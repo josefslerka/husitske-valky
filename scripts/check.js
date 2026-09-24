@@ -17,12 +17,16 @@ function run(args) {
     if (result.error) throw result.error;
     if (result.status !== 0) process.exit(result.status || 1);
 }
-const sources = [...files(path.join(root, 'js')), ...files(__dirname), path.join(root, 'validate_scenarios.js')];
+const sources = [...files(path.join(root, 'js')), ...files(__dirname),
+    path.join(root, 'bonus/vozova-hradba/game.js'), path.join(root, 'bonus/vozova-hradba/ui.js'),
+    path.join(root, 'bonus/vozova-hradba/session.js'),
+    path.join(root, 'validate_scenarios.js')];
 for (const file of sources.filter(file => file.endsWith('.js'))) run(['--check', file]);
 console.log('✓ Syntaxe JavaScriptu');
 for (const script of [
     'scripts/test-core.js', 'scripts/test-battle.js', 'scripts/test-ai-assault.js', 'scripts/test-combat-strength.js', 'scripts/test-scenario-events.js',
     'scripts/test-save.js', 'scripts/test-presentation.js', 'scripts/test-tooltip.js', 'scripts/test-narrative.js', 'scripts/test-chronicle.js',
     'scripts/test-first-experience.js', 'scripts/test-music.js', 'scripts/test-touch.js', 'scripts/test-storage.js', 'scripts/test-entrypoint.js', 'scripts/test-woodcut.js', 'scripts/test-historical-context.js',
+    'scripts/test-tower-defense.js', 'scripts/test-tower-defense-session.js',
     'scripts/validate-entrypoint.js', 'scripts/validate-styles.js', 'scripts/validate-locales.js', 'validate_scenarios.js'
 ]) run([script]);

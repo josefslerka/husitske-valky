@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Vozová hradba: samostatná minihra ze světa Husitských válek.">
+    <title>Vozová hradba · Husitské války</title>
+    <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+    <main id="app" class="app">
+        <header class="hud">
+            <div class="brand-row">
+                <h1 id="title">Vozová hradba</h1>
+                <div class="small-actions">
+                    <button id="pause-button" class="icon-button" type="button" aria-label="Pozastavit hru" title="Pauza (P)" disabled>Ⅱ</button>
+                    <button id="restart-button" class="icon-button" type="button" aria-label="Nová obrana" title="Nová obrana">↻</button>
+                    <button id="help-button" class="icon-button" type="button" aria-label="Jak hrát">?</button>
+                    <button id="language-button" class="icon-button lang-button" type="button" aria-label="Switch to English">EN</button>
+                </div>
+            </div>
+            <div class="stats" aria-live="off">
+                <span><span id="gold-label">Groše</span> <strong id="gold-value">170</strong></span>
+                <span id="camp-wrap"><span id="camp-label">Tábor</span> <strong id="camp-value">20</strong></span>
+                <span><span id="wave-label">Vlna</span> <strong id="wave-value">0/8</strong></span>
+            </div>
+        </header>
+
+        <section class="wave-brief" aria-label="Průběh a složení vlny">
+            <div class="wave-caption"><strong id="wave-heading"></strong><span id="wave-remaining"></span></div>
+            <div id="wave-roster" class="wave-roster"></div>
+            <progress id="wave-progress" max="1" value="0" aria-label="Průběh vlny"></progress>
+        </section>
+
+        <nav class="map-tools" aria-label="Terén a příprava obrany" id="map-tools">
+            <span id="hill-legend">△ Návrší: dostřel +1</span>
+            <button id="barricades-button" type="button">Záseky 0/2</button>
+            <button id="tactics-button" type="button">Výhody 0/3</button>
+        </nav>
+
+        <section id="stage" class="stage" aria-label="Herní mapa">
+            <canvas id="battlefield" tabindex="0" aria-label="Klikatá cesta shora k husitskému táboru. Klepni na volné pole u cesty a postav oddíl."></canvas>
+            <div id="paused-banner" class="paused-banner" hidden></div>
+        </section>
+
+        <p id="message" class="message" role="status" aria-live="polite">Klepni na volné pole u cesty a postav první oddíl.</p>
+        <div class="controls">
+            <button id="choral-button" class="action-button choral" type="button" disabled>Chorál</button>
+            <button id="speed-button" class="action-button speed" type="button" aria-label="Rychlost hry">1×</button>
+            <button id="wave-button" class="action-button primary" type="button">Vyslat vlnu</button>
+        </div>
+        <button id="feedback-button" class="text-button tester-link" type="button">Postřehy a odkaz</button>
+        <p class="historical-note" id="historical-note">Bonusová arkáda, nikoli rekonstrukce konkrétní bitvy.</p>
+
+        <section id="coach" class="coach" aria-label="Krátké zaučení" hidden>
+            <span id="coach-progress" class="coach-progress"></span>
+            <h2 id="coach-title"></h2>
+            <p id="coach-body"></p>
+            <div class="coach-actions">
+                <button id="coach-action" class="action-button primary" type="button"></button>
+                <button id="coach-skip" class="text-button" type="button">Vypnout tipy</button>
+            </div>
+        </section>
+        <section id="build-sheet" class="sheet" aria-labelledby="sheet-title" hidden></section>
+        <div id="overlay" class="overlay" hidden>
+            <section class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="overlay-title" tabindex="-1">
+                <h2 id="overlay-title"></h2>
+                <div id="overlay-body"></div>
+                <button id="overlay-button" class="action-button primary" type="button"></button>
+                <button id="overlay-secondary" class="action-button" type="button" hidden></button>
+            </section>
+        </div>
+    </main>
+    <script src="../../js/data/unitTypes.js?v=8.17"></script>
+    <script src="../../js/ui/WoodcutRenderer.js?v=8.26"></script>
+    <script src="game.js?v=9"></script>
+    <script src="session.js?v=9"></script>
+    <script src="ui.js?v=9"></script>
+</body>
+</html>
