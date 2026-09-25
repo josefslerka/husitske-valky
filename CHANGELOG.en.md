@@ -4,8 +4,9 @@
 
 The older planning sections below are preserved as a record of earlier development; they are not the current release plan. See [TODO.md](TODO.md) for the current state and open tasks (currently maintained in Czech).
 
-## Unreleased
+## Alpha 0.3.6 (25 September 2026)
 
+- The standalone [Wagon Fort](https://hussitewars.com/bonus/vozova-hradba/) tower-defense bonus game features eight waves, unit building and upgrades, barricades and war councils. It is playable in Czech and English and is not linked to the main menu or campaign progress.
 - A visible enemy now shows its possible next-turn movement range: hover on desktop or long-press on touch without issuing an order. The preview follows terrain and fog-of-war rules and does not reveal hidden units.
 - Nekmíř can no longer be won by waiting alone: at least 50% of the player's units must survive through round 10, and Hynek of Nekmíř must be defeated. Preserving five wagons remains a secondary objective. The briefing, ending and in-battle messages now match these conditions and the actual battlefield state.
 - Plains, hills and slopes have more distinct colors and linework, making them easier to distinguish without a tooltip.

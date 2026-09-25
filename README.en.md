@@ -95,11 +95,11 @@ The game's musical theme is an original instrumental arrangement played from a l
 
 ## Current state and known limits
 
-**Version:** Alpha 0.3.5 (19 September 2026). See the [English changelog](CHANGELOG.en.md) for details. **Production site:** [hussitewars.com](https://hussitewars.com/).
+**Version:** Alpha 0.3.6 (25 September 2026). See the [English changelog](CHANGELOG.en.md) for details. **Production site:** [hussitewars.com](https://hussitewars.com/).
 
 - The AI follows readable, historically inspired doctrines but is not a human opponent.
 - Scenario balance, particularly in later acts and the first battle at Živohošť, needs more player testing.
-- Touch controls work, but text overflow on some narrow phones and iPad usability need more manual checking.
+- Touch controls work, but enlarged system text, in-app browser bars and iPad usability need more manual checking.
 - Saves and progress live only in `localStorage`; there is no backend, multiplayer or cloud synchronization.
 - Terrain recognition and the way adjacent water hexes join are still being reviewed.
 

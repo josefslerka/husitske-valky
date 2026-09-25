@@ -247,7 +247,7 @@ Nejde o úplný rozbor kritických edic ani odborné potvrzení každého detail
 
 ## 📝 Stav vývoje
 
-**Verze:** Alpha 0.3.5 (19. září 2026)
+**Verze:** Alpha 0.3.6 (25. září 2026)
 
 **Produkční adresa:** [hussitewars.com](https://hussitewars.com/)
 

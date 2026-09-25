@@ -489,6 +489,31 @@ test('obě obrazovky O hře vznikají z jediné lokalizované šablony a mají a
     }
 });
 
+test('číslo a datum vydání souhlasí v menu, dokumentaci a obou changelozích', () => {
+    const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
+    const cs = JSON.parse(read('js/i18n/locales/cs.json'));
+    const en = JSON.parse(read('js/i18n/locales/en.json'));
+    const version = cs.menu.version;
+    const match = /^(Alpha \d+(?:\.\d+){1,2}) · (\d{2})\.(\d{2})\.(\d{4})$/.exec(version);
+    assert.ok(match, 'verze v menu musí obsahovat číslo i datum');
+    const [, number, day, month, year] = match;
+    const date = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+    const format = locale => new Intl.DateTimeFormat(locale, {
+        day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'
+    }).format(date);
+    assert.equal(en.menu.version, version);
+    assert.ok(read('index.html').includes(`data-i18n="menu.version">${version}</span>`));
+    assert.ok(read('README.md').includes(`**Verze:** ${number} (${format('cs-CZ')})`));
+    assert.ok(read('README.en.md').includes(`**Version:** ${number} (${format('en-GB')})`));
+    assert.ok(read('TODO.md').includes(`**Aktuální verze:** ${number} (${Number(day)}. ${Number(month)}. ${year})`));
+    const changelogCs = read('CHANGELOG.md');
+    const changelogEn = read('CHANGELOG.en.md');
+    assert.ok(changelogCs.includes(`## ${number} (${format('cs-CZ')})`));
+    assert.ok(changelogEn.includes(`## ${number} (${format('en-GB')})`));
+    assert.match(changelogCs, /\[Vozová hradba\]\(https:\/\/hussitewars\.com\/bonus\/vozova-hradba\/\)/);
+    assert.match(changelogEn, /\[Wagon Fort\]\(https:\/\/hussitewars\.com\/bonus\/vozova-hradba\/\)/);
+});
+
 test('terén v obou jazycích propojí každý dekorativní náhled se správným mapovým motivem', async () => {
     const h = await createLocalizedHarness();
     const terrain = ['plains', 'forest', 'hills', 'water', 'town', 'road', 'dam', 'mud', 'slope'];

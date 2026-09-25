@@ -4,8 +4,9 @@
 
 Starší plánovací oddíly níže zachováváme jako dobový záznam; nejsou aktuálním plánem vydání. Aktuální stav a otevřené úkoly jsou v [TODO.md](TODO.md).
 
-## Nevydané změny
+## Alpha 0.3.6 (25. září 2026)
 
+- Samostatná bonusová tower defense hra [Vozová hradba](https://hussitewars.com/bonus/vozova-hradba/) nabízí osm vln, stavbu a vylepšování oddílů, záseky a válečné porady. Funguje česky i anglicky a není propojená s menu ani postupem hlavní kampaně.
 - Viditelný nepřítel ukáže možný dojezd v příštím tahu: na počítači při najetí myší, na dotyku po dlouhém podržení bez vydání rozkazu. Náhled respektuje terén a mlhu války a neodhaluje skryté oddíly.
 - Nekmíř už nelze vyhrát pouhým čekáním: do konce 10. kola musí přežít alespoň 50 % vlastních oddílů a Hynek z Nekmíře musí být vyřazen. Záchrana pěti vozů zůstává vedlejším cílem. Briefing, závěr a hlášky v průběhu bitvy odpovídají novým podmínkám a skutečnému stavu bojiště.
 - Pláň, kopec a svah mají odlišnější barvy a kresbu, aby šly rozpoznat i bez tooltipu.
