@@ -16,6 +16,7 @@ class BattleView {
         this.backgroundPaused = false;
         this.animationEnabled = false;
         this.moveAnimation = null;
+        this.previewedEnemyUnit = null;
         this.setupEventListeners();
     }
 
@@ -111,6 +112,26 @@ class BattleView {
 
     showMoveRange(unit) {
         this.game.hexGrid.setHighlighted(unit.canMove() ? this.game.getValidMoves(unit) : []);
+    }
+
+    showEnemyMoveRange(unit) {
+        if (!unit || unit.faction === 'hussites' || unit.health <= 0 ||
+            this.game.gameState !== 'playing' || this.game.currentFaction !== 'hussites' ||
+            !this.game.fogOfWarSystem.isEnemyVisible(unit)) {
+            this.clearEnemyMoveRange();
+            return;
+        }
+        if (this.previewedEnemyUnit === unit) return;
+        this.previewedEnemyUnit = unit;
+        this.game.hexGrid.setEnemyMove(this.game.getValidMoves(unit, { visibleEnemyPreview: true }));
+        this.render();
+    }
+
+    clearEnemyMoveRange() {
+        if (!this.previewedEnemyUnit) return;
+        this.previewedEnemyUnit = null;
+        this.game.hexGrid.setEnemyMove([]);
+        this.render();
     }
 
     clearLog() {
@@ -515,6 +536,12 @@ class BattleView {
     }
 
     render() {
+        if (this.previewedEnemyUnit && (this.previewedEnemyUnit.health <= 0 ||
+            this.game.currentFaction !== 'hussites' ||
+            !this.game.fogOfWarSystem.isEnemyVisible(this.previewedEnemyUnit))) {
+            this.previewedEnemyUnit = null;
+            this.game.hexGrid.setEnemyMove([]);
+        }
         this.panels.updateObjectiveProgress();
         const aliveUnits = this.game.units.filter(u => u.health > 0);
 

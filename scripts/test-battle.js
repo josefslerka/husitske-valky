@@ -272,16 +272,10 @@ test('Kutná Hora na konci uzná rozbití polní armády, jen pokud Žižka pře
     zizkaFell.destroy();
 });
 
-test('Nekmíř vede Hynka do boje a jeho bonus nevyžaduje smrt Švamberka', () => {
+test('Nekmíř vede Hynka do boje a vyžaduje jeho vyřazení, ne jen pasivní přežití', () => {
     const h = createHarness(), game = h.newGame('nekmir_1419');
-    game.view.notifications = [];
-    game.turnNumber = 6; game.updatePhase(); game.checkPhaseEvents();
-    assert.equal(game.currentPhase.id, 4);
-    assert.ok(game.view.notifications.some(event => event.text.includes('Hynek')));
-
     game.currentFaction = 'crusaders';
     const hynek = game.units.find(unit => unit.type === 'HYNEK_NEKMIRE');
-    const svamberk = game.units.find(unit => unit.type === 'BOHUSLAV_SVAMBERK');
     const action = h.AI.decideAction(game, hynek);
     assert.equal(action.type, 'move');
     const before = Math.min(...game.getEnemyUnits('crusaders').map(unit =>
@@ -290,10 +284,36 @@ test('Nekmíř vede Hynka do boje a jeho bonus nevyžaduje smrt Švamberka', () 
         game.hexGrid.getDistance(action.col, action.row, unit.col, unit.row)));
     assert.ok(after < before, 'Hynek má postupovat k boji, ne do severozápadního lesa');
 
-    hynek.health = 0; svamberk.health = svamberk.maxHealth;
-    game.victoryConditionsSystem.evaluateSecondaryConditions('hussites');
-    const result = game.secondaryResults.find(item => item.target === 'HYNEK_NEKMIRE');
-    assert.equal(result.achieved, true);
+    game.currentFaction = 'hussites';
+    game.view.notifications = [];
+    game.turnNumber = 6; hynek.col = 8;
+    game.updatePhase(); game.checkPhaseEvents();
+    assert.equal(game.currentPhase.id, 4);
+    assert.ok(game.view.notifications.some(event => event.text.includes('Hynek')));
+
+    game.turnNumber = 11;
+    game.victoryConditionsSystem.checkScenarioVictoryConditions();
+    assert.equal(game.view.result.isVictory, false, 'pouhé čekání a přežití nestačí');
+    assert.match(game.view.result.stats.reason, /defeatSurvivalTarget/);
+    game.destroy();
+
+    const active = h.newGame('nekmir_1419');
+    active.units.find(unit => unit.type === 'HYNEK_NEKMIRE').health = 0;
+    active.turnNumber = 11;
+    active.victoryConditionsSystem.checkScenarioVictoryConditions();
+    assert.equal(active.view.result.isVictory, true, 'po vyřazení Hynka je přežití platné vítězství');
+    active.destroy();
+});
+
+test('Nekmíř nelze vyhrát opakovaným ukončováním tahů bez rozkazů', async () => {
+    const h = createHarness(), game = h.newGame('nekmir_1419');
+    for (let i = 0; i < 12 && game.gameState === 'playing'; i++) {
+        game.endTurn();
+        await h.advance(60000);
+    }
+    assert.ok(game.view.result, 'bitva musí dojít k výsledku');
+    assert.equal(game.view.result.isVictory, false);
+    assert.ok(game.units.find(unit => unit.type === 'HYNEK_NEKMIRE').health > 0);
     game.destroy();
 });
 

@@ -636,11 +636,16 @@ class Game {
         return cost;
     }
 
-    getValidMoves(unit) {
+    getValidMoves(unit, { visibleEnemyPreview = false } = {}) {
         // Obrana proti budoucím voláním, co zapomenou zkontrolovat canMove()
         // (řešilo se per-call-site u AI/hráče, ale sepnutý vůz nemá pohybovat
         // ani při pozdějším přidaném volání, které na to zapomene)
-        if (!unit.canMove()) return [];
+        if (visibleEnemyPreview) {
+            // Náhled ukazuje příští možný tah, ne stav hasMoved v právě hraném kole.
+            // Uzavřenou pochodovou hradbu zde raději neodhadujeme jako jeden vůz.
+            if (unit.unitClass === 'fortification' || unit.movement <= 0 ||
+                (unit.isWagon() && unit.formationClosed)) return [];
+        } else if (!unit.canMove()) return [];
 
         // P4: pochodová hradba se hýbe jako SKUPINA - platné cíle jsou směry, kam
         // se posune celá linie (ne kam dojde jeden vůz). Vrať skupinové cíle.
@@ -673,6 +678,10 @@ class Game {
                 if (neighbor.col < 0 || neighbor.col >= this.hexGrid.cols ||
                     neighbor.row < 0 || neighbor.row >= this.hexGrid.rows) continue;
 
+                // Předpověď nesmí procházet neviděným terénem ani naznačit,
+                // že na neviděném poli stojí jiný oddíl. Je tedy konzervativní.
+                if (visibleEnemyPreview && !this.fogOfWarSystem.isHexVisible(neighbor.col, neighbor.row)) continue;
+
                 const terrain = this.hexGrid.getTerrain(neighbor.col, neighbor.row);
 
                 // Voda - normálně neprůchodná, ale zamrzlá řeka (frozenRiver) je průchodná
@@ -690,7 +699,7 @@ class Game {
                     this.currentScenario.specialMechanics.bridgeBottleneck) {
                     const bridgePos = this.currentScenario.specialMechanics.bridgeBottleneck.position;
                     if (bridgePos && neighbor.col === bridgePos[0] && neighbor.row === bridgePos[1]) {
-                        if (this.bridgeUsedThisTurn) continue;
+                        if (this.bridgeUsedThisTurn && !visibleEnemyPreview) continue;
                     }
                 }
 
@@ -709,7 +718,9 @@ class Game {
                 best.set(key, newCost);
 
                 // Kontrola, zda je pole obsazené
-                const unitAtHex = this.getUnitAt(neighbor.col, neighbor.row);
+                const actualUnit = this.getUnitAt(neighbor.col, neighbor.row);
+                const unitAtHex = visibleEnemyPreview && actualUnit &&
+                    !this.fogOfWarSystem.isEnemyVisible(actualUnit) ? null : actualUnit;
 
                 if (unitAtHex) {
                     // Přes spojence lze projít (ale ne skončit), přes nepřátele vůbec

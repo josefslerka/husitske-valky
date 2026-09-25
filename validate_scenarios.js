@@ -122,6 +122,7 @@ const validAiStanceModes = ['aggressive', 'default', 'defensive', 'hold', 'retre
 // Typy podmínek eventů implementované v ScenarioManager.checkEventCondition
 // (neznámá podmínka se tiše vyhodnotí jako splněná - default: return true)
 const implementedEventConditionTypes = [
+    'closed_wagons',
     'ready_units',
     'units_in_area',
     'no_units_in_area',
@@ -202,6 +203,11 @@ function validateScenario(scenario) {
         if (vc.primary) {
             if (!implementedVictoryTypes.includes(vc.primary.type)) {
                 errors.push(`Primary victory type '${vc.primary.type}' není implementovaný`);
+            }
+            if (vc.primary.requiredEnemyType &&
+                !(scenario.forces[(scenario.playerFaction || 'hussites') === 'hussites' ? 'crusaders' : 'hussites'].units || [])
+                    .some(unit => unit.type === vc.primary.requiredEnemyType)) {
+                errors.push(`Požadovaný nepřítel '${vc.primary.requiredEnemyType}' není nasazen ve scénáři`);
             }
 
             // Validace pozic v primary

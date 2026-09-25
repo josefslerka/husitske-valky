@@ -40,6 +40,7 @@ class BattleTooltip {
 
         this.lastHoveredHex = hex;
         this.showTooltip(hex, event.clientX, event.clientY);
+        this.game.view.showEnemyMoveRange(this.game.getUnitAt(hex.col, hex.row));
     }
 
     showTooltip(hex, mouseX, mouseY) {
@@ -87,6 +88,11 @@ class BattleTooltip {
                 </div>
                 <div class="tooltip-info tooltip-strength">${i18n.t('tooltip.attackStrength', { value: Math.round(unit.getAttackStrength() * 100) })}</div>
             `;
+
+            if (unit.faction !== 'hussites' && unit.movement > 0 &&
+                !(unit.isWagon() && unit.formationClosed)) {
+                html += `<div class="tooltip-info">${i18n.t('tooltip.enemyMovePreview')}</div>`;
+            }
 
             // Speciální schopnost (přeskočíme commander - ten má vlastní sekci)
             if (unit.special && unit.special !== 'commander') {
@@ -279,6 +285,7 @@ class BattleTooltip {
     }
 
     hideTooltip() {
+        this.game.view?.clearEnemyMoveRange();
         this.tooltip.classList.add('hidden');
         this.tooltip.classList.remove('tooltip-scrollable');
         this.lastHoveredHex = null;

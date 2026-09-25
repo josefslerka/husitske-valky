@@ -8,6 +8,7 @@
     height: min(820px, calc(100dvh - 32px));
     max-height: calc(100dvh - 32px);
     min-width: 0;
+    overflow-wrap: anywhere;
     padding: 24px clamp(18px, 3vw, 36px) 18px;
     overflow: hidden;
     background: var(--field-page-light);
@@ -75,6 +76,7 @@
     color: var(--field-ink);
     font-size: 1rem;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 #mission-modal .reputation-track {
     grid-column: 1;
@@ -284,8 +286,14 @@
     #mission-modal .mission-modal-content { width: calc(100vw - 16px); height: calc(100dvh - 16px); max-height: calc(100dvh - 16px); padding: 18px 16px 14px; }
     #mission-modal .mission-heading { padding-bottom: 12px; }
     #mission-modal #mission-close { top: 12px; right: 12px; }
-    #mission-modal .campaign-reputation { gap: 4px 12px; padding: 10px 0; }
-    #mission-modal #campaign-reputation-tier { max-width: 17ch; font-size: .8125rem; }
+    #mission-modal .campaign-reputation { grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 10px 0; }
+    #mission-modal #campaign-reputation-tier {
+        grid-column: 1;
+        grid-row: 3;
+        max-width: none;
+        font-size: .8125rem;
+        text-align: left;
+    }
     #mission-modal .reputation-heading { font-size: .8125rem; }
     #mission-modal .mission-card { flex-wrap: wrap; gap: 10px; padding: 12px; }
     #mission-modal .mission-card-info { flex-basis: calc(100% - 48px); }

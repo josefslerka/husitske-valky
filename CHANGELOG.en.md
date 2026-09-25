@@ -4,6 +4,14 @@
 
 The older planning sections below are preserved as a record of earlier development; they are not the current release plan. See [TODO.md](TODO.md) for the current state and open tasks (currently maintained in Czech).
 
+## Unreleased
+
+- A visible enemy now shows its possible next-turn movement range: hover on desktop or long-press on touch without issuing an order. The preview follows terrain and fog-of-war rules and does not reveal hidden units.
+- Nekmíř can no longer be won by waiting alone: at least 50% of the player's units must survive through round 10, and Hynek of Nekmíř must be defeated. Preserving five wagons remains a secondary objective. The briefing, ending and in-battle messages now match these conditions and the actual battlefield state.
+- Plains, hills and slopes have more distinct colors and linework, making them easier to distinguish without a tooltip.
+- Text wraps more reliably in panels, briefings and controls on narrow phones. The reputation display, map controls and battle notification layout have been adjusted; bottom controls and notifications account for mobile browser chrome. Actual X/LinkedIn in-app browser bars and enlarged system text still need verification on a phone.
+- Regression tests cover movement previews without information leaks, passive play at Nekmíř, conditional messages, terrain rendering and mobile controls.
+
 ## Alpha 0.3.5 (19 September 2026)
 
 - The Siege of Plzeň objective now counts all twenty city tiles: any three occupied city tiles bring victory, rather than a hidden set of six coordinates that differed from the map label.

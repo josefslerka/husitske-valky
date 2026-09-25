@@ -9,6 +9,8 @@ class BattleMapInput {
         this.pointers = new Map();
         this.ignoreClick = false;
         this.gesture = false;
+        this.longPressTimer = null;
+        this.longPressed = false;
         this.applySize();
         const signal = view.eventAbortController.signal;
         this.canvas.addEventListener('pointerdown', e => this.down(e), { signal });
@@ -90,15 +92,36 @@ class BattleMapInput {
         if (this.pointers.size === 0) {
             this.gesture = false;
             this.ignoreClick = false;
+            this.longPressed = false;
         }
         this.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY, type: e.pointerType });
         this.canvas.setPointerCapture?.(e.pointerId);
         if (e.pointerType !== 'mouse') e.preventDefault();
         if (this.pointers.size > 1) {
             this.gesture = true;
+            this.clearLongPress();
             this.view.orders.cancel();
         }
         this.view.hideTooltip();
+        if (e.pointerType !== 'mouse' && this.pointers.size === 1) {
+            this.longPressTimer = setTimeout(() => {
+                const p = this.pointers.get(e.pointerId);
+                if (!p || this.gesture) return;
+                const pos = this.screenToWorld(p.x, p.y);
+                const hex = this.view.game.hexGrid.pixelToHex(pos.x, pos.y);
+                const unit = hex && this.view.game.getUnitAt(hex.col, hex.row);
+                if (!unit || unit.faction === 'hussites' ||
+                    !this.view.game.fogOfWarSystem.isEnemyVisible(unit)) return;
+                this.longPressed = true;
+                this.ignoreClick = true;
+                this.view.orders.inspect(hex);
+            }, 500);
+        }
+    }
+
+    clearLongPress() {
+        if (this.longPressTimer !== null) clearTimeout(this.longPressTimer);
+        this.longPressTimer = null;
     }
 
     pair() {
@@ -113,7 +136,10 @@ class BattleMapInput {
         const before = this.pointers.size === 2 ? this.pair() : null;
         const dx = e.clientX - p.x, dy = e.clientY - p.y;
         p.x = e.clientX; p.y = e.clientY;
-        if (Math.hypot(p.x - p.startX, p.y - p.startY) > 8) this.gesture = true;
+        if (Math.hypot(p.x - p.startX, p.y - p.startY) > 8) {
+            this.gesture = true;
+            this.clearLongPress();
+        }
         if (!this.gesture) return;
         this.ignoreClick = true;
         this.canvas.classList.add('panning');
@@ -128,6 +154,7 @@ class BattleMapInput {
     }
 
     up(e) {
+        this.clearLongPress();
         const p = this.pointers.get(e.pointerId);
         if (!p) return;
         // I bez pointermove nesmí velký posun mezi down/up vydat rozkaz.
@@ -136,13 +163,14 @@ class BattleMapInput {
         if (p.type !== 'mouse') {
             e.preventDefault();
             this.ignoreClick = true; // případný kompatibilní click nesmí rozkaz zopakovat
-            if (!this.gesture && this.pointers.size === 0) this.view.handleMapTap(e, true);
+            if (!this.gesture && !this.longPressed && this.pointers.size === 0) this.view.handleMapTap(e, true);
         } else if (this.gesture) this.ignoreClick = true;
         this.canvas.releasePointerCapture?.(e.pointerId);
         if (!this.pointers.size) this.canvas.classList.remove('panning');
     }
 
     cancel() {
+        this.clearLongPress();
         const ids = [...this.pointers.keys()];
         this.pointers.clear();
         this.ignoreClick = true;

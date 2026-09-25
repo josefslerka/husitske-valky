@@ -101,6 +101,7 @@ test('klepnutí na nedostupné pole nespotřebuje pohyb ani nezaloží autosave'
     const before = snapshot(game);
     orders.tap({ col: 0, row: 0 });
     assert.equal(orders.inspectedHex.col, 0); assert.equal(orders.inspectedHex.row, 0);
+    assert.match(h.document.getElementById('order-hint').textContent, /touch.inspectHint/);
     assert.equal(snapshot(game), before);
     assert.equal(h.storage.has(h.SaveGameSystem.AUTO_KEY), false); game.destroy();
 });
@@ -112,6 +113,46 @@ test('karta neodhalí nepřítele skrytého mlhou a neprozkoumané místo nemá 
     game.exploredHexes.add(`${enemy.col},${enemy.row}`);
     orders.tap(enemy); assert.ok(orders.inspectedHex);
     assert.ok(!game.view.tooltip.contentForHex(enemy).includes(enemy.name));
+    game.exploredHexes.add('0,0');
+    orders.tap({ col: 0, row: 0 });
+    assert.equal(orders.inspectedHex.col, 0, 'prázdné prozkoumané pole nesmí být nepřítelem');
+    game.destroy();
+});
+
+test('dojezd viditelného nepřítele ukazuje jen viditelná pole a nemění stav hry', () => {
+    const { game, enemy } = fixture();
+    enemy.hasMoved = true;
+    game.fogOfWar = true;
+    game.visibleHexes.clear();
+    for (const key of ['6,5', '7,5', '6,4']) game.visibleHexes.add(key);
+    const before = snapshot(game);
+    game.view.showEnemyMoveRange(enemy);
+    assert.ok(game.hexGrid.enemyMoveHexes.length > 0);
+    assert.ok(game.hexGrid.enemyMoveHexes.every(hex =>
+        game.visibleHexes.has(`${hex.col},${hex.row}`)));
+    assert.equal(snapshot(game), before);
+    game.view.clearEnemyMoveRange();
+    assert.equal(game.hexGrid.enemyMoveHexes.length, 0);
+    game.visibleHexes.clear();
+    game.view.showEnemyMoveRange(enemy);
+    assert.equal(game.hexGrid.enemyMoveHexes.length, 0, 'skrytý nepřítel se nesmí prozradit');
+    game.destroy();
+});
+
+test('dlouhé podržení nepřítele otevře jen průzkum dojezdu bez útoku', async () => {
+    const { h, game, input, orders, enemy } = fixture();
+    const p = game.hexGrid.hexToPixel(enemy.col, enemy.row);
+    const before = snapshot(game);
+    pointer(input.canvas, 'pointerdown', p.x, p.y);
+    await h.advance(500);
+    assert.equal(orders.inspectedHex.col, enemy.col);
+    assert.ok(game.hexGrid.enemyMoveHexes.length > 0);
+    pointer(input.canvas, 'pointerup', p.x, p.y);
+    click(input.canvas, p.x, p.y);
+    assert.equal(snapshot(game), before);
+    assert.equal(h.storage.has(h.SaveGameSystem.AUTO_KEY), false);
+    orders.cancel();
+    assert.equal(game.hexGrid.enemyMoveHexes.length, 0);
     game.destroy();
 });
 
@@ -392,6 +433,16 @@ test('spodní odstup měří viewport, má obecný webview fallback a v běžné
     assert.equal(clearance({ compact: true, innerHeight: 800, viewportHeight: 800, embedded: false }), 0);
     assert.equal(clearance({ compact: false, innerHeight: 800, viewportHeight: 734, embedded: true }), 0);
     assert.equal(clearance({ compact: true, standalone: true, innerHeight: 800, viewportHeight: 734, embedded: true }), 0);
+
+    const rootStyles = new Map();
+    h.document.documentElement = { style: { setProperty: (key, value) => rootStyles.set(key, value) } };
+    h.context.window.innerHeight = 800;
+    h.context.window.visualViewport = { height: 734, offsetTop: 0 };
+    const container = h.document.getElementById('game-container');
+    const measured = vm.runInContext('syncBrowserBottomClearance(document.getElementById("game-container"), true)', h.context);
+    assert.equal(measured, 66);
+    assert.equal(container.style['--browser-bottom-clearance'], '66px');
+    assert.equal(rootStyles.get('--browser-bottom-clearance'), '66px', 'pevná notifikace také dostane bezpečný odstup');
 });
 
 test('panel cílů začíná pod kamerou a kompaktní výška počítá se spodním odstupem', () => {
@@ -401,6 +452,7 @@ test('panel cílů začíná pod kamerou a kompaktní výška počítá se spodn
     assert.match(css, /#objectives-panel\s*\{[^}]*right:\s*254px/s);
     assert.match(css, /max-height:\s*calc\(100dvh - 160px - var\(--browser-bottom-clearance\)\)/);
     assert.match(css, /max\(env\(safe-area-inset-bottom\), var\(--browser-bottom-clearance\)\)/);
+    assert.match(css, /\.compact-interface \.event-notification\s*\{[^}]*max-height:\s*calc\(100dvh - 24px - var\(--browser-bottom-clearance, 0px\)\)/s);
     const mapStart = html.indexOf('<div id="map-container">');
     const infoStart = html.indexOf('<aside id="info-panel">', mapStart);
     const objectivesStart = html.indexOf('id="objectives-panel"', mapStart);

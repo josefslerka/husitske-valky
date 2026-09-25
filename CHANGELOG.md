@@ -4,6 +4,14 @@
 
 Starší plánovací oddíly níže zachováváme jako dobový záznam; nejsou aktuálním plánem vydání. Aktuální stav a otevřené úkoly jsou v [TODO.md](TODO.md).
 
+## Nevydané změny
+
+- Viditelný nepřítel ukáže možný dojezd v příštím tahu: na počítači při najetí myší, na dotyku po dlouhém podržení bez vydání rozkazu. Náhled respektuje terén a mlhu války a neodhaluje skryté oddíly.
+- Nekmíř už nelze vyhrát pouhým čekáním: do konce 10. kola musí přežít alespoň 50 % vlastních oddílů a Hynek z Nekmíře musí být vyřazen. Záchrana pěti vozů zůstává vedlejším cílem. Briefing, závěr a hlášky v průběhu bitvy odpovídají novým podmínkám a skutečnému stavu bojiště.
+- Pláň, kopec a svah mají odlišnější barvy a kresbu, aby šly rozpoznat i bez tooltipu.
+- Na úzkých telefonech se lépe zalamují texty v panelech, briefingu a ovládání; opraveno rozložení pověsti, mapových tlačítek a bitevní notifikace. Spodní ovládání i notifikace zohledňují bezpečný odstup od lišty mobilního prohlížeče. Skutečné lišty X/LinkedIn a zvětšené systémové písmo ještě čekají na ověření na telefonu.
+- Regresní testy pokrývají náhled dojezdu bez úniku informací, pasivní taktiku u Nekmíře, podmíněné hlášky, terénní kresbu a mobilní ovládání.
+
 ## Alpha 0.3.5 (19. září 2026)
 
 - Cíl obléhání Plzně nyní počítá všech dvacet polí města: vítězství přinesou libovolná tři obsazená městská pole, ne skrytá šestice souřadnic odlišná od popisku mapy.

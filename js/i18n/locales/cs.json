@@ -131,6 +131,7 @@
   "touch": {
     "inspect": "Průzkum místa",
     "inspectHint": "Prohlížíte si místo. Žádný rozkaz se neprovede.",
+    "enemyMoveHint": "Červeně: možný dojezd příštího tahu po viditelné části mapy. Dlouhé podržení nepřítele nevydá rozkaz.",
     "close": "Zavřít",
     "details": "Jednotka, terén a podrobnosti",
     "noUnit": "Vyberte oddíl",
@@ -291,6 +292,7 @@
     "critical": "Kritická"
   },
   "tooltip": {
+    "enemyMovePreview": "Červeně na mapě: možný dojezd příštího tahu jen ve viditelném terénu.",
     "visibility": "Dohled",
     "attackStrength": "Síla útoku dle zdraví: {value}%",
     "commander": "Velitel",
@@ -730,6 +732,7 @@
     "victoryFieldArmyEliminated": "Draze zaplacené vítězství! Do kola {turn} přežilo {percent}% vašich oddílů, ale nepřátelská bojová síla byla zničena.",
     "victoryAlternativeFieldArmy": "Alternativní vítězství! Nepřátelská polní armáda byla rozbita a Žižka přežil.",
     "defeatSurvival": "Porážka! Přežilo jen {percent}% jednotek (potřeba {required}%).",
+    "defeatSurvivalTarget": "Porážka! {target} zůstal na bojišti; samotné přežití nestačí.",
     "victoryDestruction": "Vítězství! Zničili jste {percent}% nepřátel.",
     "defeatDestruction": "Porážka! Zničeno jen {percent}% nepřátel (potřeba {required}%).",
     "victoryHoldPosition": "Vítězství! Ubránili jste klíčové pozice do kola {turn}!",
@@ -1680,19 +1683,18 @@
       "description": "Raný doklad husitské vozové taktiky. Jan Žižka s malým houfem odráží útok plzeňského landfrýdu.",
       "historicalSignificance": "Jeden z nejranějších písemně zachycených bojů husitů s využitím vozů; nikoli první použití vozů v dějinách.",
       "briefing": {
-        "hussites": "Landfrýd dostihl váš houf s vozy poblíž Nekmíře. Sražte vozy do obrany a kryjte pěchotu. Sedm vozů a jejich polokruhová formace představují herní zpracování stručné zprávy, ne přesný plán bitvy.",
+        "hussites": "Landfrýd dostihl váš houf s vozy poblíž Nekmíře. Sražte vozy do obrany, kryjte pěchotu a vyřaďte Hynka. Pouhé čekání k vítězství nestačí. Sedm vozů a jejich polokruhová formace představují herní zpracování stručné zprávy, ne přesný plán bitvy.",
         "crusaders": "Dostihnete husitské kacíře, než stihnou zničit tvrz Nekmíř. Máte jasnou početní převahu. Zničte je!"
       },
       "objectives": {
-        "primary": "Odražte útok landfrýdu a přežijte do kola 10 s 50% jednotek",
+        "primary": "Přežijte 10 kol s alespoň 50 % oddílů a vyřaďte Hynka z Nekmíře",
         "secondary": [
-          "Zabijte Hynka z Nekmíře",
           "Uchraňte alespoň 5 vozů"
         ]
       },
       "debriefing": {
         "victory": "Vozová obrana obstála. V této partii se vám podařilo odrazit landfrýd. Historický střet u Nekmíře patří k raným dokladům Žižkovy taktiky; přesný průběh a počty ztrát však neznáme.",
-        "defeat": "Improvizovaná vozová hradba nevydržela nápor nepřítele. Husitský výpad skončil katastrofou. Žižka však přežil a poučil se - příště bude hradba silnější a uzavřená."
+        "defeat": "U Nekmíře se nepodařilo udržet potřebnou sílu a vyřadit Hynka. Přesný průběh historického střetu neznáme; výsledek této partie je herní rekonstrukce."
       },
       "phases": [
         {
@@ -1715,7 +1717,7 @@
               "message": "Žižka: „Sražte vozy k sobě! Střelci za vozy, cepníci připraveni!“"
             },
             {
-              "text": "Vozová hradba je připravena! +3 k obraně pro jednotky za vozy."
+              "text": "Vozy drží pohromadě. Střelci mohou bezpečněji krýt pěchotu — využijte chvíle k útoku na Hynka."
             }
           ]
         },
@@ -1730,19 +1732,19 @@
         },
         {
           "name": "Klíčová fáze bitvy",
-          "description": "Nápor se láme; Hynek bojuje v první linii.",
+          "description": "Boj o vozové postavení pokračuje.",
           "events": [
             {
-              "text": "Jízda narazila na vozy! Hynek z Nekmíře vede další nápor v první linii — teď je příležitost ho vyřadit."
+              "text": "Hynek se přiblížil k vozům. Připravte proti němu úder, dokud je na dostřel."
             }
           ]
         },
         {
-          "name": "Ústup landfrýdu",
-          "description": "Katolíci ustupují, husité pokračují k tvrzi.",
+          "name": "Závěr střetu",
+          "description": "O výsledku rozhodnou poslední kola a osud Hynka.",
           "events": [
             {
-              "message": "Jízda je odražena! Landfrýd se začíná stahovat; na Hynka zbývá poslední příležitost."
+              "message": "Landfrýd utrpěl těžké ztráty. Zbývá dokončit střet s Hynkem."
             }
           ]
         }

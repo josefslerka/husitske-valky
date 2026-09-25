@@ -278,7 +278,9 @@ class VictoryConditionsSystem {
                 // Je to výslovně datová alternativa, globální význam velitelů
                 // ani ostatní scénáře tím neměníme.
                 const fieldArmyEliminated = this.fieldArmyAlternativeAchieved(primary, playerFaction, enemyFaction);
-                victoryAchieved = currentPercent >= minPercent || fieldArmyEliminated;
+                const requiredEnemyDefeated = !primary.requiredEnemyType ||
+                    !enemyUnits.some(unit => unit.type === primary.requiredEnemyType);
+                victoryAchieved = (currentPercent >= minPercent || fieldArmyEliminated) && requiredEnemyDefeated;
                 // Odehrálo se requiredTurnsSurvive kol (turnNumber už je o 1 dál)
                 this.game.gameOverTurn = requiredTurnsSurvive;
 
@@ -289,6 +291,10 @@ class VictoryConditionsSystem {
                     }));
                 } else if (victoryAchieved) {
                     this.outcome(i18n.t('gameLog.victorySurvival', { turn: requiredTurnsSurvive, percent: Math.round(currentPercent) }));
+                } else if (!requiredEnemyDefeated && currentPercent >= minPercent) {
+                    this.outcome(i18n.t('gameLog.defeatSurvivalTarget', {
+                        target: i18n.t(`units.${primary.requiredEnemyType}.name`)
+                    }));
                 } else {
                     this.outcome(i18n.t('gameLog.defeatSurvival', { percent: Math.round(currentPercent), required: minPercent }));
                 }

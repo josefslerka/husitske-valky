@@ -8,9 +8,9 @@ class WoodcutRenderer {
     });
 
     static terrainColors = Object.freeze({
-        plains: '#e8dcc2', forest: '#b4ba95', hills: '#cebc97', water: '#91a69a',
+        plains: '#efe4cc', forest: '#b4ba95', hills: '#c4ad82', water: '#91a69a',
         town: '#e1d2ad', road: '#dfc99b', road2: '#dfc99b', dam: '#c7b18a',
-        mud: '#b6a17e', swamp: '#a9b18e', slope: '#bdb69c', trenches: '#b9aa8d', church: '#e7d9b9'
+        mud: '#b6a17e', swamp: '#a9b18e', slope: '#ada58d', trenches: '#b9aa8d', church: '#e7d9b9'
     });
 
     // Paths are trusted, code-owned artwork, never scenario/localization input.
@@ -69,7 +69,7 @@ class WoodcutRenderer {
 
     constructor(grid) { this.grid = grid; this.ctx = grid.ctx; }
 
-    static terrainColor(terrain) { return this.terrainColors[terrain] || this.palette.paper; }
+    static terrainColor(terrain) { return this.terrainColors[terrain] || this.terrainColors.plains; }
 
     // Encyclopedia swatches use the actual map renderer on one isolated hex.
     // Fixed 2x backing resolution stays sharp even while the tab is hidden.
@@ -168,14 +168,19 @@ class WoodcutRenderer {
             case 'church':
                 this.house(-8, 6, .88, true); break;
             case 'hills':
+                ctx.strokeStyle = '#655b45'; ctx.lineWidth = 1.7;
                 for (let i = 0; i < 3; i++) {
                     ctx.beginPath(); ctx.ellipse(-4 + i * 6, 7 + i * 5, 26 - i * 4, 20 - i * 4, -.15, Math.PI, Math.PI * 1.97); ctx.stroke();
                 }
-                this.hatch(-8, 1, 30, 13, 5); break;
+                this.hatch(-8, 1, 30, 13, 5);
+                this.line([[-24, 20], [-11, 16], [2, 19], [15, 15], [27, 17]]); break;
             case 'slope':
+                ctx.strokeStyle = '#4f5145'; ctx.lineWidth = 2;
                 this.path([[-31, 15], [-10, -17], [0, -8], [11, -25], [32, 13]]); ctx.stroke();
                 this.line([[-10, -17], [-6, 12]]); this.line([[11, -25], [18, 13]]);
-                this.hatch(-4, -2, 25, 19, 5); break;
+                this.hatch(-4, -2, 25, 19, 5);
+                this.line([[-22, 19], [-17, 6]]); this.line([[2, 15], [7, 2]]);
+                this.line([[22, 16], [27, 4]]); break;
             case 'water':
                 ctx.strokeStyle = '#496555';
                 for (let i = -3; i <= 3; i++) {
@@ -250,14 +255,16 @@ class WoodcutRenderer {
         const color = kind === 'attack' ? p.danger
             : kind === 'selected' ? p.ink
             : kind === 'objective' ? p.gold
+            : kind === 'enemy-move' ? p.red
             : p.move;
         this.hexPath(hex.col, hex.row, 3);
         ctx.fillStyle = kind === 'attack' ? 'rgba(152,46,38,.15)'
+            : kind === 'enemy-move' ? 'rgba(128,53,45,.12)'
             : kind === 'objective' ? 'rgba(183,137,55,.16)'
             : 'rgba(242,232,211,.22)'; ctx.fill();
         ctx.strokeStyle = p.light; ctx.lineWidth = 5; ctx.stroke();
         ctx.strokeStyle = color; ctx.lineWidth = 2;
-        if (kind === 'move') ctx.setLineDash([4, 5]);
+        if (kind === 'move' || kind === 'enemy-move') ctx.setLineDash(kind === 'enemy-move' ? [2, 4] : [4, 5]);
         if (kind === 'objective') ctx.setLineDash([3, 4]);
         ctx.stroke(); ctx.setLineDash([]);
         if (kind === 'selected') { this.hexPath(hex.col, hex.row, 7); ctx.lineWidth = 1; ctx.stroke(); }
@@ -338,6 +345,7 @@ class WoodcutRenderer {
         ctx.save(); ctx.fillStyle = p.paper; ctx.fillRect(0, 0, grid.canvas.width, grid.canvas.height);
         this.drawTerrain(fog);
         for (const hex of grid.escapeZoneHexes) this.highlight(hex, grid.escapeZoneKind || 'escape');
+        for (const hex of grid.enemyMoveHexes) this.highlight(hex, 'enemy-move');
         for (const hex of grid.highlightedHexes) this.highlight(hex, 'move');
         for (const hex of grid.attackableHexes) this.highlight(hex, 'attack');
         if (grid.selectedHex) this.highlight(grid.selectedHex, 'selected');

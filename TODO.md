@@ -11,14 +11,17 @@ changelogu. Tento soubor obsahuje pouze otevřené úkoly a záměrně odložen�
 
 ### P1 — Mobilní použitelnost
 
-- [ ] **Dohledat přetékající texty na úzkých telefonech.**
-  - Ručně projít panel jednotky, briefing, cíle, pauzu, herní menu a výsledky při
-    šířce odpovídající Samsungu S24 a při zvětšeném písmu.
-  - Oprava tlačítka `Bránit` už existuje; hledat další konkrétní případy místo
-    plošného zmenšování textu.
+- [x] **Odstranit reprodukované přetékání v úzkém mobilním zobrazení.**
+  - Na 320–360 px a na šířku prověřeny bitevní ovladače, panel oddílu, cíle,
+    kampaňový briefing a herní menu. Opraveno lámání pověsti a úzký sloupec
+    události; dlouhé texty v panelech se mohou bezpečně zalomit či posouvat.
+- [ ] **Dokončit ruční mobilní kontrolu na fyzickém zařízení.**
+  - Zvětšené systémové písmo, výsledky bitvy a další scénáře na Samsungu S24.
 - [ ] **Ověřit spodní bezpečnou zónu ve skutečných in-app prohlížečích.**
   - X a LinkedIn, portrait i landscape; porovnat se Safari/Chrome.
   - Plovoucí lišta hostitelské aplikace nesmí zakrýt `Ukončit tah`, `Cíle` ani `Menu`.
+  - Výpočtový odstup a běžné mobilní viewporty jsou otestované; test v hostitelských
+    aplikacích vyžaduje skutečný telefon.
 
 ### P1 — Obtížnost první bitvy
 
@@ -32,11 +35,11 @@ changelogu. Tento soubor obsahuje pouze otevřené úkoly a záměrně odložen�
 
 ### P2 — Čitelnost rozhodování
 
-- [ ] **Ukázat možný dojezd viditelného nepřítele.**
+- [x] **Ukázat možný dojezd viditelného nepřítele.**
   - Hover na desktopu, bezpečný výběr nebo dlouhý dotyk na mobilu.
   - Respektovat terén, aktuální stav a mlhu války; náhled nesmí odhalit skrytou
     jednotku ani informace, které hráč nemá znát.
-- [ ] **Prověřit, zda Nekmíř neřeší jediná pasivní taktika.**
+- [x] **Prověřit, zda Nekmíř neřeší jediná pasivní taktika.**
   - Otestovat vozovou hradbu ponechanou v počáteční pozici.
   - Pokud je výhra opakovatelně triviální, změnit rozhodování AI nebo motivaci
     scénáře, ne pouze nahodile zvýšit statistiky protivníka.
@@ -49,11 +52,12 @@ changelogu. Tento soubor obsahuje pouze otevřené úkoly a záměrně odložen�
 - [ ] **Prověřit zprávy závislé na stavu bojiště.**
   - Hláška nesmí oznamovat protiútok, paniku nebo výpad, pokud už pro něj nejsou
     odpovídající živé jednotky nebo podmínky.
-  - Začít konkrétními případy z hráčského feedbacku, ne plošným přepisem všech událostí.
+  - Nekmířské zprávy jsou opravené; další konkrétní případy z hráčského feedbacku
+    kontrolovat průběžně, ne plošným přepisem všech událostí.
 
 ### P2 — Mapa a výtvarná čitelnost
 
-- [ ] **Odlišit pláň, kopec a svah i bez tooltipu.**
+- [x] **Odlišit pláň, kopec a svah i bez tooltipu.**
   - Vyzkoušet jemnější tón pláně a čitelnější kresbu výškového terénu v současném
     dřevorytovém stylu.
   - Jednotky, dosahy a stavové značky musí zůstat kontrastní.

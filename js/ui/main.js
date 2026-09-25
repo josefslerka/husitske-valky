@@ -78,6 +78,8 @@ function syncBrowserBottomClearance(gameContainer, compact) {
     } else if (gameContainer.style) {
         gameContainer.style['--browser-bottom-clearance'] = `${clearance}px`;
     }
+    // Notifikace jsou mimo #game-container, ale také musí zůstat nad lištou webview.
+    document.documentElement?.style?.setProperty?.('--browser-bottom-clearance', `${clearance}px`);
     return clearance;
 }
 

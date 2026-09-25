@@ -167,14 +167,14 @@ test('prozkoumaný a viditelný terén jsou odlišné; objevování nic nemění
     assert.equal(exploredHexes.size, 1); assert.equal(visibleHexes.size, 1);
 });
 
-test('výběr, pohyb, útok a únik mají různé značky i bez barvy', () => {
+test('výběr, vlastní i nepřátelský dojezd, útok a únik mají různé značky i bez barvy', () => {
     const h = drawingHarness(), recordings = [];
-    for (const kind of ['selected', 'move', 'attack', 'escape']) {
+    for (const kind of ['selected', 'move', 'enemy-move', 'attack', 'escape']) {
         h.calls.length = 0; h.grid.renderer.highlight({ col: 1, row: 1 }, kind);
         recordings.push(JSON.stringify(h.calls.filter(call => !['fillStyle', 'strokeStyle'].includes(call[0]))));
         assert.equal(h.stack.length, 0);
     }
-    assert.equal(new Set(recordings).size, 4);
+    assert.equal(new Set(recordings).size, 5);
 });
 
 test('strany se liší tvarem a zdravotní lišta zůstává viditelná po vyčerpání', () => {

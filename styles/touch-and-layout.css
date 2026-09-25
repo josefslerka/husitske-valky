@@ -119,13 +119,20 @@
 #order-content .tooltip-debuff, #order-content .damage-range { color: #872825 !important; }
 #order-content .tooltip-morale span:last-child { color: #3b4221 !important; }
 .compact-interface .event-notification {
-    top: 150px;
+    top: max(12px, env(safe-area-inset-top));
     width: min(420px, calc(100vw - 24px));
-    max-height: calc(100dvh - 180px);
+    max-height: calc(100dvh - 24px - var(--browser-bottom-clearance, 0px));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    transform: translateX(-50%);
+    animation: none;
     overflow-y: auto;
     background: var(--field-page);
 }
-.compact-interface .event-notification button { min-height: 44px; }
+.compact-interface .event-notification h3,
+.compact-interface .event-notification p,
+.compact-interface .event-notification button { grid-column: 1; grid-row: auto; min-width: 0; }
+.compact-interface .event-notification button { justify-self: end; min-height: 44px; }
 .compact-interface .confirm-dialog {
     width: min(460px, calc(100vw - 24px));
     min-width: 0;
@@ -205,6 +212,13 @@
 .compact-battle #tooltip { display: none; }
 
 @media (max-width: 600px) {
+    .compact-battle #unit-panel, .compact-battle #info-panel,
+    .compact-battle #battle-order, .compact-battle #objectives-panel,
+    .modal-content {
+        overflow-wrap: anywhere;
+    }
+    .compact-battle #compact-orders button,
+    .compact-battle #game-footer button { min-width: 0; overflow-wrap: anywhere; }
     .compact-battle #game-header { flex-wrap: nowrap; align-items: flex-start; }
     .compact-battle #turn-info { flex-direction: column; }
     .compact-battle #objective-hud { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -217,6 +231,12 @@
     .compact-battle #battle-order { padding: 10px; }
     .compact-battle #unit-panel, .compact-battle #info-panel { top: auto; max-height: calc(100% - 66px); }
     .compact-battle #unit-info .stat { padding: 3px 0; }
+}
+@media (max-width: 360px) {
+    .compact-battle #map-tools { left: 8px; right: 8px; justify-content: space-between; }
+    .compact-battle #map-tools button { min-width: 0; padding-inline: 4px; overflow-wrap: anywhere; }
+    .compact-battle #map-zoom-in, .compact-battle #map-zoom-out { flex: 0 0 44px; }
+    .compact-battle #map-zoom-value { min-width: 36px; }
 }
 @media (max-height: 500px) and (min-width: 601px) {
     .compact-battle #game-header { min-height: 42px; }

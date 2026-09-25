@@ -131,6 +131,7 @@
   "touch": {
     "inspect": "Inspect location",
     "inspectHint": "Inspecting this location will not issue an order.",
+    "enemyMoveHint": "Red: possible next-turn reach across visible terrain. Long-pressing an enemy does not issue an order.",
     "close": "Close",
     "details": "Unit, terrain and details",
     "noUnit": "Select a unit",
@@ -291,6 +292,7 @@
     "critical": "Critical"
   },
   "tooltip": {
+    "enemyMovePreview": "Red on the map: possible next-turn reach across currently visible terrain only.",
     "visibility": "Vision",
     "attackStrength": "Attack strength by health: {value}%",
     "commander": "Commander",
@@ -1482,19 +1484,18 @@
       "description": "An early account of Hussite wagon tactics. Jan Žižka and a small force face the Pilsen regional league.",
       "historicalSignificance": "One of the earliest written accounts of Hussites fighting with wagons, not the first use of wagons in history.",
       "briefing": {
-        "hussites": "The regional league has caught your wagon column near Nekmíř. Close the wagons and shelter the infantry. Seven wagons in a semicircle are a game reconstruction of a brief account, not an exact battle plan.",
+        "hussites": "The regional league has caught your wagon column near Nekmíř. Close the wagons, shelter the infantry, and take Hynek out of the fight. Waiting alone will not win this battle. Seven wagons in a semicircle are a game reconstruction of a brief account, not an exact battle plan.",
         "crusaders": "Catch up with Hussite heretics before they destroy Nekmíř fortress. You have clear numerical superiority. Destroy them!"
       },
       "objectives": {
-        "primary": "Repel landfrieden attack and survive until turn 10 with 50% units",
+        "primary": "Survive 10 rounds with at least 50% of your units and defeat Hynek of Nekmíř",
         "secondary": [
-          "Kill Hynek of Nekmíř",
           "Preserve at least 5 wagons"
         ]
       },
       "debriefing": {
         "victory": "The wagon defence held: you repelled the regional league in this battle. Nekmíř is an early record of Žižka’s tactics, but its exact course and casualties are not securely known.",
-        "defeat": "Improvised wagon fort didn't withstand enemy pressure. Hussite raid ended in disaster. However Žižka survived and learned - next time fort will be stronger and closed."
+        "defeat": "At Nekmíř you did not both preserve enough of your force and defeat Hynek. The historical course of this battle is uncertain; this outcome is a game reconstruction."
       },
       "phases": [
         {
@@ -1517,7 +1518,7 @@
               "message": "Žižka: \"Pull wagons together! Shooters behind wagons, flailmen ready!\""
             },
             {
-              "text": "Wagon fort is ready! +3 to defense for units behind wagons."
+              "text": "The wagons are holding together. Your shooters can cover the infantry more safely — use the opening against Hynek."
             }
           ]
         },
@@ -1532,19 +1533,19 @@
         },
         {
           "name": "Key Phase of Battle",
-          "description": "The assault is breaking; Hynek fights in the front line.",
+          "description": "The fight around the wagons continues.",
           "events": [
             {
-              "text": "The cavalry has hit the wagons! Hynek of Nekmíř leads the next assault in the front line — now is the chance to take him out."
+              "text": "Hynek has come close to the wagons. Strike while he is within range."
             }
           ]
         },
         {
-          "name": "Landfrieden Retreat",
-          "description": "Catholics retreat, Hussites continue to fortress.",
+          "name": "Final Clash",
+          "description": "The last rounds and Hynek's fate will decide the result.",
           "events": [
             {
-              "message": "The cavalry is repelled! The regional league begins to withdraw; this is the last chance to reach Hynek."
+              "message": "The regional league has suffered heavy losses. The fight with Hynek remains."
             }
           ]
         }
@@ -3500,6 +3501,7 @@
     "victoryFieldArmyEliminated": "A costly victory! {percent}% of your units survived through round {turn}, but the enemy field army was eliminated.",
     "victoryAlternativeFieldArmy": "Alternative victory! The enemy field army was shattered and Žižka survived.",
     "defeatSurvival": "Defeat! Only {percent}% of units survived (required {required}%).",
+    "defeatSurvivalTarget": "Defeat! {target} remains on the field; surviving alone is not enough.",
     "victoryDestruction": "Victory! You destroyed {percent}% of enemies.",
     "defeatDestruction": "Defeat! Only {percent}% of enemies destroyed (required {required}%).",
     "victoryHoldPosition": "Victory! You held key positions until round {turn}!",

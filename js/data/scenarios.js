@@ -205,13 +205,13 @@ const Scenarios = {
             pursueRouted: true,
             flankSeeking: true,
             fearThreshold: 18,
-            // Hynek je přímo bonusovým cílem a podle tradice v boji padl:
+            // Hynek je nyní součástí hlavního cíle a podle tradice v boji padl:
             // nesmí používat obecnou velitelskou logiku útěku do týlu.
             aggressiveCommanders: ['HYNEK_NEKMIRE']
         },
 
         briefing: {
-            hussites: "Landfrýd dostihl váš houf s vozy poblíž Nekmíře. Sražte vozy do obrany a kryjte pěchotu. Sedm vozů a jejich polokruhová formace představují herní zpracování stručné zprávy, ne přesný plán bitvy.",
+            hussites: "Landfrýd dostihl váš houf s vozy poblíž Nekmíře. Sražte vozy do obrany, kryjte pěchotu a vyřaďte Hynka. Pouhé čekání k vítězství nestačí. Sedm vozů a jejich polokruhová formace představují herní zpracování stručné zprávy, ne přesný plán bitvy.",
             crusaders: "Dostihnete husitské kacíře, než stihnou zničit tvrz Nekmíř. Máte jasnou početní převahu. Zničte je!"
         },
 
@@ -322,7 +322,7 @@ const Scenarios = {
                 description: "Houf využívá vozy jako obranné postavení.",
                 events: [
                     {"trigger":"turn_3","message":"Žižka: \"Sražte vozy k sobě! Střelci za vozy, cepníci připraveni!\""},
-                    {"trigger":"turn_4","type":"wagon_bonus","text":"Vozová hradba je připravena! +3 k obraně pro jednotky za vozy."}
+                    {"trigger":"turn_4","type":"message","condition":{"type":"closed_wagons","faction":"hussites","minCount":3},"text":"Vozy drží pohromadě. Střelci mohou bezpečněji krýt pěchotu — využijte chvíle k útoku na Hynka."}
                 ]
             },
             {
@@ -338,18 +338,18 @@ const Scenarios = {
                 id: 4,
                 name: "Klíčová fáze bitvy",
                 turnRange: [6,8],
-                description: "Nápor se láme; Hynek bojuje v první linii.",
+                description: "Boj o vozové postavení pokračuje.",
                 events: [
-                    {"trigger":"turn_6","type":"cavalry_charge_blocked","text":"Jízda narazila na vozy! Hynek z Nekmíře vede další nápor v první linii — teď je příležitost ho vyřadit."}
+                    {"trigger":"turn_6","type":"message","condition":{"type":"ready_units","faction":"crusaders","requiredType":"HYNEK_NEKMIRE","area":{"minCol":7,"maxCol":14,"minRow":4,"maxRow":10}},"text":"Hynek se přiblížil k vozům. Připravte proti němu úder, dokud je na dostřel."}
                 ]
             },
             {
                 id: 5,
-                name: "Ústup landfrýdu",
+                name: "Závěr střetu",
                 turnRange: [9,10],
-                description: "Katolíci ustupují, husité pokračují k tvrzi.",
+                description: "O výsledku rozhodnou poslední kola a osud Hynka.",
                 events: [
-                    {"trigger":"turn_9","message":"Jízda je odražena! Landfrýd se začíná stahovat; na Hynka zbývá poslední příležitost."}
+                    {"trigger":"turn_9","condition":{"type":"faction_losses_percent","faction":"crusaders","percent":50},"message":"Landfrýd utrpěl těžké ztráty. Zbývá dokončit střet s Hynkem."}
                 ]
             }
         ],
@@ -359,10 +359,10 @@ const Scenarios = {
                 type: 'survive',
                 turns: 10,
                 minUnitsPercent: 50,
-                description: 'Odražte útok landfrýdu a přežijte do kola 10 s 50% jednotek'
+                requiredEnemyType: 'HYNEK_NEKMIRE',
+                description: 'Přežijte 10 kol s alespoň 50 % oddílů a vyřaďte Hynka z Nekmíře'
             },
             secondary: [
-                { type: 'kill_commander', target: 'HYNEK_NEKMIRE', description: 'Zabijte Hynka z Nekmíře' },
                 { type: 'protect_wagons', minWagons: 5, description: 'Uchraňte alespoň 5 vozů' }
             ]
         },
@@ -386,7 +386,7 @@ const Scenarios = {
 
         debriefing: {
             victory: "Vozová obrana obstála. V této partii se vám podařilo odrazit landfrýd. Historický střet u Nekmíře patří k raným dokladům Žižkovy taktiky; přesný průběh a počty ztrát však neznáme.",
-            defeat: "Improvizovaná vozová hradba nevydržela nápor nepřítele. Husitský výpad skončil katastrofou. Žižka však přežil a poučil se - příště bude hradba silnější a uzavřená."
+            defeat: "U Nekmíře se nepodařilo udržet potřebnou sílu a vyřadit Hynka. Přesný průběh historického střetu neznáme; výsledek této partie je herní rekonstrukce."
         },
 
         maxTurns: 12,
@@ -4461,6 +4461,9 @@ const ScenarioManager = {
     // Kontrola podmínky eventu
     checkEventCondition: function(game, condition) {
         switch (condition.type) {
+            case 'closed_wagons':
+                return game.units.filter(unit => unit.faction === condition.faction &&
+                    unit.health > 0 && unit.isWagon?.() && unit.formationClosed).length >= (condition.minCount || 1);
             case 'ready_units': {
                 const area = condition.area;
                 const ready = game.units.filter(u =>

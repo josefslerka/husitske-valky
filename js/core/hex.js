@@ -34,6 +34,7 @@ class HexGrid {
         // Stav výběru
         this.selectedHex = null;
         this.highlightedHexes = [];
+        this.enemyMoveHexes = [];
         this.attackableHexes = [];
         this.escapeZoneHexes = [];
         this.escapeZoneLabel = '';
@@ -416,6 +417,10 @@ class HexGrid {
 
     setAttackable(hexes) {
         this.attackableHexes = hexes || [];
+    }
+
+    setEnemyMove(hexes) {
+        this.enemyMoveHexes = hexes || [];
     }
 
     setEscapeZone(hexes, label = '', kind = 'escape') {

@@ -56,15 +56,25 @@ class BattleOrders {
             this.game.handleHexClick(hex);
             return;
         }
+        this.inspect(hex);
+    }
+
+    inspect(hex) {
+        this.cancel();
         const html = this.view.tooltip.contentForHex(hex);
         if (!html) return;
+        const unit = this.game.getUnitAt(hex.col, hex.row);
+        const visibleEnemy = Boolean(unit && unit.faction !== 'hussites' &&
+            this.game.fogOfWarSystem.isEnemyVisible(unit));
         this.inspectedHex = { ...hex };
         document.getElementById('order-title').textContent = i18n.t('touch.inspect');
-        document.getElementById('order-hint').textContent = i18n.t('touch.inspectHint');
+        document.getElementById('order-hint').textContent = i18n.t(
+            visibleEnemy ? 'touch.enemyMoveHint' : 'touch.inspectHint');
         document.getElementById('order-content').innerHTML = html;
         document.getElementById('order-details').open = true;
         this.panel.classList.remove('hidden');
         this.positionMarker();
+        if (visibleEnemy) this.view.showEnemyMoveRange(unit);
     }
 
     refresh() {
@@ -92,6 +102,7 @@ class BattleOrders {
     }
 
     cancel() {
+        this.view.clearEnemyMoveRange();
         this.inspectedHex = null;
         this.panel.classList.add('hidden');
         this.marker.classList.add('hidden');

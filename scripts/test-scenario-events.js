@@ -130,6 +130,36 @@ test('Plzeň nehlásí výpad ani neposiluje morálku, když posádka už nemů�
     active.destroy();
 });
 
+test('Nekmíř ohlašuje hradbu, Hynka a ústup jen podle skutečného stavu', () => {
+    const h = createHarness(), game = h.newGame('nekmir_1419');
+    const wagons = game.units.filter(unit => unit.faction === 'hussites' && unit.isWagon());
+    const hynek = game.units.find(unit => unit.type === 'HYNEK_NEKMIRE');
+    const crusaders = game.units.filter(unit => unit.faction === 'crusaders');
+    const defense = game.units.find(unit => unit.faction === 'hussites' && !unit.isWagon()).defense;
+
+    refresh(game, 4);
+    assert.equal(game.processedEvents.has('phase2_evt1'), false);
+    assert.equal(game.units.find(unit => unit.faction === 'hussites' && !unit.isWagon()).defense, defense);
+    wagons.slice(0, 3).forEach(unit => { unit.formationClosed = true; });
+    game.checkPhaseEvents();
+    assert.equal(game.processedEvents.has('phase2_evt1'), true);
+    assert.equal(game.units.find(unit => unit.faction === 'hussites' && !unit.isWagon()).defense, defense,
+        'narace nesmí přidat skrytý trvalý bonus');
+
+    refresh(game, 6);
+    assert.equal(game.processedEvents.has('phase4_evt0'), false);
+    hynek.col = 8;
+    game.checkPhaseEvents();
+    assert.equal(game.processedEvents.has('phase4_evt0'), true);
+
+    refresh(game, 9);
+    assert.equal(game.processedEvents.has('phase5_evt0'), false);
+    crusaders.slice(0, Math.ceil(crusaders.length / 2)).forEach(unit => { unit.health = 0; });
+    game.checkPhaseEvents();
+    assert.equal(game.processedEvents.has('phase5_evt0'), true);
+    game.destroy();
+});
+
 test('oba formáty posil přijdou ve správném kole, na správnou stranu a jen jednou', () => {
     const { game } = fixture();
     addReinforcements(game.currentScenario);
