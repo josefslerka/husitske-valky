@@ -4,6 +4,12 @@
 
 Starší plánovací oddíly níže zachováváme jako dobový záznam; nejsou aktuálním plánem vydání. Aktuální stav a otevřené úkoly jsou v [TODO.md](TODO.md).
 
+## Alpha 0.3.7 (27. září 2026)
+
+- Po vítězství ve všech pěti bitvách I. aktu Zrození se v hlavním menu odemkne odkaz na bonusovou Vozovou hradbu. Odemčení se zachová po obnovení stránky; přímý odkaz na minihru zůstává dostupný i testerům bez dokončeného aktu.
+- Scénářové události a samostatné skupiny posil mají úplné české i anglické texty v překladech. Přepnutí jazyka aktualizuje také právě otevřené a čekající bitevní hlášky, aniž by znovu spustilo jejich herní účinky; stavové varianty zpráv zůstávají zachované.
+- Lokalizační kontrola hlídá chybějící texty i nesoulad scénářových událostí s jejich překlady. Regresní testy pokrývají odemčení odměny, přepnutí jazyka během fronty hlášek a pozdější příchod posil.
+
 ## Alpha 0.3.6 (25. září 2026)
 
 - Samostatná bonusová tower defense hra [Vozová hradba](https://hussitewars.com/bonus/vozova-hradba/) nabízí osm vln, stavbu a vylepšování oddílů, záseky a válečné porady. Funguje česky i anglicky a není propojená s menu ani postupem hlavní kampaně.

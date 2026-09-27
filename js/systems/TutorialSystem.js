@@ -231,7 +231,8 @@ class TutorialSystem {
         // Zobrazení gratulace
         this.game.showEventNotification(
             i18n.t('tutorial.completed'),
-            i18n.t('tutorial.completedText')
+            i18n.t('tutorial.completedText'),
+            () => ({ title: i18n.t('tutorial.completed'), text: i18n.t('tutorial.completedText') })
         );
 
         // Po 4 sekundách návrat do menu

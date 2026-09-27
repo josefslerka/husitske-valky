@@ -10,6 +10,12 @@ Verzi zobrazovanou v menu i obou obrazovkách O hře určuje společný klíč `
 
 Odkaz `Změny` / `Changelog` v titulním menu vede podle aktivního jazyka na `CHANGELOG.md` nebo `CHANGELOG.en.md`. Přepíná se při prvním načtení i při změně jazyka; aktualizaci URL vlastní `updateLanguageToggle()` v `js/ui/main.js`.
 
+### Texty scénářových událostí
+
+Mechanika událostí zůstává v `js/data/scenarios.js`; jejich české a anglické texty jsou v `locales/cs.json` a `locales/en.json`. Události jsou zatím párované podle pořadí ve fázi. Pole `sourceHash` v každém překladu není text pro hráče: validátor jím hlídá, že překlad stále patří ke stejné zdrojové události. Kontroluje také shodu polí `message`, `text` a `title`, takže překlep v názvu pole už neprojde.
+
+Po změně zdrojové události nejprve zkontrolujte oba překlady a jejich pořadí. Teprve pak spusťte `node scripts/validate-locales.js --stamp-event-sources`, prohlédněte diff a spusťte `node scripts/check.js`. Otisky neaktualizujte naslepo. Pořadí událostí v herní bázi také souvisí s identifikátory v uložených hrách; jeho změna vyžaduje samostatnou migraci savu. Samostatné skupiny posil mají texty pod `scenarios.<id>.reinforcementGroups.<group>`.
+
 ## 🏗️ Struktura
 
 ```

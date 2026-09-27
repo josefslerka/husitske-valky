@@ -4,6 +4,12 @@
 
 The older planning sections below are preserved as a record of earlier development; they are not the current release plan. See [TODO.md](TODO.md) for the current state and open tasks (currently maintained in Czech).
 
+## Alpha 0.3.7 (27 September 2026)
+
+- Winning all five battles of Act I, Birth, unlocks a link to the bonus Wagon Fort game in the main menu. The unlock persists after reloading the page; testers can still use the direct link without completing the act.
+- Scenario events and separate reinforcement groups now have complete Czech and English text in the locale files. Switching languages also updates open and queued battle notifications without repeating their gameplay effects, while preserving state-dependent message variants.
+- Locale validation catches missing text and mismatches between scenario events and their translations. Regression tests cover the reward unlock, language switching while notifications are queued, and reinforcements arriving later.
+
 ## Alpha 0.3.6 (25 September 2026)
 
 - The standalone [Wagon Fort](https://hussitewars.com/bonus/vozova-hradba/) tower-defense bonus game features eight waves, unit building and upgrades, barricades and war councils. It is playable in Czech and English and is not linked to the main menu or campaign progress.

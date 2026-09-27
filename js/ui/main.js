@@ -812,7 +812,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (e) {
             const key = ['gameLog.noSaveFound', 'gameLog.saveIncompatible', 'gameLog.scenarioUpdated'].includes(e.message)
                 ? e.message : 'gameLog.loadError';
-            if (game) game.showEventNotification(i18n.t('messages.messageTitle'), i18n.t(key));
+            if (game) game.showEventNotification(i18n.t('messages.messageTitle'), i18n.t(key),
+                () => ({ title: i18n.t('messages.messageTitle'), text: i18n.t(key) }));
             else {
                 const error = document.getElementById('save-load-error');
                 error.textContent = i18n.t(key);
@@ -1370,6 +1371,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Zkušenost odvozujeme z existujících dat: dokončené bitvy nemají autosave.
         // Pouhé otevření menu nebo změna nastavení z nováčka veterána nedělá.
         const progress = CampaignProgressSystem.load();
+        document.getElementById('menu-act-one-reward').classList.toggle('hidden',
+            !CampaignProgressSystem.isActCompleted(1, progress));
         let hasPlayed = ScenarioManager.getScenarioList().some(scenario =>
             ['victory', 'defeat'].includes(progress.battles[scenario.id]?.result))
             || ChronicleSystem.getEntries().length > 0;

@@ -160,6 +160,9 @@
     "colophon": "Čechy v neklidu · kronika vašich rozhodnutí",
     "playTitle": "Do pole",
     "libraryTitle": "Mezi bitvami",
+    "actOneReward": "Odměna za dokončení I. aktu",
+    "wagonDefense": "Vozová hradba",
+    "wagonDefenseNote": "Bonusová obrana proti vlnám nepřátel",
     "noManualSave": "Zatím neuloženo",
     "newGame": "Vybrat bitvu",
     "continue": "Pokračovat",
@@ -175,7 +178,7 @@
     "switchLanguage": "Přepnout do angličtiny",
     "support": "Buy Me a Coffee",
     "changelog": "Změny",
-    "version": "Alpha 0.3.6 · 25.09.2026"
+    "version": "Alpha 0.3.7 · 27.09.2026"
   },
   "about": {
     "title": "O hře",
@@ -1641,10 +1644,12 @@
           "description": "Šternberk útočí na unavené jihočeské poutníky.",
           "events": [
             {
-              "message": "Petr ze Šternberka vás dostihl! Opevněte se na kopci Červenka!"
+              "message": "Petr ze Šternberka vás dostihl! Opevněte se na kopci Červenka!",
+              "sourceHash": "2d92336d81943c4a"
             },
             {
-              "text": "TIP: Vaše jednotky jsou blízko kopce. Přesuňte je na zelená pole pro obranný bonus."
+              "text": "TIP: Vaše jednotky jsou blízko kopce. Přesuňte je na zelená pole pro obranný bonus.",
+              "sourceHash": "81b28fabbb1093b0"
             }
           ]
         },
@@ -1653,7 +1658,8 @@
           "description": "Husité budují improvizovanou obranu.",
           "events": [
             {
-              "text": "TIP: Stáhni bezbranné poutníky na kopec za bojovníky. Střelci z kopce střílejí dál a silněji (bonus z výšiny)."
+              "text": "TIP: Stáhni bezbranné poutníky na kopec za bojovníky. Střelci z kopce střílejí dál a silněji (bonus z výšiny).",
+              "sourceHash": "bd8a50ba168700c3"
             }
           ]
         },
@@ -1662,7 +1668,8 @@
           "description": "Posily z Nového Knína přicházejí na pomoc.",
           "events": [
             {
-              "message": "Břeněk Švihovský přivádí posily! Držte pozice!"
+              "message": "Břeněk Švihovský přivádí posily! Držte pozice!",
+              "sourceHash": "39a5e1c28bdcbf41"
             }
           ]
         },
@@ -1671,7 +1678,8 @@
           "description": "S posilami můžete přejít do protiútoku.",
           "events": [
             {
-              "message": "Šternberk vidí přesilu a váhá. Teď je čas udeřit!"
+              "message": "Šternberk vidí přesilu a váhá. Teď je čas udeřit!",
+              "sourceHash": "28470dbac8d3ba0c"
             }
           ]
         }
@@ -1702,10 +1710,12 @@
           "description": "Žižka vytahuje z Plzně směrem k Nekmíři.",
           "events": [
             {
-              "message": "Plzeňský landfrýd dostihl husitskou kolonu! Rychle vytvořte vozovou hradbu!"
+              "message": "Plzeňský landfrýd dostihl husitskou kolonu! Rychle vytvořte vozovou hradbu!",
+              "sourceHash": "934ca70da4b6c09e"
             },
             {
-              "text": "TIP: Vozy máš na pochodu (rozpojené). Sepni je do vozové hradby — polokruh otevřený k tvrzi. Na uzavřený kruh 7 vozů nestačí."
+              "text": "TIP: Vozy máš na pochodu (rozpojené). Sepni je do vozové hradby — polokruh otevřený k tvrzi. Na uzavřený kruh 7 vozů nestačí.",
+              "sourceHash": "4d6baee43efab32d"
             }
           ]
         },
@@ -1714,10 +1724,12 @@
           "description": "Houf využívá vozy jako obranné postavení.",
           "events": [
             {
-              "message": "Žižka: „Sražte vozy k sobě! Střelci za vozy, cepníci připraveni!“"
+              "message": "Žižka: „Sražte vozy k sobě! Střelci za vozy, cepníci připraveni!“",
+              "sourceHash": "5814377600ad017d"
             },
             {
-              "text": "Vozy drží pohromadě. Střelci mohou bezpečněji krýt pěchotu — využijte chvíle k útoku na Hynka."
+              "text": "Vozy drží pohromadě. Střelci mohou bezpečněji krýt pěchotu — využijte chvíle k útoku na Hynka.",
+              "sourceHash": "553373fb6789e279"
             }
           ]
         },
@@ -1726,7 +1738,8 @@
           "description": "Švamberk vrhá jízdu proti vozům.",
           "events": [
             {
-              "message": "Těžká jízda landfrýdu útočí! Vydrží vozová hradba?"
+              "message": "Těžká jízda landfrýdu útočí! Vydrží vozová hradba?",
+              "sourceHash": "e7d18daacf8da2ec"
             }
           ]
         },
@@ -1735,7 +1748,8 @@
           "description": "Boj o vozové postavení pokračuje.",
           "events": [
             {
-              "text": "Hynek se přiblížil k vozům. Připravte proti němu úder, dokud je na dostřel."
+              "text": "Hynek se přiblížil k vozům. Připravte proti němu úder, dokud je na dostřel.",
+              "sourceHash": "f37d87b016184d21"
             }
           ]
         },
@@ -1744,7 +1758,8 @@
           "description": "O výsledku rozhodnou poslední kola a osud Hynka.",
           "events": [
             {
-              "message": "Landfrýd utrpěl těžké ztráty. Zbývá dokončit střet s Hynkem."
+              "message": "Landfrýd utrpěl těžké ztráty. Zbývá dokončit střet s Hynkem.",
+              "sourceHash": "02e17c3ab998df91"
             }
           ]
         }
@@ -1786,7 +1801,8 @@
           "description": "Johanité a královské vojsko útočí po hrázi.",
           "events": [
             {
-              "message": "Křižáci zahajují útok po úzké hrázi!"
+              "message": "Křižáci zahajují útok po úzké hrázi!",
+              "sourceHash": "fc4441e3cd264b66"
             }
           ]
         },
@@ -1795,7 +1811,8 @@
           "description": "Padá mlha, katolíci ztrácejí orientaci.",
           "events": [
             {
-              "message": "Padá hustá mlha! Viditelnost klesá."
+              "message": "Padá hustá mlha! Viditelnost klesá.",
+              "sourceHash": "ce9ab27fb4412c46"
             }
           ]
         }
@@ -1829,7 +1846,8 @@
           "description": "Míšeňská a duryňská jízda se valí do úzkého hrdla šíje.",
           "events": [
             {
-              "message": "Útok se soustřeďuje na šíji. Posádka srubů drží úzký přístup; pražská pomoc je na cestě."
+              "message": "Útok se soustřeďuje na šíji. Posádka srubů drží úzký přístup; pražská pomoc je na cestě.",
+              "sourceHash": "a6e480c6ca234f34"
             }
           ]
         },
@@ -1854,6 +1872,10 @@
         "hussites": "Obléháte Vyšehrad. Posádka slíbila kapitulaci, pokud jí do dohodnuté lhůty nepřijde pomoc. Lhůta uplynula a Zikmundovo vojsko se blíží k pankráckým pozicím. Braňte příkopy i západní bok od Podolí.",
         "crusaders": "Musíte prorazit k Vyšehradu a zachránit posádku! Česká šlechta útočí od Podolí, hlavní voj čelně."
       },
+      "reinforcementGroups": {
+        "orebska_zaloha": "Hynek Krušina nasazuje orebské cepníky z rezervy!",
+        "vysehradske_oddily": "Jednotky uvolněné z obléhání Vyšehradu se připojují k bitvě!"
+      },
       "objectives": {
         "primary": "Ubraňte kostel sv. Pankráce do kola 15",
         "secondary": [
@@ -1871,10 +1893,12 @@
           "description": "Dohodnutá lhůta pro pomoc posádce vypršela; královské vojsko teprve nastupuje do bitvy.",
           "events": [
             {
-              "message": "Lhůta vypršela. Vyšehradská posádka se podle dohody nemá zapojit do boje."
+              "message": "Lhůta vypršela. Vyšehradská posádka se podle dohody nemá zapojit do boje.",
+              "sourceHash": "52068d36f780960d"
             },
             {
-              "message": "Zikmund marně mává mečem směrem k Vyšehradu. Je pozdě."
+              "message": "Zikmund marně mává mečem směrem k Vyšehradu. Je pozdě.",
+              "sourceHash": "49718985c17ba745"
             }
           ]
         },
@@ -1883,10 +1907,12 @@
           "description": "Uhři a Němci čelně útočí na husitské příkopy.",
           "events": [
             {
-              "message": "Uhři a Němci zahajují čelní útok na vaše příkopy!"
+              "message": "Uhři a Němci zahajují čelní útok na vaše příkopy!",
+              "sourceHash": "b3398588f64bb938"
             },
             {
-              "text": "Připravené pozice poskytují +3 k obraně!"
+              "text": "Připravené pozice poskytují +3 k obraně!",
+              "sourceHash": "9955085d0b5885be"
             }
           ]
         },
@@ -1895,13 +1921,16 @@
           "description": "Česká a moravská šlechta útočí od Podolí.",
           "events": [
             {
-              "message": "Česká a moravská šlechta nastupuje od Podolí. Strmý přístup omezuje její jízdu."
+              "message": "Česká a moravská šlechta nastupuje od Podolí. Strmý přístup omezuje její jízdu.",
+              "sourceHash": "36bb2c650df069e8"
             },
             {
-              "message": "Uražená česká šlechta útočí! Musí sesednout kvůli strmému svahu."
+              "message": "Uražená česká šlechta útočí! Musí sesednout kvůli strmému svahu.",
+              "sourceHash": "a23c064fd5ee9d4c"
             },
             {
-              "text": "Česká šlechta ztrácí výhodu jízdy na strmém svahu!"
+              "text": "Česká šlechta ztrácí výhodu jízdy na strmém svahu!",
+              "sourceHash": "ac277f214ed078ff"
             }
           ]
         },
@@ -1910,10 +1939,12 @@
           "description": "Hynek Krušina nasazuje zálohy.",
           "events": [
             {
-              "message": "„Běží nepřátelé!“ Hynek Krušina obrací zatlačené Pražany do protiútoku a nasazuje orebské cepníky z rezervy!"
+              "message": "„Běží nepřátelé!“ Hynek Krušina obrací zatlačené Pražany do protiútoku a nasazuje orebské cepníky z rezervy!",
+              "sourceHash": "ac07bf1cc99b6ecb"
             },
             {
-              "text": "Jednotky uvolněné z obléhání Vyšehradu se připojují k bitvě!"
+              "message": "Jednotky uvolněné z obléhání Vyšehradu se připojují k bitvě!",
+              "sourceHash": "1226dff8ae3e48a6"
             }
           ]
         },
@@ -1922,10 +1953,12 @@
           "description": "Šlechta je uvězněna v úvozu a pobita.",
           "events": [
             {
-              "message": "Česká šlechta uvízla v úvozu! Nemůže uniknout!"
+              "message": "Česká šlechta uvízla v úvozu! Nemůže uniknout!",
+              "sourceHash": "dc1ce311e5eff28c"
             },
             {
-              "text": "Táboři a orebité nebrali zajatce... Masakr v úvozu!"
+              "text": "Táboři a orebité nebrali zajatce... Masakr v úvozu!",
+              "sourceHash": "c150d9b8348a5a32"
             }
           ]
         },
@@ -1934,10 +1967,12 @@
           "description": "Zikmund dává rozkaz k ústupu.",
           "events": [
             {
-              "message": "Zikmund dává rozkaz k ústupu! Královské vojsko prchá k Českému Brodu."
+              "message": "Zikmund dává rozkaz k ústupu! Královské vojsko prchá k Českému Brodu.",
+              "sourceHash": "3f55aba6ba5d4f32"
             },
             {
-              "message": "Bitva rozhoduje o osudu Vyšehradu. Ovládnutí celé Prahy však z jejího výsledku automaticky neplyne."
+              "message": "Bitva rozhoduje o osudu Vyšehradu. Ovládnutí celé Prahy však z jejího výsledku automaticky neplyne.",
+              "sourceHash": "4ed29ad480d54e57"
             }
           ]
         }
@@ -1975,13 +2010,16 @@
           "description": "Kutnohorští zradili! Křižáci svírají husity ze všech stran.",
           "events": [
             {
-              "message": "Kutnohorští horníci otevřeli Kolínskou bránu! Křižáci proudí do města - jste v obklíčení!"
+              "message": "Kutnohorští horníci otevřeli Kolínskou bránu! Křižáci proudí do města - jste v obklíčení!",
+              "sourceHash": "59496f9da9448fad"
             },
             {
-              "message": "Připravte průlom přes Kaňk. Cíl ústupu ke Kolínu leží na severozápadě mapy."
+              "message": "Připravte průlom přes Kaňk. Cíl ústupu ke Kolínu leží na severozápadě mapy.",
+              "sourceHash": "16f7e3b41492aa27"
             },
             {
-              "message": "Sevření se stahuje. Udržte houf pohromadě a nenechte si uzavřít cestu ke Kaňku."
+              "message": "Sevření se stahuje. Udržte houf pohromadě a nenechte si uzavřít cestu ke Kaňku.",
+              "sourceHash": "04b3d8261547f8f3"
             }
           ]
         },
@@ -1990,10 +2028,12 @@
           "description": "Vojsko připravuje průlom z obklíčení pod ochranou vozů a palby.",
           "events": [
             {
-              "message": "K průlomu! Střelci kryjí postup, vozy drží houf pohromadě."
+              "message": "K průlomu! Střelci kryjí postup, vozy drží houf pohromadě.",
+              "sourceHash": "bd77976611788f76"
             },
             {
-              "message": "Křižáci v nočním zmatku nedokáží koordinovat obranu!"
+              "message": "Křižáci v nočním zmatku nedokáží koordinovat obranu!",
+              "sourceHash": "d1f89b6ec1e549c3"
             }
           ]
         },
@@ -2002,10 +2042,12 @@
           "description": "Ústupová cesta vede přes Kaňk na severozápad ke Kolínu.",
           "events": [
             {
-              "message": "Pokračujte přes Kaňk na severozápad ke Kolínu. Dostaňte oddíly do vyznačené únikové zóny."
+              "message": "Pokračujte přes Kaňk na severozápad ke Kolínu. Dostaňte oddíly do vyznačené únikové zóny.",
+              "sourceHash": "9fcc1b514898188a"
             },
             {
-              "message": "Dokončete ústup. O bezpečí houfu rozhodne počet oddílů, které skutečně uniknou."
+              "message": "Dokončete ústup. O bezpečí houfu rozhodne počet oddílů, které skutečně uniknou.",
+              "sourceHash": "00cbfa6003424bc4"
             }
           ]
         }
@@ -2040,10 +2082,12 @@
           "description": "Žižkovo vojsko pronásleduje ustupující křižáky.",
           "events": [
             {
-              "message": "Zikmund uprchl! Scolariho vojsko ustupuje k Německému Brodu. Pronásledujte je!"
+              "message": "Zikmund uprchl! Scolariho vojsko ustupuje k Německému Brodu. Pronásledujte je!",
+              "sourceHash": "9f56b8df032af73f"
             },
             {
-              "message": "Křižáci zanechávají kořist po cestě. Nedejte se rozptýlit - ničte vojsko!"
+              "message": "Křižáci zanechávají kořist po cestě. Nedejte se rozptýlit - ničte vojsko!",
+              "sourceHash": "8e77a9519f3118ab"
             }
           ]
         },
@@ -2052,10 +2096,12 @@
           "description": "Po dřívějším střetu u Habrů kryje zadní voj přístup do Německého Brodu.",
           "events": [
             {
-              "message": "Zadní voj se staví do cesty před Brodem. Prorazte k městu a mostu."
+              "message": "Zadní voj se staví do cesty před Brodem. Prorazte k městu a mostu.",
+              "sourceHash": "c592f010d7134649"
             },
             {
-              "message": "Křižáci neudrží pozice - začínají prchat k řece!"
+              "message": "Křižáci neudrží pozice - začínají prchat k řece!",
+              "sourceHash": "fc53207ead306054"
             }
           ]
         },
@@ -2064,10 +2110,12 @@
           "description": "Panikařící vojsko se valí k mostu a na zamrzlou řeku.",
           "events": [
             {
-              "message": "Most je přeplněný! Část vojska se pokouší přejít přes zamrzlou Sázavu!"
+              "message": "Most je přeplněný! Část vojska se pokouší přejít přes zamrzlou Sázavu!",
+              "sourceHash": "b78d905ec88f4e68"
             },
             {
-              "message": "Led praská pod těžkými vozy! Řeka pohlcuje prchající!"
+              "message": "Led praská pod těžkými vozy! Řeka pohlcuje prchající!",
+              "sourceHash": "fb796240286149cd"
             }
           ]
         },
@@ -2076,10 +2124,12 @@
           "description": "Husité dobíjejí zbytky královského vojska.",
           "events": [
             {
-              "message": "Královské vojsko je rozprášeno! Sbírejte kořist a dobijte zbytky odporu."
+              "message": "Královské vojsko je rozprášeno! Sbírejte kořist a dobijte zbytky odporu.",
+              "sourceHash": "324f79d0e6388c7d"
             },
             {
-              "message": "Ústupová cesta vede přes řeku k Jihlavě. Vítězství závisí na splnění cíle této bitvy."
+              "message": "Ústupová cesta vede přes řeku k Jihlavě. Vítězství závisí na splnění cíle této bitvy.",
+              "sourceHash": "532812e028bf5d43"
             }
           ]
         }
@@ -2093,6 +2143,10 @@
       "briefing": {
         "hussites": "Hrad Hněvín je téměř náš! Posádka nabídla kapitulaci, ale Želivský ji odmítl. Máš dva cíle: dobýt hrad NEBO zablokovat městskou bránu, odkud může přijít posila. Na obojí nemáš dost mužů - rozhodni se!",
         "crusaders": "Držte hrad za každou cenu! Posily markraběte Fridricha jsou na cestě. Mostečtí vyrazí z brány a udeří husitům do boku."
+      },
+      "reinforcementGroups": {
+        "mostecka_posadka": "Mostecká hotovost vyráží z městské brány!",
+        "misenska_armada": "Míšeňská armáda markraběte Fridricha přichází ze severu!"
       },
       "objectives": {
         "primary": "Splň JEDEN z cílů: Dobij hrad Hněvín NEBO udrž městskou bránu zablokovanou",
@@ -2113,10 +2167,12 @@
           "description": "Hrad Hněvín je na dosah. Posádka nabídla kapitulaci, ale Želivský odmítl.",
           "events": [
             {
-              "message": "Želivský: „Žádná milost pro zrádce! Dobyjeme hrad silou!“"
+              "message": "Želivský: „Žádná milost pro zrádce! Dobyjeme hrad silou!“",
+              "sourceHash": "052e3a6d99997e2a"
             },
             {
-              "message": "Hradní posádka se houževnatě brání. Z města se ozývá ruch..."
+              "message": "Hradní posádka se houževnatě brání. Z města se ozývá ruch...",
+              "sourceHash": "a0bdb0f12bb3957d"
             }
           ]
         },
@@ -2125,10 +2181,12 @@
           "description": "Mostečtí vyrazili z brány! Úder do boku husitského vojska.",
           "events": [
             {
-              "message": "Z městské brány vyráží mostecká hotovost! Úder do boku!"
+              "message": "Z městské brány vyráží mostecká hotovost! Úder do boku!",
+              "sourceHash": "d3e768c23b339449"
             },
             {
-              "message": "Musíte se rozhodnout - pokračovat v útoku na hrad, nebo se otočit?"
+              "message": "Musíte se rozhodnout - pokračovat v útoku na hrad, nebo se otočit?",
+              "sourceHash": "6f554fc677c0a691"
             }
           ]
         },
@@ -2137,13 +2195,16 @@
           "description": "Míšeňská armáda! Markrabě Fridrich přichází ze severu!",
           "events": [
             {
-              "message": "Na obzoru míšeňské prapory! Markrabě Fridrich přichází s posilami!"
+              "message": "Na obzoru míšeňské prapory! Markrabě Fridrich přichází s posilami!",
+              "sourceHash": "8590244cc34e678e"
             },
             {
-              "message": "Útok na hrad je nyní velmi riskantní. Zvažte alternativní cíl."
+              "message": "Útok na hrad je nyní velmi riskantní. Zvažte alternativní cíl.",
+              "sourceHash": "cbb4efc01d0fba71"
             },
             {
-              "message": "Zásah koně husitského praporečníka rozvrací šik - a s příchodem míšeňských posil se mezi husity šíří strach."
+              "message": "Zásah koně husitského praporečníka rozvrací šik - a s příchodem míšeňských posil se mezi husity šíří strach.",
+              "sourceHash": "1445d14dafc7777d"
             }
           ]
         },
@@ -2152,10 +2213,12 @@
           "description": "Splňte alespoň jeden cíl, nebo čelíte porážce.",
           "events": [
             {
-              "message": "Čas se krátí! Držte bránu, nebo dobyjte hrad!"
+              "message": "Čas se krátí! Držte bránu, nebo dobyjte hrad!",
+              "sourceHash": "0bc1f13c1114a2da"
             },
             {
-              "message": "Poslední šance! Buď splníte cíl, nebo je vše ztraceno."
+              "message": "Poslední šance! Buď splníte cíl, nebo je vše ztraceno.",
+              "sourceHash": "a67319787b2620b0"
             }
           ]
         }
@@ -2189,10 +2252,12 @@
           "description": "Němci útočí v parném vedru.",
           "events": [
             {
-              "message": "Smírný list odmítnut! Němci pyšně vzkázali, že „nikoho neživit nebudou a všechny pobijí“ - Češi se proto zavázali stejným slibem. Pardon nedá nikdo."
+              "message": "Smírný list odmítnut! Němci pyšně vzkázali, že „nikoho neživit nebudou a všechny pobijí“ - Češi se proto zavázali stejným slibem. Pardon nedá nikdo.",
+              "sourceHash": "71334fd2f55ac335"
             },
             {
-              "message": "Saské a míšeňské jezdectvo útočí do svahu v nesnesitelném červnovém vedru!"
+              "message": "Saské a míšeňské jezdectvo útočí do svahu v nesnesitelném červnovém vedru!",
+              "sourceHash": "e30d7f590805761f"
             }
           ]
         },
@@ -2206,10 +2271,12 @@
           "description": "Křižáci se dávají na bezhlavý útěk.",
           "events": [
             {
-              "message": "„Běží! Němci běží!“ - křižáci prchají!"
+              "message": "„Běží! Němci běží!“ - křižáci prchají!",
+              "sourceHash": "ff26e7e8b05c28c9"
             },
             {
-              "message": "Pod německou korouhví pokleklo 24 hrabat a korouhevních pánů s meči zabodnutými do země a prosili o milost - pro slib daný před bojem jsou ale do jednoho pobiti."
+              "message": "Pod německou korouhví pokleklo 24 hrabat a korouhevních pánů s meči zabodnutými do země a prosili o milost - pro slib daný před bojem jsou ale do jednoho pobiti.",
+              "sourceHash": "b7b309812f4f023b"
             }
           ]
         }
@@ -2241,11 +2308,15 @@
           "description": "Husité postupují od Stříbra. Křižáci vysílají jízdu, aby zpomalila postup.",
           "events": [
             {
-              "message": "Husitské vojsko se blíží od Stříbra! 16 000 pěších a 1500 jezdců pod Prokopem Holým."
+              "message": "Husitské vojsko se blíží od Stříbra! 16 000 pěších a 1500 jezdců pod Prokopem Holým.",
+              "sourceHash": "434f7ddaf8d06135"
             },
-            {},
             {
-              "text": "Harcovníci Jindřicha z Plavna odraženi husity na pochodu - ve zmatku se ženou zpět do ležení a šíří paniku!"
+              "sourceHash": "702b3c389ae900c6"
+            },
+            {
+              "text": "Harcovníci Jindřicha z Plavna odraženi husity na pochodu - ve zmatku se ženou zpět do ležení a šíří paniku!",
+              "sourceHash": "8a7b41707a39ac53"
             }
           ]
         },
@@ -2254,13 +2325,16 @@
           "description": "Strach se šíří křižáckým táborem. Jednotky začínají dezertovat.",
           "events": [
             {
-              "text": "Celé oddíly křižáků opouštějí tábor a prchají k hranicím!"
+              "text": "Celé oddíly křižáků opouštějí tábor a prchají k hranicím!",
+              "sourceHash": "8df8c6efa7635ae8"
             },
             {
-              "message": "Kardinál Beaufort se marně snaží zastavit prchající vojáky."
+              "message": "Kardinál Beaufort se marně snaží zastavit prchající vojáky.",
+              "sourceHash": "7c28667a546cc122"
             },
             {
-              "text": "Beaufort v hněvu roztrhá říšské korouhve a hodí je knížatům k nohám!"
+              "text": "Beaufort v hněvu roztrhá říšské korouhve a hodí je knížatům k nohám!",
+              "sourceHash": "760c440b8ecb0a11"
             }
           ]
         },
@@ -2269,10 +2343,12 @@
           "description": "Křižácká armáda prchá. Husité pronásledují a dobývají opuštěný tábor.",
           "events": [
             {
-              "text": "Při zaslechnutí chorálu „Ktož sú boží bojovníci“, troubění a hluku válečných vozů se zbytky křižácké armády dávají na zběsilý útěk!"
+              "text": "Při zaslechnutí chorálu „Ktož sú boží bojovníci“, troubění a hluku válečných vozů se zbytky křižácké armády dávají na zběsilý útěk!",
+              "sourceHash": "a25643181c4bb4e7"
             },
             {
-              "message": "Husité nacházejí opuštěný křižácký tábor plný zásob a výzbroje."
+              "message": "Husité nacházejí opuštěný křižácký tábor plný zásob a výzbroje.",
+              "sourceHash": "a26538ce87af226a"
             }
           ]
         }
@@ -2304,10 +2380,12 @@
           "description": "Husité zahajují útok na slezské vojsko před hradbami.",
           "events": [
             {
-              "message": "Husitské vojsko postupuje s vozy a děly proti obráncům Nisy!"
+              "message": "Husitské vojsko postupuje s vozy a děly proti obráncům Nisy!",
+              "sourceHash": "59805265269bf8b3"
             },
             {
-              "message": "Sedláci a vesničané se staví husitům na odpor před předměstím."
+              "message": "Sedláci a vesničané se staví husitům na odpor před předměstím.",
+              "sourceHash": "d577a80245eaf69f"
             }
           ]
         },
@@ -2316,10 +2394,12 @@
           "description": "Husité prolamují slezskou obranu.",
           "events": [
             {
-              "text": "Slezské oddíly začínají ustupovat pod tlakem husitského útoku!"
+              "text": "Slezské oddíly začínají ustupovat pod tlakem husitského útoku!",
+              "sourceHash": "2ee9f00a1a1c8dbc"
             },
             {
-              "message": "Půta z Častolovic se snaží organizovat obranu u hradeb."
+              "message": "Půta z Častolovic se snaží organizovat obranu u hradeb.",
+              "sourceHash": "2b6ea1f22bd551c4"
             }
           ]
         },
@@ -2328,10 +2408,12 @@
           "description": "Obránci prchají, mnozí hynou v řece.",
           "events": [
             {
-              "text": "Obránci v panice prchají - mnoho jich hyne v řece Nise!"
+              "text": "Obránci v panice prchají - mnoho jich hyne v řece Nise!",
+              "sourceHash": "bb99bcbd40d498c8"
             },
             {
-              "message": "Husité pálí předměstí a útočí na hradby!"
+              "message": "Husité pálí předměstí a útočí na hradby!",
+              "sourceHash": "426674b2390b58dc"
             }
           ]
         }
@@ -2362,11 +2444,15 @@
           "description": "Husité se rychle přibližují k Domažlicím.",
           "events": [
             {
-              "message": "Husitské vojsko urazilo 80 km za 2 dny a blíží se k Domažlicím!"
+              "message": "Husitské vojsko urazilo 80 km za 2 dny a blíží se k Domažlicím!",
+              "sourceHash": "d13f6586eb16fd93"
             },
-            {},
             {
-              "text": "Zvědové hlásí: Husité jsou blíž, než jsme čekali!"
+              "sourceHash": "41786ebc78778c29"
+            },
+            {
+              "text": "Zvědové hlásí: Husité jsou blíž, než jsme čekali!",
+              "sourceHash": "ef57271f69b3c586"
             }
           ]
         },
@@ -2376,20 +2462,25 @@
           "events": [
             {
               "text": "Zvuk chorálu děsí křižáky!",
-              "message": "Husitský houf se blíží. V ležení se přesuny oddílů vykládají jako začínající útěk."
+              "message": "Husitský houf se blíží. V ležení se přesuny oddílů vykládají jako začínající útěk.",
+              "sourceHash": "8cd6a81891c59f3f"
             },
             {
-              "text": "Zmatek a strach oslabují morálku křižáckého vojska."
+              "text": "Zmatek a strach oslabují morálku křižáckého vojska.",
+              "sourceHash": "ad788be9e3227c64"
             },
             {
-              "message": "Kardinál Cesarini prchá a ztrácí kardinálský klobouk!"
+              "message": "Kardinál Cesarini prchá a ztrácí kardinálský klobouk!",
+              "sourceHash": "2f808c8919d67fd2"
             },
             {
-              "text": "Panika se šíří křižáckým táborem!"
+              "text": "Panika se šíří křižáckým táborem!",
+              "sourceHash": "4df03986538deabe"
             },
             {
               "message": "Křižáci slyší chorál a rachot vozů - a dávají se na útěk!",
-              "text": "Strach z příchodu husitů a narušené velení šíří paniku. Některé oddíly však mohou klást odpor."
+              "text": "Strach z příchodu husitů a narušené velení šíří paniku. Některé oddíly však mohou klást odpor.",
+              "sourceHash": "af83531c6337a21d"
             }
           ]
         },
@@ -2398,7 +2489,8 @@
           "description": "Křižáci prchají Všerubským průsmykem do Bavorska.",
           "events": [
             {
-              "text": "Celá křižácká armáda se dává na útěk!"
+              "text": "Celá křižácká armáda se dává na útěk!",
+              "sourceHash": "950dab7be6f14046"
             }
           ]
         }
@@ -2431,13 +2523,16 @@
           "description": "Husitská děla ostřelují hradby. Obránci odpovídají z městských pozic.",
           "events": [
             {
-              "message": "Husitské bombardy zahajují palbu na hradby Plzně!"
+              "message": "Husitské bombardy zahajují palbu na hradby Plzně!",
+              "sourceHash": "decc760ba12e4f23"
             },
             {
-              "message": "Obránci se kryjí za cimbuřím. Vilém Švihovský povzbuzuje posádku."
+              "message": "Obránci se kryjí za cimbuřím. Vilém Švihovský povzbuzuje posádku.",
+              "sourceHash": "6b210a6ed905aa71"
             },
             {
-              "message": "V hradbách se objevují první trhliny!"
+              "message": "V hradbách se objevují první trhliny!",
+              "sourceHash": "9b70fb96f95d3cf7"
             }
           ]
         },
@@ -2446,13 +2541,16 @@
           "description": "Pěchota postupuje k hradbám. Těžké ztráty na obou stranách.",
           "events": [
             {
-              "message": "Jan Pardus z Horky vede táborskou pěchotu do útoku!"
+              "message": "Jan Pardus z Horky vede táborskou pěchotu do útoku!",
+              "sourceHash": "432033a139859f9c"
             },
             {
-              "message": "Obránci kryjí přístupy ke hradbám a odrážejí útočící pěchotu."
+              "message": "Obránci kryjí přístupy ke hradbám a odrážejí útočící pěchotu.",
+              "sourceHash": "8c88ded47d067fdc"
             },
             {
-              "message": "Krvavé boje u hradeb! Husité se snaží prolomit obranu."
+              "message": "Krvavé boje u hradeb! Husité se snaží prolomit obranu.",
+              "sourceHash": "4d522511db436e8b"
             }
           ]
         },
@@ -2461,10 +2559,12 @@
           "description": "Posádka se může pokusit o výpad, pokud má ještě sílu. Boj pokračuje u opevnění.",
           "events": [
             {
-              "message": "Vilém Švihovský připravuje výpad z bran. Bojeschopní obránci se shromažďují u opevnění."
+              "message": "Vilém Švihovský připravuje výpad z bran. Bojeschopní obránci se shromažďují u opevnění.",
+              "sourceHash": "f5bf28448afb6edb"
             },
             {
-              "text": "Bojeschopným obráncům u bran roste sebedůvěra."
+              "text": "Bojeschopným obráncům u bran roste sebedůvěra.",
+              "sourceHash": "2c6a6034ff386e8d"
             }
           ]
         },
@@ -2473,10 +2573,12 @@
           "description": "Útok buď uspěje, nebo husité budou muset ustoupit.",
           "events": [
             {
-              "message": "Poslední šance na průlom! Prokop Holý posílá zálohy."
+              "message": "Poslední šance na průlom! Prokop Holý posílá zálohy.",
+              "sourceHash": "8494bcee206c5eba"
             },
             {
-              "text": "Hlad, násilné „picování“ okolí a spory mezi hejtmany lámou tábor. Někteří vojáci dezertují."
+              "text": "Hlad, násilné „picování“ okolí a spory mezi hejtmany lámou tábor. Někteří vojáci dezertují.",
+              "sourceHash": "1fcc8155d64d644d"
             }
           ]
         }
@@ -2518,10 +2620,12 @@
           "description": "Vyjednávání selhalo. Někdejší spojenci stojí proti sobě.",
           "events": [
             {
-              "message": "Bratrovražedná bitva začíná..."
+              "message": "Bratrovražedná bitva začíná...",
+              "sourceHash": "2c06e0e4432eea99"
             },
             {
-              "message": "Smír se nepodařilo dojednat. Proti vám stojí i muži, kteří dříve bojovali pod stejným znamením."
+              "message": "Smír se nepodařilo dojednat. Proti vám stojí i muži, kteří dříve bojovali pod stejným znamením.",
+              "sourceHash": "549135246500804b"
             }
           ]
         },
@@ -2530,10 +2634,12 @@
           "description": "Koalice hledá příležitost vylákat polní vojska z obrany.",
           "events": [
             {
-              "message": "Koalice hledá slabé místo vaší obrany. Pozor na předstíraný útěk!"
+              "message": "Koalice hledá slabé místo vaší obrany. Pozor na předstíraný útěk!",
+              "sourceHash": "cf53041b66126912"
             },
             {
-              "message": "Koalice dostává rozkaz předstírat ústup. Pronásledování může otevřít cestu její jízdě."
+              "message": "Koalice dostává rozkaz předstírat ústup. Pronásledování může otevřít cestu její jízdě.",
+              "sourceHash": "3b15ad2edc7f5f85"
             }
           ]
         },
@@ -2542,7 +2648,8 @@
           "description": "Sledujte pohyb jízdy; soudržnost obrany může rozhodnout.",
           "events": [
             {
-              "message": "Rozhodující střet. Sledujte pohyb jízdy; o opuštění hradby rozhodujete vy."
+              "message": "Rozhodující střet. Sledujte pohyb jízdy; o opuštění hradby rozhodujete vy.",
+              "sourceHash": "d2f10bef335c08d3"
             }
           ]
         },
@@ -2558,7 +2665,8 @@
                   "fallen": "Prokop Holý v této bitvě padl. Zbývající oddíly bojují bez něj.",
                   "escaped": "Prokop Holý opustil bojiště. Boj pokračuje bez něj."
                 }
-              }
+              },
+              "sourceHash": "a4acd2975f7d4ce0"
             }
           ]
         }
@@ -2593,13 +2701,16 @@
           "description": "Královské vojsko tlačí na opevněné předhradí a hradní jádro.",
           "events": [
             {
-              "message": "Obléhání trvá od jara. Dělostřelecká postavení svírají hrad ze severu a jihu."
+              "message": "Obléhání trvá od jara. Dělostřelecká postavení svírají hrad ze severu a jihu.",
+              "sourceHash": "db40e0daf546bf42"
             },
             {
-              "message": "Hrad nemá doloženou studnu, ale chráněný přístup k Vrchlici mohl zajišťovat vodu. Držte obranné pásmo."
+              "message": "Hrad nemá doloženou studnu, ale chráněný přístup k Vrchlici mohl zajišťovat vodu. Držte obranné pásmo.",
+              "sourceHash": "1a5913205cd3ab24"
             },
             {
-              "message": "Král Zikmund ztrácí trpělivost. Posílá uherské vojsko!"
+              "message": "Král Zikmund ztrácí trpělivost. Posílá uherské vojsko!",
+              "sourceHash": "e6f5180cbf50fdee"
             }
           ]
         },
@@ -2608,10 +2719,12 @@
           "description": "Uherské posily mění rovnováhu sil.",
           "events": [
             {
-              "message": "Michal Országh přivádí uherské rytíře! Situace je zoufalá."
+              "message": "Michal Országh přivádí uherské rytíře! Situace je zoufalá.",
+              "sourceHash": "6f8e49fdb6062e29"
             },
             {
-              "text": "Uherští rytíři povzbuzují královské vojsko k rozhodnému útoku!"
+              "text": "Uherští rytíři povzbuzují královské vojsko k rozhodnému útoku!",
+              "sourceHash": "37d2371f34b4f687"
             }
           ]
         },
@@ -2620,13 +2733,16 @@
           "description": "Generální útok na hradby. Obránci bojují o holé přežití.",
           "events": [
             {
-              "message": "Děla ostřelují obranu. Rozhodující je, zda posádka udrží přístupy k hradnímu jádru."
+              "message": "Děla ostřelují obranu. Rozhodující je, zda posádka udrží přístupy k hradnímu jádru.",
+              "sourceHash": "a438d7f1b24418b2"
             },
             {
-              "text": "Někteří obránci ztrácejí naději. Jan Roháč je povzbuzuje k boji!"
+              "text": "Někteří obránci ztrácejí naději. Jan Roháč je povzbuzuje k boji!",
+              "sourceHash": "7452a7510edad80f"
             },
             {
-              "message": "Útočníci hledají cestu přes příkopy. Hlídejte průchody mezi valy."
+              "message": "Útočníci hledají cestu přes příkopy. Hlídejte průchody mezi valy.",
+              "sourceHash": "73c355e79e1475ca"
             }
           ]
         },
@@ -2635,10 +2751,12 @@
           "description": "O výsledku rozhodne udržení hradního jádra.",
           "events": [
             {
-              "message": "Bojuje se o přístupy k jádru. Ztráta jeho klíčových pozic ukončí obranu."
+              "message": "Bojuje se o přístupy k jádru. Ztráta jeho klíčových pozic ukončí obranu.",
+              "sourceHash": "f08242481d546c24"
             },
             {
-              "message": "Závěr obrany. O osudu této partie rozhoduje posádka a držené pozice, ne předem napsaná legenda."
+              "message": "Závěr obrany. O osudu této partie rozhoduje posádka a držené pozice, ne předem napsaná legenda.",
+              "sourceHash": "777a2480e3c0b8b5"
             }
           ]
         }
@@ -2672,10 +2790,12 @@
           "description": "Husité se opevňují na kopci Gothard, katolíci se shromažďují.",
           "events": [
             {
-              "message": "Žižka: „Na kopec! Držte svahy, střelci dopředu!“"
+              "message": "Žižka: „Na kopec! Držte svahy, střelci dopředu!“",
+              "sourceHash": "d33ea65170c2d50c"
             },
             {
-              "message": "Katolická šlechta se formuje k útoku pod kopcem."
+              "message": "Katolická šlechta se formuje k útoku pod kopcem.",
+              "sourceHash": "e13d01502d43e95e"
             }
           ]
         },
@@ -2684,13 +2804,16 @@
           "description": "Čeněk z Vartenberka vrhá jízdu do čelního útoku na kopec.",
           "events": [
             {
-              "message": "Čeněk z Vartenberka: „Vpřed! Rozdrťte kacíře!“"
+              "message": "Čeněk z Vartenberka: „Vpřed! Rozdrťte kacíře!“",
+              "sourceHash": "bd9d066a177c6183"
             },
             {
-              "message": "Těžká jízda naráží na husitskou pěchotu! Útok vázne ve strmém svahu."
+              "message": "Těžká jízda naráží na husitskou pěchotu! Útok vázne ve strmém svahu.",
+              "sourceHash": "583b6451ec561952"
             },
             {
-              "text": "Páni musí sesednout z koní - do strmého svahu na vozy a sudlice se koňmo zaútočit nedá."
+              "text": "Páni musí sesednout z koní - do strmého svahu na vozy a sudlice se koňmo zaútočit nedá.",
+              "sourceHash": "369c9666dd0b8e5b"
             }
           ]
         },
@@ -2699,13 +2822,16 @@
           "description": "Zuřivé boje na svazích Gothardu. Katolíci utrpí těžké ztráty.",
           "events": [
             {
-              "message": "Husitské houfnice a střelci kosí útočníky!"
+              "message": "Husitské houfnice a střelci kosí útočníky!",
+              "sourceHash": "95b5059c8ef46819"
             },
             {
-              "message": "Houf Arnošta Flašky se hroutí pod palbou!"
+              "message": "Houf Arnošta Flašky se hroutí pod palbou!",
+              "sourceHash": "f31f4738c98a037a"
             },
             {
-              "text": "Zhroucení Flaškova houfu otřáslo katolíky."
+              "text": "Zhroucení Flaškova houfu otřáslo katolíky.",
+              "sourceHash": "d569262f7d6bc625"
             }
           ]
         },
@@ -2714,10 +2840,12 @@
           "description": "Žižka nařizuje protiútok. Orebitská jízda a pěchota vyráží z kopce.",
           "events": [
             {
-              "message": "Žižka: „Teď! Vpřed, za kalich!“"
+              "message": "Žižka: „Teď! Vpřed, za kalich!“",
+              "sourceHash": "07438cc0389ba7cf"
             },
             {
-              "message": "Katolíci se dávají na útěk! Čeněk prchá s hrstkou mužů!"
+              "message": "Katolíci se dávají na útěk! Čeněk prchá s hrstkou mužů!",
+              "sourceHash": "e29d86e0d90e7308"
             }
           ]
         },
@@ -2726,10 +2854,12 @@
           "description": "Husité pronásledují prchající katolíky a ukořisťují jejich vozy.",
           "events": [
             {
-              "message": "Ukořistěny všechny katolické vozy a děla!"
+              "message": "Ukořistěny všechny katolické vozy a děla!",
+              "sourceHash": "ef53eba8aabefc5b"
             },
             {
-              "message": "Čeněk z Vartenberka uprchl. Husitské vítězství je úplné."
+              "message": "Čeněk z Vartenberka uprchl. Husitské vítězství je úplné.",
+              "sourceHash": "6e06c27625f7267a"
             }
           ]
         }
@@ -2765,10 +2895,12 @@
           "description": "Žižka rozpoznává terén s pomocí Roháče a Hvězdy. Husité se opevňují na svahu.",
           "events": [
             {
-              "message": "Jan Roháč: „Pane hejtmane, máme dobrý svah nad údolím. Potok Bohynka nám kryje střed.“"
+              "message": "Jan Roháč: „Pane hejtmane, máme dobrý svah nad údolím. Potok Bohynka nám kryje střed.“",
+              "sourceHash": "8fc5193ff7e19104"
             },
             {
-              "message": "Jan Hvězda: „Znám tato místa. Údolí je úzké - nepřítel se nebude moci rozvinout.“"
+              "message": "Jan Hvězda: „Znám tato místa. Údolí je úzké - nepřítel se nebude moci rozvinout.“",
+              "sourceHash": "74cf88c9cb2f5a79"
             }
           ]
         },
@@ -2777,13 +2909,16 @@
           "description": "Protižižkovská koalice vrhá jízdu do údolí. Nepřítel se nemůže plně rozvinout.",
           "events": [
             {
-              "message": "Čeněk z Vartenberka: „Do útoku! Rozdrtíme slepce jednou provždy!“"
+              "message": "Čeněk z Vartenberka: „Do útoku! Rozdrtíme slepce jednou provždy!“",
+              "sourceHash": "b22753775f55632b"
             },
             {
-              "message": "Těžká jízda vjíždí do úzkého údolí... Řady se tísní!"
+              "message": "Těžká jízda vjíždí do úzkého údolí... Řady se tísní!",
+              "sourceHash": "9bd7766c9ca46c89"
             },
             {
-              "text": "Jízda ztrácí hybnost v bažinatém údolí!"
+              "text": "Jízda ztrácí hybnost v bažinatém údolí!",
+              "sourceHash": "3a701a788d5f29ad"
             }
           ]
         },
@@ -2792,17 +2927,21 @@
           "description": "Palba a tísnivý terén narušují postup útočníků. Obránci hledají chvíli k protiútoku.",
           "events": [
             {
-              "message": "Houfnice a ručnice pálí do natěsnaných řad nepřítele!"
+              "message": "Houfnice a ručnice pálí do natěsnaných řad nepřítele!",
+              "sourceHash": "b0e62fc3982ceb42"
             },
             {
-              "message": "Ztráty koalice rostou! Údolí se barví krví!"
+              "message": "Ztráty koalice rostou! Údolí se barví krví!",
+              "sourceHash": "640bd08acde62d8e"
             },
             {
-              "text": "Koaliční vojsko ztrácí odvahu v zabijácké palbě."
+              "text": "Koaliční vojsko ztrácí odvahu v zabijácké palbě.",
+              "sourceHash": "879d45f151f1cb7d"
             },
             {
               "title": "Rozvrácené čelo kolony",
-              "text": "Natěsnané oddíly se pod palbou nemohou rozvinout. Zmatek v čele kolony podlamuje soudržnost dalších šiků."
+              "text": "Natěsnané oddíly se pod palbou nemohou rozvinout. Zmatek v čele kolony podlamuje soudržnost dalších šiků.",
+              "sourceHash": "9f0f261bb59ca3ce"
             }
           ]
         },
@@ -2811,13 +2950,16 @@
           "description": "Žižka nařizuje smrtící protiútok ze svahu dolů.",
           "events": [
             {
-              "message": "Žižka: „Teď! Dolů z kopce! Za pravdu Boží!“"
+              "message": "Žižka: „Teď! Dolů z kopce! Za pravdu Boží!“",
+              "sourceHash": "b89410c09e58058c"
             },
             {
-              "message": "Husitská jízda a pěchota se řítí ze svahu na dezorientovaného nepřítele!"
+              "message": "Husitská jízda a pěchota se řítí ze svahu na dezorientovaného nepřítele!",
+              "sourceHash": "426dfb85f78623f1"
             },
             {
-              "text": "Útok z kopce! +15% k útoku husitských jednotek."
+              "text": "Útok z kopce! +15% k útoku husitských jednotek.",
+              "sourceHash": "865e62ddfb19842d"
             }
           ]
         },
@@ -2826,16 +2968,20 @@
           "description": "Koaliční vojsko se hroutí. Zadní voje prchají bez boje.",
           "events": [
             {
-              "message": "Koalice se hroutí! Muži prchají směrem k Malešovu!"
+              "message": "Koalice se hroutí! Muži prchají směrem k Malešovu!",
+              "sourceHash": "5b715986bd22d6c7"
             },
             {
-              "message": "Čeněk z Vartenberka: „Zpět! Všichni zpět!“ Zadní voje už ani nevstoupily do boje."
+              "message": "Čeněk z Vartenberka: „Zpět! Všichni zpět!“ Zadní voje už ani nevstoupily do boje.",
+              "sourceHash": "00bad03020fbf3c7"
             },
             {
-              "message": "O výsledku rozhoduje soudržnost oddílů. Historické odhady padlých nejsou součtem ztrát této partie."
+              "message": "O výsledku rozhoduje soudržnost oddílů. Historické odhady padlých nejsou součtem ztrát této partie.",
+              "sourceHash": "05c68a3910e0278d"
             },
             {
-              "message": "Žižka ovládl bojiště. Cesta na Kutnou Horu je volná!"
+              "message": "Žižka ovládl bojiště. Cesta na Kutnou Horu je volná!",
+              "sourceHash": "c6e069a760281120"
             }
           ]
         }
@@ -2850,7 +2996,8 @@
           "description": "Křižáci obkličují Žatec a zahajují palbu z děl.",
           "events": [
             {
-              "message": "Křižácké vojsko obklíčilo Žatec. Děla pálí na hradby!"
+              "message": "Křižácké vojsko obklíčilo Žatec. Děla pálí na hradby!",
+              "sourceHash": "6b6023159027178e"
             }
           ]
         },
@@ -2859,11 +3006,13 @@
           "description": "Erkinger žene pěchotu na hradby - jeden útok za druhým.",
           "events": [
             {
-              "message": "Erkinger zahajuje útok na západní hradbu! Držte linii!"
+              "message": "Erkinger zahajuje útok na západní hradbu! Držte linii!",
+              "sourceHash": "fe7bf43dfd17c22f"
             },
             {
               "text": "Žatečtí vyrazili z bran, pobili množství obléhatelů a stáhli se zpět za hradby. Obránci nabírají odvahu!",
-              "title": "Výpad z bran!"
+              "title": "Výpad z bran!",
+              "sourceHash": "f71e3eb7ed221b21"
             }
           ]
         },
@@ -2873,7 +3022,8 @@
           "events": [
             {
               "text": "Křižácké ležení vzplálo! Hlad, spory knížat a falešná zpráva o blížícím se pražském vojsku lámou výpravu.",
-              "title": "Požár ležení!"
+              "title": "Požár ležení!",
+              "sourceHash": "51c22b8a79b28d37"
             }
           ]
         }

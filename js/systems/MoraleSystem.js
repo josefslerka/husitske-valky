@@ -244,6 +244,7 @@ class MoraleSystem {
 
         const isPlayer = faction === playerFaction;
         let breakReason = null;
+        let resolveReason = null;
 
         // Kontrola padlého velitele
         const deadCommanders = this.game.units.filter(u =>
@@ -253,7 +254,12 @@ class MoraleSystem {
         );
 
         if (deadCommanders.length > 0 && commanders.length === 0) {
-            breakReason = i18n.t('gameLog.breakReasonCommander', {commander: deadCommanders[0].name});
+            const commander = deadCommanders[0];
+            resolveReason = () => i18n.t('gameLog.breakReasonCommander', {
+                commander: i18n.hasTranslation(`units.${commander.type}.name`)
+                    ? i18n.t(`units.${commander.type}.name`) : commander.name
+            });
+            breakReason = resolveReason();
         }
 
         // Kontrola ztráty armády - hráč má vyšší práh (75%)
@@ -261,8 +267,10 @@ class MoraleSystem {
         const initialCount = faction === playerFaction ? this.game.initialPlayerUnits : this.game.initialEnemyUnits;
         if (initialCount > 0) {
             const lossPercent = 1 - (totalUnits / initialCount);
-            if (lossPercent >= lossThreshold) {
-                breakReason = breakReason || i18n.t('gameLog.breakReasonCasualties', {percent: Math.round(lossPercent * 100)});
+            if (lossPercent >= lossThreshold && !breakReason) {
+                const percent = Math.round(lossPercent * 100);
+                resolveReason = () => i18n.t('gameLog.breakReasonCasualties', { percent });
+                breakReason = resolveReason();
             }
         }
 
@@ -270,18 +278,19 @@ class MoraleSystem {
         // (hráčova frakce nemá kaskádový routing)
         if (!isPlayer) {
             const routingCount = factionUnits.filter(u => u.isRouting).length;
-            if (totalUnits > 0 && routingCount / totalUnits >= 0.5) {
-                breakReason = breakReason || i18n.t('gameLog.breakReasonRouting', {count: routingCount, total: totalUnits});
+            if (totalUnits > 0 && routingCount / totalUnits >= 0.5 && !breakReason) {
+                resolveReason = () => i18n.t('gameLog.breakReasonRouting', { count: routingCount, total: totalUnits });
+                breakReason = resolveReason();
             }
         }
 
         if (breakReason) {
-            this.triggerMoraleBreak(faction, breakReason);
+            this.triggerMoraleBreak(faction, breakReason, resolveReason);
         }
     }
 
     // Spuštění morálního zlomu
-    triggerMoraleBreak(faction, reason) {
+    triggerMoraleBreak(faction, reason, resolveReason = null) {
         const factionName = i18n.t(`factions.${faction}`);
         this.game.addLog(`⚠️ ${i18n.t('gameLog.moraleBreakTitle')} ${factionName}: ${reason}`, 'morale');
 
@@ -316,17 +325,21 @@ class MoraleSystem {
             }
 
             // Zobrazení notifikace
-            this.game.showEventNotification(
-                i18n.t('gameLog.moraleBreakTitle'),
-                `${reason}\n${i18n.t('gameLog.armyCollapsing')}`
-            );
+            const resolve = () => ({
+                title: i18n.t('gameLog.moraleBreakTitle'),
+                text: `${resolveReason ? resolveReason() : reason}\n${i18n.t('gameLog.armyCollapsing')}`
+            });
+            const { title, text } = resolve();
+            this.game.showEventNotification(title, text, resolve);
         } else {
             // Pro hráče - varování (jen jednou)
             this.playerMoraleWarningShown = true;
-            this.game.showEventNotification(
-                i18n.t('gameLog.moraleBreakTitle'),
-                `${reason}\n${i18n.t('gameLog.playerMoraleWarning')}`
-            );
+            const resolve = () => ({
+                title: i18n.t('gameLog.moraleBreakTitle'),
+                text: `${resolveReason ? resolveReason() : reason}\n${i18n.t('gameLog.playerMoraleWarning')}`
+            });
+            const { title, text } = resolve();
+            this.game.showEventNotification(title, text, resolve);
         }
     }
 

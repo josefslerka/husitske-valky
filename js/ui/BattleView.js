@@ -6,6 +6,8 @@ class BattleView {
         this.animationLoop = null;
         this.eventNotificationQueue = [];
         this.activeEventNotification = null;
+        this.activeEventNotificationItem = null;
+        this.activeEventNotificationElements = null;
         this.eventNotificationTimer = null;
         this.eventAbortController = new AbortController();
         this.minimap = new Minimap(document.getElementById('minimap'), game.hexGrid);
@@ -231,31 +233,59 @@ class BattleView {
             this.activeEventNotification.remove();
             this.activeEventNotification = null;
         }
+        this.activeEventNotificationItem = null;
+        this.activeEventNotificationElements = null;
     }
 
-    showEventNotification(title, text) {
+    showEventNotification(title, text, resolveLocalizedText = null) {
         if (!text || this.game.gameState === 'destroyed') return;
-        this.eventNotificationQueue.push({ title, text });
+        this.eventNotificationQueue.push({ title, text, resolveLocalizedText });
         this.showNextEventNotification();
+    }
+
+    // Rozpracované zprávy nejsou součástí savu. Při přepnutí jazyka obnovíme
+    // jejich text z aktuálního scénáře, aniž bychom je znovu spouštěli.
+    refreshEventNotifications() {
+        const refresh = item => {
+            if (typeof item?.resolveLocalizedText !== 'function') return;
+            const localized = item.resolveLocalizedText();
+            if (typeof localized?.title === 'string') item.title = localized.title;
+            if (typeof localized?.text === 'string') item.text = localized.text;
+        };
+        this.eventNotificationQueue.forEach(refresh);
+        if (this.activeEventNotificationItem) {
+            refresh(this.activeEventNotificationItem);
+            const { heading, body, button } = this.activeEventNotificationElements;
+            heading.textContent = this.activeEventNotificationItem.title || '';
+            body.textContent = this.activeEventNotificationItem.text;
+            button.textContent = i18n.t('menu.continue');
+        }
     }
 
     showNextEventNotification() {
         if (this.activeEventNotification || this.eventNotificationQueue.length === 0 ||
             this.game.gameState === 'destroyed') return;
 
-        const { title, text } = this.eventNotificationQueue.shift();
+        const item = this.eventNotificationQueue.shift();
+        if (typeof item.resolveLocalizedText === 'function') {
+            const localized = item.resolveLocalizedText();
+            if (typeof localized?.title === 'string') item.title = localized.title;
+            if (typeof localized?.text === 'string') item.text = localized.text;
+        }
         const notification = document.createElement('div');
         notification.className = 'event-notification';
         const heading = document.createElement('h3');
         const body = document.createElement('p');
         const button = document.createElement('button');
-        heading.textContent = title || '';
-        body.textContent = text;
+        heading.textContent = item.title || '';
+        body.textContent = item.text;
         button.textContent = i18n.t('menu.continue');
         notification.append(heading, body, button);
 
         document.body.appendChild(notification);
         this.activeEventNotification = notification;
+        this.activeEventNotificationItem = item;
+        this.activeEventNotificationElements = { heading, body, button };
 
         const closeNotification = () => {
             if (this.eventNotificationTimer) {
@@ -265,6 +295,8 @@ class BattleView {
             notification.remove();
             if (this.activeEventNotification === notification) {
                 this.activeEventNotification = null;
+                this.activeEventNotificationItem = null;
+                this.activeEventNotificationElements = null;
             }
             this.showNextEventNotification();
         };

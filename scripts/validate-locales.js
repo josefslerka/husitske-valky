@@ -6,11 +6,13 @@
  * Použití:
  *   node scripts/validate-locales.js
  *   node scripts/validate-locales.js --fix-dead-events
+ *   node scripts/validate-locales.js --stamp-event-sources  # až po revizi obou překladů
  */
 
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
+const crypto = require('crypto');
 
 const root = path.resolve(__dirname, '..');
 const localePaths = {
@@ -31,6 +33,19 @@ function loadConst(filePath, names) {
 
 function hasOwn(object, key) {
     return Object.prototype.hasOwnProperty.call(object || {}, key);
+}
+
+// Otisk celého zdrojového eventu hlídá i prohození dvou stejně strukturovaných
+// událostí. Seřazení klíčů ignoruje čistě formátovací změny objektového literálu.
+function eventSourceHash(event) {
+    const canonical = value => {
+        if (Array.isArray(value)) return value.map(canonical);
+        if (value && typeof value === 'object') {
+            return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])]));
+        }
+        return value;
+    };
+    return crypto.createHash('sha256').update(JSON.stringify(canonical(event))).digest('hex').slice(0, 16);
 }
 
 function stripDeadScenarioEvents(source) {
@@ -138,6 +153,30 @@ if (scenarioEntries.length !== 18) {
     error(`Báze má ${scenarioEntries.length} scénářů, očekáváno 18.`);
 }
 
+// Použít až po ručním porovnání změněných zdrojových událostí s oběma překlady.
+// Stávající event.id se tím nemění, takže uložené hry zůstávají kompatibilní.
+const stampEventSources = process.argv.includes('--stamp-event-sources');
+if (stampEventSources) {
+    for (const language of Object.keys(localePaths)) {
+        const locale = locales[language];
+        for (const [scenarioId, scenario] of scenarioEntries) {
+            const phases = locale.scenarios?.[scenarioId]?.phases;
+            if (!phases || phases.length !== (scenario.phases || []).length) {
+                throw new Error(`${language}: ${scenarioId} má jiný počet fází; otisky nebyly zapsány.`);
+            }
+            scenario.phases.forEach((phase, phaseIndex) => {
+                const events = phases[phaseIndex]?.events;
+                if (!events || events.length !== (phase.events || []).length) {
+                    throw new Error(`${language}: ${scenarioId}, fáze ${phaseIndex + 1} má jiný počet eventů; otisky nebyly zapsány.`);
+                }
+                phase.events.forEach((event, eventIndex) => {
+                    events[eventIndex].sourceHash = eventSourceHash(event);
+                });
+            });
+        }
+    }
+}
+
 for (const [scenarioId, scenario] of scenarioEntries) {
     for (const language of ['cs', 'en']) {
         // Globální mapLabels jsou nezávislé na tom, zda scénář používá
@@ -165,6 +204,22 @@ for (const [scenarioId, scenario] of scenarioEntries) {
         }
 
         const location = `${language.toUpperCase()}: scenarios.${scenarioId}`;
+        for (const side of ['hussites', 'crusaders']) {
+            if (scenario.forces?.[side]?.reinforcements?.message &&
+                (typeof overlay.reinforcements?.[side] !== 'string' || !overlay.reinforcements[side].trim())) {
+                error(`${location}.reinforcements.${side}: chybí zpráva o posilách.`);
+            }
+        }
+        for (const group of Object.keys(scenario.reinforcements || {})) {
+            if (typeof overlay.reinforcementGroups?.[group] !== 'string' || !overlay.reinforcementGroups[group].trim()) {
+                error(`${location}.reinforcementGroups.${group}: chybí zpráva o posilách.`);
+            }
+        }
+        for (const group of Object.keys(overlay.reinforcementGroups || {})) {
+            if (!hasOwn(scenario.reinforcements, group)) {
+                error(`${location}.reinforcementGroups.${group}: skupina posil ve scénáři neexistuje.`);
+            }
+        }
         validateTextVariants(scenario.debriefing?.victoryVariants, overlay.debriefing?.victoryVariants,
             `${location}.debriefing.victoryVariants`);
         validateTextVariants(scenario.debriefing?.unitStatus?.texts, overlay.debriefing?.unitStatus?.texts,
@@ -185,24 +240,29 @@ for (const [scenarioId, scenario] of scenarioEntries) {
                 return;
             }
 
-            baseEvents.forEach((event, index) => validateTextVariants(event.unitStatus?.texts, localizedEvents[index]?.unitStatus?.texts,
-                `${location}.phases.${phaseIndex}.events.${index}.unitStatus.texts`));
+            for (const field of ['name', 'description']) {
+                if (hasOwn(phase, field) && !hasOwn(localizedPhases[phaseIndex], field)) {
+                    error(`${language.toUpperCase()}: ${scenarioId}, fáze ${phaseIndex + 1}: chybí ${field}.`);
+                }
+            }
 
-            if (language === 'en') {
-                for (const field of ['name', 'description']) {
-                    if (hasOwn(phase, field) && !hasOwn(localizedPhases[phaseIndex], field)) {
-                        error(`EN: ${scenarioId}, fáze ${phaseIndex + 1}: chybí ${field}.`);
+            baseEvents.forEach((event, eventIndex) => {
+                const localizedEvent = localizedEvents[eventIndex] || {};
+                const eventLocation = `${language.toUpperCase()}: ${scenarioId}, fáze ${phaseIndex + 1}, event ${eventIndex + 1}`;
+                validateTextVariants(event.unitStatus?.texts, localizedEvent.unitStatus?.texts,
+                    `${location}.phases.${phaseIndex}.events.${eventIndex}.unitStatus.texts`);
+                for (const field of ['message', 'text', 'title']) {
+                    if (hasOwn(event, field) && (typeof localizedEvent[field] !== 'string' || !localizedEvent[field].trim())) {
+                        error(`${eventLocation}: chybí neprázdné ${field}.`);
+                    }
+                    if (!hasOwn(event, field) && hasOwn(localizedEvent, field)) {
+                        error(`${eventLocation}: nadbytečné ${field} se v herní bázi nepoužije.`);
                     }
                 }
-                baseEvents.forEach((event, eventIndex) => {
-                    const localizedEvent = localizedEvents[eventIndex] || {};
-                    for (const field of ['message', 'text', 'title']) {
-                        if (hasOwn(event, field) && !hasOwn(localizedEvent, field)) {
-                            error(`EN: ${scenarioId}, fáze ${phaseIndex + 1}, event ${eventIndex + 1}: chybí ${field}.`);
-                        }
-                    }
-                });
-            }
+                if (localizedEvent.sourceHash !== eventSourceHash(event)) {
+                    error(`${eventLocation}: nesouhlasí sourceHash; ověř pořadí a obsah překladu proti zdroji.`);
+                }
+            });
         });
 
     }
@@ -283,6 +343,13 @@ if (errors.length) {
     console.error('\nChyby lokalizace:');
     errors.forEach(message => console.error(`  - ${message}`));
     process.exit(1);
+}
+
+if (stampEventSources) {
+    for (const [language, filePath] of Object.entries(localePaths)) {
+        fs.writeFileSync(filePath, `${JSON.stringify(locales[language], null, 2)}\n`);
+        console.log(`${language}: aktualizovány otisky zdrojových událostí po revizi překladů.`);
+    }
 }
 
 console.log(`\nOK: ${scenarioEntries.length} scénářů a ${Object.keys(BattleLore).length} kronikářských záznamů je indexově zarovnáno.`);

@@ -160,6 +160,9 @@
     "colophon": "Bohemia in turmoil · a chronicle of your choices",
     "playTitle": "To the field",
     "libraryTitle": "Between battles",
+    "actOneReward": "Reward for completing Act I",
+    "wagonDefense": "Wagon Fort",
+    "wagonDefenseNote": "Bonus defense against waves of enemies",
     "noManualSave": "No save yet",
     "newGame": "Choose a Battle",
     "continue": "Continue",
@@ -175,7 +178,7 @@
     "switchLanguage": "Switch to Czech",
     "support": "Buy Me a Coffee",
     "changelog": "Changelog",
-    "version": "Alpha 0.3.6 · 25.09.2026"
+    "version": "Alpha 0.3.7 · 27.09.2026"
   },
   "about": {
     "title": "About",
@@ -1315,7 +1318,8 @@
           "description": "The crusaders encircle Žatec and open fire with their cannon.",
           "events": [
             {
-              "message": "The crusader army has encircled Žatec. Cannon batter the walls!"
+              "message": "The crusader army has encircled Žatec. Cannon batter the walls!",
+              "sourceHash": "6b6023159027178e"
             }
           ]
         },
@@ -1324,11 +1328,13 @@
           "description": "Erkinger drives his infantry at the walls - one assault after another.",
           "events": [
             {
-              "message": "Erkinger launches the assault on the western wall! Hold the line!"
+              "message": "Erkinger launches the assault on the western wall! Hold the line!",
+              "sourceHash": "fe7bf43dfd17c22f"
             },
             {
               "title": "Sally from the gates!",
-              "text": "The Žatec men sallied from the gates, cut down many besiegers and withdrew behind the walls. The defenders take heart!"
+              "text": "The Žatec men sallied from the gates, cut down many besiegers and withdrew behind the walls. The defenders take heart!",
+              "sourceHash": "f71e3eb7ed221b21"
             }
           ]
         },
@@ -1338,7 +1344,8 @@
           "events": [
             {
               "title": "The camp is burning!",
-              "text": "The crusader camp has gone up in flames! Hunger, quarrels among the princes and a false report of an approaching Prague army break the crusade."
+              "text": "The crusader camp has gone up in flames! Hunger, quarrels among the princes and a false report of an approaching Prague army break the crusade.",
+              "sourceHash": "51c22b8a79b28d37"
             }
           ]
         }
@@ -1442,10 +1449,12 @@
           "description": "Šternberk attacks tired South Bohemian pilgrims.",
           "events": [
             {
-              "message": "Petr ze Šternberka caught up with you! Fortify on Červenka hill!"
+              "message": "Petr ze Šternberka caught up with you! Fortify on Červenka hill!",
+              "sourceHash": "2d92336d81943c4a"
             },
             {
-              "text": "TIP: Your units are close to hill. Move them to green fields for defensive bonus."
+              "text": "TIP: Your units are close to hill. Move them to green fields for defensive bonus.",
+              "sourceHash": "81b28fabbb1093b0"
             }
           ]
         },
@@ -1454,7 +1463,8 @@
           "description": "Hussites build improvised defenses.",
           "events": [
             {
-              "text": "TIP: Pull the defenceless pilgrims onto the hill behind your fighters. Shooters on high ground fire farther and harder (elevation bonus)."
+              "text": "TIP: Pull the defenceless pilgrims onto the hill behind your fighters. Shooters on high ground fire farther and harder (elevation bonus).",
+              "sourceHash": "bd8a50ba168700c3"
             }
           ]
         },
@@ -1463,7 +1473,8 @@
           "description": "Reinforcements from Nový Knín come to help.",
           "events": [
             {
-              "message": "Břeněk Švihovský brings reinforcements! Hold positions!"
+              "message": "Břeněk Švihovský brings reinforcements! Hold positions!",
+              "sourceHash": "39a5e1c28bdcbf41"
             }
           ]
         },
@@ -1472,7 +1483,8 @@
           "description": "With reinforcements you can counterattack.",
           "events": [
             {
-              "message": "Šternberk sees superiority and hesitates. Now is the time to strike!"
+              "message": "Šternberk sees superiority and hesitates. Now is the time to strike!",
+              "sourceHash": "28470dbac8d3ba0c"
             }
           ]
         }
@@ -1503,10 +1515,12 @@
           "description": "Žižka marches from Plzeň towards Nekmíř.",
           "events": [
             {
-              "message": "Plzeň landfrieden caught up with Hussite column! Quickly form wagon fort!"
+              "message": "Plzeň landfrieden caught up with Hussite column! Quickly form wagon fort!",
+              "sourceHash": "934ca70da4b6c09e"
             },
             {
-              "text": "TIP: Your wagons are on the march (unchained). Chain them into a wagon fort — a semicircle open toward the fortress. 7 wagons is too few for a closed circle."
+              "text": "TIP: Your wagons are on the march (unchained). Chain them into a wagon fort — a semicircle open toward the fortress. 7 wagons is too few for a closed circle.",
+              "sourceHash": "4d6baee43efab32d"
             }
           ]
         },
@@ -1515,10 +1529,12 @@
           "description": "The force uses its wagons as a defensive position.",
           "events": [
             {
-              "message": "Žižka: \"Pull wagons together! Shooters behind wagons, flailmen ready!\""
+              "message": "Žižka: \"Pull wagons together! Shooters behind wagons, flailmen ready!\"",
+              "sourceHash": "5814377600ad017d"
             },
             {
-              "text": "The wagons are holding together. Your shooters can cover the infantry more safely — use the opening against Hynek."
+              "text": "The wagons are holding together. Your shooters can cover the infantry more safely — use the opening against Hynek.",
+              "sourceHash": "553373fb6789e279"
             }
           ]
         },
@@ -1527,7 +1543,8 @@
           "description": "Švamberk throws cavalry against wagons.",
           "events": [
             {
-              "message": "Heavy cavalry of landfrieden attacks! Will wagon fort hold?"
+              "message": "Heavy cavalry of landfrieden attacks! Will wagon fort hold?",
+              "sourceHash": "e7d18daacf8da2ec"
             }
           ]
         },
@@ -1536,7 +1553,8 @@
           "description": "The fight around the wagons continues.",
           "events": [
             {
-              "text": "Hynek has come close to the wagons. Strike while he is within range."
+              "text": "Hynek has come close to the wagons. Strike while he is within range.",
+              "sourceHash": "f37d87b016184d21"
             }
           ]
         },
@@ -1545,7 +1563,8 @@
           "description": "The last rounds and Hynek's fate will decide the result.",
           "events": [
             {
-              "message": "The regional league has suffered heavy losses. The fight with Hynek remains."
+              "message": "The regional league has suffered heavy losses. The fight with Hynek remains.",
+              "sourceHash": "02e17c3ab998df91"
             }
           ]
         }
@@ -1587,7 +1606,8 @@
           "description": "Knights Hospitaller and royal army attack along dyke.",
           "events": [
             {
-              "message": "Crusaders begin attack along narrow dam!"
+              "message": "Crusaders begin attack along narrow dam!",
+              "sourceHash": "fc4441e3cd264b66"
             }
           ]
         },
@@ -1596,7 +1616,8 @@
           "description": "Fog descends, Catholics lose orientation.",
           "events": [
             {
-              "message": "Thick fog falling! Visibility drops."
+              "message": "Thick fog falling! Visibility drops.",
+              "sourceHash": "ce9ab27fb4412c46"
             }
           ]
         }
@@ -1630,7 +1651,8 @@
           "description": "Meissen and Thuringian cavalry press into the narrow approach along the ridge.",
           "events": [
             {
-              "message": "The attack is concentrating on the ridge. The blockhouse garrison holds the narrow approach; help from Prague is on its way."
+              "message": "The attack is concentrating on the ridge. The blockhouse garrison holds the narrow approach; help from Prague is on its way.",
+              "sourceHash": "a6e480c6ca234f34"
             }
           ]
         },
@@ -1655,6 +1677,10 @@
         "hussites": "You are besieging Vyšehrad. Its garrison agreed to surrender unless relieved by a set deadline. That deadline has passed, and Sigismund’s army is approaching Pankrác. Defend the trenches and the western flank towards Podolí.",
         "crusaders": "You must break through to Vyšehrad and save garrison! Czech nobility attacks from Podolí, main force frontally."
       },
+      "reinforcementGroups": {
+        "orebska_zaloha": "Hynek Krušina sends the Oreb flailmen into battle from the reserve!",
+        "vysehradske_oddily": "Troops freed from the siege of Vyšehrad join the battle!"
+      },
       "objectives": {
         "primary": "Defend St. Pankrác church until turn 15",
         "secondary": [
@@ -1672,10 +1698,12 @@
           "description": "The deadline for relieving the garrison has expired; the royal army is now preparing for battle.",
           "events": [
             {
-              "message": "The deadline has expired. Under the agreement, the Vyšehrad garrison is not to join the fighting."
+              "message": "The deadline has expired. Under the agreement, the Vyšehrad garrison is not to join the fighting.",
+              "sourceHash": "52068d36f780960d"
             },
             {
-              "message": "Sigismund vainly waves sword toward Vyšehrad. It's too late."
+              "message": "Sigismund vainly waves sword toward Vyšehrad. It's too late.",
+              "sourceHash": "49718985c17ba745"
             }
           ]
         },
@@ -1684,10 +1712,12 @@
           "description": "Hungarians and Germans attack Hussite trenches frontally.",
           "events": [
             {
-              "message": "Hungarians and Germans begin frontal attack on your trenches!"
+              "message": "Hungarians and Germans begin frontal attack on your trenches!",
+              "sourceHash": "b3398588f64bb938"
             },
             {
-              "text": "Prepared positions provide +3 to defense!"
+              "text": "Prepared positions provide +3 to defense!",
+              "sourceHash": "9955085d0b5885be"
             }
           ]
         },
@@ -1696,13 +1726,16 @@
           "description": "Czech and Moravian nobility attack from Podolí.",
           "events": [
             {
-              "message": "Bohemian and Moravian nobles are advancing from Podolí. The steep approach restricts their cavalry."
+              "message": "Bohemian and Moravian nobles are advancing from Podolí. The steep approach restricts their cavalry.",
+              "sourceHash": "36bb2c650df069e8"
             },
             {
-              "message": "Insulted Czech nobility attacks! Must dismount due to steep slope."
+              "message": "Insulted Czech nobility attacks! Must dismount due to steep slope.",
+              "sourceHash": "a23c064fd5ee9d4c"
             },
             {
-              "text": "Czech nobility loses cavalry advantage on steep slope!"
+              "text": "Czech nobility loses cavalry advantage on steep slope!",
+              "sourceHash": "ac277f214ed078ff"
             }
           ]
         },
@@ -1711,10 +1744,12 @@
           "description": "Hynek Krušina deploys reserves.",
           "events": [
             {
-              "message": "\"The enemies are fleeing!\" Hynek Krušina turns the pressed Praguers to counterattack and deploys the Oreb flailmen from reserve!"
+              "message": "\"The enemies are fleeing!\" Hynek Krušina turns the pressed Praguers to counterattack and deploys the Oreb flailmen from reserve!",
+              "sourceHash": "ac07bf1cc99b6ecb"
             },
             {
-              "message": "Units freed from besieging Vyšehrad join the battle!"
+              "message": "Units freed from besieging Vyšehrad join the battle!",
+              "sourceHash": "1226dff8ae3e48a6"
             }
           ]
         },
@@ -1723,10 +1758,12 @@
           "description": "Nobility trapped in ravine and slaughtered.",
           "events": [
             {
-              "message": "Czech nobility stuck in ravine! Cannot escape!"
+              "message": "Czech nobility stuck in ravine! Cannot escape!",
+              "sourceHash": "dc1ce311e5eff28c"
             },
             {
-              "text": "Taborites and Orebites took no prisoners... Massacre in the ravine!"
+              "text": "Taborites and Orebites took no prisoners... Massacre in the ravine!",
+              "sourceHash": "c150d9b8348a5a32"
             }
           ]
         },
@@ -1735,10 +1772,12 @@
           "description": "Sigismund orders retreat.",
           "events": [
             {
-              "message": "Sigismund orders retreat! Royal army flees to Český Brod."
+              "message": "Sigismund orders retreat! Royal army flees to Český Brod.",
+              "sourceHash": "3f55aba6ba5d4f32"
             },
             {
-              "message": "The battle decides Vyšehrad’s fate. Its outcome does not automatically mean control of all Prague."
+              "message": "The battle decides Vyšehrad’s fate. Its outcome does not automatically mean control of all Prague.",
+              "sourceHash": "4ed29ad480d54e57"
             }
           ]
         }
@@ -1776,13 +1815,16 @@
           "description": "Kutná Hora people betrayed! Crusaders close in from all sides.",
           "events": [
             {
-              "message": "Kutná Hora miners opened Kolín Gate! Crusaders pour into city - you are encircled!"
+              "message": "Kutná Hora miners opened Kolín Gate! Crusaders pour into city - you are encircled!",
+              "sourceHash": "59496f9da9448fad"
             },
             {
-              "message": "Prepare to break out through Kaňk. The withdrawal zone towards Kolín is in the northwest of the map."
+              "message": "Prepare to break out through Kaňk. The withdrawal zone towards Kolín is in the northwest of the map.",
+              "sourceHash": "16f7e3b41492aa27"
             },
             {
-              "message": "The encirclement is tightening. Keep the force together and keep the route towards Kaňk open."
+              "message": "The encirclement is tightening. Keep the force together and keep the route towards Kaňk open.",
+              "sourceHash": "04b3d8261547f8f3"
             }
           ]
         },
@@ -1791,10 +1833,12 @@
           "description": "The army prepares to break out under cover of wagons and supporting fire.",
           "events": [
             {
-              "message": "Begin the breakout! Shooters cover the advance; wagons keep the column together."
+              "message": "Begin the breakout! Shooters cover the advance; wagons keep the column together.",
+              "sourceHash": "bd77976611788f76"
             },
             {
-              "message": "Crusaders in night confusion cannot coordinate defense!"
+              "message": "Crusaders in night confusion cannot coordinate defense!",
+              "sourceHash": "d1f89b6ec1e549c3"
             }
           ]
         },
@@ -1803,10 +1847,12 @@
           "description": "The withdrawal route runs through Kaňk northwest towards Kolín.",
           "events": [
             {
-              "message": "Continue through Kaňk northwest towards Kolín. Get your units into the marked escape zone."
+              "message": "Continue through Kaňk northwest towards Kolín. Get your units into the marked escape zone.",
+              "sourceHash": "9fcc1b514898188a"
             },
             {
-              "message": "Complete the withdrawal. The force’s safety depends on how many units actually escape."
+              "message": "Complete the withdrawal. The force’s safety depends on how many units actually escape.",
+              "sourceHash": "00cbfa6003424bc4"
             }
           ]
         }
@@ -1841,10 +1887,12 @@
           "description": "Žižka's army pursues retreating crusaders.",
           "events": [
             {
-              "message": "Sigismund fled! Scolari's army retreating to Německý Brod. Pursue them!"
+              "message": "Sigismund fled! Scolari's army retreating to Německý Brod. Pursue them!",
+              "sourceHash": "9f56b8df032af73f"
             },
             {
-              "message": "Crusaders leave loot along the way. Don't get distracted - destroy the army!"
+              "message": "Crusaders leave loot along the way. Don't get distracted - destroy the army!",
+              "sourceHash": "8e77a9519f3118ab"
             }
           ]
         },
@@ -1853,10 +1901,12 @@
           "description": "Following the earlier clash at Habry, the rearguard covers the approach to Německý Brod.",
           "events": [
             {
-              "message": "The rearguard blocks the approach to Brod. Break through towards the town and bridge."
+              "message": "The rearguard blocks the approach to Brod. Break through towards the town and bridge.",
+              "sourceHash": "c592f010d7134649"
             },
             {
-              "message": "Crusaders cannot hold positions - begin fleeing to river!"
+              "message": "Crusaders cannot hold positions - begin fleeing to river!",
+              "sourceHash": "fc53207ead306054"
             }
           ]
         },
@@ -1865,10 +1915,12 @@
           "description": "Panicking army rushes to bridge and onto frozen river.",
           "events": [
             {
-              "message": "Bridge is overcrowded! Part of army tries to cross frozen Sázava!"
+              "message": "Bridge is overcrowded! Part of army tries to cross frozen Sázava!",
+              "sourceHash": "b78d905ec88f4e68"
             },
             {
-              "message": "Ice cracks under heavy wagons! River swallows the fleeing!"
+              "message": "Ice cracks under heavy wagons! River swallows the fleeing!",
+              "sourceHash": "fb796240286149cd"
             }
           ]
         },
@@ -1877,10 +1929,12 @@
           "description": "Hussites finish off remnants of royal army.",
           "events": [
             {
-              "message": "Royal army is scattered! Collect loot and finish off resistance."
+              "message": "Royal army is scattered! Collect loot and finish off resistance.",
+              "sourceHash": "324f79d0e6388c7d"
             },
             {
-              "message": "The retreat route leads across the river towards Jihlava. Victory depends on completing this battle’s objective."
+              "message": "The retreat route leads across the river towards Jihlava. Victory depends on completing this battle’s objective.",
+              "sourceHash": "532812e028bf5d43"
             }
           ]
         }
@@ -1894,6 +1948,10 @@
       "briefing": {
         "hussites": "Hněvín castle is almost ours! Garrison offered capitulation, but Želivský refused. You have two goals: capture castle OR block city gate from which reinforcements may come. You don't have enough men for both - decide!",
         "crusaders": "Hold castle at all costs! Margrave Frederick's reinforcements are on way. Most townsmen will sally from gate and strike Hussites in flank."
+      },
+      "reinforcementGroups": {
+        "mostecka_posadka": "The Most militia sallies from the city gate!",
+        "misenska_armada": "Margrave Frederick's Meissen army arrives from the north!"
       },
       "objectives": {
         "primary": "Fulfill ONE goal: Capture Hněvín castle OR keep city gate blocked",
@@ -1914,10 +1972,12 @@
           "description": "Hněvín castle is within reach. Garrison offered capitulation, but Želivský refused.",
           "events": [
             {
-              "message": "Želivský: \"No mercy for traitors! We shall take castle by force!\""
+              "message": "Želivský: \"No mercy for traitors! We shall take castle by force!\"",
+              "sourceHash": "052e3a6d99997e2a"
             },
             {
-              "message": "Castle garrison defends stubbornly. Noise comes from city..."
+              "message": "Castle garrison defends stubbornly. Noise comes from city...",
+              "sourceHash": "a0bdb0f12bb3957d"
             }
           ]
         },
@@ -1926,10 +1986,12 @@
           "description": "Most townsmen sallied from gate! Strike to flank of Hussite army.",
           "events": [
             {
-              "message": "Most militia sallies from city gate! Flank strike!"
+              "message": "Most militia sallies from city gate! Flank strike!",
+              "sourceHash": "d3e768c23b339449"
             },
             {
-              "message": "You must decide - continue castle assault, or turn around?"
+              "message": "You must decide - continue castle assault, or turn around?",
+              "sourceHash": "6f554fc677c0a691"
             }
           ]
         },
@@ -1938,13 +2000,16 @@
           "description": "Meissen army! Margrave Friedrich comes from north!",
           "events": [
             {
-              "message": "Meissen banners on horizon! Margrave Friedrich comes with reinforcements!"
+              "message": "Meissen banners on horizon! Margrave Friedrich comes with reinforcements!",
+              "sourceHash": "8590244cc34e678e"
             },
             {
-              "message": "Castle assault is now very risky. Consider alternative objective."
+              "message": "Castle assault is now very risky. Consider alternative objective.",
+              "sourceHash": "cbb4efc01d0fba71"
             },
             {
-              "message": "A hit on the Hussite standard-bearer's horse throws the ranks into disorder - and with the Meissen reinforcements arriving, fear spreads among the Hussites."
+              "message": "A hit on the Hussite standard-bearer's horse throws the ranks into disorder - and with the Meissen reinforcements arriving, fear spreads among the Hussites.",
+              "sourceHash": "1445d14dafc7777d"
             }
           ]
         },
@@ -1953,10 +2018,12 @@
           "description": "Complete at least one objective, or face defeat.",
           "events": [
             {
-              "message": "Time is running out! Hold the gate, or take the castle!"
+              "message": "Time is running out! Hold the gate, or take the castle!",
+              "sourceHash": "0bc1f13c1114a2da"
             },
             {
-              "message": "Last chance! Either complete objective, or all is lost."
+              "message": "Last chance! Either complete objective, or all is lost.",
+              "sourceHash": "a67319787b2620b0"
             }
           ]
         }
@@ -1990,10 +2057,12 @@
           "description": "Germans attack in scorching heat.",
           "events": [
             {
-              "message": "Truce letter refused! The Germans proudly replied they 'would keep no one alive and kill them all' - so the Czechs took the same vow. No one gives quarter."
+              "message": "Truce letter refused! The Germans proudly replied they 'would keep no one alive and kill them all' - so the Czechs took the same vow. No one gives quarter.",
+              "sourceHash": "71334fd2f55ac335"
             },
             {
-              "message": "Saxon and Meissen cavalry charge uphill in the unbearable June heat!"
+              "message": "Saxon and Meissen cavalry charge uphill in the unbearable June heat!",
+              "sourceHash": "e30d7f590805761f"
             }
           ]
         },
@@ -2007,10 +2076,12 @@
           "description": "Crusaders break into headlong flight.",
           "events": [
             {
-              "message": "\"They run! Germans run!\" - crusaders flee!"
+              "message": "\"They run! Germans run!\" - crusaders flee!",
+              "sourceHash": "ff26e7e8b05c28c9"
             },
             {
-              "message": "Under the German banner, 24 counts and bannerlords knelt with swords driven into the ground and begged for mercy - but by the vow taken before the battle, they are slain to the last."
+              "message": "Under the German banner, 24 counts and bannerlords knelt with swords driven into the ground and begged for mercy - but by the vow taken before the battle, they are slain to the last.",
+              "sourceHash": "b7b309812f4f023b"
             }
           ]
         }
@@ -2042,11 +2113,15 @@
           "description": "Hussites advance from Stříbro. Crusaders send cavalry to slow advance.",
           "events": [
             {
-              "message": "Hussite army approaches from Stříbro! 16,000 infantry and 1,500 cavalry under Prokop the Great."
+              "message": "Hussite army approaches from Stříbro! 16,000 infantry and 1,500 cavalry under Prokop the Great.",
+              "sourceHash": "434f7ddaf8d06135"
             },
-            {},
             {
-              "text": "Jindřich of Plavno's skirmishers are beaten back by the Hussites on the march - they rush back to camp in disorder, spreading panic!"
+              "sourceHash": "702b3c389ae900c6"
+            },
+            {
+              "text": "Jindřich of Plavno's skirmishers are beaten back by the Hussites on the march - they rush back to camp in disorder, spreading panic!",
+              "sourceHash": "8a7b41707a39ac53"
             }
           ]
         },
@@ -2055,13 +2130,16 @@
           "description": "Fear spreads through crusader camp. Units begin deserting.",
           "events": [
             {
-              "text": "Entire crusader units abandon camp and flee to borders!"
+              "text": "Entire crusader units abandon camp and flee to borders!",
+              "sourceHash": "8df8c6efa7635ae8"
             },
             {
-              "message": "Cardinal Beaufort vainly tries to stop fleeing soldiers."
+              "message": "Cardinal Beaufort vainly tries to stop fleeing soldiers.",
+              "sourceHash": "7c28667a546cc122"
             },
             {
-              "text": "Beaufort in rage tears imperial banners and throws them at princes' feet!"
+              "text": "Beaufort in rage tears imperial banners and throws them at princes' feet!",
+              "sourceHash": "760c440b8ecb0a11"
             }
           ]
         },
@@ -2070,10 +2148,12 @@
           "description": "Crusader army flees. Hussites pursue and capture abandoned camp.",
           "events": [
             {
-              "text": "At the sound of the chorale \"Ye Who Are Warriors of God\", the horns and the rumble of war wagons, the remnants of the crusader army break into headlong flight!"
+              "text": "At the sound of the chorale \"Ye Who Are Warriors of God\", the horns and the rumble of war wagons, the remnants of the crusader army break into headlong flight!",
+              "sourceHash": "a25643181c4bb4e7"
             },
             {
-              "message": "Hussites find abandoned crusader camp full of supplies and weapons."
+              "message": "Hussites find abandoned crusader camp full of supplies and weapons.",
+              "sourceHash": "a26538ce87af226a"
             }
           ]
         }
@@ -2105,10 +2185,12 @@
           "description": "Hussites begin attack on Silesian army before walls.",
           "events": [
             {
-              "message": "Hussite army advances with wagons and guns against Nysa defenders!"
+              "message": "Hussite army advances with wagons and guns against Nysa defenders!",
+              "sourceHash": "59805265269bf8b3"
             },
             {
-              "message": "Peasants and villagers oppose Hussites before suburbs."
+              "message": "Peasants and villagers oppose Hussites before suburbs.",
+              "sourceHash": "d577a80245eaf69f"
             }
           ]
         },
@@ -2117,10 +2199,12 @@
           "description": "Hussites break through Silesian defense.",
           "events": [
             {
-              "text": "Silesian units begin retreating under pressure of Hussite attack!"
+              "text": "Silesian units begin retreating under pressure of Hussite attack!",
+              "sourceHash": "2ee9f00a1a1c8dbc"
             },
             {
-              "message": "Půta of Častolovic tries to organize defense at walls."
+              "message": "Půta of Častolovic tries to organize defense at walls.",
+              "sourceHash": "2b6ea1f22bd551c4"
             }
           ]
         },
@@ -2129,10 +2213,12 @@
           "description": "Defenders flee, many perish in river.",
           "events": [
             {
-              "text": "Defenders flee in panic - many perish in river Nysa!"
+              "text": "Defenders flee in panic - many perish in river Nysa!",
+              "sourceHash": "bb99bcbd40d498c8"
             },
             {
-              "message": "Hussites burn suburbs and attack walls!"
+              "message": "Hussites burn suburbs and attack walls!",
+              "sourceHash": "426674b2390b58dc"
             }
           ]
         }
@@ -2163,11 +2249,15 @@
           "description": "Hussites rapidly approach Domažlice.",
           "events": [
             {
-              "message": "Hussite army covered 80 km in 2 days and approaches Domažlice!"
+              "message": "Hussite army covered 80 km in 2 days and approaches Domažlice!",
+              "sourceHash": "d13f6586eb16fd93"
             },
-            {},
             {
-              "text": "Scouts report: Hussites are closer than we expected!"
+              "sourceHash": "41786ebc78778c29"
+            },
+            {
+              "text": "Scouts report: Hussites are closer than we expected!",
+              "sourceHash": "ef57271f69b3c586"
             }
           ]
         },
@@ -2177,20 +2267,25 @@
           "events": [
             {
               "text": "Sound of choral terrifies crusaders!",
-              "message": "The Hussite force is approaching. Movements inside the camp are being mistaken for the start of a retreat."
+              "message": "The Hussite force is approaching. Movements inside the camp are being mistaken for the start of a retreat.",
+              "sourceHash": "8cd6a81891c59f3f"
             },
             {
-              "text": "Confusion and fear weaken the crusading army’s morale."
+              "text": "Confusion and fear weaken the crusading army’s morale.",
+              "sourceHash": "ad788be9e3227c64"
             },
             {
-              "message": "Cardinal Cesarini flees and loses cardinal hat!"
+              "message": "Cardinal Cesarini flees and loses cardinal hat!",
+              "sourceHash": "2f808c8919d67fd2"
             },
             {
-              "text": "Panic spreads through crusader camp!"
+              "text": "Panic spreads through crusader camp!",
+              "sourceHash": "4df03986538deabe"
             },
             {
               "message": "The crusaders hear the chorale and the rumble of wagons - and break into flight!",
-              "text": "Fear of the Hussites and disrupted command spread panic, but some units may still resist."
+              "text": "Fear of the Hussites and disrupted command spread panic, but some units may still resist.",
+              "sourceHash": "af83531c6337a21d"
             }
           ]
         },
@@ -2199,7 +2294,8 @@
           "description": "Crusaders flee through Všeruby pass to Bavaria.",
           "events": [
             {
-              "text": "Entire crusader army breaks into flight!"
+              "text": "Entire crusader army breaks into flight!",
+              "sourceHash": "950dab7be6f14046"
             }
           ]
         }
@@ -2232,13 +2328,16 @@
           "description": "Hussite guns bombard walls. Defenders respond from city positions.",
           "events": [
             {
-              "message": "Hussite bombards open fire on Plzeň walls!"
+              "message": "Hussite bombards open fire on Plzeň walls!",
+              "sourceHash": "decc760ba12e4f23"
             },
             {
-              "message": "Defenders take cover behind battlements. Vilém Švihovský encourages garrison."
+              "message": "Defenders take cover behind battlements. Vilém Švihovský encourages garrison.",
+              "sourceHash": "6b210a6ed905aa71"
             },
             {
-              "message": "First cracks appear in walls!"
+              "message": "First cracks appear in walls!",
+              "sourceHash": "9b70fb96f95d3cf7"
             }
           ]
         },
@@ -2247,13 +2346,16 @@
           "description": "Infantry advances to walls. Heavy losses on both sides.",
           "events": [
             {
-              "message": "Jan Pardus of Horka leads Taborite infantry to attack!"
+              "message": "Jan Pardus of Horka leads Taborite infantry to attack!",
+              "sourceHash": "432033a139859f9c"
             },
             {
-              "message": "The defenders cover the approaches to the walls and repel the attacking infantry."
+              "message": "The defenders cover the approaches to the walls and repel the attacking infantry.",
+              "sourceHash": "8c88ded47d067fdc"
             },
             {
-              "message": "Bloody fighting at walls! Hussites try to break defense."
+              "message": "Bloody fighting at walls! Hussites try to break defense.",
+              "sourceHash": "4d522511db436e8b"
             }
           ]
         },
@@ -2262,10 +2364,12 @@
           "description": "The garrison may attempt a sortie if it still has the strength. Fighting continues at the fortifications.",
           "events": [
             {
-              "message": "Vilém Švihovský prepares a sortie. The defenders still fit to fight gather near the gates."
+              "message": "Vilém Švihovský prepares a sortie. The defenders still fit to fight gather near the gates.",
+              "sourceHash": "f5bf28448afb6edb"
             },
             {
-              "text": "The defenders still fit to fight near the gates gain confidence."
+              "text": "The defenders still fit to fight near the gates gain confidence.",
+              "sourceHash": "2c6a6034ff386e8d"
             }
           ]
         },
@@ -2274,10 +2378,12 @@
           "description": "Attack either succeeds, or Hussites must retreat.",
           "events": [
             {
-              "message": "Last chance for breakthrough! Prokop the Great sends reserves."
+              "message": "Last chance for breakthrough! Prokop the Great sends reserves.",
+              "sourceHash": "8494bcee206c5eba"
             },
             {
-              "text": "Hunger, violent foraging in the countryside, and quarrels among the captains break the camp. Some soldiers desert."
+              "text": "Hunger, violent foraging in the countryside, and quarrels among the captains break the camp. Some soldiers desert.",
+              "sourceHash": "1fcc8155d64d644d"
             }
           ]
         }
@@ -2319,10 +2425,12 @@
           "description": "Negotiations have failed. Former allies now face each other.",
           "events": [
             {
-              "message": "Fratricidal battle begins..."
+              "message": "Fratricidal battle begins...",
+              "sourceHash": "2c06e0e4432eea99"
             },
             {
-              "message": "Negotiations have failed. Among those facing you are men who once fought under the same sign."
+              "message": "Negotiations have failed. Among those facing you are men who once fought under the same sign.",
+              "sourceHash": "549135246500804b"
             }
           ]
         },
@@ -2331,10 +2439,12 @@
           "description": "The coalition seeks a chance to draw the field armies out of their defences.",
           "events": [
             {
-              "message": "The coalition is looking for a weak point in your defence. Beware of a feigned retreat!"
+              "message": "The coalition is looking for a weak point in your defence. Beware of a feigned retreat!",
+              "sourceHash": "cf53041b66126912"
             },
             {
-              "message": "The coalition is ordered to feign a retreat. Pursuit could open a path for its cavalry."
+              "message": "The coalition is ordered to feign a retreat. Pursuit could open a path for its cavalry.",
+              "sourceHash": "3b15ad2edc7f5f85"
             }
           ]
         },
@@ -2343,7 +2453,8 @@
           "description": "Watch the cavalry; keeping your defence together may decide the battle.",
           "events": [
             {
-              "message": "The decisive clash. Watch the cavalry; whether to leave the wagon fort is your decision."
+              "message": "The decisive clash. Watch the cavalry; whether to leave the wagon fort is your decision.",
+              "sourceHash": "d2f10bef335c08d3"
             }
           ]
         },
@@ -2359,7 +2470,8 @@
                   "fallen": "Prokop the Great has fallen in this battle. The remaining troops fight on without him.",
                   "escaped": "Prokop the Great has left the battlefield. The fighting continues without him."
                 }
-              }
+              },
+              "sourceHash": "a4acd2975f7d4ce0"
             }
           ]
         }
@@ -2394,13 +2506,16 @@
           "description": "The royal army presses the fortified bailey and castle core.",
           "events": [
             {
-              "message": "The siege has continued since spring. Artillery positions cover the castle from the north and south."
+              "message": "The siege has continued since spring. Artillery positions cover the castle from the north and south.",
+              "sourceHash": "db40e0daf546bf42"
             },
             {
-              "message": "No well is documented, but protected access to the Vrchlice could supply water. Hold the defensive perimeter."
+              "message": "No well is documented, but protected access to the Vrchlice could supply water. Hold the defensive perimeter.",
+              "sourceHash": "1a5913205cd3ab24"
             },
             {
-              "message": "King Sigismund loses patience. Sends Hungarian army!"
+              "message": "King Sigismund loses patience. Sends Hungarian army!",
+              "sourceHash": "e6f5180cbf50fdee"
             }
           ]
         },
@@ -2409,10 +2524,12 @@
           "description": "Hungarian reinforcements change balance of power.",
           "events": [
             {
-              "message": "Michal Országh brings Hungarian knights! Situation desperate."
+              "message": "Michal Országh brings Hungarian knights! Situation desperate.",
+              "sourceHash": "6f8e49fdb6062e29"
             },
             {
-              "text": "Hungarian knights encourage royal army to decisive attack!"
+              "text": "Hungarian knights encourage royal army to decisive attack!",
+              "sourceHash": "37d2371f34b4f687"
             }
           ]
         },
@@ -2421,13 +2538,16 @@
           "description": "General assault on walls. Defenders fight for survival.",
           "events": [
             {
-              "message": "Guns bombard the defences. Holding the approaches to the castle core is crucial."
+              "message": "Guns bombard the defences. Holding the approaches to the castle core is crucial.",
+              "sourceHash": "a438d7f1b24418b2"
             },
             {
-              "text": "Some defenders lose hope. Jan Roháč encourages them to fight!"
+              "text": "Some defenders lose hope. Jan Roháč encourages them to fight!",
+              "sourceHash": "7452a7510edad80f"
             },
             {
-              "message": "The attackers are seeking a way across the ditches. Watch the passages between the banks."
+              "message": "The attackers are seeking a way across the ditches. Watch the passages between the banks.",
+              "sourceHash": "73c355e79e1475ca"
             }
           ]
         },
@@ -2436,10 +2556,12 @@
           "description": "Holding the castle core will decide the outcome.",
           "events": [
             {
-              "message": "The approaches to the core are contested. Losing its key positions will end the defence."
+              "message": "The approaches to the core are contested. Losing its key positions will end the defence.",
+              "sourceHash": "f08242481d546c24"
             },
             {
-              "message": "The defence reaches its final stage. The garrison and held positions decide this battle, not a prewritten legend."
+              "message": "The defence reaches its final stage. The garrison and held positions decide this battle, not a prewritten legend.",
+              "sourceHash": "777a2480e3c0b8b5"
             }
           ]
         }
@@ -2473,10 +2595,12 @@
           "description": "Hussites fortify on Gothard hill, Catholics gather.",
           "events": [
             {
-              "message": "Žižka: \"To the hill! Hold slopes, shooters forward!\""
+              "message": "Žižka: \"To the hill! Hold slopes, shooters forward!\"",
+              "sourceHash": "d33ea65170c2d50c"
             },
             {
-              "message": "Catholic nobility forms for attack below hill."
+              "message": "Catholic nobility forms for attack below hill.",
+              "sourceHash": "e13d01502d43e95e"
             }
           ]
         },
@@ -2485,13 +2609,16 @@
           "description": "Čeněk of Wartenberg throws cavalry into frontal assault on hill.",
           "events": [
             {
-              "message": "Čeněk of Wartenberg: \"Forward! Crush heretics!\""
+              "message": "Čeněk of Wartenberg: \"Forward! Crush heretics!\"",
+              "sourceHash": "bd9d066a177c6183"
             },
             {
-              "message": "Heavy cavalry crashes into Hussite infantry! Attack bogs down on steep slope."
+              "message": "Heavy cavalry crashes into Hussite infantry! Attack bogs down on steep slope.",
+              "sourceHash": "583b6451ec561952"
             },
             {
-              "text": "The lords must dismount - there is no charging uphill onto the wagons and pikes on horseback."
+              "text": "The lords must dismount - there is no charging uphill onto the wagons and pikes on horseback.",
+              "sourceHash": "369c9666dd0b8e5b"
             }
           ]
         },
@@ -2500,13 +2627,16 @@
           "description": "Furious fighting on Gothard slopes. Catholics suffer heavy losses.",
           "events": [
             {
-              "message": "Hussite hand cannons and shooters mow down attackers!"
+              "message": "Hussite hand cannons and shooters mow down attackers!",
+              "sourceHash": "95b5059c8ef46819"
             },
             {
-              "message": "Arnošt Flaška's troop collapses under fire!"
+              "message": "Arnošt Flaška's troop collapses under fire!",
+              "sourceHash": "f31f4738c98a037a"
             },
             {
-              "text": "The collapse of Flaška's troop shook the Catholics."
+              "text": "The collapse of Flaška's troop shook the Catholics.",
+              "sourceHash": "d569262f7d6bc625"
             }
           ]
         },
@@ -2515,10 +2645,12 @@
           "description": "Žižka orders counterattack. Orebite cavalry and infantry charge from hill.",
           "events": [
             {
-              "message": "Žižka: \"Now! Forward, for the chalice!\""
+              "message": "Žižka: \"Now! Forward, for the chalice!\"",
+              "sourceHash": "07438cc0389ba7cf"
             },
             {
-              "message": "Catholics break into flight! Čeněk flees with handful of men!"
+              "message": "Catholics break into flight! Čeněk flees with handful of men!",
+              "sourceHash": "e29d86e0d90e7308"
             }
           ]
         },
@@ -2527,10 +2659,12 @@
           "description": "Hussites pursue fleeing Catholics and capture their wagons.",
           "events": [
             {
-              "message": "All Catholic wagons and guns captured!"
+              "message": "All Catholic wagons and guns captured!",
+              "sourceHash": "ef53eba8aabefc5b"
             },
             {
-              "message": "Čeněk of Wartenberg escaped. Hussite victory is complete."
+              "message": "Čeněk of Wartenberg escaped. Hussite victory is complete.",
+              "sourceHash": "6e06c27625f7267a"
             }
           ]
         }
@@ -2566,10 +2700,12 @@
           "description": "Žižka recognizes terrain with help of Roháč and Hvězda. Hussites fortify on slope.",
           "events": [
             {
-              "message": "Jan Roháč: \"Lord captain, we have good slope above valley. Bohynka stream covers our center.\""
+              "message": "Jan Roháč: \"Lord captain, we have good slope above valley. Bohynka stream covers our center.\"",
+              "sourceHash": "8fc5193ff7e19104"
             },
             {
-              "message": "Jan Hvězda: \"I know these places. Valley is narrow - enemy won't be able to deploy.\""
+              "message": "Jan Hvězda: \"I know these places. Valley is narrow - enemy won't be able to deploy.\"",
+              "sourceHash": "74cf88c9cb2f5a79"
             }
           ]
         },
@@ -2578,13 +2714,16 @@
           "description": "Anti-Žižka coalition throws cavalry into valley. Enemy cannot fully deploy.",
           "events": [
             {
-              "message": "Čeněk of Wartenberg: \"To attack! We'll crush the blind man once and for all!\""
+              "message": "Čeněk of Wartenberg: \"To attack! We'll crush the blind man once and for all!\"",
+              "sourceHash": "b22753775f55632b"
             },
             {
-              "message": "Heavy cavalry enters narrow valley... Ranks crowd!"
+              "message": "Heavy cavalry enters narrow valley... Ranks crowd!",
+              "sourceHash": "9bd7766c9ca46c89"
             },
             {
-              "text": "Cavalry loses momentum in marshy valley!"
+              "text": "Cavalry loses momentum in marshy valley!",
+              "sourceHash": "3a701a788d5f29ad"
             }
           ]
         },
@@ -2593,17 +2732,21 @@
           "description": "Fire and constricted terrain disrupt the attackers’ advance. The defenders look for a chance to counterattack.",
           "events": [
             {
-              "message": "Hand cannons and handguns fire into crowded enemy ranks!"
+              "message": "Hand cannons and handguns fire into crowded enemy ranks!",
+              "sourceHash": "b0e62fc3982ceb42"
             },
             {
-              "message": "Coalition losses grow! Valley colors with blood!"
+              "message": "Coalition losses grow! Valley colors with blood!",
+              "sourceHash": "640bd08acde62d8e"
             },
             {
-              "text": "Coalition army loses courage in murderous fire."
+              "text": "Coalition army loses courage in murderous fire.",
+              "sourceHash": "879d45f151f1cb7d"
             },
             {
               "title": "Disrupted vanguard",
-              "text": "Crowded units cannot deploy under fire. Confusion in the vanguard shakes the formations behind them."
+              "text": "Crowded units cannot deploy under fire. Confusion in the vanguard shakes the formations behind them.",
+              "sourceHash": "9f0f261bb59ca3ce"
             }
           ]
         },
@@ -2612,13 +2755,16 @@
           "description": "Žižka orders deadly counterattack down slope.",
           "events": [
             {
-              "message": "Žižka: \"Now! Down the hill! For God's truth!\""
+              "message": "Žižka: \"Now! Down the hill! For God's truth!\"",
+              "sourceHash": "b89410c09e58058c"
             },
             {
-              "message": "Hussite cavalry and infantry rush down slope at disoriented enemy!"
+              "message": "Hussite cavalry and infantry rush down slope at disoriented enemy!",
+              "sourceHash": "426dfb85f78623f1"
             },
             {
-              "text": "Attack from hill! +15% to Hussite units' attack."
+              "text": "Attack from hill! +15% to Hussite units' attack.",
+              "sourceHash": "865e62ddfb19842d"
             }
           ]
         },
@@ -2627,16 +2773,20 @@
           "description": "Coalition army collapses. Rear units flee without fight.",
           "events": [
             {
-              "message": "Coalition collapses! Men flee toward Malešov!"
+              "message": "Coalition collapses! Men flee toward Malešov!",
+              "sourceHash": "5b715986bd22d6c7"
             },
             {
-              "message": "Čeněk of Wartenberg: \"Back! Everyone back!\" Rear units didn't even enter battle."
+              "message": "Čeněk of Wartenberg: \"Back! Everyone back!\" Rear units didn't even enter battle.",
+              "sourceHash": "00bad03020fbf3c7"
             },
             {
-              "message": "Unit cohesion will decide the outcome. Historical casualty estimates are not a count of losses in this game."
+              "message": "Unit cohesion will decide the outcome. Historical casualty estimates are not a count of losses in this game.",
+              "sourceHash": "05c68a3910e0278d"
             },
             {
-              "message": "Žižka controls battlefield. Road to Kutná Hora open!"
+              "message": "Žižka controls battlefield. Road to Kutná Hora open!",
+              "sourceHash": "c6e069a760281120"
             }
           ]
         }

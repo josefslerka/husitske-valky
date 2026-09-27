@@ -234,6 +234,19 @@ function getLocalizedScenario(scenarioId, baseScenario) {
         }
     }
 
+    // Samostatné skupiny posil (Vyšehrad, Most) nejsou pod forces.*.
+    if (baseScenario.reinforcements) {
+        localizedScenario.reinforcements = Object.fromEntries(
+            Object.entries(baseScenario.reinforcements).map(([group, reinforcements]) => {
+                const key = `${scenarioKey}.reinforcementGroups.${group}`;
+                return [group, {
+                    ...reinforcements,
+                    message: i18n.hasTranslation(key) ? i18n.t(key) : reinforcements.message
+                }];
+            })
+        );
+    }
+
     // Tutorial steps
     if (baseScenario.tutorialSteps) {
         localizedScenario.tutorialSteps = baseScenario.tutorialSteps.map((step, index) => {
@@ -430,10 +443,26 @@ function updateGameDataLocalization() {
                 });
             }
 
+            // Posily ještě mohou dorazit v dalších kolech. Měníme jen jejich
+            // popisky, nikoli souřadnice a stav již zpracovaných událostí.
+            for (const side of ['hussites', 'crusaders']) {
+                const current = scenario.forces?.[side]?.reinforcements;
+                const translated = localized.forces?.[side]?.reinforcements;
+                if (current && translated) current.message = translated.message;
+            }
+            for (const [group, current] of Object.entries(scenario.reinforcements || {})) {
+                const translated = localized.reinforcements?.[group];
+                if (translated) current.message = translated.message;
+            }
+
             const battleName = document.getElementById('battle-name');
             const battleDate = document.getElementById('battle-date');
             if (battleName) battleName.textContent = scenario.name;
             if (battleDate) battleDate.textContent = scenario.date;
+        }
+
+        if (typeof activeGame.view?.refreshEventNotifications === 'function') {
+            activeGame.view.refreshEventNotifications();
         }
 
         if (typeof activeGame.updateUI === 'function') activeGame.updateUI();

@@ -1556,6 +1556,24 @@ body {
     color: var(--field-ink-soft);
     cursor: not-allowed;
 }
+#main-menu .menu-reward {
+    margin-top: 18px;
+    padding: 13px 16px;
+    border: 1px solid var(--field-rule);
+    border-left: 3px solid var(--field-red);
+    background: #e9dcc0;
+}
+#main-menu .menu-reward .menu-section-title { margin-bottom: 4px; }
+#main-menu .menu-reward-link {
+    min-height: 48px;
+    padding: 4px 0 0;
+    border-bottom: 0;
+    text-decoration: none;
+}
+#main-menu .menu-reward-copy { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+#main-menu .menu-reward-copy strong { font-size: 1.05rem; font-weight: 700; }
+#main-menu .menu-reward-copy > span { color: var(--field-ink-soft); font: normal .82rem/1.4 Georgia, serif; }
+#main-menu .menu-reward-link .menu-arrow { align-self: center; }
 #main-menu .menu-library { margin-top: 24px; }
 #main-menu .menu-library .menu-section-title { margin-bottom: 4px; }
 #main-menu .menu-library-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }

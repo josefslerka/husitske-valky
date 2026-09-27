@@ -94,6 +94,11 @@ const CampaignProgressSystem = {
         return act.battles.filter(battle => progress.battles[battle.id]?.result === 'victory').length;
     },
 
+    isActCompleted(actId, progress = this.load()) {
+        const act = this._acts().find(candidate => candidate.id === Number(actId));
+        return Boolean(act?.battles.length && this._isActComplete(act, progress));
+    },
+
     isActUnlocked(actId, progress = this.load()) {
         const act = this._acts().find(candidate => candidate.id === Number(actId));
         if (!act) return false;

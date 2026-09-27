@@ -11,7 +11,7 @@ const test = (name, run) => tests.push({ name, run });
 const scriptTag = file => html.match(new RegExp(`<script src="${file.replaceAll('.', '\\.')}\\?v=[\\d.]+"></script>`))[0];
 
 test('skutečný HTML vstup zahrnuje všechny skripty, hudbu, značku i překlady', () => {
-    assert.deepEqual(validateEntrypoint(), { scripts: 35, assets: 40, languages: 2 });
+    assert.deepEqual(validateEntrypoint(), { scripts: 35, assets: 41, languages: 2 });
 });
 
 test('chybějící skript nepřekryje ani jeho kopie v komentáři', () => {
@@ -54,7 +54,12 @@ test('relativní URL mohou mít cache verzi, fragment a nezávislé vnější od
     const changed = html.replace('imgs/menu-woodcut.svg', './imgs/menu-woodcut.svg?v=999#art') +
         '<a href="https://example.com/missing">externí</a><a href="mailto:test@example.com">mail</a>' +
         '<a href="#menu">kotva</a><img src="data:image/png;base64,AAAA">';
-    assert.equal(validateEntrypoint({ html: changed }).assets, 40);
+    assert.equal(validateEntrypoint({ html: changed }).assets, 41);
+});
+
+test('odkaz na odměnu vede na skutečný soubor minihry', () => {
+    assert.throws(() => validateEntrypoint({ html: html.replace('bonus/vozova-hradba/index.html', 'bonus/vozova-hradba/missing.html') }),
+        /chybí soubor/);
 });
 
 test('velikost písmen se kontroluje i na case-insensitive disku', () => {

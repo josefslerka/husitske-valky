@@ -31,7 +31,17 @@ class TestBattleView {
     clearSelection() {}
     showMoveRange() {}
     clearEventNotifications() { this.notifications = []; }
-    showEventNotification(title, text) { this.notifications.push({ title, text }); }
+    showEventNotification(title, text, resolveLocalizedText = null) {
+        this.notifications.push({ title, text, resolveLocalizedText });
+    }
+    refreshEventNotifications() {
+        for (const item of this.notifications) {
+            if (typeof item.resolveLocalizedText !== 'function') continue;
+            const localized = item.resolveLocalizedText();
+            if (typeof localized?.title === 'string') item.title = localized.title;
+            if (typeof localized?.text === 'string') item.text = localized.text;
+        }
+    }
     showAttackAnimation() {}
     showExplosionAnimation() {}
     animateMove() { return Promise.resolve(true); }

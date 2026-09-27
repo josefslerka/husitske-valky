@@ -349,8 +349,8 @@ class Game {
 
     // Zařazení notifikace eventu. Jednotlivé zprávy se zobrazují sekvenčně,
     // aby se při více událostech v jednom kole nepřekrývaly.
-    showEventNotification(title, text) {
-        return this.view.showEventNotification(title, text);
+    showEventNotification(title, text, resolveLocalizedText = null) {
+        return this.view.showEventNotification(title, text, resolveLocalizedText);
     }
 
     // ==========================================
@@ -408,12 +408,20 @@ class Game {
         if (isPlayer) {
             const msg = i18n.t('gameLog.armyWaveringPlayer', { faction: factionName });
             this.addLog('⚠️ ' + msg, 'morale');
-            this.showEventNotification('⚠️ ' + i18n.t('game.wavering'), msg);
+            const resolve = () => ({
+                title: '⚠️ ' + i18n.t('game.wavering'),
+                text: i18n.t('gameLog.armyWaveringPlayer', { faction: i18n.t(`factions.${faction}`) })
+            });
+            this.showEventNotification('⚠️ ' + i18n.t('game.wavering'), msg, resolve);
             if (typeof Sound !== 'undefined' && Sound.playDefeat) Sound.playDefeat();
         } else {
             const msg = i18n.t('gameLog.armyWavering', { faction: factionName });
             this.addLog('⚔️ ' + msg, 'morale');
-            this.showEventNotification('⚔️ ' + i18n.t('game.wavering'), msg);
+            const resolve = () => ({
+                title: '⚔️ ' + i18n.t('game.wavering'),
+                text: i18n.t('gameLog.armyWavering', { faction: i18n.t(`factions.${faction}`) })
+            });
+            this.showEventNotification('⚔️ ' + i18n.t('game.wavering'), msg, resolve);
             if (typeof Sound !== 'undefined' && Sound.playWagonFort) Sound.playWagonFort();
         }
     }
@@ -947,9 +955,17 @@ class Game {
 
         if (Math.random() < drownChance) {
             this.addLog(i18n.t('gameLog.iceBroke', {unit: unit.name}), 'combat');
+            const resolve = () => ({
+                title: i18n.t('messages.iceBreakTitle'),
+                text: i18n.t('messages.iceBreakText', {
+                    unit: i18n.hasTranslation(`units.${unit.type}.name`)
+                        ? i18n.t(`units.${unit.type}.name`) : unit.name
+                })
+            });
             this.showEventNotification(
                 i18n.t('messages.iceBreakTitle'),
-                i18n.t('messages.iceBreakText', { unit: unit.name })
+                i18n.t('messages.iceBreakText', { unit: unit.name }),
+                resolve
             );
             unit.health = 0;
             this.units = this.units.filter(u => u !== unit);

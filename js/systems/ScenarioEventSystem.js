@@ -18,6 +18,35 @@ class ScenarioEventSystem {
         return status?.texts?.[this.getUnitState(status)] || '';
     }
 
+    // Hláška může čekat ve frontě, zatímco hráč přepne jazyk. Uchováme její
+    // identitu a jednou vybranou narativní variantu, ne hotový překlad.
+    showScenarioEventNotification(event, fallbackTitleKey, { unitStatus = false, titleKey = null, suffixKey = null } = {}) {
+        const scenarioId = this.game.currentScenario?.id;
+        const unitState = unitStatus ? this.getUnitState(event.unitStatus) : null;
+        const resolve = () => {
+            let currentEvent = event;
+            let currentPhase = null;
+            if (event.id && this.game.currentScenario?.id === scenarioId) {
+                for (const phase of this.game.currentScenario.phases || []) {
+                    const index = (phase.events || []).findIndex((candidate, position) =>
+                        (candidate.id || `phase${phase.id}_evt${position}`) === event.id);
+                    if (index >= 0) {
+                        currentEvent = phase.events[index];
+                        currentPhase = phase;
+                        break;
+                    }
+                }
+            }
+            const title = titleKey ? i18n.t(titleKey)
+                : (currentEvent.title || currentPhase?.name || event.title || i18n.t(fallbackTitleKey));
+            const variant = unitState ? currentEvent.unitStatus?.texts?.[unitState] : null;
+            const body = variant || currentEvent.text || currentEvent.message || event.text || event.message || '';
+            return { title, text: body + (suffixKey ? `\n\n${i18n.t(suffixKey)}` : '') };
+        };
+        const { title, text } = resolve();
+        this.game.showEventNotification(title, text, resolve);
+    }
+
     // Malý datový otisk závěru pro Kroniku. Žádný lokalizovaný text ani
     // reference na živé jednotky: pozdější partie ani jazyk osud nepřepíšou.
     captureNarrativeOutcome(isVictory) {
@@ -123,8 +152,7 @@ class ScenarioEventSystem {
     processEvent(event) {
         switch (event.type) {
             case 'message':
-                this.game.showEventNotification(event.title || i18n.t('messages.messageTitle'),
-                    this.getUnitStatusText(event.unitStatus) || event.text);
+                this.showScenarioEventNotification(event, 'messages.messageTitle', { unitStatus: true });
                 break;
 
             case 'reinforcement':
@@ -155,7 +183,7 @@ class ScenarioEventSystem {
                     }
                 }
                 if (event.text) {
-                    this.game.showEventNotification(event.title || i18n.t('messages.moraleTitle'), event.text);
+                    this.showScenarioEventNotification(event, 'messages.moraleTitle');
                 }
                 break;
 
@@ -209,12 +237,12 @@ class ScenarioEventSystem {
                     }
 
                     if (event.text) {
-                        const reputationLine = typeof CampaignProgressSystem !== 'undefined'
+                        const reputationKey = typeof CampaignProgressSystem !== 'undefined'
                             && CampaignProgressSystem.affectsReputationBattle(this.game.currentScenario?.id)
                             && basePanicLevel >= 2
-                            ? `\n\n${i18n.t(CampaignProgressSystem.getNarrativeKey(this.game.campaignReputation))}`
-                            : '';
-                        this.game.showEventNotification(event.title || i18n.t('messages.panicTitle'), event.text + reputationLine);
+                            ? CampaignProgressSystem.getNarrativeKey(this.game.campaignReputation)
+                            : null;
+                        this.showScenarioEventNotification(event, 'messages.panicTitle', { suffixKey: reputationKey });
                     }
                     this.game.addLog(i18n.t('gameLog.enemyPanic', {penalty: panicLevel * 5}), 'morale');
                 }
@@ -236,7 +264,7 @@ class ScenarioEventSystem {
                         proximity: (typeof event.proximity === 'number') ? event.proximity : 3
                     };
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.orderTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.orderTitle');
                     }
                 }
                 break;
@@ -261,7 +289,7 @@ class ScenarioEventSystem {
                     }
                     this.game.moraleBroken = routFraction >= 0.75;
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.massRoutTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.massRoutTitle');
                     }
                     this.game.addLog(i18n.t('gameLog.armyRouting'), 'morale');
                 }
@@ -278,7 +306,7 @@ class ScenarioEventSystem {
                         unit.defense = (unit.defense || 0) + 3;
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.trenchesTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.trenchesTitle');
                     }
                     this.game.addLog(i18n.t('gameLog.trenchBonus'), 'turn');
                 }
@@ -299,7 +327,7 @@ class ScenarioEventSystem {
                         unit.dismounted = true;
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.dismountTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.dismountTitle');
                     }
                     if (dismountedUnits.length > 0) {
                         this.game.addLog(i18n.t('gameLog.dismountedUnits', { count: dismountedUnits.length }), 'combat');
@@ -310,7 +338,7 @@ class ScenarioEventSystem {
             case 'tutorial':
                 // Pozůstatek tutoriálových TIPů ve scénářích - jen zobrazit text
                 if (event.text) {
-                    this.game.showEventNotification(i18n.t('messages.tipTitle'), event.text);
+                    this.showScenarioEventNotification(event, 'messages.tipTitle', { titleKey: 'messages.tipTitle' });
                 }
                 break;
 
@@ -330,7 +358,7 @@ class ScenarioEventSystem {
                         }
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.moraleTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.moraleTitle');
                     }
                 }
                 break;
@@ -348,7 +376,7 @@ class ScenarioEventSystem {
                         }
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.cavalryStoppedTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.cavalryStoppedTitle');
                     }
                     if (blocked > 0) {
                         this.game.addLog(i18n.t('gameLog.chargeBlocked', { count: blocked }), 'combat');
@@ -374,7 +402,7 @@ class ScenarioEventSystem {
                         }
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.wagonFortTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.wagonFortTitle');
                     }
                     if (boosted > 0) {
                         this.game.addLog(i18n.t('gameLog.wagonBonusApplied', { count: boosted }), 'turn');
@@ -393,7 +421,7 @@ class ScenarioEventSystem {
                         }
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.terrainTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.terrainTitle');
                     }
                 }
                 break;
@@ -409,7 +437,7 @@ class ScenarioEventSystem {
                         }
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.attackTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.attackTitle');
                     }
                 }
                 break;
@@ -436,7 +464,7 @@ class ScenarioEventSystem {
                         }
                     }
                     if (event.text) {
-                        this.game.showEventNotification(event.title || i18n.t('messages.massacreTitle'), event.text);
+                        this.showScenarioEventNotification(event, 'messages.massacreTitle');
                     }
                     if (massacreTargets.length > 0) {
                         this.game.addLog(i18n.t('gameLog.massacreResult', { count: massacreTargets.length }), 'combat');
@@ -449,7 +477,7 @@ class ScenarioEventSystem {
                 // Neznámý typ eventu - zobraz aspoň vyprávění, ať se text
                 // tiše neztratí, a upozorni do konzole
                 if (event.text || event.message) {
-                    this.game.showEventNotification(event.title || i18n.t('messages.eventTitle'), event.text || event.message);
+                    this.showScenarioEventNotification(event, 'messages.eventTitle');
                 }
                 console.warn(`Neimplementovaný typ eventu: ${event.type}`);
                 break;
@@ -463,14 +491,16 @@ class ScenarioEventSystem {
         // Oba formáty sdílejí umístění i deduplikaci; zachovat pořadí skupin a stará ID.
         for (const faction of ['hussites', 'crusaders']) {
             const reinf = scenario.forces[faction].reinforcements;
-            if (reinf) this.tryReinforcementGroup(reinf, faction, `reinf-${faction}-${reinf.turn}`);
+            if (reinf) this.tryReinforcementGroup(reinf, faction, `reinf-${faction}-${reinf.turn}`,
+                () => this.game.currentScenario?.forces?.[faction]?.reinforcements?.message || reinf.message);
         }
         for (const [key, reinf] of Object.entries(scenario.reinforcements || {})) {
-            this.tryReinforcementGroup(reinf, reinf.faction || 'crusaders', `reinf-scenario-${key}-${reinf.turn}`);
+            this.tryReinforcementGroup(reinf, reinf.faction || 'crusaders', `reinf-scenario-${key}-${reinf.turn}`,
+                () => this.game.currentScenario?.reinforcements?.[key]?.message || reinf.message);
         }
     }
 
-    tryReinforcementGroup(reinf, faction, key) {
+    tryReinforcementGroup(reinf, faction, key, resolveMessage = () => reinf.message) {
         const processed = this.game.processedEvents;
         const pendingKey = `${key}:pending`;
         if (processed.has(key)) return;
@@ -489,8 +519,10 @@ class ScenarioEventSystem {
         processed.delete(pendingKey);
         processed.add(key);
         if (reinf.message) {
-            const title = i18n.t(faction === 'hussites' ? 'messages.reinforcementsTitle' : 'messages.enemyReinforcementsTitle');
-            this.game.showEventNotification(title, reinf.message);
+            const titleKey = faction === 'hussites' ? 'messages.reinforcementsTitle' : 'messages.enemyReinforcementsTitle';
+            const resolve = () => ({ title: i18n.t(titleKey), text: resolveMessage() });
+            const { title, text } = resolve();
+            this.game.showEventNotification(title, text, resolve);
         }
         this.createReinforcements(plan, faction);
     }

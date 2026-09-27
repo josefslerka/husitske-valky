@@ -1,8 +1,8 @@
 # Vozová hradba
 
-Samostatně spustitelná bonusová tower defense hra v adresáři hlavní hry. Je to
-arkádová odměna po první kampani, ale během testování není postup kampaně
-vyžadován.
+Samostatně spustitelná bonusová tower defense hra v adresáři hlavní hry. V menu
+hlavní hry se jako arkádová odměna objeví po vítězství ve všech pěti bitvách
+I. aktu Zrození. Přímý odkaz zůstává dostupný pro testery i bez postupu kampaní.
 
 ## Spuštění a odkaz pro testery
 
@@ -19,9 +19,7 @@ python3 -m http.server 8778
 
 Pak otevřete `http://127.0.0.1:8778/bonus/vozova-hradba/`. Na hostovaném webu
 testerům pošlete základní adresu webu doplněnou o `bonus/vozova-hradba/`.
-Hra nevyžaduje přihlášení,
-uloženou kampaň ani další serverovou logiku. Odkaz z hlavní stránky lze přidat
-po odzkoušení.
+Hra nevyžaduje přihlášení, uloženou kampaň ani další serverovou logiku.
 
 Pro zveřejnění na stávajícím testovacím webu připraví následující skript
 samostatný adresář, včetně přesné kopie obou sdílených souborů v `shared/`:

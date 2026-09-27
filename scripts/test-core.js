@@ -343,12 +343,16 @@ test('kampaň odemyká akty a opakováním nefarmí pověst', () => {
     CampaignProgressSystem.reset();
     assert.strictEqual(CampaignProgressSystem.isActUnlocked(1), true);
     assert.strictEqual(CampaignProgressSystem.isActUnlocked(2), false);
+    assert.strictEqual(CampaignProgressSystem.isActCompleted(1), false);
+    assert.strictEqual(CampaignProgressSystem.isActCompleted(99), false);
 
     const firstAct = ['zivohost_1419', 'nekmir_1419', 'sudomere_1420'];
     for (const scenarioId of firstAct) {
         CampaignProgressSystem.recordBattle({ scenarioId, result: 'victory', turns: 9, maxTurns: 10, lossRatio: 0.4 });
     }
     assert.strictEqual(CampaignProgressSystem.isActUnlocked(2), true);
+    assert.strictEqual(CampaignProgressSystem.isActCompleted(1), false,
+        'odemčení II. aktu po třech vítězstvích není dokončení Zrození');
 
     const reputation = CampaignProgressSystem.getReputation();
     CampaignProgressSystem.recordBattle({
@@ -361,6 +365,10 @@ test('kampaň odemyká akty a opakováním nefarmí pověst', () => {
         scenarioId: 'vysehrad_1420', result: 'victory', turns: 9, maxTurns: 10, lossRatio: 0.4
     });
     assert.strictEqual(completion.actCompleted, 1);
+    assert.strictEqual(CampaignProgressSystem.isActCompleted(1), true);
+    CampaignProgressSystem.recordBattle({ scenarioId: 'vysehrad_1420', result: 'defeat', turns: 10 });
+    assert.strictEqual(CampaignProgressSystem.isActCompleted(1), true,
+        'opakovaná prohra už získanou odměnu nevezme');
 });
 
 test('pověst mění morálku, paniku a zlomí se u Lipan', () => {

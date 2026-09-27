@@ -151,6 +151,72 @@ test('přepnutí CS → EN → CS obnoví všechny varianty, ale nezmění hern�
     }
 });
 
+test('vyšehradská zpráva používá český overlay a samostatné posily mají oba jazyky', async () => {
+    const h = await createLocalizedHarness('cs');
+    const czech = h.getLocalizedScenario('vysehrad_1420', h.Scenarios.vysehrad_1420);
+    assert.equal(czech.phases[3].events[1].message,
+        'Jednotky uvolněné z obléhání Vyšehradu se připojují k bitvě!');
+    await h.i18n.setLanguage('en');
+    const english = h.getLocalizedScenario('vysehrad_1420', h.Scenarios.vysehrad_1420);
+    assert.equal(english.phases[3].events[1].message,
+        'Units freed from besieging Vyšehrad join the battle!');
+    assert.equal(english.reinforcements.vysehradske_oddily.message,
+        'Troops freed from the siege of Vyšehrad join the battle!');
+    const most = h.getLocalizedScenario('most_1421', h.Scenarios.most_1421);
+    assert.match(most.reinforcements.misenska_armada.message, /Meissen army/);
+});
+
+test('změna jazyka přeloží otevřenou i čekající hlášku bez opakování eventů', async () => {
+    const h = await createLocalizedHarness('cs', { browserView: true });
+    const game = h.newGame('vysehrad_1420');
+    h.context.window.game = game;
+    game.turnNumber = 8; game.updatePhase(); game.checkPhaseEvents();
+    const processed = [...game.processedEvents];
+    const view = game.view;
+    assert.ok(view.activeEventNotificationItem);
+    assert.ok(view.eventNotificationQueue.length > 1);
+    await h.i18n.setLanguage('en');
+    assert.match(view.activeEventNotificationItem.text, /deadline has expired/);
+    assert.match(view.activeEventNotificationElements.body.textContent, /deadline has expired/);
+    assert.equal(view.activeEventNotificationElements.button.textContent, h.i18n.t('menu.continue'));
+    assert.ok(view.eventNotificationQueue.some(item => item.text ===
+        'Units freed from besieging Vyšehrad join the battle!'));
+    assert.ok(view.eventNotificationQueue.some(item => item.text ===
+        'Troops freed from the siege of Vyšehrad join the battle!'));
+    assert.deepEqual([...game.processedEvents], processed);
+    await h.i18n.setLanguage('cs');
+    assert.match(view.activeEventNotificationItem.text, /Lhůta vypršela/);
+    assert.deepEqual([...game.processedEvents], processed);
+    game.destroy();
+});
+
+test('posily, které dorazí až po změně jazyka, už nemluví česky', async () => {
+    const h = await createLocalizedHarness('cs');
+    const game = h.newGame('most_1421');
+    h.context.window.game = game;
+    await h.i18n.setLanguage('en');
+    assert.equal(game.currentScenario.reinforcements.mostecka_posadka.message,
+        'The Most militia sallies from the city gate!');
+    game.turnNumber = 3; game.updatePhase(); game.checkPhaseEvents();
+    assert.ok(game.view.notifications.some(item => item.text ===
+        'The Most militia sallies from the city gate!'));
+    game.destroy();
+});
+
+test('překlad čekající lipanské zprávy zachová stav Prokopa v okamžiku události', async () => {
+    const h = await createLocalizedHarness('cs', { browserView: true });
+    const game = h.newGame('lipany_1434');
+    h.context.window.game = game;
+    game.turnNumber = 12; game.updatePhase(); game.checkPhaseEvents();
+    const expected = h.i18n.t('scenarios.lipany_1434.phases.3.events.0.unitStatus.texts.alive');
+    assert.ok(game.view.eventNotificationQueue.some(item => item.text === expected));
+    game.units.find(unit => unit.type === 'PROKOP_HOLY').health = 0;
+    await h.i18n.setLanguage('en');
+    const translated = h.i18n.t('scenarios.lipany_1434.phases.3.events.0.unitStatus.texts.alive');
+    assert.ok(game.view.eventNotificationQueue.some(item => item.text === translated));
+    game.destroy();
+});
+
 for (const lang of ['cs', 'en']) {
     test(`${lang}: draze vyhraná Sudoměř má pravdivý závěr a běžná výhra původní`, async () => {
         const { game } = await fixture('sudomere_1420', lang);

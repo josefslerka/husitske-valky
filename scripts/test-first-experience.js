@@ -377,8 +377,8 @@ test('dohraná časová mise ukazuje skutečný počet kol a nehlásí další t
     game.destroy();
 });
 
-async function menuHarness(language = 'cs', prepare = () => {}) {
-    const h = await createLocalizedHarness(language);
+async function menuHarness(language = 'cs', prepare = () => {}, options = {}) {
+    const h = await createLocalizedHarness(language, options);
     h.context.CustomEvent = class extends Event {
         constructor(type, options) { super(type); this.detail = options?.detail; }
     };
@@ -411,7 +411,42 @@ test('titulní menu zachovává všechny akce, pořadí pokračování a dekorat
     assert.match(menu, /<h1 id="menu-title"/);
     assert.match(menu, /<nav[^>]*aria-labelledby="menu-play-title"/);
     assert.match(menu, /<img[^>]*menu-woodcut\.svg[^>]*alt=""[^>]*aria-hidden="true"/);
+    assert.match(menu, /<section id="menu-act-one-reward" class="menu-reward hidden"/);
+    assert.match(menu, /<a id="menu-wagon-defense"[^>]*href="bonus\/vozova-hradba\/index\.html"/);
 });
+
+for (const language of ['cs', 'en']) {
+    test(`${language}: Vozová hradba se v menu objeví až po celém I. aktu a přežije obnovení`, async () => {
+        const h = await menuHarness(language), el = id => h.document.getElementById(id);
+        const reward = el('menu-act-one-reward');
+        const refreshMenu = () => el('btn-gameover-menu').dispatchEvent(new Event('click'));
+        assert.equal(reward.classList.contains('hidden'), true);
+        assert.equal(h.i18n.hasTranslation('menu.actOneReward'), true);
+        assert.equal(h.i18n.t('menu.wagonDefense'), language === 'cs' ? 'Vozová hradba' : 'Wagon Fort');
+        assert.equal(h.i18n.hasTranslation('menu.wagonDefenseNote'), true);
+
+        for (const scenarioId of ['zivohost_1419', 'nekmir_1419', 'sudomere_1420']) {
+            h.CampaignProgressSystem.recordBattle({ scenarioId, result: 'victory', turns: 5 });
+        }
+        assert.equal(h.CampaignProgressSystem.isActUnlocked(2), true);
+        refreshMenu();
+        assert.equal(reward.classList.contains('hidden'), true, 'tři vítězství nestačí');
+
+        h.CampaignProgressSystem.recordBattle({ scenarioId: 'vysehrad_1420', result: 'victory', turns: 5 });
+        h.CampaignProgressSystem.recordBattle({ scenarioId: 'vitkov_1420', result: 'defeat', turns: 5 });
+        refreshMenu();
+        assert.equal(reward.classList.contains('hidden'), true, 'poslední bitva sama nestačí');
+
+        h.CampaignProgressSystem.recordBattle({ scenarioId: 'vitkov_1420', result: 'victory', turns: 5 });
+        refreshMenu();
+        assert.equal(reward.classList.contains('hidden'), false);
+        const reloaded = await menuHarness(language, () => {}, { storage: h.storage });
+        assert.equal(reloaded.document.getElementById('menu-act-one-reward').classList.contains('hidden'), false);
+        reloaded.CampaignProgressSystem.reset();
+        reloaded.document.getElementById('btn-gameover-menu').dispatchEvent(new Event('click'));
+        assert.equal(reloaded.document.getElementById('menu-act-one-reward').classList.contains('hidden'), true);
+    });
+}
 
 test('přepínač jazyka ukazuje cíl a vede na changelog v obou směrech', async () => {
     const h = await menuHarness();
