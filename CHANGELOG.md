@@ -4,7 +4,7 @@
 
 Starší plánovací oddíly níže zachováváme jako dobový záznam; nejsou aktuálním plánem vydání. Aktuální stav a otevřené úkoly jsou v [TODO.md](TODO.md).
 
-## Připravované změny
+## Alpha 0.3.8 (30. září 2026)
 
 - Úvod Vozové hradby jasně rozlišuje stavební pole od cesty nepřítele: volná pole jsou před první vlnou zelená s výrazným pluskem, legenda a první tip vysvětlují zákaz stavby na cestě i objížďkách. Značky nezakrývají náhled dosahu a po zahájení boje zmizí. Texty jsou česky i anglicky; obtížnost ani pravidla se nemění.
 - Karta vlastního střelce ukazuje krycí palbu přímo nad rozkazy, včetně konkrétního důvodu nedostupnosti po pohybu, vyčerpání výstřelů, ukrytí nebo útěku. Stejnou informaci obsahují tooltipy. Rozkaz střelců se jmenuje `Krýt se` a výslovně uvádí ochranu o 30 % i ztrátu zbývajícího výstřelu; texty jsou česky i anglicky.

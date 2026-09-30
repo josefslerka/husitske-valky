@@ -1,6 +1,6 @@
 # TODO — Husitské války
 
-**Aktuální verze:** Alpha 0.3.7 (27. 9. 2026)
+**Aktuální verze:** Alpha 0.3.8 (30. 9. 2026)
 
 **Cíl:** stabilní veřejná Alpha 1.0
 

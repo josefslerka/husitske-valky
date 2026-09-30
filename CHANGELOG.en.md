@@ -4,7 +4,7 @@
 
 The older planning sections below are preserved as a record of earlier development; they are not the current release plan. See [TODO.md](TODO.md) for the current state and open tasks (currently maintained in Czech).
 
-## Unreleased
+## Alpha 0.3.8 (30 September 2026)
 
 - Wagon Fort's opening map clearly separates deployment sites from the enemy road: empty sites are green with prominent plus markers before the first wave, and the legend and first tip explain that roads and detours cannot hold units. Markers do not obscure range previews and disappear when combat starts. Text is available in Czech and English; difficulty and combat rules are unchanged.
 - The player's shooter card now shows covering-fire status directly above its orders, including the specific reason it is unavailable after movement, spending all shots, taking cover or routing. Tooltips show the same information. Shooters' defensive order is now called `Take Cover`, explicitly explaining both the 30% damage reduction and the forfeited shot. All text is available in Czech and English.
