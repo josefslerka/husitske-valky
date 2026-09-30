@@ -278,8 +278,8 @@ function renderRulesTab() {
         <div class="rules-section">
             <h4>${isEnglish ? 'Turn Sequence' : 'Průběh tahu'}</h4>
             <p>${isEnglish
-                ? 'Each unit can move and attack (or only one of those) in one turn. Defend spends its remaining actions and reduces incoming damage by 30%. At End Turn, unused units defend automatically, except stationary units with range 2 or more and a shot left: they prepare covering fire instead, without the defense bonus. Choosing Defend for a shooter gives protection but forfeits that reaction shot.'
-                : 'Každá jednotka může v jednom tahu provést pohyb a útok (nebo pouze jedno z toho). Bránit spotřebuje zbývající akce a sníží příchozí poškození o 30 %. Na konci tahu se nevyužité oddíly brání automaticky, kromě stojících oddílů s dostřelem 2+ a zbývajícím výstřelem: ty připraví krycí palbu bez bonusu obrany. Ruční Bránit střelce ochrání, ale připraví ho o reakční výstřel.'
+                ? 'Each unit can move and attack (or only one of those) in one turn. Defend spends its remaining actions and reduces incoming damage by 30%. At End Turn, unused units defend automatically, except stationary units with range 2 or more and a shot left: they prepare covering fire instead, without the defense bonus. A shooter can choose Take Cover for protection, forfeiting that reaction shot. Its card shows covering-fire readiness or the reason it is unavailable.'
+                : 'Každá jednotka může v jednom tahu provést pohyb a útok (nebo pouze jedno z toho). Bránit spotřebuje zbývající akce a sníží příchozí poškození o 30 %. Na konci tahu se nevyužité oddíly brání automaticky, kromě stojících oddílů s dostřelem 2+ a zbývajícím výstřelem: ty připraví krycí palbu bez bonusu obrany. Střelec může zvolit Krýt se: získá ochranu, ale přijde o reakční výstřel. Jeho karta ukazuje připravenost krycí palby nebo důvod její nedostupnosti.'
             }</p>
         </div>
         <div class="rules-section">

@@ -4,6 +4,12 @@
 
 The older planning sections below are preserved as a record of earlier development; they are not the current release plan. See [TODO.md](TODO.md) for the current state and open tasks (currently maintained in Czech).
 
+## Unreleased
+
+- Wagon Fort's opening map clearly separates deployment sites from the enemy road: empty sites are green with prominent plus markers before the first wave, and the legend and first tip explain that roads and detours cannot hold units. Markers do not obscure range previews and disappear when combat starts. Text is available in Czech and English; difficulty and combat rules are unchanged.
+- The player's shooter card now shows covering-fire status directly above its orders, including the specific reason it is unavailable after movement, spending all shots, taking cover or routing. Tooltips show the same information. Shooters' defensive order is now called `Take Cover`, explicitly explaining both the 30% damage reduction and the forfeited shot. All text is available in Czech and English.
+- The bombard now has a range of 5 hexes and starts behind the infantry at the Siege of Plzeň, outside the defenders' immediate firing range. It can bombard the two forward archer units from the start, but cannot reach the entire city garrison. It remains immobile and vulnerable to an enemy sortie.
+
 ## Alpha 0.3.7 (27 September 2026)
 
 - Winning all five battles of Act I, Birth, unlocks a link to the bonus Wagon Fort game in the main menu. The unlock persists after reloading the page; testers can still use the direct link without completing the act.

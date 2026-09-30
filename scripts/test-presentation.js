@@ -73,6 +73,78 @@ test('vykreslení panelů, mapy a tooltipu nemění herní stav', () => {
     game.destroy();
 });
 
+for (const language of ['cs', 'en']) {
+    test(`${language}: nová bitva nezdědí kartu krycí palby předchozího střelce`, async () => {
+        const h = await createLocalizedHarness(language, { browserView: true });
+        const game = h.newGame();
+        const shooter = game.unitFactory.createUnit('RUCNICARI', 5, 5);
+        game.units.push(shooter);
+        game.selectUnit(shooter);
+        const panel = h.document.getElementById('unit-cover-fire');
+        assert.equal(panel.classList.contains('hidden'), false);
+        game.destroy();
+        const nextGame = h.newGame();
+        assert.equal(panel.classList.contains('hidden'), true);
+        assert.equal(panel.dataset.state, '');
+        nextGame.destroy();
+    });
+
+    test(`${language}: karta i tooltip vysvětlí pohyb, výstřel, kryt a ústup střelce`, async () => {
+        const h = await createLocalizedHarness(language, { browserView: true }), game = h.newGame();
+        const shooter = game.unitFactory.createUnit('RUCNICARI', 5, 5);
+        const target = game.unitFactory.createUnit('TEZKY_RYTIR', 7, 5);
+        const reserve = game.unitFactory.createUnit('CEPNICI', 1, 1);
+        game.units = [shooter, target, reserve];
+        game.hexGrid.setTerrain(5, 5, 'plains');
+        game.hexGrid.setTerrain(5, 4, 'plains');
+        game.scheduleAI = () => {};
+        const check = state => {
+            game.selectUnit(shooter);
+            assert.equal(h.document.getElementById('unit-cover-fire').dataset.state, state);
+            const detail = h.i18n.t(`game.coverFireDetails.${state}`);
+            assert.equal(h.document.getElementById('unit-cover-fire-detail').textContent, detail);
+            assert.ok(game.view.tooltip.contentForHex(shooter).includes(detail));
+        };
+        check('ready');
+        const move = game.moveUnit(shooter, 5, 4);
+        await h.advance(1000); await move;
+        check('moved');
+        assert.equal(game.undoLastMove(), true);
+        check('ready');
+        const attack = game.combatSystem.performAttack(shooter, target);
+        await h.advance(1000); assert.equal(await attack, true);
+        check('spent');
+        game.endTurn(); game.endTurn();
+        check('ready');
+        game.combatSystem.defendSelectedUnit();
+        check('defending');
+        assert.equal(shooter.isDefending, true);
+        assert.equal(game.isCoverFireReady(shooter), false);
+        shooter.reduceMorale(100, 'test');
+        check('routing');
+        game.destroy();
+    });
+
+    test(`${language}: rychlostřelec kryje palbou i po prvním výstřelu`, async () => {
+        const h = await createLocalizedHarness(language, { browserView: true }), game = h.newGame();
+        const shooter = game.unitFactory.createUnit('LUCISTNICI', 5, 5);
+        shooter.faction = 'hussites';
+        const target = game.unitFactory.createUnit('TEZKY_RYTIR', 7, 5);
+        const reserve = game.unitFactory.createUnit('CEPNICI', 1, 1);
+        game.units = [shooter, target, reserve];
+        for (let shot = 1; shot <= 2; shot++) {
+            const attack = game.combatSystem.performAttack(shooter, target);
+            await h.advance(1000); assert.equal(await attack, true);
+            game.selectUnit(shooter);
+            const state = shot === 1 ? 'ready' : 'spent';
+            assert.equal(shooter.attackCount, shot);
+            assert.equal(game.isCoverFireReady(shooter), shot === 1);
+            assert.equal(h.document.getElementById('unit-cover-fire').dataset.state, state);
+        }
+        game.destroy();
+    });
+}
+
 test('Plzeň viditelně označí celou cílovou zónu a průběžně počítá obsazení', async () => {
     const h = await createLocalizedHarness('cs', { browserView: true });
     const game = h.newGame('oblehani_plzne_1433');

@@ -23,6 +23,41 @@ test('všech 18 scénářů po prvním hráčově tahu pokračuje', () => {
     }
 });
 
+test('plzeňská bombarda může střílet několik kol, ale bez další podpory ji obránci zničí', async () => {
+    const h = createHarness(), game = h.newGame('oblehani_plzne_1433');
+    const bombarda = game.units.find(unit => unit.type === 'BOMBARDA');
+    const initialDefenders = game.getEnemyUnits('hussites').length;
+    game.fastForwardAI = true;
+    let shots = 0;
+
+    // Ostatní hráčské oddíly drží výchozí linii. Jedná skutečná AI a
+    // probíhají celé souboje, krycí palba, pohyb i scénářové události.
+    for (let turn = 0; turn < 6; turn++) {
+        const targets = game.getEnemyUnits('hussites')
+            .filter(unit => game.combatSystem.canAttack(bombarda, unit))
+            .sort((a, b) => Number(b.type === 'POLNI_DELO') - Number(a.type === 'POLNI_DELO')
+                || a.health - b.health);
+        if (targets.length) {
+            const attack = game.combatSystem.performAttack(bombarda, targets[0]);
+            await h.advance(1000);
+            assert.equal(await attack, true);
+            shots++;
+        }
+        game.endTurn();
+        assert.equal(game.currentFaction, 'crusaders');
+        await h.advance(60000);
+        assert.equal(game.currentFaction, 'hussites');
+        assert.equal(game.gameState, 'playing', 'samotná palba nenahradí obsazení města');
+        if (turn < 3) assert.ok(bombarda.health > 0, 'baterie vydrží první tři nepřátelské tahy');
+    }
+
+    assert.ok(shots >= 3, 'dělo pomáhá déle než jedním úvodním výstřelem');
+    assert.ok(bombarda.health <= 0, 'přibližující se obránci mohou nechráněnou baterii zničit');
+    assert.ok(game.getEnemyUnits('hussites').length > initialDefenders / 2,
+        'většina posádky zůstává živá i při soustavné palbě z baterie');
+    game.destroy();
+});
+
 test('Sion vyhraje až po dokončení 12. nepřátelského tahu', () => {
     const h = createHarness(), game = h.newGame('sion_1437');
     game.turnNumber = 12;

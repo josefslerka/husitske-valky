@@ -250,9 +250,23 @@
     "selectUnit": "Select a unit",
     "attack": "Attack",
     "defend": "Defend",
+    "takeCover": "Take Cover",
+    "takeCoverHint": "30% less incoming damage. Ends this unit's actions and forfeits its remaining shot.",
+    "coverFireTitles": {
+      "ready": "⚡ Covering fire ready",
+      "unavailable": "Covering fire unavailable",
+      "defending": "🛡 Taking cover"
+    },
+    "coverFireDetails": {
+      "ready": "Automatically fires when a visible enemy moves within range. Gives no defense bonus.",
+      "moved": "This unit has already moved this turn.",
+      "spent": "This unit has no shots remaining.",
+      "defending": "Takes 30% less damage. Covering fire is cancelled.",
+      "routing": "This unit is routing and cannot fire."
+    },
     "defendHint": "Defend immediately ends this unit's actions and reduces incoming damage by 30%. It uses any remaining shot. Covering fire and defense do not stack.",
     "defendExplanation": "Defend: 30% less incoming damage, ends actions. Unused units defend automatically at End Turn. A stationary unit with range 2+ and a shot left uses covering fire instead, with no defense bonus.",
-    "defendExplanationRanged": "Covering fire is not defense. Leave this unit still: it can fire when an enemy moves within range, but has no defense bonus. Defend: 30% less incoming damage, forfeits the shot.",
+    "defendExplanationRanged": "Take Cover: 30% less incoming damage. Ends this unit's actions and forfeits its remaining shot.",
     "undo": "Undo",
     "objectives": "Objectives",
     "choral": "Choral",
@@ -1393,7 +1407,7 @@
         },
         {
           "title": "Defensive stance activated!",
-          "text": "A defending unit takes 30% less damage and spends its remaining actions. At End Turn, unused units defend automatically; stationary units with range 2 or more and a shot left prepare covering fire instead, without the defense bonus. Manual Defend forfeits that shot. Now destroy all enemies!"
+          "text": "A defending unit takes 30% less damage and spends its remaining actions. At End Turn, unused units defend automatically; stationary units with range 2 or more and a shot left prepare covering fire instead, without the defense bonus. Choosing Take Cover for a shooter forfeits its remaining shot. Now destroy all enemies!"
         },
         {
           "title": "Training complete!",

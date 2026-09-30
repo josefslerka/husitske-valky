@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://hussitewars.com/imgs/social-preview.png">
     <meta name="twitter:image:alt" content="Husitská vozová hradba pod kalichem · A Hussite wagon fort beneath the chalice banner">
 
-    <link rel="stylesheet" href="style.css?v=8.38">
+    <link rel="stylesheet" href="style.css?v=8.39">
 </head>
 <body class="booting">
     <section id="startup-status" class="startup-status">
@@ -187,6 +187,10 @@
                 <h2 data-i18n="game.unit"></h2>
                 <div id="unit-info">
                     <p class="no-selection" data-i18n="game.selectUnit"></p>
+                </div>
+                <div id="unit-cover-fire" class="cover-fire-status hidden" role="status" aria-live="polite" aria-atomic="true">
+                    <strong id="unit-cover-fire-title"></strong>
+                    <p id="unit-cover-fire-detail"></p>
                 </div>
                 <div id="unit-actions" class="hidden">
                     <button id="btn-attack" disabled data-i18n="game.attack"></button>
@@ -1068,22 +1072,22 @@
 
     <!-- i18n - lokalizační systém (načíst jako první) -->
     <script src="js/core/GameStorage.js?v=8.9"></script>
-    <script src="js/i18n/i18n.js?v=8.40"></script>
+    <script src="js/i18n/i18n.js?v=8.41"></script>
     <script src="js/i18n/i18nHelpers.js?v=8.19"></script>
-    <script src="js/i18n/encyclopediaRenderer.js?v=8.28"></script>
+    <script src="js/i18n/encyclopediaRenderer.js?v=8.29"></script>
     <!-- ?v= cache-busting: bumpni číslo při každém vydání, ať hráči nedostanou starý JS -->
     <script src="js/ui/sound.js?v=3.9"></script>
     <script src="js/ui/music.js?v=8.20"></script>
     <script src="js/ui/WoodcutRenderer.js?v=8.27"></script>
     <script src="js/core/hex.js?v=8.14"></script>
-    <script src="js/data/unitTypes.js?v=8.17"></script>
+    <script src="js/data/unitTypes.js?v=8.18"></script>
     <script src="js/entities/Unit.js?v=8.18"></script>
     <script src="js/entities/UnitFactory.js?v=3.9"></script>
     <script src="js/data/battleLore.js?v=8.17"></script>
     <script src="js/data/historicalSources.js?v=8.17"></script>
     <script src="js/data/campaign.js?v=8.0"></script>
     <script src="js/systems/CampaignProgressSystem.js?v=8.10"></script>
-    <script src="js/data/scenarios.js?v=8.24"></script>
+    <script src="js/data/scenarios.js?v=8.25"></script>
     <script src="js/systems/CombatSystem.js?v=8.2"></script>
     <script src="js/systems/BattleActionSystem.js?v=8.8"></script>
     <script src="js/systems/SaveGameSystem.js?v=8.17"></script>
@@ -1095,12 +1099,12 @@
     <script src="js/systems/ChronicleSystem.js?v=8.9"></script>
     <script src="js/ui/HistoricalNotesView.js?v=8.17"></script>
     <script src="js/ui/ChronicleView.js?v=8.17"></script>
-    <script src="js/ui/BattlePanels.js?v=8.19"></script>
-    <script src="js/ui/BattleTooltip.js?v=8.18"></script>
+    <script src="js/ui/BattlePanels.js?v=8.20"></script>
+    <script src="js/ui/BattleTooltip.js?v=8.19"></script>
     <script src="js/ui/BattleMapInput.js?v=8.9"></script>
     <script src="js/ui/BattleOrders.js?v=8.13"></script>
     <script src="js/ui/BattleView.js?v=8.22"></script>
-    <script src="js/core/game.js?v=8.22"></script>
+    <script src="js/core/game.js?v=8.23"></script>
     <script src="js/ai.js?v=8.21"></script>
     <script src="js/ui/main.js?v=8.34"></script>
 

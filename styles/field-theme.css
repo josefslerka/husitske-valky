@@ -258,6 +258,38 @@ body {
     line-height: 1.35;
 }
 
+#unit-cover-fire {
+    order: -1;
+    flex-shrink: 0;
+    min-width: 0;
+    margin: 0 0 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--field-rule);
+    border-left-width: 3px;
+    background: var(--field-page-light);
+    color: var(--field-ink-soft);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+#unit-cover-fire.cover-fire-ready {
+    border-left-color: #387049;
+}
+
+#unit-cover-fire.cover-fire-defending {
+    border-left-color: var(--field-blue);
+}
+
+#unit-cover-fire strong {
+    display: block;
+    color: var(--field-ink);
+}
+
+#unit-cover-fire p {
+    margin: 4px 0 0;
+}
+
 #unit-actions button {
     min-height: 34px;
     padding: 7px 8px;
@@ -1847,6 +1879,7 @@ body {
        pravidla pro empty-unit-panel dřív znovu ukázala text v šířce 42 px. */
     #unit-panel:not(.expanded) h2,
     #unit-panel:not(.expanded) #unit-info,
+    #unit-panel:not(.expanded) #unit-cover-fire,
     #unit-panel:not(.expanded) #unit-actions,
     #info-panel:not(.expanded) h2,
     #info-panel:not(.expanded) #army-overview {

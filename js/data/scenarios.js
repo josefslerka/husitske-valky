@@ -3093,7 +3093,7 @@ const Scenarios = {
                     { type: 'SUDLICNICI', col: 8, row: 7 },
                     // Sirotci (Bedřich ze Strážnice)
                     // POZOR: typ musí mít faction: 'hussites' - HALAPARTNICI jsou křižácká šablona
-                    { type: 'PAVEZNICI', col: 8, row: 6 },
+                    { type: 'PAVEZNICI', col: 9, row: 6 },
                     { type: 'SUDLICNICI', col: 9, row: 5 },
                     { type: 'SUDLICNICI', col: 9, row: 7 },
                     // Střelci
@@ -3105,9 +3105,9 @@ const Scenarios = {
                     { type: 'HOUFNICE', col: 3, row: 5 },
                     { type: 'HOUFNICE', col: 3, row: 7 },
                     { type: 'TARASNICE', col: 3, row: 6 },
-                    // Těžká bombarda je před bitvou usazená v předsunuté
-                    // baterii; s pohybem 0 odtud skutečně dostřelí na obranu.
-                    { type: 'BOMBARDA', col: 11, row: 6 },
+                    // Pevná baterie za pěchotou: dostřel 5 pokryje předsunuté
+                    // lučištníky, ale ne celou posádku města. Výpad ji může ohrozit.
+                    { type: 'BOMBARDA', col: 8, row: 6 },
                     // Jízda - záloha
                     { type: 'JIZDA_HUSITI', col: 2, row: 4 },
                     { type: 'JIZDA_HUSITI', col: 2, row: 8 }

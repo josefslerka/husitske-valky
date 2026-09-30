@@ -107,6 +107,36 @@ function measuredSpeed(game, enemy, dt = 0.05) {
 
 {
     const game = new Game();
+    const key = hex => hex.col + ',' + hex.row;
+    const fields = () => new Set(game.availableBuildHexes().map(key));
+    const initial = fields();
+    assert.ok(initial.size > 0, 'the initial map has visible deployment sites');
+    assert.ok([...HILLS].every(hex => initial.has(hex)), 'hill sites can also hold units');
+    for (const hex of HEXES) {
+        assert.equal(initial.has(key(hex)), game.isBuildable(hex.col, hex.row),
+            'initial markers show every legal site and no reserved road, detour, banner or camp');
+    }
+    const before = JSON.stringify({ summary: game.summary(), route: game.route, towers: game.towers });
+    game.availableBuildHexes();
+    assert.equal(JSON.stringify({ summary: game.summary(), route: game.route, towers: game.towers }), before,
+        'reading markers cannot change the battle');
+    for (const gate of Object.values(BARRICADES)) {
+        assert.equal(game.toggleBarricade(gate.id), true);
+        assert.deepEqual(fields(), initial, 'rerouting never turns a road branch into a deployment site');
+    }
+    assert.equal(game.place(3, 3, 'rucnicari'), true);
+    assert.equal(fields().has('3,3'), false, 'an occupied field has no deployment marker');
+    assert.equal(game.sell(3, 3), true);
+    assert.deepEqual(fields(), initial, 'withdrawing a unit restores its deployment marker');
+    for (const hex of game.availableBuildHexes()) {
+        const check = new Game();
+        assert.equal(check.place(hex.col, hex.row, 'rucnicari'), true,
+            'every marked field actually accepts a unit');
+    }
+}
+
+{
+    const game = new Game();
     assert.equal(WAVE_COUNT, 8);
     assert.equal(game.gold, START_GOLD);
     assert.equal(game.camp, START_CAMP);

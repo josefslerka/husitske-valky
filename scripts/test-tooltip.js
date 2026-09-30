@@ -125,15 +125,15 @@ test('viditelný střelec ukazuje skutečnou připravenost reakční palby', () 
     shooter.faction = 'crusaders';
     f.game.units.push(shooter);
     assert.equal(f.game.isCoverFireReady(shooter), true);
-    assert.match(f.tooltip.contentForHex({ col: 6, row: 6 }), /tooltip\.coverFireReady/);
+    assert.match(f.tooltip.contentForHex({ col: 6, row: 6 }), /game\.coverFireDetails\.ready/);
     f.game.view.updateUnitPanel(shooter);
-    assert.match(f.h.document.getElementById('unit-info').innerHTML, /tooltip\.coverFireReady/);
+    assert.equal(f.h.document.getElementById('unit-cover-fire').dataset.state, 'ready');
 
     shooter.defend();
     assert.equal(f.game.isCoverFireReady(shooter), false);
-    assert.match(f.tooltip.contentForHex({ col: 6, row: 6 }), /tooltip\.coverFireSpent/);
+    assert.match(f.tooltip.contentForHex({ col: 6, row: 6 }), /game\.coverFireDetails\.defending/);
     f.game.view.updateUnitPanel(shooter);
-    assert.match(f.h.document.getElementById('unit-info').innerHTML, /tooltip\.coverFireSpent/);
+    assert.equal(f.h.document.getElementById('unit-cover-fire').dataset.state, 'defending');
     f.game.destroy();
 });
 

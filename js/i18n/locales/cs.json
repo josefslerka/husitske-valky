@@ -250,9 +250,23 @@
     "selectUnit": "Vyberte jednotku",
     "attack": "Útok",
     "defend": "Bránit",
+    "takeCover": "Krýt se",
+    "takeCoverHint": "O 30 % menší příchozí poškození. Ukončí akce oddílu a spotřebuje zbývající výstřel.",
+    "coverFireTitles": {
+      "ready": "⚡ Krycí palba připravena",
+      "unavailable": "Krycí palba nedostupná",
+      "defending": "🛡 Oddíl se kryje"
+    },
+    "coverFireDetails": {
+      "ready": "Při pohybu viditelného nepřítele v dostřelu automaticky vystřelí. Nemá bonus obrany.",
+      "moved": "Oddíl se už v tomto tahu pohnul.",
+      "spent": "Oddíl už nemá zbývající výstřel.",
+      "defending": "Utrpí o 30 % menší poškození. Krycí palba je zrušená.",
+      "routing": "Oddíl prchá a nemůže střílet."
+    },
     "defendHint": "Bránit hned ukončí akce oddílu a sníží příchozí poškození o 30 %. Pokud má oddíl zbývající výstřel, spotřebuje ho. Krycí palba a obrana se nesčítají.",
     "defendExplanation": "Bránit: příchozí poškození klesne o 30 %, akce končí. Nevyužitý oddíl se na konci tahu brání sám. Stojící oddíl s dostřelem 2+ a volným výstřelem místo toho kryje palbou bez bonusu obrany.",
-    "defendExplanationRanged": "Krycí palba není obrana. Nechte oddíl stát: při pohybu nepřítele v dostřelu může vystřelit, ale nemá obranný bonus. Bránit: příchozí poškození klesne o 30 %, výstřel propadne.",
+    "defendExplanationRanged": "Krýt se: o 30 % menší příchozí poškození. Ukončí akce oddílu a spotřebuje zbývající výstřel.",
     "undo": "Zpět",
     "objectives": "Cíle",
     "choral": "Chorál",
@@ -1588,7 +1602,7 @@
         },
         {
           "title": "Obranný postoj aktivován!",
-          "text": "Jednotka v obraně utrpí o 30 % menší poškození a spotřebuje zbývající akce. Na konci tahu se nevyužité oddíly brání automaticky; stojící oddíly s dostřelem 2+ a zbývajícím výstřelem místo toho kryjí palbou bez bonusu obrany. Ruční Bránit jim výstřel vezme. Nyní znič všechny nepřátele!"
+          "text": "Jednotka v obraně utrpí o 30 % menší poškození a spotřebuje zbývající akce. Na konci tahu se nevyužité oddíly brání automaticky; stojící oddíly s dostřelem 2+ a zbývajícím výstřelem místo toho kryjí palbou bez bonusu obrany. Rozkaz Krýt se střelcům vezme zbývající výstřel. Nyní znič všechny nepřátele!"
         },
         {
           "title": "Výcvik dokončen!",

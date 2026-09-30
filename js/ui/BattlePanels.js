@@ -1,6 +1,11 @@
 // HTML panelů bitvy. Výpočty bojových pravidel poskytuje Game/Unit.
 class BattlePanels {
-    constructor(game) { this.game = game; }
+    constructor(game) {
+        this.game = game;
+        // HTML panelu se sdílí mezi bitvami; nová hra nesmí ukazovat
+        // připravenost střelce z předchozího bojiště.
+        this.updateCoverFirePanel(null);
+    }
 
     static syncCompactButtons() {
         const compact = document.getElementById('game-container').classList.contains('compact-battle');
@@ -270,8 +275,27 @@ class BattlePanels {
         bar.title = `${label}: ${morale}%`;
     }
 
+    updateCoverFirePanel(unit) {
+        const panel = document.getElementById('unit-cover-fire');
+        const state = this.game.gameState === 'playing' ? this.game.getCoverFireStatus(unit) : null;
+        panel.classList.toggle('hidden', !state);
+        panel.classList.toggle('cover-fire-ready', state === 'ready');
+        panel.classList.toggle('cover-fire-defending', state === 'defending');
+        panel.dataset.state = state || '';
+        if (!state) return;
+
+        const titleKey = `game.coverFireTitles.${['ready', 'defending'].includes(state) ? state : 'unavailable'}`;
+        const detailKey = `game.coverFireDetails.${state}`;
+        for (const [id, key] of [['unit-cover-fire-title', titleKey], ['unit-cover-fire-detail', detailKey]]) {
+            const element = document.getElementById(id);
+            element.setAttribute('data-i18n', key);
+            element.textContent = i18n.t(key);
+        }
+    }
+
     updateUnitPanel(unit) {
         this.updateGuidance();
+        this.updateCoverFirePanel(unit);
         const infoDiv = document.getElementById('unit-info');
         const actionsDiv = document.getElementById('unit-actions');
         const attackBtn = document.getElementById('btn-attack');
@@ -373,12 +397,8 @@ class BattlePanels {
         if (unit.isTerrified) {
             statusHtml += `<span style="color: #ff8844; font-size: 0.85rem;">😨 ${i18n.t('tooltip.terrified')}</span><br>`;
         }
-        if (unit.isDefending) {
+        if (unit.isDefending && (this.game.gameState !== 'playing' || !this.game.getCoverFireStatus(unit))) {
             statusHtml += `<span style="color: #4488ff; font-size: 0.85rem;">🛡️ ${i18n.t('tooltip.defensiveStance')}</span><br>`;
-        }
-        if (this.game.gameState === 'playing' && unit.faction !== this.game.currentFaction && unit.range >= 2) {
-            const ready = this.game.isCoverFireReady(unit);
-            statusHtml += `<span style="color: ${ready ? '#387049' : '#675f4d'}; font-size: 0.85rem;">${i18n.t(ready ? 'tooltip.coverFireReady' : 'tooltip.coverFireSpent')}</span><br>`;
         }
         // WP1/P4: stav vozové hradby - pevná zeď (nehýbe se) vs pochod (poloviční kryt)
         if (unit.isWagon() && unit.formationClosed) {
@@ -453,9 +473,18 @@ class BattlePanels {
             actionsDiv.classList.remove('hidden');
             attackBtn.disabled = !unit.canAttack();
 
+            const takingCover = unit.isRanged() && unit.range >= 2;
+            const defendBtn = document.getElementById('btn-defend');
+            const defendKey = takingCover ? 'game.takeCover' : 'game.defend';
+            const defendHintKey = takingCover ? 'game.takeCoverHint' : 'game.defendHint';
+            defendBtn.setAttribute('data-i18n', defendKey);
+            defendBtn.setAttribute('data-i18n-title', defendHintKey);
+            defendBtn.textContent = i18n.t(defendKey);
+            defendBtn.title = i18n.t(defendHintKey);
+
             const defendExplanation = document.getElementById('defend-explanation');
             if (defendExplanation) {
-                const key = this.game.isCoverFireReady(unit)
+                const key = takingCover
                     ? 'game.defendExplanationRanged'
                     : 'game.defendExplanation';
                 defendExplanation.setAttribute('data-i18n', key);

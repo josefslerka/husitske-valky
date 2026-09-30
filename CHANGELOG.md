@@ -4,6 +4,12 @@
 
 Starší plánovací oddíly níže zachováváme jako dobový záznam; nejsou aktuálním plánem vydání. Aktuální stav a otevřené úkoly jsou v [TODO.md](TODO.md).
 
+## Připravované změny
+
+- Úvod Vozové hradby jasně rozlišuje stavební pole od cesty nepřítele: volná pole jsou před první vlnou zelená s výrazným pluskem, legenda a první tip vysvětlují zákaz stavby na cestě i objížďkách. Značky nezakrývají náhled dosahu a po zahájení boje zmizí. Texty jsou česky i anglicky; obtížnost ani pravidla se nemění.
+- Karta vlastního střelce ukazuje krycí palbu přímo nad rozkazy, včetně konkrétního důvodu nedostupnosti po pohybu, vyčerpání výstřelů, ukrytí nebo útěku. Stejnou informaci obsahují tooltipy. Rozkaz střelců se jmenuje `Krýt se` a výslovně uvádí ochranu o 30 % i ztrátu zbývajícího výstřelu; texty jsou česky i anglicky.
+- Bombarda má dostřel 5 hexů a při obléhání Plzně začíná za pěchotou mimo okamžitý dostřel obránců. Od začátku může ostřelovat dva předsunuté lučištnické oddíly; na celou posádku města nedosáhne. Nadále je nepohyblivá a zranitelná při nepřátelském výpadu.
+
 ## Alpha 0.3.7 (27. září 2026)
 
 - Po vítězství ve všech pěti bitvách I. aktu Zrození se v hlavním menu odemkne odkaz na bonusovou Vozovou hradbu. Odemčení se zachová po obnovení stránky; přímý odkaz na minihru zůstává dostupný i testerům bez dokončeného aktu.

@@ -315,6 +315,10 @@ const WagonDefense = (() => {
                 && !BLOCKED.has(col + ',' + row);
         }
 
+        availableBuildHexes() {
+            return HEXES.filter(hex => this.isBuildable(hex.col, hex.row) && !this.towerAt(hex.col, hex.row));
+        }
+
         towerAt(col, row) {
             return this.towers.find(tower => tower.col === col && tower.row === row) || null;
         }

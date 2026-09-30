@@ -3,8 +3,8 @@
         cs: {
             title: 'Vozová hradba', pageTitle: 'Vozová hradba · Husitské války',
             gold: 'Groše', camp: 'Tábor', wave: 'Vlna',
-            initial: 'Klepni na volné pole, vyber oddíl a zkontroluj jeho dosah.',
-            forbidden: 'Na cestě ani v táboře nelze stavět. Vyber volné pole vedle cesty.',
+            initial: 'Klepni na zelené pole s + u cesty a postav první oddíl. Na cestě ani objížďkách se nestaví.',
+            forbidden: 'Na cestě, objížďkách ani v táboře nelze stavět. Vyber volné pole vedle cesty.',
             built: '{unit}: oddíl připraven.', upgraded: '{unit}: oddíl posílen.', sold: 'Oddíl stažen. Část grošů je zpět.',
             notEnough: 'Na tento oddíl zatím nemáš dost grošů.',
             placeUnit: 'Postavit · {cost}', missingGold: 'Chybí {gold} grošů', firstUnit: 'Nejprve postav bojový oddíl',
@@ -23,7 +23,8 @@
             choral: 'Chorál', choralActive: 'Chorál zní', choralUsed: 'Chorál použit',
             choralMessage: 'Zní „Ktož jsú boží bojovníci“: naše oddíly bijí silněji a nepřítel váhá.',
             speedLabel: 'Rychlost hry', helpLabel: 'Jak hrát', languageLabel: 'Switch to English',
-            mapLabel: 'Klikatá cesta shora k husitskému táboru. Klepni na volné pole u cesty a postav oddíl.',
+            mapLabel: 'Volná pole vedle cesty jsou pro stavbu oddílů. Před první vlnou jsou zelená a označená pluskem. Hnědá cesta a objížďky patří nepříteli; tam stavět nelze.',
+            buildLegend: 'Stavba oddílů', roadLegend: 'Cesta nepřítele · bez stavby',
             stageLabel: 'Herní mapa', history: 'Bonusová arkáda, nikoli rekonstrukce konkrétní bitvy.',
             buildTitle: 'Vyber oddíl', close: 'Zavřít', level: 'úroveň {level}',
             upgrade: 'Vylepšit · {cost}', maxLevel: 'Nejvyšší úroveň', sell: 'Stáhnout · +{gold}',
@@ -62,7 +63,7 @@
             wagonNoRoad: 'Odtud vůz na cestu nedosáhne. Může jen podporovat sousední oddíly.',
             helpTitle: 'Jak bránit tábor', helpBody: 'Protivník postupuje po cestě od praporu k táboru. Obránci útočí sami, ty rozhoduješ o jejich rozmístění.',
             helpItems: [
-                'Klepni na volný hex, vyber oddíl a prohlédni si zvýrazněné hexy v dosahu. Tlačítkem Postavit potvrď jeho umístění. Dosah se počítá přes společné hrany hexů.',
+                'Zelená pole s + před první vlnou ukazují volná místa pro oddíly. Hnědá cesta a její objížďky patří nepříteli; tam stavět nelze. Klepni na volný hex u cesty, vyber oddíl, prohlédni si dosah a potvrď tlačítkem Postavit. Dosah se počítá přes společné hrany hexů.',
                 'Ručničáři střílejí z dálky, cepníci jsou silní proti obrněným, houfnice zasahuje skupiny a vůz podporuje okolí.',
                 'Červené přesýpací hodiny označují zpomalení vozem. Platí na červených hexech cesty, v překryvu nejsilnější vůz. Podpora zvyšuje útok v šesti sousedních hexech, nejvýše o 80 %.',
                 'Cepníci zasáhnou 1 hex, ručničáři 2 a houfnice 3. Na třetí úrovni získají střelci, houfnice a vůz další hex dosahu. Cepníci zůstávají u boje zblízka.',
@@ -97,7 +98,7 @@
             },
             coachLabel: 'Krátké zaučení', coachProgress: 'Tip {step}/3', coachSkip: 'Vypnout tipy', coachReplay: 'Znovu ukázat tipy',
             coach: {
-                build: { title: 'Postav první oddíl', body: 'Zvýrazněný hex je u cesty. Vyber ručničáře nebo houfnici, prohlédni si dosah a potvrď stavbu.', action: 'Ukázat místo' },
+                build: { title: 'Postav první oddíl', body: 'Zelená pole s + jsou pro tvoje oddíly. Hnědá cesta i objížďky jsou pro nepřítele. Klepni na + u cesty, vyber oddíl a potvrď stavbu.', action: 'Ukázat místo' },
                 hill: { title: 'Získej výhodu návrší', body: 'Na hexu s △ dostřelí ručničáři i houfnice o 1 hex dál. V náhledu si to můžeš prohlédnout bez placení.', action: 'Ukázat návrší' },
                 barricade: { title: 'Veď útok kolem obrany', body: 'Zásek za 25 grošů přidá cestě 2 hexy. Modrý náhled ti ukáže, kam nepřítel půjde. Přestavuj mezi vlnami.', action: 'Ukázat zásek' }
             },
@@ -130,8 +131,8 @@
         en: {
             title: 'Wagon Fort', pageTitle: 'Wagon Fort · Hussite Wars',
             gold: 'Coin', camp: 'Camp', wave: 'Wave',
-            initial: 'Tap an empty field, choose a unit and check its range.',
-            forbidden: 'You cannot build on the road or in the camp. Choose an open field beside it.',
+            initial: 'Tap a green + field beside the road to deploy your first unit. Roads and detours cannot hold units.',
+            forbidden: 'Roads, detours and the camp cannot hold units. Choose an open field beside the road.',
             built: '{unit} deployed.', upgraded: '{unit} upgraded.', sold: 'Unit withdrawn. Some coin returned.',
             notEnough: 'You do not have enough coin for this unit yet.',
             placeUnit: 'Deploy · {cost}', missingGold: 'Need {gold} more coin', firstUnit: 'Deploy a fighting unit first',
@@ -150,7 +151,8 @@
             choral: 'Chorale', choralActive: 'Singing', choralUsed: 'Chorale used',
             choralMessage: 'The battle hymn sounds: your units hit harder and the enemy hesitates.',
             speedLabel: 'Game speed', helpLabel: 'How to play', languageLabel: 'Přepnout do češtiny',
-            mapLabel: 'A winding road leads from the banner to the Hussite camp. Tap an open field beside it to build.',
+            mapLabel: 'Open fields beside the road are for deploying units. Before the first wave they are green and marked with a plus. The brown road and detours are for enemies; units cannot be deployed there.',
+            buildLegend: 'Deploy units', roadLegend: 'Enemy road · no deployment',
             stageLabel: 'Game map', history: 'An arcade bonus, not a reconstruction of a specific battle.',
             buildTitle: 'Choose a unit', close: 'Close', level: 'level {level}',
             upgrade: 'Upgrade · {cost}', maxLevel: 'Maximum level', sell: 'Withdraw · +{gold}',
@@ -189,7 +191,7 @@
             wagonNoRoad: 'This wagon cannot reach the road. It can only support adjacent units.',
             helpTitle: 'Defend the camp', helpBody: 'Enemies follow the road from the banner to the camp. Defenders fight automatically; you decide where they stand.',
             helpItems: [
-                'Tap an empty hex, choose a unit and check the highlighted hexes in range. Press Deploy to place it. Range is counted across shared hex edges.',
+                'Green + fields before the first wave show empty deployment sites. The brown road and its detours are for enemies; units cannot be deployed there. Tap an open hex beside the road, choose a unit, check its range and confirm with Deploy. Range is counted across shared hex edges.',
                 'Handgunners fire at range, flailmen pierce armour, howitzers hit groups, and wagons support nearby units.',
                 'A red hourglass marks enemies slowed by a wagon on red road hexes. Only the strongest overlapping wagon applies. Support increases attack in the six adjacent hexes, up to +80%.',
                 'Flailmen reach 1 hex, handgunners 2 and howitzers 3. At level three, handgunners, howitzers and wagons gain one extra hex of range. Flailmen remain melee units.',
@@ -224,7 +226,7 @@
             },
             coachLabel: 'Quick introduction', coachProgress: 'Tip {step}/3', coachSkip: 'Turn tips off', coachReplay: 'Show tips again',
             coach: {
-                build: { title: 'Deploy your first unit', body: 'The marked hex is beside the road. Choose handgunners or a howitzer, check the range and confirm deployment.', action: 'Show the spot' },
+                build: { title: 'Deploy your first unit', body: 'Green + fields are for your units. The brown road and detours are for enemies. Tap a + beside the road, choose a unit and confirm deployment.', action: 'Show the spot' },
                 hill: { title: 'Use the high ground', body: 'On a △ hex, handgunners and howitzers gain 1 hex of range. Check the preview without spending coin.', action: 'Show a hill' },
                 barricade: { title: 'Lead enemies past your defense', body: 'A barricade costs 25 coin and adds 2 hexes to the route. Blue previews where enemies will go. Rebuild between waves.', action: 'Show a barricade' }
             },
@@ -659,6 +661,21 @@
         }
         g.restore();
     }
+    function drawBuildSites(g) {
+        if (game.wave !== 0 || !sheet.hidden) return;
+        g.save();
+        for (const hex of game.availableBuildHexes()) {
+            hexPath(g, hex.col, hex.row, 0.035);
+            g.fillStyle = '#38704924'; g.strokeStyle = '#38704980'; g.lineWidth = 0.035;
+            g.fill(); g.stroke();
+            g.beginPath(); g.arc(hex.x, hex.y, 0.21, 0, Math.PI * 2);
+            g.fillStyle = palette.light; g.strokeStyle = '#387049'; g.lineWidth = 0.04;
+            g.fill(); g.stroke();
+            g.beginPath(); g.moveTo(hex.x - 0.11, hex.y); g.lineTo(hex.x + 0.11, hex.y);
+            g.moveTo(hex.x, hex.y - 0.11); g.lineTo(hex.x, hex.y + 0.11); g.stroke();
+        }
+        g.restore();
+    }
     function render() {
         if (!background) return;
         ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -670,15 +687,7 @@
             ctx.save(); ctx.setLineDash([0.13, 0.09]); ctx.lineWidth = 0.06;
             ctx.strokeStyle = palette.blue; path(ctx, preview.path); ctx.stroke(); ctx.restore();
         }
-        if (game.wave === 0 && !game.towers.length && !selected) {
-            ctx.strokeStyle = '#80352d85'; ctx.lineWidth = 0.025;
-            for (const [col, row] of [[3, 3], [4, 4], [3, 0]]) {
-                const { x, y } = WagonDefense.hexCenter(col, row);
-                ctx.beginPath(); ctx.arc(x, y, 0.21, 0, Math.PI * 2); ctx.stroke();
-                ctx.beginPath(); ctx.moveTo(x - 0.1, y); ctx.lineTo(x + 0.1, y);
-                ctx.moveTo(x, y - 0.1); ctx.lineTo(x, y + 0.1); ctx.stroke();
-            }
-        }
+        drawBuildSites(ctx);
         const wagons = game.towers.filter(tower => tower.type === 'vuz');
         if (selected?.preview === 'vuz') {
             wagons.push({ type: 'vuz', level: 1, col: selected.col, row: selected.row });
@@ -782,6 +791,7 @@
         document.getElementById('camp-wrap').classList.toggle('low', game.camp <= 6);
         setText(document.getElementById('wave-value'), game.wave + '/' + WagonDefense.WAVE_COUNT);
         const needsUnit = game.wave === 0 && !game.towers.some(tower => tower.type !== 'vuz');
+        document.getElementById('placement-legend').hidden = game.wave > 0;
         waveButton.disabled = paused || needsUnit || Boolean(game.pendingChoice) || !(game.state === 'ready' || game.canCallEarly());
         waveButton.title = needsUnit ? t('firstUnit') : '';
         setText(waveButton, game.canCallEarly()
@@ -1267,6 +1277,8 @@
             ? 'Terén a příprava obrany' : 'Terrain and defense preparation');
         document.querySelector('.wave-brief').setAttribute('aria-label', t('waveBriefLabel'));
         canvas.setAttribute('aria-label', t('mapLabel'));
+        document.getElementById('build-legend').textContent = t('buildLegend');
+        document.getElementById('road-legend').textContent = t('roadLegend');
         if (game.state === 'running') setMessage(t('waveStarted', { wave: game.wave }));
         else if (game.state === 'ready' && game.wave > 0) {
             setMessage(t('waveComplete', { wave: game.wave, bonus: 20 + 4 * game.wave })

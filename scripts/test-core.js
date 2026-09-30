@@ -262,14 +262,20 @@ test('Tachov a Domažlice začínají odporem zadního voje, ne okamžitým úst
     }
 });
 
-test('plzeňská bombarda začíná v dostřelu obránců', () => {
+test('plzeňská bombarda kryje přední střelce zpoza pěchoty bez okamžité protipalby', () => {
     const h = createHarness(), game = h.newGame('oblehani_plzne_1433');
     const bombarda = game.units.find(candidate => candidate.type === 'BOMBARDA');
+    const screen = game.units.find(candidate => candidate.type === 'PAVEZNICI');
     const defenders = game.units.filter(candidate => candidate.faction === 'crusaders');
-    const nearest = Math.min(...defenders.map(defender =>
-        game.hexGrid.getDistance(bombarda.col, bombarda.row, defender.col, defender.row)));
+    const targets = defenders.filter(defender => game.combatSystem.canAttack(bombarda, defender));
     assert.strictEqual(bombarda.movement, 0);
-    assert.ok(nearest <= bombarda.range, `nejbližší obránce je ${nearest} hexů, dostřel ${bombarda.range}`);
+    assert.ok(screen.col > bombarda.col, 'pavézníci stojí mezi baterií a městem');
+    assert.strictEqual(targets.length, 2, 'baterie nemá od začátku v dosahu celou posádku');
+    assert.ok(targets.every(target => target.type === 'LUCISTNICI'));
+    for (const defender of defenders) {
+        const distance = game.hexGrid.getDistance(bombarda.col, bombarda.row, defender.col, defender.row);
+        assert.ok(distance > defender.range, `${defender.type} nemůže ostřelovat baterii z počátečního postavení`);
+    }
     game.destroy();
 });
 

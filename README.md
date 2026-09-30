@@ -182,9 +182,10 @@ s útokem alespoň 28 může v boji zblízka protiútočit; střelci po vlastní
 automaticky neopětují palbu. Stojící oddíl s dostřelem 2+ a zbývajícím výstřelem
 na konci tahu připraví **krycí palbu**, která reaguje na pohyb protivníka a
 nepřidává bonus obrany. Ostatní nevyužité oddíly se automaticky brání a dostanou
-−30 % příchozího poškození. Ruční **Bránit** chrání i střelce, ale spotřebuje
-jeho reakční výstřel. Jde o vědomou volbu mezi palbou a ochranou, nikoli dva
-sčítající se bonusy.
+−30 % příchozího poškození. U střelců se ruční obranný rozkaz jmenuje **Krýt se**:
+chrání oddíl, ale spotřebuje jeho reakční výstřel. Karta přímo nad rozkazy ukazuje,
+zda je krycí palba připravena, nebo proč není dostupná. Jde o vědomou volbu mezi
+palbou a ochranou, nikoli dva sčítající se bonusy.
 
 Přesun žetonu je krátce animovaný; krycí palba a navazující útok začnou až po
 jeho příjezdu. Při omezení animací nebo zrychleném tahu AI se efekt přeskočí.

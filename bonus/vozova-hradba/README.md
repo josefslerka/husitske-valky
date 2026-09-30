@@ -35,6 +35,10 @@ souborů. Produkční konfigurace `CNAME` do tohoto adresáře nepatří.
 
 ## Ovládání
 
+- Před první vlnou jsou volná místa pro oddíly zelená a označená výrazným
+  pluskem. Hnědá cesta včetně obou objížděk je vyhrazená nepříteli; tam
+  stavět nelze. Legenda a první tip vysvětlují rozdíl česky i anglicky.
+  Značky během náhledu dosahu a po zahájení první vlny zmizí.
 - Klepněte na volný hex, vyberte ručničáře, cepníky, houfnici nebo bojový vůz
   a zkontrolujte náhled dosahu. Umístění potvrďte tlačítkem Postavit.
   Nabídka se přesouvá nad nebo pod zvolené pole, aby je nezakrývala.

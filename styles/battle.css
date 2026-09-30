@@ -198,6 +198,7 @@
 #unit-panel.collapsed h2,
 #info-panel.collapsed h2,
 #unit-panel.collapsed #unit-info,
+#unit-panel.collapsed #unit-cover-fire,
 #unit-panel.collapsed #unit-actions,
 #info-panel.collapsed #army-overview {
     display: none;

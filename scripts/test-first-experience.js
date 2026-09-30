@@ -30,24 +30,51 @@ test('sociální náhled má dvojjazyčná metadata a skutečný obrázek 1200 �
 });
 
 for (const language of ['cs', 'en']) {
-    test(`${language}: vysvětlení obrany rozliší krycí palbu a ruční volbu`, async () => {
+    test(`${language}: vlastní střelec vidí krycí palbu a rozkaz Krýt se i po změně jazyka`, async () => {
         const h = await createLocalizedHarness(language, { browserView: true });
         assert.equal(h.i18n.t('game.defend'), language === 'cs' ? 'Bránit' : 'Defend');
         assert.match(h.i18n.t('game.defendHint'), language === 'cs' ? /nesčítají/ : /do not stack/);
         assert.match(h.i18n.t('game.defendExplanation'), language === 'cs' ? /místo toho kryje palbou bez bonusu obrany/ : /uses covering fire instead, with no defense bonus/);
-        assert.match(h.i18n.t('game.defendExplanationRanged'), language === 'cs' ? /Krycí palba není obrana/ : /Covering fire is not defense/);
+        assert.match(h.i18n.t('game.defendExplanationRanged'), language === 'cs' ? /spotřebuje zbývající výstřel/ : /forfeits its remaining shot/);
         const game = h.newGame();
+        h.context.window.game = game;
         const shooter = game.unitFactory.createUnit('RUCNICARI', 5, 5);
         game.units.push(shooter);
         game.selectUnit(shooter);
         const explanation = h.document.getElementById('defend-explanation');
+        const defend = h.document.getElementById('btn-defend');
+        const status = h.document.getElementById('unit-cover-fire');
+        const detail = h.document.getElementById('unit-cover-fire-detail');
+        assert.equal(defend.textContent, language === 'cs' ? 'Krýt se' : 'Take Cover');
+        assert.equal(defend.getAttribute('data-i18n'), 'game.takeCover');
+        assert.equal(status.classList.contains('hidden'), false);
+        assert.equal(status.dataset.state, 'ready');
+        assert.equal(detail.textContent, h.i18n.t('game.coverFireDetails.ready'));
         assert.equal(explanation.getAttribute('data-i18n'), 'game.defendExplanationRanged');
         assert.equal(explanation.textContent, h.i18n.t('game.defendExplanationRanged'));
         assert.equal(h.i18n.hasTranslation('game.endTurnHint'), true);
         shooter.hasMoved = true;
         game.view.updateUnitPanel(shooter);
-        assert.equal(explanation.getAttribute('data-i18n'), 'game.defendExplanation');
+        assert.equal(status.dataset.state, 'moved');
+        assert.equal(detail.textContent, h.i18n.t('game.coverFireDetails.moved'));
+        assert.equal(explanation.getAttribute('data-i18n'), 'game.defendExplanationRanged');
+
+        await h.i18n.setLanguage(language === 'cs' ? 'en' : 'cs');
+        assert.equal(shooter.hasMoved, true, 'překlad nesmí obnovit krycí palbu');
+        assert.equal(game.isCoverFireReady(shooter), false);
+        assert.equal(defend.textContent, h.i18n.t('game.takeCover'));
+        assert.equal(defend.title, h.i18n.t('game.takeCoverHint'));
+        assert.equal(detail.textContent, h.i18n.t('game.coverFireDetails.moved'));
+        assert.equal(explanation.textContent, h.i18n.t('game.defendExplanationRanged'));
+
+        const infantry = game.units.find(unit => unit.range === 1 && unit.faction === 'hussites');
+        game.selectUnit(infantry);
+        assert.equal(status.classList.contains('hidden'), true);
+        assert.equal(defend.textContent, h.i18n.t('game.defend'));
+        assert.equal(defend.getAttribute('data-i18n'), 'game.defend');
         assert.equal(explanation.textContent, h.i18n.t('game.defendExplanation'));
+        game.deselectUnit();
+        assert.equal(status.classList.contains('hidden'), true);
         game.destroy();
     });
 

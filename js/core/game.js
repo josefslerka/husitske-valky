@@ -883,6 +883,16 @@ class Game {
             !unit.hasMoved && unit.canAttack();
     }
 
+    // Panel i tooltip vysvětlují stejnou připravenost; čtení stavu
+    // nespotřebuje výstřel ani nezmění rozkazy oddílu.
+    getCoverFireStatus(unit) {
+        if (!unit || unit.health <= 0 || unit.escaped || unit.range < 2) return null;
+        if (unit.isRouting) return 'routing';
+        if (unit.isDefending) return 'defending';
+        if (this.isCoverFireReady(unit)) return 'ready';
+        return unit.hasMoved ? 'moved' : 'spent';
+    }
+
     async triggerOverwatch(movedUnit) {
         if (!movedUnit || movedUnit.health <= 0) return;
 

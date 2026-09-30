@@ -41,7 +41,7 @@ The menu waits for both translations to load. If loading fails, it shows a reada
 
 Attacks and ending a turn are direct actions; there is no extra confirmation step. A surviving infantry defender with a base attack of at least 28 can counterattack a melee strike. Ranged units do not automatically shoot back merely because they were hit.
 
-At the end of your turn, an unused unit normally takes a defensive stance automatically, reducing incoming damage by 30%. There is one deliberate exception: a stationary unit with range 2+ and a shot remaining prepares **covering fire** instead. It can react when an enemy moves into range, but it receives no defensive bonus. Choosing **Defend** manually protects a ranged unit, but consumes its remaining reaction shot. The two benefits do not stack.
+At the end of your turn, an unused unit normally takes a defensive stance automatically, reducing incoming damage by 30%. There is one deliberate exception: a stationary unit with range 2+ and a shot remaining prepares **covering fire** instead. It can react when an enemy moves into range, but it receives no defensive bonus. A ranged unit's manual defensive order is called **Take Cover**: it protects the unit but forfeits its remaining reaction shot. The unit card shows covering-fire readiness or the specific reason it is unavailable directly above the orders. The two benefits do not stack.
 
 Units briefly slide to their destination hex. Covering fire and any follow-up attack resolve after the token visually arrives. The movement effect is skipped when reduced motion is requested or the AI turn is fast-forwarded. An idle battlefield no longer redraws the map on every animation frame.
 

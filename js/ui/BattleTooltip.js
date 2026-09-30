@@ -116,15 +116,16 @@ class BattleTooltip {
                 }
             }
 
-            if (unit.isDefending) {
+            const coverFire = this.game.gameState === 'playing' ? this.game.getCoverFireStatus(unit) : null;
+            if (unit.isDefending && !coverFire) {
                 html += `<div class="tooltip-bonus">${i18n.t('tooltip.defensiveStance')}</div>`;
             }
 
-            // Pouze u viditelného protivníka, jenž může reagovat na pohyb
-            // během právě probíhajícího tahu. Stejnou připravenost čte Game.
-            if (this.game.gameState === 'playing' && unit.faction !== this.game.currentFaction && unit.range >= 2) {
-                const ready = this.game.isCoverFireReady(unit);
-                html += `<div class="${ready ? 'tooltip-bonus' : 'tooltip-info'}">${i18n.t(ready ? 'tooltip.coverFireReady' : 'tooltip.coverFireSpent')}</div>`;
+            // Vlastní střelec i viditelný protivník dostanou stejný stav a
+            // konkrétní důvod nedostupnosti jako karta rozkazů.
+            if (coverFire) {
+                const title = ['ready', 'defending'].includes(coverFire) ? coverFire : 'unavailable';
+                html += `<div class="${coverFire === 'ready' ? 'tooltip-bonus' : 'tooltip-info'}"><strong>${i18n.t(`game.coverFireTitles.${title}`)}</strong><br>${i18n.t(`game.coverFireDetails.${coverFire}`)}</div>`;
             }
 
             if (unit.isTerrified) {

@@ -875,7 +875,7 @@ const UnitTypes = {
         maxHealth: 35,
         attack: 60,
         defense: 3,
-        range: 3,
+        range: 5,
         movement: 0,
         cost: 140,
         description: 'Těžké obléhací dělo. Ničí opevnění.',
