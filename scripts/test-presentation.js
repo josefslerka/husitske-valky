@@ -380,7 +380,11 @@ for (const language of ['cs', 'en']) {
         populateHelpUnits(null);
         const cards = h.document.getElementById('help-units-list').children.filter(el => el.className?.startsWith('help-unit-card'));
         assert.equal(cards.length, Object.keys(UnitTypes).length);
-        for (const type of ['VOZOVA_HRADBA', 'CEPNICI', 'BOMBARDA', 'JAN_ZIZKA', 'ZIKMUND']) {
+        for (const type of [
+            'VOZOVA_HRADBA', 'CEPNICI', 'LEHKA_JIZDA', 'TEZKOODENCI', 'TEZKY_RYTIR',
+            'SLECHTICKA_JIZDA_HUSITI', 'TARASNICE', 'HOUFNICE', 'HOUFNICE_PRASKY',
+            'BOMBARDA', 'JAN_ZIZKA', 'ZIKMUND'
+        ]) {
             const localized = vm.runInContext(`getLocalizedUnit('${type}', UnitTypes.${type})`, h.context);
             const card = cards.find(el => el.children[0].children[1].children[0].textContent === localized.name);
             assert.ok(card, type);
@@ -394,6 +398,13 @@ for (const language of ['cs', 'en']) {
         assert.equal(JSON.stringify(UnitTypes), before);
         const game = h.newGame('sudomere_1420'), panels = new h.BattlePanels(game);
         panels.updateArmyOverview();
+        for (const type of ['JIZDA_HUSITI', 'TEZKOODENCI', 'TEZKY_RYTIR']) {
+            const unit = game.units.find(candidate => candidate.type === type);
+            assert.ok(unit, type);
+            const list = h.document.getElementById(unit.faction === 'hussites' ? 'hussite-units' : 'crusader-units');
+            const row = list.children.find(el => el.innerHTML.includes(unit.name));
+            assert.ok(row?.innerHTML.includes(WoodcutRenderer.icon(unit)), type);
+        }
         const commander = game.units.find(u => u.isCommander() && u.faction === 'hussites');
         const row = h.document.getElementById('hussite-units').children.find(el => el.innerHTML.includes(commander.name));
         assert.ok(row.classList.contains('commander-unit'));

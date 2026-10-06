@@ -167,6 +167,9 @@
     "newGame": "Choose a Battle",
     "continue": "Continue",
     "encyclopedia": "Encyclopedia",
+    "howToPlay": "How to Play",
+    "howToPlayNote": "Rules, controls and tactics",
+    "howToPlayTitle": "How to Play — Rules and Tactics",
     "chronicle": "Chronicle",
     "tutorial": "Tutorial",
     "quickBattle": "Quick Battle",
@@ -244,6 +247,12 @@
     "overview": "Overview",
     "objectivesTitle": "Mission Objectives",
     "captureProgress": "Occupied {captured}/{required}",
+    "dualObjectiveProgress": "{name} {held}/{required}",
+    "holdProgress": "Turns counted: {held}/{required}",
+    "objectiveOccupied": "Positions held",
+    "objectiveUnoccupied": "Occupy all target hexes",
+    "showObjectiveOnMap": "Show on map",
+    "dualObjectiveHint": "One objective is enough. Hold the gold-marked hexes at the end of your own turns to add a turn to the counter. If any target hex is not held at that point, the counter resets. Most's city hexes do not count as the gate.",
     "endTurn": "End Turn",
     "endTurnHint": "Unused units defend automatically (−30% incoming damage). Stationary units with range 2 or more and a shot left prepare covering fire instead, without the defense bonus.",
     "unit": "Unit",
@@ -278,7 +287,7 @@
     "load": "Load Game",
     "sound": "Sound",
     "soundOff": "Sound Off",
-    "help": "Help",
+    "help": "How to Play",
     "backToMenu": "Back to Main Menu",
     "returnToMenu": "Return to Menu",
     "confirmReturn": "Do you really want to leave the battle and return to the main menu?",
@@ -289,10 +298,40 @@
     "closeFort": "⛓ Chain the wagons",
     "openFort": "⛓ Open the wall",
     "toggleFortLine": "⛓ Whole line",
-    "wagonChainedHint": "Chained — the wagon cannot move",
+    "wagonChainedHint": "Stationary fort — use March or unlink the wagon to move",
     "startMarch": "➡ March",
     "stopMarch": "⛓ Halt",
     "wagonMarchHint": "Marching fort — click an adjacent hex and the whole line advances (half cover)",
+    "wagonOrders": {
+      "title": "How wagon orders work",
+      "single": "One wagon",
+      "line": "Whole line",
+      "march": "March and stop",
+      "openHint": "Unlinks only the selected wagon. Spends its movement, not its shot: it can move independently next turn. It no longer provides closed-fort cover.",
+      "closeHint": "Links only the selected wagon and spends its movement, not its shot. A wagon in a stationary fort cannot move independently.",
+      "lineHint": "Sets {state} for {eligible} of {count} connected wagons. The order travels through adjacent friendly wagons; it skips those that have spent their movement or are already in the target state. Each changed wagon spends its movement, not its shot.",
+      "openState": "unlinked formation",
+      "closedState": "linked formation",
+      "marchHint": "Switches connected linked wagons to marching stance for free. Click a highlighted adjacent hex to move the marching group one hex; each wagon spends its movement, not its shot. All need unused movement and a clear destination. Water (except a frozen river), the map edge or another unit blocks the whole group's move. Marching wagons provide half fort cover.",
+      "stopHint": "Stops connected linked wagons for free and restores full fort cover immediately. Does not refund movement already spent; the stationary fort cannot move further.",
+      "closed": "A linked wagon holds position. Unlinking spends movement: it can move independently next turn. Use March to move as a group.",
+      "open": "An unlinked wagon can move independently if it has movement left. Linking spends movement, not its shot.",
+      "marching": "March: a highlighted adjacent hex moves the marching group one hex. All need unused movement and a clear destination; fort cover is halved."
+    },
+    "artilleryOrders": {
+      "title": "Movement and fire",
+      "normal": "After moving, it cannot fire this turn. If it fires first, it can still move afterwards, provided its movement is unused.",
+      "mobile": "A mobile gun can move and fire once in either order during the same turn.",
+      "fixed": "Immobile gun. It can fire once per turn, but cannot move."
+    },
+    "routingDetails": {
+      "start": "A routing unit cannot attack. It may rally at the start of its own turn; a nearby commander improves its chances.",
+      "attempts": "Rally attempts left: {count}. After two failures it deserts at the start of its next turn, even in the middle of the map.",
+      "desertionDue": "Both rally attempts failed. The unit will desert at the start of its next turn, even in the middle of the map.",
+      "retreat": "After a failed attempt it automatically retreats one hex away from the enemy if a clear route exists. At the map edge it leaves the battle instead.",
+      "noRetreat": "This unit cannot retreat automatically: if it fails to rally, it is destroyed.",
+      "noQuarter": "The scenario's no-quarter rule currently applies here: this routing unit will be destroyed when routing is processed, without a rally attempt."
+    },
     "moraleLabel": "Morale",
     "wavering": "WAVERING!"
   },
@@ -534,7 +573,7 @@
     "retry": "Try Again",
     "confirmRetry": "Do you really want to restart this battle? Your current progress will be lost.",
     "settings": "Settings",
-    "help": "Help",
+    "help": "How to Play",
     "mainMenu": "Main Menu"
   },
   "confirm": {
@@ -544,6 +583,7 @@
     "cancel": "Cancel"
   },
   "help": {
+    "unitStatsNote": "Numbers are base values, without terrain or commander bonuses. Conditional abilities are explained on each unit's card.",
     "title": "Help and Encyclopedia",
     "tabs": {
       "history": "History",
@@ -568,7 +608,21 @@
     },
     "equipment": "Equipment",
     "origin": "Origin",
-    "historicalNote": "Historical Note"
+    "historicalNote": "Historical Note",
+    "mechanics": {
+      "artilleryTitle": "Artillery: order matters",
+      "artillery": "A howitzer or another movable gun without the Mobile ability cannot fire after moving in the same turn. The reverse order is allowed: fire first, then move. A mobile tarasnice can move and fire in either order. Immobile guns cannot move. Defend / Take Cover always spends both actions.",
+      "wagonTitle": "Wagon fort orders",
+      "wagonLineBonus": "A linked wagon with at least two adjacent linked friendly wagons gains +10% formation defense, reduced to +5% when marching. An unlinked wagon does not get this bonus.",
+      "wagonSingle": "Open the Wall / Chain the Wagons changes only the selected wagon and spends its movement, not its shot. After unlinking, it can move independently next turn. Unlinking removes closed-fort cover; a linked stationary wagon cannot move.",
+      "wagonLine": "Whole Line sets the opposite of the selected wagon's formation for all friendly wagons connected through adjacent hexes. It skips wagons that have spent their movement or are already in the target state, but still follows the connection through them. Each changed wagon spends its movement, not its shot.",
+      "wagonMarch": "March / Halt freely changes the stance of connected linked wagons. The actual march moves the marching group one hex and spends each wagon's movement, not its shot. All need unused movement; water (except a frozen river), the map edge or other units blocks the whole group's route. Marching gives half fort cover; halting restores full cover immediately without refunding movement.",
+      "routingTitle": "Routing does not mean destroyed",
+      "routing": "A routing unit cannot attack. It tries to rally at the start of its own turn; success ends routing and allows it to fight again. A nearby commander and an adjacent veteran or elite unit improve its chances.",
+      "routingEscape": "After a failed attempt, an ordinary unit automatically retreats one clear hex away from the nearest enemy. If already at the map edge, it leaves the battle. A blocked route alone does not destroy an ordinary unit: it stays in place.",
+      "routingDesertion": "A unit has two rally attempts. After two failures it deserts at the start of its next turn, even in the middle of the map. Both an escape at the edge and desertion count as fled units in the result, not destroyed units.",
+      "routingNoRetreat": "A unit unable to retreat automatically (such as a howitzer or fixed fortification garrison) is destroyed after a failed rally. Some scenarios also apply a no-quarter rule in a specified area and phase, destroying routing enemies before they can attempt to rally."
+    }
   },
   "terrain": {
     "plains": "Plains",
@@ -586,10 +640,11 @@
   },
   "special": {
     "armorPiercing": "Armor Piercing (+30% vs armored)",
-    "reach": "Reach (attack over allies)",
+    "reach": "Base range: 1 hex. An attack at 2 hexes requires an ally on a shared neighbouring tile.",
+    "wagon": "War wagon — can form a wall and march with the line.",
     "shieldWall": "Shield Wall (+20% defense to ranged)",
     "antiCavalry": "Anti-Cavalry (+50% damage)",
-    "wagenburg": "Wagon Fort (+15% defense/wagon)",
+    "wagenburg": "Adjacent-wagon cover (−15% incoming damage per wagon, up to −45%; a marching neighbour counts for half).",
     "terror": "Terrifying (-10% enemy attack)",
     "pursuit": "Pursuit (+30% vs weakened)",
     "charge": "Charge (+50% after movement)",
@@ -666,7 +721,7 @@
     },
     "SUDLICNICI": {
       "name": "Pikemen",
-      "description": "Infantry with pole weapons. Reach over allied units.",
+      "description": "Infantry with polearms. Reaching a more distant enemy requires an ally between them.",
       "lore": {
         "description": "Footmen armed with long pole weapons - pikes, bills, or halberds. Their reach allowed them to strike enemies over rows of comrades or over the edge of war wagons.",
         "equipment": "Pike (pole weapon with blade and hook, 2-3 meters long), short knife, light helmet, quilted jacket",
@@ -1136,7 +1191,7 @@
     },
     "VOZOVA_HRADBA_PRASKY": {
       "name": "Prague Wagons",
-      "description": "Wagon fort of moderate Utraquists from Prague.",
+      "description": "Defensive wagons of the moderate Utraquists. They can form a wall and march with the line, but lack the Hussite wagon type's special adjacent-wagon bonus.",
       "lore": {
         "description": "War wagons of moderate Utraquists from Prague. Used in civil war between Hussites at Lipany.",
         "equipment": "Reinforced wagons with chains, crew of defenders and shooters",
@@ -1146,7 +1201,7 @@
     },
     "CEPNICI_PRASKY": {
       "name": "Prague Flailmen",
-      "description": "Flailmen of moderate Utraquists.",
+      "description": "Moderate Utraquist infantry with war flails. Their crushing blow is effective against heavy cavalry and wagons.",
       "lore": {
         "description": "Flailmen of moderate Utraquists from Prague. Even in civil war, they wielded flails with same ferocity.",
         "equipment": "War flails, light armor, helmets",
@@ -1156,7 +1211,7 @@
     },
     "KUSINICI_PRASKY": {
       "name": "Prague Crossbowmen",
-      "description": "Crossbowmen of moderate Utraquists.",
+      "description": "Moderate Utraquist crossbowmen. They can fire after moving; keep them away from close combat.",
       "lore": {
         "description": "Crossbowmen of moderate Utraquists. Their crossbows were just as deadly against former allies.",
         "equipment": "Crossbows, light armor",
@@ -1166,7 +1221,7 @@
     },
     "HOUFNICE_PRASKY": {
       "name": "Prague Howitzers",
-      "description": "Artillery of moderate Utraquists.",
+      "description": "Moderate Utraquist artillery. Siege fire is effective against wagons; unlike the Hussite howitzer, it does not hit adjacent tiles.",
       "lore": {
         "description": "Howitzers of moderate Utraquists. Ironic that Hussite invention was used against radical Hussites.",
         "equipment": "Field howitzers, gunpowder, iron balls",
@@ -1176,7 +1231,7 @@
     },
     "JIZDA_PRASKY": {
       "name": "Prague Cavalry",
-      "description": "Light cavalry of moderate Utraquists.",
+      "description": "Light cavalry of the moderate Utraquists, suited to fast movement and flank attacks. They have no special charge or pursuit bonus.",
       "lore": {
         "description": "Cavalry of moderate Utraquists from Prague. Mostly gentry and wealthy townsmen.",
         "equipment": "Light armor, lances, swords",
@@ -1207,6 +1262,7 @@
     "podoliSunkenRoad": "Sunken Road to Podolí",
     "westernWall": "Western Wall",
     "hnevinCastle": "Hněvín Castle",
+    "mostGate": "City Gate",
     "monastery": "Monastery",
     "towardBavaria": "Toward Bavaria",
     "fromStribro": "From Stříbro",
@@ -1960,7 +2016,7 @@
       "description": "The Prague army besieges Most and Hněvín. The arrival of opposing reinforcements threatens its position.",
       "historicalSignificance": "A significant defeat of the Prague league, not proof that Hussites could never win without Žižka or wagon defences.",
       "briefing": {
-        "hussites": "Hněvín castle is almost ours! Garrison offered capitulation, but Želivský refused. You have two goals: capture castle OR block city gate from which reinforcements may come. You don't have enough men for both - decide!",
+        "hussites": "Complete one objective by the end of round 10: occupy both gold-marked Hněvín hexes and hold them for 2 turns, OR hold the marked city gate for 6 turns. The gate is at the end of the road outside Most; occupying the city hexes does not count. Holding turns are counted at the end of your own turns. Earn the bonus by controlling both the castle and the gate when you win.",
         "crusaders": "Hold castle at all costs! Margrave Frederick's reinforcements are on way. Most townsmen will sally from gate and strike Hussites in flank."
       },
       "reinforcementGroups": {
@@ -1968,16 +2024,25 @@
         "misenska_armada": "Margrave Frederick's Meissen army arrives from the north!"
       },
       "objectives": {
-        "primary": "Fulfill ONE goal: Capture Hněvín castle OR keep city gate blocked",
+        "primary": "By round 10: Hněvín for 2 turns OR the city gate for 6 turns",
+        "targets": {
+          "capture_castle": "Occupy both marked Hněvín hexes and hold them for 2 turns",
+          "block_gate": "Occupy the marked gate at the end of the road outside Most and hold it for 6 turns"
+        },
         "secondary": [
-          "Fulfill BOTH goals",
+          "Control the castle and gate when one holding objective is completed",
           "Želivský survives",
           "Save howitzer",
           "Fewer than 5 lost units"
         ]
       },
       "debriefing": {
-        "victory": "Hněvín castle is yours! Combination of castle capture and city gate blocking paid off. Most is under Hussite control and way to Saxony is open for future Beautiful Rides.",
+        "victory": "The Prague army won this game battle. This is an alternative outcome; the historical siege of Most ended in defeat.",
+        "victoryVariants": {
+          "castleCaptured": "You occupied both key Hněvín positions and held them for the required time. Capturing the castle secured victory, but the city gate was not also under your control. This is an alternative game outcome to the Prague army's historical defeat.",
+          "gateBlocked": "You kept the city gate outside Most blocked for the required time. This objective secured victory; it does not imply that Hněvín was captured. This is an alternative game outcome to the Prague army's historical defeat.",
+          "bothControlled": "You completed one holding objective while also occupying both key Hněvín positions and the city gate. You earned the bonus for controlling both locations. This is an alternative game outcome to the Prague army's historical defeat."
+        },
         "defeat": "Most townsmen and castle garrison held their positions. Hussite attack failed and army must retreat. Northwestern Bohemia remains in enemy hands."
       },
       "phases": [
@@ -1986,8 +2051,8 @@
           "description": "Hněvín castle is within reach. Garrison offered capitulation, but Želivský refused.",
           "events": [
             {
-              "message": "Želivský: \"No mercy for traitors! We shall take castle by force!\"",
-              "sourceHash": "052e3a6d99997e2a"
+              "message": "Želivský: \"No mercy for traitors! We shall take the castle by force!\"",
+              "sourceHash": "50994c2dc2121962"
             },
             {
               "message": "Castle garrison defends stubbornly. Noise comes from city...",
@@ -3576,7 +3641,7 @@
     "aiTrapSprung": "A trap! The enemy turns on you!",
     "choralShockEnemy": "The enemy hears the chorale — dread spreads through their ranks!",
     "wagonClosed": "{unit}: wagons chained — the fort holds.",
-    "wagonOpened": "{unit}: chains released — the wagon can sally.",
+    "wagonOpened": "{unit}: chains released — movement spent; independent movement is available next turn.",
     "wagonLineClosed": "{count} wagons chained into a fort.",
     "wagonLineOpened": "{count} wagons unchained — the fort opens.",
     "wagonMarchOn": "The wagon fort shifts into marching order ({count} wagons).",
@@ -3620,13 +3685,14 @@
     "fleeingCasualties": "{unit} starts fleeing due to casualties!",
     "fleeingCommander": "{unit} starts fleeing after commander's death!",
     "fleeingSurrounded": "{unit} starts fleeing - surrounded!",
-    "routedCaught": "{unit} was caught and killed - no mercy!",
-    "rallySuccess": "Rally successful - {unit} continues fighting",
+    "routedCaught": "{unit}: routing unit destroyed under the scenario's no-quarter rule.",
+    "rallySuccess": "{unit} rallied and can fight again.",
     "rallyFailed": "{unit} continues fleeing",
-    "rallyFailedAttempt": "{unit} continues fleeing (attempt {attempt}/3)",
+    "rallyFailedAttempt": "{unit}: rally failed (attempt {attempt}/2); the unit is still routing.",
     "unitTrapped": "{unit} cannot retreat and is destroyed!",
     "unitStartsFleeing": "{unit} starts fleeing!",
     "unitFledBattlefield": "{unit} fled the battlefield!",
+    "unitDeserted": "{unit} deserted after two failed rally attempts; it was not destroyed.",
     "moraleBreakTitle": "Morale broken!",
     "breakReasonCommander": "Commander {commander} has fallen",
     "breakReasonCasualties": "Heavy casualties ({percent}%)",

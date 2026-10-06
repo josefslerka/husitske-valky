@@ -249,6 +249,14 @@
 
 #tooltip.tooltip-scrollable { pointer-events: auto; }
 
+#tooltip.tooltip-docked {
+    position: static;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    pointer-events: auto;
+}
+
 #tooltip .tooltip-title {
     font-weight: bold;
     font-size: 1rem;
@@ -266,6 +274,10 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 2px 14px;
+}
+
+#tooltip.tooltip-docked .tooltip-stats {
+    grid-template-columns: minmax(0, 1fr);
 }
 
 #tooltip .tooltip-stat {

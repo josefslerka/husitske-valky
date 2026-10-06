@@ -250,13 +250,46 @@ body {
     margin: 0 0 12px;
 }
 
-#unit-actions .defend-explanation {
+#unit-actions .defend-explanation,
+#unit-actions .order-explanation {
     grid-column: 1 / -1;
     margin: -2px 0 3px;
     color: var(--field-ink-soft);
     font-size: 0.78rem;
     line-height: 1.35;
 }
+
+#unit-actions .wagon-order-help {
+    grid-column: 1 / -1;
+    min-width: 0;
+    padding: 0 9px;
+    border: 1px solid var(--field-rule);
+    color: var(--field-ink-soft);
+    font-size: .78rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.wagon-order-help summary {
+    min-height: 44px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.wagon-order-help summary:focus-visible { outline: 2px solid var(--field-red-dark); outline-offset: 2px; }
+.wagon-order-help p { margin: 4px 0 12px; }
+.unit-mechanics-hint {
+    padding: 9px;
+    margin: 8px 0;
+    border-left: 3px solid var(--field-rule);
+    background: rgba(201, 162, 39, .08);
+    font-size: .8rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+.unit-mechanics-hint p { margin: 5px 0 0; }
+.unit-routing-hint { border-left-color: var(--field-red-dark); }
 
 #unit-cover-fire {
     order: -1;
@@ -762,6 +795,19 @@ body {
     min-width: 232px;
 }
 
+/* Dočasná inspekce nemění uživatelův rozbalený/sbalený stav panelu.
+   Vyšší specificita zajistí čitelnou kartu i při původně sbaleném přehledu. */
+#game-main #info-panel.enemy-inspection {
+    width: 232px;
+    min-width: 232px;
+    padding: 12px;
+    overflow: hidden;
+    transition: none;
+}
+
+#game-main #info-panel.enemy-inspection h2 { display: block; }
+#game-main #info-panel.enemy-inspection #army-overview { display: none; }
+
 #unit-panel,
 #info-panel {
     padding: 12px;
@@ -931,12 +977,54 @@ body {
 
 #unit-panel:not(.empty-unit-panel) #unit-info {
     display: block;
-    overflow: visible;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 #unit-panel:not(.empty-unit-panel) h2 {
     display: block;
+    flex-shrink: 0;
 }
+
+/* Pokud jsou samotné rozkazy vyšší než nízké okno, musí být dostupné také. */
+#unit-panel:not(.empty-unit-panel) { overflow-y: auto; overscroll-behavior: contain; }
+
+/* V nízkém okně by dlouhé rozkazy vozu nechaly detailu jen pár řádků.
+   Posouvá se proto celá karta, stejně jako na mobilu. */
+@media (max-height: 800px) {
+    #unit-panel:not(.empty-unit-panel) #unit-info { flex: none; overflow: visible; }
+}
+
+/* Dotyková karta posouvá celý panel, nikoli vnořený detail. */
+.compact-battle #unit-panel:not(.empty-unit-panel) #unit-info {
+    flex: none;
+    overflow: visible;
+}
+
+/* Rozbalená nápověda může být vyšší než celý panel i na desktopu.
+   Detail oddílu nesmí zmizet do nulově vysokého vnořeného posuvu. */
+#unit-panel:has(.wagon-order-help[open]) #unit-info {
+    flex: none;
+    overflow: visible;
+}
+
+.dual-objective { padding: 12px 0; border-bottom: 1px solid var(--field-rule); }
+.dual-objective strong { color: var(--field-red-dark); }
+.dual-objective p, #dual-objective-hint { margin: 6px 0; font-size: .85rem; line-height: 1.4; }
+.dual-objective .objective-progress { color: var(--field-ink-soft); }
+.dual-objective.objective-held .objective-progress { color: #365846; }
+.objective-locate {
+    min-height: 44px;
+    padding: 6px 10px;
+    margin-top: 4px;
+    color: var(--field-ink);
+    background: var(--field-page-light);
+    border: 1px solid var(--field-rule);
+    cursor: pointer;
+}
+.objective-locate:hover, .objective-locate:focus-visible { background: var(--field-page); }
 
 #unit-panel:not(.empty-unit-panel) #unit-actions {
     display: grid;
@@ -1610,6 +1698,9 @@ body {
 #main-menu .menu-library .menu-section-title { margin-bottom: 4px; }
 #main-menu .menu-library-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 #main-menu .menu-library-link { font-size: .92rem; min-height: 52px; }
+#main-menu .menu-how-to-link { min-height: 56px; font-size: .92rem; }
+#main-menu .menu-how-to-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; overflow-wrap: anywhere; }
+#main-menu .menu-how-to-copy > span { color: var(--field-ink-soft); font: normal .82rem/1.4 Georgia, serif; }
 #main-menu .menu-library-link svg {
     width: 23px;
     height: 23px;
@@ -1906,6 +1997,14 @@ body {
     min-width: 42px;
     padding: 10px 5px;
 }
+
+/* Pravidla vybraného oddílu nesmějí znovu zobrazit obsah sbalené lišty.
+   Rozbalená dotyková karta má zároveň .collapsed, proto výjimka .expanded. */
+#unit-panel.collapsed:not(.expanded) { overflow: hidden; }
+#unit-panel.collapsed:not(.expanded) h2,
+#unit-panel.collapsed:not(.expanded) #unit-info,
+#unit-panel.collapsed:not(.expanded) #unit-cover-fire,
+#unit-panel.collapsed:not(.expanded) #unit-actions { display: none; }
 
 /* === Čitelnost vítězné/prohrané obrazovky na světlém pergamenu ("polní rukopis") ===
    Modal má krémové pozadí, ale řada textů zůstala světlá z původního tmavého

@@ -35,7 +35,11 @@ class BattleView {
     }
 
     factionLabel(faction) { return this.panels.factionLabel(faction); }
-    updateUI() { this.panels.updateUI(); this.orders.refresh(); }
+    updateUI() {
+        if (this.game.gameState !== 'playing' || this.game.currentFaction !== 'hussites') this.hideTooltip();
+        this.panels.updateUI();
+        this.orders.refresh();
+    }
     updateEndTurnButton() { this.panels.updateEndTurnButton(); this.orders.refresh(); }
     updateArmyOverview() { return this.panels.updateArmyOverview(); }
     renderMoraleBar(prefix, faction, aliveCount) { return this.panels.renderMoraleBar(prefix, faction, aliveCount); }
@@ -73,9 +77,12 @@ class BattleView {
         if (_primary) {
             const zoneHexes = _primary.type === 'escape' ? (_primary.escapeZone || [])
                             : ['breakthrough', 'capture_position'].includes(_primary.type) ? (_primary.positions || [])
+                            : ['dual_objective', 'dual_objective_battle'].includes(_primary.type)
+                                ? (_primary.objectives || []).flatMap(objective => objective.positions || [])
                             : [];
             if (zoneHexes.length > 0) {
-                const zoneKind = _primary.type === 'capture_position' ? 'objective' : 'escape';
+                const zoneKind = ['capture_position', 'dual_objective', 'dual_objective_battle'].includes(_primary.type)
+                    ? 'objective' : 'escape';
                 this.game.hexGrid.setEscapeZone(
                     zoneHexes.map(([col, row]) => ({ col, row })),
                     _primary.zoneLabel || '',
@@ -133,6 +140,7 @@ class BattleView {
         if (!this.previewedEnemyUnit) return;
         this.previewedEnemyUnit = null;
         this.game.hexGrid.setEnemyMove([]);
+        if (this.tooltip.isDocked()) this.tooltip.dismissCard();
         this.render();
     }
 

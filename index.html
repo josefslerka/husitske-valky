@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://hussitewars.com/imgs/social-preview.png">
     <meta name="twitter:image:alt" content="Husitská vozová hradba pod kalichem · A Hussite wagon fort beneath the chalice banner">
 
-    <link rel="stylesheet" href="style.css?v=8.39">
+    <link rel="stylesheet" href="style.css?v=8.43">
 </head>
 <body class="booting">
     <section id="startup-status" class="startup-status">
@@ -113,6 +113,13 @@
                                     <span class="btn-text" data-i18n="menu.encyclopedia"></span>
                                 </button>
                             </div>
+                            <button id="btn-how-to-play" class="menu-btn menu-how-to-link">
+                                <span class="menu-how-to-copy">
+                                    <strong data-i18n="menu.howToPlay">Jak hrát</strong>
+                                    <span data-i18n="menu.howToPlayNote">Pravidla, ovládání a taktika</span>
+                                </span>
+                                <span class="menu-arrow" aria-hidden="true">→</span>
+                            </button>
                         </section>
                         <div class="menu-utilities">
                             <button id="btn-settings" class="menu-btn menu-utility"><span class="btn-text" data-i18n="menu.settings"></span></button>
@@ -195,10 +202,20 @@
                 <div id="unit-actions" class="hidden">
                     <button id="btn-attack" disabled data-i18n="game.attack"></button>
                     <button id="btn-defend" data-i18n="game.defend" data-i18n-title="game.defendHint"></button>
-                    <button id="btn-formation" class="hidden"></button>
-                    <button id="btn-formation-line" class="hidden"></button>
-                    <button id="btn-formation-march" class="hidden"></button>
+                    <button id="btn-formation" class="hidden" aria-describedby="wagon-single-help"></button>
+                    <button id="btn-formation-line" class="hidden" aria-describedby="wagon-line-help"></button>
+                    <button id="btn-formation-march" class="hidden" aria-describedby="wagon-march-help"></button>
                     <button id="btn-undo" class="hidden">↩ <span data-i18n="game.undo"></span></button>
+                    <p id="formation-explanation" class="order-explanation hidden"></p>
+                    <details id="wagon-order-help" class="wagon-order-help hidden">
+                        <summary data-i18n="game.wagonOrders.title">Jak fungují rozkazy vozů</summary>
+                        <strong data-i18n="game.wagonOrders.single">Jeden vůz</strong>
+                        <p id="wagon-single-help"></p>
+                        <strong data-i18n="game.wagonOrders.line">Celá linie</strong>
+                        <p id="wagon-line-help"></p>
+                        <strong data-i18n="game.wagonOrders.march">Pochod a zastavení</strong>
+                        <p id="wagon-march-help"></p>
+                    </details>
                     <p id="defend-explanation" class="defend-explanation" data-i18n="game.defendExplanation"></p>
                 </div>
             </aside>
@@ -252,6 +269,8 @@
                         <span class="objective-status">○</span>
                         <span class="objective-text" id="primary-objective"></span>
                     </div>
+                    <div id="dual-objectives"></div>
+                    <p id="dual-objective-hint" class="hidden"></p>
                     <div id="secondary-objectives"></div>
                 </div>
             </div>
@@ -313,7 +332,7 @@
                     <button id="btn-sound" title="Zapnout/Vypnout zvuk">
                         <span class="btn-icon">🔊</span> <span data-i18n="game.sound"></span>
                     </button>
-                    <button id="btn-help" data-i18n-title="game.help">
+                    <button id="btn-help" data-i18n-title="menu.howToPlayNote">
                         <span class="btn-icon">❓</span> <span data-i18n="game.help"></span>
                     </button>
                 </div>
@@ -439,7 +458,7 @@
 
     <div id="help-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="help-title">
         <div class="modal-content help-modal-content">
-            <button id="help-close" class="help-close-btn" data-i18n-title="chronicle.close" title="Zavřít">&times;</button>
+            <button id="help-close" class="help-close-btn" data-i18n-title="chronicle.close" data-i18n-aria-label="chronicle.close" title="Zavřít" aria-label="Zavřít">&times;</button>
             <h2 id="help-title" data-i18n="menu.encyclopedia">Encyklopedie</h2>
 
             <div class="help-tabs">
@@ -475,6 +494,7 @@
                 <!-- Jednotky -->
                 <div id="tab-units" class="help-tab-content">
                     <h3 data-i18n="encyclopedia.unitsTitle">Jednotky v bitvě</h3>
+                    <p class="help-stats-note" data-i18n="help.unitStatsNote">Čísla jsou základní hodnoty bez bonusů terénu a velitelů. Podmíněné schopnosti jsou popsány u každého oddílu.</p>
                     <div id="help-units-list"></div>
                 </div>
 
@@ -653,6 +673,10 @@
                         <p>Každá jednotka může v jednom tahu provést pohyb a útok (nebo pouze jedno z toho). Bránit spotřebuje zbývající akce a sníží příchozí poškození o 30 %. Na konci tahu se nevyužité oddíly brání automaticky, kromě stojících oddílů s dostřelem 2+ a zbývajícím výstřelem: ty připraví krycí palbu bez bonusu obrany. Ruční Bránit střelce ochrání, ale připraví ho o reakční výstřel.</p>
                     </div>
                     <div class="rules-section">
+                        <h4 data-i18n="help.mechanics.artilleryTitle"></h4>
+                        <p data-i18n="help.mechanics.artillery"></p>
+                    </div>
+                    <div class="rules-section">
                         <h4>Výpočet poškození</h4>
                         <p>Poškození = Útok jednotky - Obrana cíle. Minimální poškození je 5. Terén přidává bonus k obraně.</p>
                     </div>
@@ -662,9 +686,9 @@
                             <li><strong>Náraz (Charge):</strong> +50% poškození při útoku po pohybu</li>
                             <li><strong>Proti jízdě:</strong> +50% poškození proti kavalerii</li>
                             <li><strong>Drtivý úder:</strong> +30% poškození proti obrněným</li>
-                            <li><strong>Vozová hradba:</strong> +3 obrana za každý sousední vůz</li>
-                            <li><strong>Dosah:</strong> Útok přes spojeneckou jednotku</li>
-                            <li><strong>Plošný útok:</strong> Zasáhne všechny nepřátele v dosahu</li>
+                            <li data-i18n="special.wagenburg">Kryt sousedních vozů</li>
+                            <li data-i18n="special.reach">Základní dosah 1; na 2 hexy jen přes spojence</li>
+                            <li data-i18n="special.areaAttack">Plošný útok</li>
                             <li><strong>Rychlá palba:</strong> 2 útoky za tah (75% poškození)</li>
                             <li><strong>Děsivý:</strong> Může vyděsit nepřítele (-2 útok)</li>
                         </ul>
@@ -682,9 +706,15 @@
                         <p>Jednotky vedle vozové hradby nebo v městě se na konci tahu léčí o <strong>+10 HP</strong>. Maximálně do 50% původního zdraví. Každá jednotka může regenerovat pouze jednou za bitvu.</p>
                     </div>
                     <div class="rules-section">
+                        <h4 data-i18n="help.mechanics.wagonTitle"></h4>
+                        <p data-i18n="help.mechanics.wagonSingle"></p>
+                        <p data-i18n="help.mechanics.wagonLine"></p>
+                        <p data-i18n="help.mechanics.wagonMarch"></p>
+                    </div>
+                    <div class="rules-section">
                         <h4>Formace vozové hradby</h4>
                         <ul>
-                            <li><strong>Linie vozů:</strong> 3+ vozy vedle sebe dostávají +10% obrana navíc</li>
+                            <li><strong>Linie vozů:</strong> <span data-i18n="help.mechanics.wagonLineBonus"></span></li>
                             <li><strong>Střílny:</strong> Střelci vedle vozu dostávají +5 útok a +10% obrana</li>
                             <li><strong>Průlom:</strong> Při zničení vozu sousední vozy ztratí formační bonus na 1 kolo</li>
                         </ul>
@@ -726,8 +756,14 @@
                             <li><strong>Pád velitele:</strong> Smrt velitele způsobí okamžitý morální zlom</li>
                             <li><strong>Těžké ztráty:</strong> Ztráta 60%+ armády spustí morální zlom</li>
                             <li><strong>Panika:</strong> Když prchá více než polovina jednotek</li>
-                            <li><strong>Útěk:</strong> Prchající jednotky na okraji mapy uprchnou z bojiště</li>
                         </ul>
+                    </div>
+                    <div class="rules-section">
+                        <h4 data-i18n="help.mechanics.routingTitle"></h4>
+                        <p data-i18n="help.mechanics.routing"></p>
+                        <p data-i18n="help.mechanics.routingEscape"></p>
+                        <p data-i18n="help.mechanics.routingDesertion"></p>
+                        <p data-i18n="help.mechanics.routingNoRetreat"></p>
                     </div>
                 </div>
 
@@ -1072,41 +1108,41 @@
 
     <!-- i18n - lokalizační systém (načíst jako první) -->
     <script src="js/core/GameStorage.js?v=8.9"></script>
-    <script src="js/i18n/i18n.js?v=8.42"></script>
-    <script src="js/i18n/i18nHelpers.js?v=8.19"></script>
-    <script src="js/i18n/encyclopediaRenderer.js?v=8.29"></script>
+    <script src="js/i18n/i18n.js?v=8.45"></script>
+    <script src="js/i18n/i18nHelpers.js?v=8.21"></script>
+    <script src="js/i18n/encyclopediaRenderer.js?v=8.31"></script>
     <!-- ?v= cache-busting: bumpni číslo při každém vydání, ať hráči nedostanou starý JS -->
     <script src="js/ui/sound.js?v=3.9"></script>
     <script src="js/ui/music.js?v=8.20"></script>
-    <script src="js/ui/WoodcutRenderer.js?v=8.27"></script>
+    <script src="js/ui/WoodcutRenderer.js?v=8.28"></script>
     <script src="js/core/hex.js?v=8.14"></script>
     <script src="js/data/unitTypes.js?v=8.18"></script>
-    <script src="js/entities/Unit.js?v=8.18"></script>
+    <script src="js/entities/Unit.js?v=8.19"></script>
     <script src="js/entities/UnitFactory.js?v=3.9"></script>
     <script src="js/data/battleLore.js?v=8.17"></script>
     <script src="js/data/historicalSources.js?v=8.17"></script>
     <script src="js/data/campaign.js?v=8.0"></script>
     <script src="js/systems/CampaignProgressSystem.js?v=8.10"></script>
-    <script src="js/data/scenarios.js?v=8.25"></script>
+    <script src="js/data/scenarios.js?v=8.26"></script>
     <script src="js/systems/CombatSystem.js?v=8.2"></script>
     <script src="js/systems/BattleActionSystem.js?v=8.8"></script>
     <script src="js/systems/SaveGameSystem.js?v=8.17"></script>
-    <script src="js/systems/ScenarioEventSystem.js?v=8.8"></script>
+    <script src="js/systems/ScenarioEventSystem.js?v=8.9"></script>
     <script src="js/systems/FogOfWarSystem.js?v=3.9"></script>
-    <script src="js/systems/VictoryConditionsSystem.js?v=8.3"></script>
+    <script src="js/systems/VictoryConditionsSystem.js?v=8.4"></script>
     <script src="js/systems/TutorialSystem.js?v=8.2"></script>
-    <script src="js/systems/MoraleSystem.js?v=8.3"></script>
-    <script src="js/systems/ChronicleSystem.js?v=8.9"></script>
+    <script src="js/systems/MoraleSystem.js?v=8.4"></script>
+    <script src="js/systems/ChronicleSystem.js?v=8.10"></script>
     <script src="js/ui/HistoricalNotesView.js?v=8.17"></script>
     <script src="js/ui/ChronicleView.js?v=8.17"></script>
-    <script src="js/ui/BattlePanels.js?v=8.20"></script>
-    <script src="js/ui/BattleTooltip.js?v=8.19"></script>
+    <script src="js/ui/BattlePanels.js?v=8.23"></script>
+    <script src="js/ui/BattleTooltip.js?v=8.23"></script>
     <script src="js/ui/BattleMapInput.js?v=8.9"></script>
     <script src="js/ui/BattleOrders.js?v=8.13"></script>
-    <script src="js/ui/BattleView.js?v=8.22"></script>
+    <script src="js/ui/BattleView.js?v=8.24"></script>
     <script src="js/core/game.js?v=8.23"></script>
     <script src="js/ai.js?v=8.21"></script>
-    <script src="js/ui/main.js?v=8.34"></script>
+    <script src="js/ui/main.js?v=8.36"></script>
 
     <!-- Cloudflare Web Analytics: souhrnné návštěvy bez cookies. -->
     <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"

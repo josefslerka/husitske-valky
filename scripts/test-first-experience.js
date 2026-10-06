@@ -5,6 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const { createHarness } = require('./helpers/game-harness');
 const { createLocalizedHarness } = require('./helpers/localized-harness');
+const { menuHarness } = require('./helpers/menu-harness');
 const tests = [];
 const test = (name, run) => tests.push({ name, run });
 const plain = value => JSON.parse(JSON.stringify(value));
@@ -403,29 +404,6 @@ test('dohraná časová mise ukazuje skutečný počet kol a nehlásí další t
     assert.equal(h.document.getElementById('turn-number').textContent, 'Kolo: 8/8');
     game.destroy();
 });
-
-async function menuHarness(language = 'cs', prepare = () => {}, options = {}) {
-    const h = await createLocalizedHarness(language, options);
-    h.context.CustomEvent = class extends Event {
-        constructor(type, options) { super(type); this.detail = options?.detail; }
-    };
-    h.context.window = Object.assign(new EventTarget(), { innerWidth: 1280 });
-    h.context.Music = {
-        isPlaying: false, setVolume() {}, setEnabled() {},
-        stop() { this.isPlaying = false; },
-        toggle() { this.isPlaying = !this.isPlaying; return this.isPlaying; }
-    };
-    await prepare(h);
-    let initialize;
-    const listen = h.document.addEventListener.bind(h.document);
-    h.document.addEventListener = (type, handler, options) => {
-        if (type === 'DOMContentLoaded') initialize = handler;
-        else listen(type, handler, options);
-    };
-    vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/ui/main.js'), 'utf8'), h.context);
-    await initialize();
-    return h;
-}
 
 test('titulní menu zachovává všechny akce, pořadí pokračování a dekorativní ilustraci', () => {
     const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');

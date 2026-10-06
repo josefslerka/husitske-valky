@@ -23,9 +23,14 @@ class WoodcutRenderer {
         bow: 'M-6-16Q18 0-6 16Z M-14 0H14 M9-4L14 0 9 4',
         gun: 'M-12 12L9-10 13-6-8 16Z M7-8L10-14 14-10 11-6 M-5 5L-9 0 M-3 4L1 8',
         cannon: 'M-14-3L12-12 15-4-11 5Z M-11 5L10 8 M-10 9A5 5 0 1 0 0 9A5 5 0 1 0-10 9 M7 8L14 14 M-5 9L-5 14',
+        tarasnice: 'M-16-1L14-11 16-6-14 4Z M-14 4L10 8 M-10 10A3.5 3.5 0 1 0-3 10A3.5 3.5 0 1 0-10 10 M-6.5 10V13.5 M7 8L14 14',
+        howitzer: 'M-9-5L6-11 12-1-3 5Z M-3-7L3 3 M-10 5L10 8 M-10 9A5 5 0 1 0 0 9A5 5 0 1 0-10 9 M-5 9V14 M7 8L14 14',
+        bombard: 'M-16-5L9-16 15-2-10 8Z M-8-8L-2 4 M3-12L9 0 M-16 11H14V15H-16Z M-10 8L-12 11 M8 1L11 11',
         wagon: 'M-13-8H13V8H-13Z M-13-3H13 M-13 2H13 M-9-8V-14L0-17 9-14V-8 M-12 12A4 4 0 1 0-4 12A4 4 0 1 0-12 12 M4 12A4 4 0 1 0 12 12A4 4 0 1 0 4 12',
         fieldwork: 'M-16 15H16 M-12 14V-7L0-17 12-7V14 M-15-7H15 M-12-2H12 M-12 4H12 M-12 10H12 M-6-3V6 M6-3V6',
         horse: 'M-9 13L-3 1-8-4-2-12-1-18 3-13 9-10 14-3 10 1 5-1 6 7 11 13Z M-12 16H13 M5-8H7',
+        horseShield: 'M-9 13L-3 1-8-4-2-12-1-18 3-13 9-10 14-3 10 1 5-1 6 7 11 13Z M-12 16H13 M5-8H7 M-16 0H-7L-8 8-12 12-16 8Z',
+        horseLance: 'M-9 13L-3 1-8-4-2-12-1-18 3-13 9-10 14-3 10 1 5-1 6 7 11 13Z M-12 16H13 M5-8H7 M-15 12L-7-13 M-10-12L-5-20-4-11Z M-2-12L3-7 8-5',
         captain: 'M-6 15V-16 M-5-15L12-12 7-6 12 0-5-3Z M-10 15H-1',
         pilgrim: 'M-7 16L2-16Q9-20 9-12 M-1-7Q12-12 12-3Q12 6 3 3Z M-10 11L-4 13',
         sword: 'M-11 13L9-14 14-17 13-11-7 16Z M-10 4L2 14'
@@ -54,8 +59,16 @@ class WoodcutRenderer {
         if (type.includes('SUDLICNICI') || type === 'HALAPARTNICI') return 'polearm';
         if (type === 'RUCNICARI') return 'gun';
         if (type === 'LUCISTNICI') return 'bow';
+        // Physical profiles distinguish gun types; generic field guns keep
+        // their existing cannon. Prague variants share their weapon profile.
+        if (type === 'TARASNICE') return 'tarasnice';
+        if (type === 'BOMBARDA') return 'bombard';
+        if (type === 'HOUFNICE' || type === 'HOUFNICE_PRASKY') return 'howitzer';
         if (unit.unitClass === 'artillery') return 'cannon';
         if (unit.unitClass === 'ranged' || type.includes('KUS')) return 'crossbow';
+        // RYTIRI is the bonus game's presentation-only knight descriptor.
+        if (type === 'TEZKY_RYTIR' || type === 'RYTIRI') return 'horseLance';
+        if (type === 'TEZKOODENCI' || unit.unitClass === 'heavyCavalry') return 'horseShield';
         if (/JIZDA|RYTIR|ZVED|TEZKOODENCI/.test(type)) return 'horse';
         return 'sword';
     }

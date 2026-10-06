@@ -167,6 +167,9 @@
     "newGame": "Vybrat bitvu",
     "continue": "Pokračovat",
     "encyclopedia": "Encyklopedie",
+    "howToPlay": "Jak hrát",
+    "howToPlayNote": "Pravidla, ovládání a taktika",
+    "howToPlayTitle": "Jak hrát — pravidla a taktika",
     "chronicle": "Kronika",
     "tutorial": "Tutoriál",
     "quickBattle": "Rychlá bitva",
@@ -244,6 +247,12 @@
     "overview": "Přehled",
     "objectivesTitle": "Cíle mise",
     "captureProgress": "Obsazeno {captured}/{required}",
+    "dualObjectiveProgress": "{name} {held}/{required}",
+    "holdProgress": "Započtená kola: {held}/{required}",
+    "objectiveOccupied": "Pole držíte",
+    "objectiveUnoccupied": "Nutné obsadit všechna cílová pole",
+    "showObjectiveOnMap": "Ukázat na mapě",
+    "dualObjectiveHint": "Stačí jeden cíl. Zlatě označená pole držte na konci vlastních tahů; tehdy se započítá další kolo. Pokud některé cílové pole na konci tahu nedržíte, počítadlo se vynuluje. Městská pole Mostu se za bránu nepočítají.",
     "endTurn": "Ukončit tah",
     "endTurnHint": "Nevyužité oddíly se automaticky brání (−30 % příchozího poškození). Stojící oddíly s dostřelem 2+ a zbývajícím výstřelem místo toho kryjí palbou, bez bonusu obrany.",
     "unit": "Jednotka",
@@ -278,7 +287,7 @@
     "load": "Načíst hru",
     "sound": "Zvuk",
     "soundOff": "Zvuk vyp.",
-    "help": "Nápověda",
+    "help": "Jak hrát",
     "backToMenu": "Zpět na hlavní menu",
     "returnToMenu": "Návrat do menu",
     "confirmReturn": "Opravdu chcete opustit bitvu a vrátit se do hlavního menu?",
@@ -289,10 +298,40 @@
     "closeFort": "⛓ Sepnout hradbu",
     "openFort": "⛓ Rozevřít hradbu",
     "toggleFortLine": "⛓ Celá linie",
-    "wagonChainedHint": "Sepnuto řetězy — vůz se nemůže hýbat",
+    "wagonChainedHint": "Pevná hradba — vůz stojí; přesun umožní Pochod nebo rozpojení",
     "startMarch": "➡ Pochod",
     "stopMarch": "⛓ Zastavit",
     "wagonMarchHint": "Pochodová hradba — klikni na sousední hex a celá linie se posune (poloviční kryt)",
+    "wagonOrders": {
+      "title": "Jak fungují rozkazy vozů",
+      "single": "Jeden vůz",
+      "line": "Celá linie",
+      "march": "Pochod a zastavení",
+      "openHint": "Rozpojí pouze vybraný vůz. Spotřebuje jeho pohyb, ne výstřel; samostatně se přesune až příští tah. Přestane poskytovat kryt sepnuté hradby.",
+      "closeHint": "Sepne pouze vybraný vůz a spotřebuje jeho pohyb, ne výstřel. V pevné hradbě se samostatně nepohybuje.",
+      "lineHint": "Nastaví {state} u {eligible} z {count} propojených vozů. Rozkaz přechází přes sousedící vlastní vozy; vůz, který už použil pohyb nebo je v cílovém stavu, přeskočí. Změněným vozům spotřebuje pohyb, ne výstřel.",
+      "openState": "rozpojení",
+      "closedState": "sepnutí",
+      "marchHint": "Zdarma přepne propojené sepnuté vozy do pochodu. Kliknutím na zvýrazněné sousední pole posunete celou pochodující skupinu o jeden hex; každému vozu spotřebuje pohyb, ne výstřel. Všechny musí mít volný pohyb a cestu. Voda (mimo zamrzlou řeku), okraj mapy nebo jiný oddíl přesun celé skupiny zablokují. Pochodující vozy dávají poloviční kryt hradby.",
+      "stopHint": "Zdarma zastaví propojené sepnuté vozy a obnoví plný kryt hradby hned. Nevrátí již použitý pohyb; pevná hradba se dál nepohybuje.",
+      "closed": "Sepnutý vůz stojí. Rozevření spotřebuje pohyb: samostatně pojede až příští tah. Pro skupinový přesun zvolte Pochod.",
+      "open": "Rozpojený vůz může jet samostatně, pokud má volný pohyb. Sepnutí spotřebuje pohyb, ne výstřel.",
+      "marching": "Pochod: zvýrazněné sousední pole posune celou pochodující skupinu o jeden hex. Potřebují volný pohyb i cestu všichni; kryt hradby je poloviční."
+    },
+    "artilleryOrders": {
+      "title": "Pohyb a palba",
+      "normal": "Po přesunu už toto kolo nevystřelí. Když nejdřív vystřelí, může se pak ještě přesunout, pokud má volný pohyb.",
+      "mobile": "Mobilní dělo může jet a jednou vystřelit v libovolném pořadí během téhož tahu.",
+      "fixed": "Nepohyblivé dělo. Může jednou za tah vystřelit, ale nepřesune se."
+    },
+    "routingDetails": {
+      "start": "Prchající oddíl nemůže útočit. Na začátku vlastního tahu se může znovu zformovat; blízký velitel zvyšuje šanci.",
+      "attempts": "Zbývající pokusy o zformování: {count}. Po dvou neúspěších při příštím vlastním tahu dezertuje, i uprostřed mapy.",
+      "desertionDue": "Dva pokusy o zformování selhaly. Při příštím vlastním tahu oddíl dezertuje, i uprostřed mapy.",
+      "retreat": "Po neúspěšném pokusu automaticky ustoupí o jedno pole od nepřítele, je-li cesta volná. Na okraji mapy místo toho uprchne z bitvy.",
+      "noRetreat": "Tento oddíl nemůže automaticky ustupovat: pokud se nezformuje, je zničen.",
+      "noQuarter": "Zde právě platí scénářové pravidlo bez milosti: při zpracování prchání bude tento oddíl zničen, bez pokusu o zformování."
+    },
     "moraleLabel": "Morálka",
     "wavering": "KOLÍSÁ!"
   },
@@ -534,7 +573,7 @@
     "retry": "Zkusit znovu",
     "confirmRetry": "Opravdu chcete začít tuto bitvu znovu? Současný rozehraný postup bude ztracen.",
     "settings": "Nastavení",
-    "help": "Nápověda",
+    "help": "Jak hrát",
     "mainMenu": "Hlavní menu"
   },
   "confirm": {
@@ -544,6 +583,7 @@
     "cancel": "Zrušit"
   },
   "help": {
+    "unitStatsNote": "Čísla jsou základní hodnoty bez bonusů terénu a velitelů. Podmíněné schopnosti jsou popsány u každého oddílu.",
     "title": "Nápověda a Encyklopedie",
     "tabs": {
       "history": "Historie",
@@ -568,7 +608,21 @@
     },
     "equipment": "Výzbroj",
     "origin": "Původ",
-    "historicalNote": "Historická poznámka"
+    "historicalNote": "Historická poznámka",
+    "mechanics": {
+      "artilleryTitle": "Dělostřelectvo: záleží na pořadí",
+      "artillery": "Houfnice a další pohyblivá děla bez schopnosti Mobilní po přesunu už v témže tahu nevystřelí. Opačné pořadí je možné: nejdřív výstřel, potom přesun. Mobilní tarasnice může jet i střílet v libovolném pořadí. Nepohyblivá děla se nepřesouvají. Bránit / Krýt se vždy ukončí obě akce.",
+      "wagonTitle": "Rozkazy vozové hradby",
+      "wagonLineBonus": "Sepnutý vůz s alespoň dvěma sousedními sepnutými vlastními vozy získá +10 % obrany za linii; při pochodu jen +5 %. Rozpojený vůz tento bonus nemá.",
+      "wagonSingle": "Rozevřít / Sepnout hradbu mění jen vybraný vůz a spotřebuje jeho pohyb, ne výstřel. Po rozevření proto samostatně pojede až příští tah. Rozpojení ruší kryt sepnuté hradby; sepnutý stojící vůz se nepohybuje.",
+      "wagonLine": "Celá linie nastaví stav opačný ke stavu vybraného vozu u všech vlastních vozů propojených sousedními poli. Přeskočí vozy, které už použily pohyb nebo jsou v cílovém stavu; propojení přes ně ale pokračuje. Změněným vozům spotřebuje pohyb, ne výstřel.",
+      "wagonMarch": "Pochod / Zastavit zdarma mění postoj propojených sepnutých vozů. Samotný pochod posune pochodující skupinu o jeden hex a spotřebuje pohyb všech vozů, ne výstřel. Všechny musí mít volný pohyb; vodní pole (mimo zamrzlou řeku), okraj mapy nebo jiné oddíly cestu celé skupině zablokují. Pochod dává poloviční kryt hradby, zastavení plný kryt hned obnoví, ale nevrátí použitý pohyb.",
+      "routingTitle": "Prchá neznamená zničen",
+      "routing": "Prchající oddíl nemůže útočit. Na začátku vlastního tahu zkouší znovu zformovat; při úspěchu přestane prchat a může zase bojovat. Blízký velitel a sousední veterán nebo elita zvýší šanci.",
+      "routingEscape": "Při neúspěchu běžný oddíl automaticky ustoupí o jedno volné pole od nejbližšího nepřítele. Pokud už stojí na okraji mapy, uprchne z bitvy. Zablokovaná cesta sama o sobě běžný oddíl nezničí: zůstane stát.",
+      "routingDesertion": "Má dva pokusy o zformování. Po dvou neúspěších při příštím vlastním tahu dezertuje, i uprostřed mapy. Útěk přes okraj i dezertování se ve výsledku počítají jako uprchlé oddíly, ne zničené.",
+      "routingNoRetreat": "Oddíl bez možnosti automatického ústupu (například houfnice nebo posádka pevného opevnění) je po neúspěšném zformování zničen. Některé scénáře navíc v určené oblasti a fázi ničí prchající nepřátele bez milosti, ještě před pokusem o zformování."
+    }
   },
   "terrain": {
     "plains": "Pláně",
@@ -586,10 +640,11 @@
   },
   "special": {
     "armorPiercing": "Drtivý úder (+30% vs obrněné)",
-    "reach": "Dosah (útok přes spojence)",
+    "reach": "Základní dosah 1 hex; útok na 2 hexy jen přes spojence na společném sousedním poli.",
+    "wagon": "Vůz — sepnutí do hradby a společný pochod.",
     "shieldWall": "Štítová zeď (+20% obrana střelcům)",
     "antiCavalry": "Proti jízdě (+50% poškození)",
-    "wagenburg": "Vozová hradba (+15% obrana/vůz)",
+    "wagenburg": "Kryt sousedních vozů (−15 % poškození za vůz, nejvýše −45 %; pochodující soused dává polovinu).",
     "terror": "Děsivý (-10% útok nepříteli)",
     "pursuit": "Pronásledování (+30% vs oslabené)",
     "charge": "Náraz (+50% po pohybu)",
@@ -660,7 +715,7 @@
     "aiTrapSprung": "Léčka! Nepřítel se obrací proti vám!",
     "choralShockEnemy": "Nepřátelé slyší chorál — strach se šíří šiky!",
     "wagonClosed": "{unit}: řetězy sepnuty — hradba drží.",
-    "wagonOpened": "{unit}: řetězy rozpojeny — vůz může vyrazit.",
+    "wagonOpened": "{unit}: řetězy rozpojeny — pohyb použit, samostatně vyrazí příští tah.",
     "wagonLineClosed": "Sepnuto {count} vozů do hradby.",
     "wagonLineOpened": "Rozpojeno {count} vozů — hradba se otevírá.",
     "wagonMarchOn": "Vozová hradba přechází do pochodu ({count} vozů).",
@@ -704,13 +759,14 @@
     "fleeingCasualties": "{unit} začíná prchat kvůli ztrátám!",
     "fleeingCommander": "{unit} začíná prchat po smrti velitele!",
     "fleeingSurrounded": "{unit} začíná prchat - je obklíčen!",
-    "routedCaught": "{unit} byl dobyt a zabit - žádná milost!",
-    "rallySuccess": "Rally úspěšné - {unit} pokračuje v boji",
+    "routedCaught": "{unit}: prchající oddíl zničen podle scénářového pravidla bez milosti.",
+    "rallySuccess": "{unit} se znovu zformoval a může pokračovat v boji.",
     "rallyFailed": "{unit} pokračuje v útěku",
-    "rallyFailedAttempt": "{unit} pokračuje v útěku (pokus {attempt}/3)",
+    "rallyFailedAttempt": "{unit}: zformování selhalo (pokus {attempt}/2), oddíl stále prchá.",
     "unitTrapped": "{unit} nemůže ustoupit a je zničen!",
     "unitStartsFleeing": "{unit} začíná prchat!",
     "unitFledBattlefield": "{unit} uprchl z bojiště!",
+    "unitDeserted": "{unit} dezertoval po dvou neúspěšných pokusech o zformování; nejde o zničení oddílu.",
     "moraleBreakTitle": "Morální zlom!",
     "breakReasonCommander": "Pád velitele {commander}",
     "breakReasonCasualties": "Těžké ztráty ({percent}%)",
@@ -795,6 +851,7 @@
     "podoliSunkenRoad": "Úvoz k Podolí",
     "westernWall": "Západní hradba",
     "hnevinCastle": "Hrad Hněvín",
+    "mostGate": "Městská brána",
     "monastery": "Klášter",
     "towardBavaria": "K Bavorsku",
     "fromStribro": "Od Stříbra",
@@ -2155,7 +2212,7 @@
       "description": "Pražské vojsko obléhá Most a Hněvín. Příchod protivníkových posil ohrožuje jeho postavení.",
       "historicalSignificance": "Významná porážka pražského svazu. Neprokazuje, že bez Žižky či vozové hradby nemohli husité vítězit.",
       "briefing": {
-        "hussites": "Hrad Hněvín je téměř náš! Posádka nabídla kapitulaci, ale Želivský ji odmítl. Máš dva cíle: dobýt hrad NEBO zablokovat městskou bránu, odkud může přijít posila. Na obojí nemáš dost mužů - rozhodni se!",
+        "hussites": "Stačí splnit jeden cíl do konce 10. kola: obsadit obě zlatě označená pole Hněvína a držet je 2 kola, NEBO držet označenou městskou bránu 6 kol. Brána je na konci cesty před Mostem; obsazení městských polí nestačí. Držení se počítá na konci vašich tahů. Bonus získáte, pokud při vítězství současně ovládáte hrad i bránu.",
         "crusaders": "Držte hrad za každou cenu! Posily markraběte Fridricha jsou na cestě. Mostečtí vyrazí z brány a udeří husitům do boku."
       },
       "reinforcementGroups": {
@@ -2163,16 +2220,25 @@
         "misenska_armada": "Míšeňská armáda markraběte Fridricha přichází ze severu!"
       },
       "objectives": {
-        "primary": "Splň JEDEN z cílů: Dobij hrad Hněvín NEBO udrž městskou bránu zablokovanou",
+        "primary": "Do 10. kola: Hněvín 2 kola NEBO městská brána 6 kol",
+        "targets": {
+          "capture_castle": "Obsaď obě označená pole Hněvína a drž je 2 kola",
+          "block_gate": "Obsaď označenou bránu na konci cesty před Mostem a drž ji 6 kol"
+        },
         "secondary": [
-          "Splň OBA cíle",
+          "Ovládni hrad i bránu při splnění jednoho časového cíle",
           "Želivský přežije",
           "Zachraň houfnici",
           "Méně než 5 ztracených jednotek"
         ]
       },
       "debriefing": {
-        "victory": "Hrad Hněvín je váš! Kombinace dobývání hradu a blokování městské brány se vyplatila. Most je pod husitskou kontrolou a cesta do Saska otevřena pro budoucí spanilé jízdy.",
+        "victory": "Pražské vojsko vyhrálo tento herní střet. Jde o alternativní výsledek; historické obléhání Mostu skončilo porážkou.",
+        "victoryVariants": {
+          "castleCaptured": "Obsadili jste obě klíčové pozice Hněvína a udrželi je po požadovanou dobu. Vítězství přineslo dobytí hradu, nikoli současné ovládnutí městské brány. Jde o herní alternativu k historické porážce pražského vojska.",
+          "gateBlocked": "Městskou bránu před Mostem jste udrželi zablokovanou po požadovanou dobu. Tento cíl přinesl vítězství; dobytí Hněvína se tím neprohlašuje. Jde o herní alternativu k historické porážce pražského vojska.",
+          "bothControlled": "Splnili jste jeden časový cíl a při vítězství současně obsadili obě klíčové pozice Hněvína i městskou bránu. Získáváte také bonus za ovládnutí obou lokalit. Jde o herní alternativu k historické porážce pražského vojska."
+        },
         "defeat": "Mostečtí měšťané a posádka hradu udrželi své pozice. Husitský útok selhal a vojsko musí ustoupit. Severozápadní Čechy zůstávají v rukou nepřítele."
       },
       "phases": [
@@ -2181,8 +2247,8 @@
           "description": "Hrad Hněvín je na dosah. Posádka nabídla kapitulaci, ale Želivský odmítl.",
           "events": [
             {
-              "message": "Želivský: „Žádná milost pro zrádce! Dobyjeme hrad silou!“",
-              "sourceHash": "052e3a6d99997e2a"
+              "message": "Želivský: „Žádná milost pro zrádce! Dobudeme hrad silou!“",
+              "sourceHash": "50994c2dc2121962"
             },
             {
               "message": "Hradní posádka se houževnatě brání. Z města se ozývá ruch...",
@@ -3046,6 +3112,24 @@
     }
   },
   "units": {
+    "SUDLICNICI": {
+      "description": "Pěchota s tyčovými zbraněmi. Na vzdálenějšího nepřítele dosáhne jen přes spojence."
+    },
+    "VOZOVA_HRADBA_PRASKY": {
+      "description": "Obranný vůz umírněných kališníků. Lze jej spojit do hradby a pochodovat s linií; nemá zvláštní bonus sousedních vozů husitského typu."
+    },
+    "CEPNICI_PRASKY": {
+      "description": "Pěchota umírněných kališníků s bojovými cepy. Drtivý úder je účinný proti těžké jízdě a vozům."
+    },
+    "KUSINICI_PRASKY": {
+      "description": "Střelci umírněných kališníků s kušemi. Mohou střílet i po pohybu; chrání je odstup od boje zblízka."
+    },
+    "HOUFNICE_PRASKY": {
+      "description": "Dělostřelectvo umírněných kališníků. Obléhací palba je účinná proti vozům; na rozdíl od husitské houfnice nezasahuje sousední pole."
+    },
+    "JIZDA_PRASKY": {
+      "description": "Lehká jízda umírněných kališníků pro rychlé přesuny a útoky na křídlech. Nemá zvláštní bonus nárazu ani pronásledování."
+    },
     "POLNI_OPEVNENI": {
       "name": "Posádka srubu",
       "description": "Obránci pevného srubu a zídky. Střílejí z krytu, ale nemohou se přesouvat.",

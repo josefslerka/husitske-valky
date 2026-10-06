@@ -114,7 +114,16 @@ function getLocalizedScenario(scenarioId, baseScenario) {
             };
         }
 
-        // Secondary objectives
+        // Named targets and secondary objectives
+        if (baseScenario.victoryConditions.primary?.objectives) {
+            localizedScenario.victoryConditions.primary = {
+                ...localizedScenario.victoryConditions.primary,
+                objectives: baseScenario.victoryConditions.primary.objectives.map(objective => {
+                    const key = `${scenarioKey}.objectives.targets.${objective.id}`;
+                    return { ...objective, description: i18n.hasTranslation(key) ? i18n.t(key) : objective.description };
+                })
+            };
+        }
         if (baseScenario.victoryConditions.secondary) {
             localizedScenario.victoryConditions.secondary = baseScenario.victoryConditions.secondary.map((obj, index) => {
                 const key = `${scenarioKey}.objectives.secondary.${index}`;
@@ -411,6 +420,10 @@ function updateGameDataLocalization() {
                     currentPrimary.description = localizedPrimary.description;
                     currentPrimary.zoneLabel = localizedPrimary.zoneLabel || '';
                     if (activeGame.hexGrid) activeGame.hexGrid.escapeZoneLabel = currentPrimary.zoneLabel;
+                    (currentPrimary.objectives || []).forEach(objective => {
+                        const translated = localizedPrimary.objectives?.find(item => item.id === objective.id);
+                        if (translated) objective.description = translated.description;
+                    });
                 }
                 (scenario.victoryConditions.secondary || []).forEach((objective, index) => {
                     const translated = localized.victoryConditions.secondary?.[index];
@@ -478,8 +491,8 @@ function updateGameDataLocalization() {
     // Pokud je otevřený help modal s jednotkami, aktualizuj ho
     const helpModal = document.getElementById('help-modal');
     if (helpModal && !helpModal.classList.contains('hidden')) {
-        if (typeof populateHelpUnits === 'function' && activeGame) {
-            populateHelpUnits(activeGame);
+        if (typeof populateHelpUnits === 'function') {
+            populateHelpUnits(helpModal.dataset.unitScope === 'battle' ? activeGame : null);
         }
         // Aktualizuj také encyklopedii
         if (typeof updateEncyclopediaContent === 'function') {

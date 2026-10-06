@@ -24,6 +24,8 @@ button:disabled { cursor: default; opacity: .45; }
 input, select, textarea { font: inherit; color: inherit; }
 .text-button { border: 0; background: none; text-decoration: underline; text-underline-offset: 3px; min-height: 30px; padding: 4px 6px; color: var(--field-red-dark); font-size: .78rem; }
 .tester-link { flex: 0 0 auto; align-self: center; }
+.main-game-link { display: flex; flex: 0 0 auto; align-items: center; align-self: flex-start; gap: 6px; min-height: 44px; max-width: 100%; color: var(--field-red-dark); font-size: .82rem; line-height: 1.3; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.main-game-link:hover { color: var(--field-ink); }
 [hidden] { display: none !important; }
 :focus-visible { outline: 3px solid var(--field-gold); outline-offset: 2px; }
 

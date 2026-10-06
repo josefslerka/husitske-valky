@@ -264,6 +264,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('btn-encyclopedia').addEventListener('click', () => {
         showEncyclopedia();
     });
+    document.getElementById('btn-how-to-play').addEventListener('click', () => {
+        openHelpModal('rules', null);
+    });
 
     // WP2b: Tlačítko Kronika
     const chronicleModal = document.getElementById('chronicle-modal');
@@ -859,6 +862,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!scenario || !scenario.victoryConditions) {
             primaryObjective.textContent = '';
             secondaryObjectives.innerHTML = '';
+            document.getElementById('dual-objectives').replaceChildren();
+            document.getElementById('dual-objective-hint').classList.add('hidden');
             if (objectiveHudText) objectiveHudText.textContent = '';
             if (objectiveHud) objectiveHud.classList.add('hidden');
             if (objectivesPanel) objectivesPanel.classList.add('hidden');
@@ -1072,9 +1077,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (btnHelp) {
         btnHelp.addEventListener('click', () => {
-            if (game) populateHelpUnits(game);
-            openHelpModal();
             if (footerMenu) footerMenu.classList.remove('open');
+            openHelpModal('rules', game, document.getElementById('btn-menu'));
         });
     }
 
@@ -1172,10 +1176,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Tlačítko Nápověda v pause menu
     document.getElementById('btn-pause-help').addEventListener('click', () => {
         hidePauseMenu();
-        if (game) {
-            populateHelpUnits(game);
-        }
-        openHelpModal();
+        openHelpModal('rules', game, document.getElementById('btn-menu'));
     });
 
     // Tlačítko Hlavní menu
@@ -1420,9 +1421,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Bez instance hry vypíše populateHelpUnits všechny typy jednotek,
         // což je pro encyklopedii přesně to, co chceme (a nevzniká temp hra
         // s vlastní animační smyčkou a listenery na živém canvasu)
-        populateHelpUnits(null);
-
-        openHelpModal();
+        openHelpModal('history', null);
     }
 
     // Prezentace i offline export sdílejí jediný pohled a bezpečné escapování.
@@ -1717,15 +1716,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     const helpTabs = document.querySelectorAll('.help-tab');
     let helpPreviousFocus = null;
 
-    function openHelpModal() {
-        helpPreviousFocus = document.activeElement;
+    function selectHelpTab(tabId) {
+        helpTabs.forEach(tab => {
+            const active = tab.getAttribute('data-tab') === tabId;
+            tab.classList.toggle('active', active);
+            tab.setAttribute('aria-pressed', String(active));
+            // Na telefonu je lišta vodorovně posuvná. Vybraná karta nesmí
+            // zůstat mimo výřez, zvlášť při přímém vstupu na Pravidla.
+            if (active) tab.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+        });
+        document.querySelectorAll('.help-tab-content').forEach(content => {
+            content.classList.toggle('active', content.id === 'tab-' + tabId);
+        });
+        document.getElementById('help-content').scrollTop = 0;
+    }
+
+    function openHelpModal(initialTab = 'rules', unitsGame = game, previousFocus = document.activeElement) {
+        helpPreviousFocus = previousFocus;
+        // Encyklopedie z menu zůstává úplná i po rozehrání bitvy a změně jazyka.
+        helpModal.dataset.unitScope = unitsGame ? 'battle' : 'all';
+        populateHelpUnits(unitsGame);
+        const title = document.getElementById('help-title');
+        const titleKey = initialTab === 'history' ? 'menu.encyclopedia' : 'menu.howToPlayTitle';
+        title.setAttribute('data-i18n', titleKey);
+        title.textContent = i18n.t(titleKey);
         // Stejný obsah a náhledy i při prvním otevření přímo z bitvy nebo pauzy.
         if (typeof initEncyclopediaContent === 'function') {
             initEncyclopediaContent();
         }
         helpModal.classList.remove('hidden');
-        document.getElementById('help-content').scrollTop = 0;
-        helpTabs.forEach(tab => tab.setAttribute('aria-pressed', String(tab.classList.contains('active'))));
+        selectHelpTab(initialTab);
         helpClose.focus();
     }
 
@@ -1753,16 +1773,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Přepínání záložek
     helpTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            helpTabs.forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-pressed', String(t === tab));
-            });
-            document.querySelectorAll('.help-tab-content').forEach(c => c.classList.remove('active'));
-
-            tab.classList.add('active');
-            const tabId = tab.getAttribute('data-tab');
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.getElementById('help-content').scrollTop = 0;
+            selectHelpTab(tab.getAttribute('data-tab'));
         });
     });
 
@@ -1905,7 +1916,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Funkce pro naplnění seznamu jednotek v helpu
 function populateHelpUnits(game) {
     const container = document.getElementById('help-units-list');
-    container.innerHTML = '';
+    container.replaceChildren();
 
     // Získání unikátních typů jednotek
     const unitTypesInBattle = new Map();
@@ -1941,10 +1952,11 @@ function populateHelpUnits(game) {
         // Fallback na české texty
         const specialDescriptions = {
             armorPiercing: 'Drtivý úder (+30% vs obrněné)',
-            reach: 'Dosah (útok přes spojence)',
+            reach: 'Základní dosah 1 hex; útok na 2 hexy jen přes spojence na společném sousedním poli.',
+            wagon: 'Vůz — sepnutí do hradby a společný pochod.',
             shieldWall: 'Štítová zeď (+20% obrana střelcům)',
             antiCavalry: 'Proti jízdě (+50% poškození)',
-            wagenburg: 'Vozová hradba (+15% obrana/vůz)',
+            wagenburg: 'Kryt sousedních vozů (−15 % poškození za vůz, nejvýše −45 %; pochodující soused dává polovinu).',
             terror: 'Děsivý (-10% útok nepříteli)',
             pursuit: 'Pronásledování (+30% vs oslabené)',
             charge: 'Náraz (+50% po pohybu)',
@@ -1983,7 +1995,7 @@ function populateHelpUnits(game) {
         if (a.faction !== b.faction) {
             return a.faction === 'hussites' ? -1 : 1;
         }
-        return a.name.localeCompare(b.name, 'cs');
+        return a.name.localeCompare(b.name, i18n.getCurrentLanguage());
     });
 
     let currentFaction = null;
@@ -2002,6 +2014,7 @@ function populateHelpUnits(game) {
         }
 
         const card = document.createElement('div');
+        card.dataset.unitType = unitType.type;
         const commander = WoodcutRenderer.isCommander(unitType);
         card.className = `help-unit-card ${unitType.faction}${commander ? ' commander-unit' : ''}`;
 
@@ -2057,6 +2070,8 @@ function populateHelpUnits(game) {
         if (unitType.description) {
             descHtml = `<p class="help-unit-description">${unitType.description}</p>`;
         }
+        const orderExplanation = BattlePanels.artilleryOrderExplanation(unitType);
+        const ordersHtml = orderExplanation ? `<p class="help-unit-description">${orderExplanation}</p>` : '';
 
         // Rozšířené informace (lore) - vždy zobrazené
         let loreHtml = '';
@@ -2094,10 +2109,10 @@ function populateHelpUnits(game) {
 
         // Sestavení karty
         card.appendChild(cardHeader);
-        card.innerHTML += stats.outerHTML;
-        card.innerHTML += specialHtml;
-        card.innerHTML += descHtml;
-        card.innerHTML += loreHtml;
+        card.appendChild(stats);
+        const details = document.createElement('div');
+        details.innerHTML = specialHtml + descHtml + ordersHtml + loreHtml;
+        card.appendChild(details);
 
         container.appendChild(card);
     }

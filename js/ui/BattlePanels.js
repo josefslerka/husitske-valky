@@ -75,6 +75,11 @@ class BattlePanels {
 
     updateObjectiveProgress() {
         const primary = this.game.currentScenario?.victoryConditions?.primary;
+        const targets = document.getElementById('dual-objectives');
+        const hint = document.getElementById('dual-objective-hint');
+        targets?.replaceChildren();
+        const progress = this.game.victoryConditionsSystem.getDualObjectiveProgress();
+        hint?.classList.toggle('hidden', progress.length === 0);
         if (!primary?.description) return;
         let text = primary.description;
         if (primary.type === 'capture_position') {
@@ -86,6 +91,46 @@ class BattlePanels {
                 return unit && unit.faction === playerFaction && unit.health > 0;
             }).length;
             text += ` · ${i18n.t('game.captureProgress', { captured, required })}`;
+        }
+        if (progress.length > 0) {
+            const summaries = [];
+            for (const objective of progress) {
+                const name = objective.labelKey ? i18n.t(`mapLabels.${objective.labelKey}`) : objective.description;
+                const held = objective.occupied ? Math.min(objective.heldTurns, objective.requiredTurns) : 0;
+                summaries.push(i18n.t('game.dualObjectiveProgress', { name, held, required: objective.requiredTurns }));
+                if (!targets) continue;
+                const row = document.createElement('div');
+                row.className = 'dual-objective';
+                row.dataset.objective = objective.id;
+                row.classList.toggle('objective-held', objective.occupied);
+                const title = document.createElement('strong');
+                title.textContent = name;
+                const description = document.createElement('p');
+                description.textContent = objective.description;
+                const state = document.createElement('p');
+                state.className = 'objective-progress';
+                state.textContent = `${i18n.t('game.holdProgress', { held, required: objective.requiredTurns })} · ${i18n.t(objective.occupied ? 'game.objectiveOccupied' : 'game.objectiveUnoccupied')}`;
+                const locate = document.createElement('button');
+                locate.type = 'button';
+                locate.className = 'objective-locate';
+                locate.textContent = i18n.t('game.showObjectiveOnMap');
+                locate.setAttribute('aria-label', `${name}: ${locate.textContent}`);
+                locate.addEventListener('click', () => {
+                    const points = (objective.positions || []).map(([col, row]) => this.game.hexGrid.hexToPixel(col, row));
+                    if (!points.length) return;
+                    this.game.view.hideTooltip();
+                    this.game.view.mapInput.centerOnWorld(
+                        points.reduce((sum, point) => sum + point.x, 0) / points.length,
+                        points.reduce((sum, point) => sum + point.y, 0) / points.length
+                    );
+                    document.getElementById('objectives-panel').classList.add('hidden');
+                    document.getElementById('btn-objectives').focus();
+                });
+                row.append(title, description, state, locate);
+                targets.appendChild(row);
+            }
+            text += ` · ${summaries.join(' · ')}`;
+            if (hint) hint.textContent = i18n.t('game.dualObjectiveHint');
         }
         for (const id of ['primary-objective', 'objective-hud-text']) {
             const element = document.getElementById(id);
@@ -293,13 +338,93 @@ class BattlePanels {
         }
     }
 
+    updateWagonOrderHelp(unit) {
+        const help = document.getElementById('wagon-order-help');
+        const explanation = document.getElementById('formation-explanation');
+        const isWagon = !!unit?.isWagon();
+        help?.classList.toggle('hidden', !isWagon);
+        explanation?.classList.toggle('hidden', !isWagon);
+        if (!isWagon) return;
+
+        const key = 'game.wagonOrders.';
+        const singleKey = key + (unit.formationClosed ? 'openHint' : 'closeHint');
+        const marchKey = key + (unit.marching ? 'stopHint' : 'marchHint');
+        const targetState = !unit.formationClosed;
+        const line = this.game.connectedWagonLine(unit);
+        const eligible = unit.hasMoved ? 0 : line.filter(w => !w.hasMoved && w.formationClosed !== targetState).length;
+        const lineHint = i18n.t(key + 'lineHint', { count: line.length, eligible,
+            state: i18n.t(key + (targetState ? 'closedState' : 'openState')) });
+
+        for (const [id, hintKey] of [['btn-formation', singleKey], ['btn-formation-march', marchKey]]) {
+            const button = document.getElementById(id);
+            if (!button) continue;
+            button.setAttribute('data-i18n-title', hintKey);
+            button.title = i18n.t(hintKey);
+        }
+        // Počet se přepočítává i při změně jazyka; samotný rozkaz zde nevydáváme.
+        const lineButton = document.getElementById('btn-formation-line');
+        if (lineButton) lineButton.title = lineHint;
+        const texts = {
+            'formation-explanation': i18n.t(key + (unit.formationClosed ? (unit.marching ? 'marching' : 'closed') : 'open')),
+            'wagon-single-help': i18n.t(singleKey),
+            'wagon-line-help': lineHint,
+            'wagon-march-help': i18n.t(key + 'marchHint') + ' ' + i18n.t(key + 'stopHint')
+        };
+        for (const [id, text] of Object.entries(texts)) {
+            const element = document.getElementById(id);
+            if (element) element.textContent = text;
+        }
+    }
+
+    routingExplanation(unit) {
+        const key = 'game.routingDetails.';
+        const noQuarter = this.game.currentScenario?.specialMechanics?.noQuarterGiven;
+        if (this.game.moraleSystem.isNoQuarterTarget(unit, noQuarter)) return i18n.t(key + 'noQuarter');
+        const attempts = Math.max(0, 2 - (unit.rallyAttempts || 0));
+        const progress = attempts > 0 ? i18n.t(key + 'attempts', { count: attempts }) : i18n.t(key + 'desertionDue');
+        if (!attempts) return progress;
+        const canRetreat = UnitTypes[unit.type]?.tactics?.canRetreat !== false;
+        return [i18n.t(key + 'start'), progress, i18n.t(key + (canRetreat ? 'retreat' : 'noRetreat'))].join(' ');
+    }
+
+    // Detail a encyklopedie čtou stejné pořadí akcí ze skutečného typu,
+    // ne z podobného jména varianty.
+    static artilleryOrderExplanation(unit) {
+        if (unit?.unitClass !== 'artillery') return '';
+        const kind = unit.movement <= 0 ? 'fixed' : (unit.special === 'mobile' ? 'mobile' : 'normal');
+        return i18n.t('game.artilleryOrders.' + kind);
+    }
+
+    unitRuleHtml(unit) {
+        let html = '';
+        if (unit.unitClass === 'artillery') {
+            html += `<div class="unit-mechanics-hint"><strong>${i18n.t('game.artilleryOrders.title')}</strong><p>${BattlePanels.artilleryOrderExplanation(unit)}</p></div>`;
+        }
+        if (unit.isRouting) {
+            html += `<div class="unit-mechanics-hint unit-routing-hint"><strong>🏃 ${i18n.t('tooltip.routing')}</strong><p>${this.routingExplanation(unit)}</p></div>`;
+        }
+        return html;
+    }
+
     updateUnitPanel(unit) {
         this.updateGuidance();
         this.updateCoverFirePanel(unit);
+        this.updateWagonOrderHelp(unit);
         const infoDiv = document.getElementById('unit-info');
         const actionsDiv = document.getElementById('unit-actions');
         const attackBtn = document.getElementById('btn-attack');
         const unitPanel = document.getElementById('unit-panel');
+
+        // Nový oddíl začíná nahoře u rozkazů. Pouhá aktualizace stejného
+        // oddílu nebo přepnutí jazyka ale nesmí čtenáři posunout detail.
+        const displayedUnitId = unit?.id ?? null;
+        if (this.displayedUnitId !== displayedUnitId) {
+            if (unitPanel) unitPanel.scrollTop = 0;
+            infoDiv.scrollTop = 0;
+            const wagonHelp = document.getElementById('wagon-order-help');
+            if (wagonHelp) wagonHelp.open = false;
+            this.displayedUnitId = displayedUnitId;
+        }
 
         if (!unit) {
             if (unitPanel) {
@@ -427,6 +552,7 @@ class BattlePanels {
         infoDiv.innerHTML = `
             <h3>${unit.name}</h3>
             <p style="font-size: 0.8rem; color: #999; margin-bottom: 8px; font-style: italic;">${unit.description}</p>
+            ${this.unitRuleHtml(unit)}
             ${commanderHtml}
             ${specialHtml}
 

@@ -2,6 +2,7 @@
     const COPY = {
         cs: {
             title: 'Vozová hradba', pageTitle: 'Vozová hradba · Husitské války',
+            mainGame: 'Zpět do Husitských válek',
             gold: 'Groše', camp: 'Tábor', wave: 'Vlna',
             initial: 'Klepni na zelené pole s + u cesty a postav první oddíl. Na cestě ani objížďkách se nestaví.',
             forbidden: 'Na cestě, objížďkách ani v táboře nelze stavět. Vyber volné pole vedle cesty.',
@@ -130,6 +131,7 @@
         },
         en: {
             title: 'Wagon Fort', pageTitle: 'Wagon Fort · Hussite Wars',
+            mainGame: 'Back to Hussite Wars',
             gold: 'Coin', camp: 'Camp', wave: 'Wave',
             initial: 'Tap a green + field beside the road to deploy your first unit. Roads and detours cannot hold units.',
             forbidden: 'Roads, detours and the camp cannot hold units. Choose an open field beside the road.',
@@ -1260,6 +1262,7 @@
         document.documentElement.lang = language;
         document.title = t('pageTitle');
         document.getElementById('title').textContent = t('title');
+        document.getElementById('main-game-label').textContent = t('mainGame');
         document.getElementById('gold-label').textContent = t('gold');
         document.getElementById('camp-label').textContent = t('camp');
         document.getElementById('wave-label').textContent = t('wave');

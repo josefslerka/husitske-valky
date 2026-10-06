@@ -30,6 +30,37 @@ class VictoryConditionsSystem {
         );
     }
 
+    // Jediný čtecí pohled pro pravidla, panel cílů i závěr. Souřadnice
+    // pocházejí z aktivního scénáře, takže respektují převod i save/load.
+    isObjectiveOccupied(objective) {
+        const faction = this.game.currentScenario?.playerFaction || 'hussites';
+        const positions = objective.positions || [];
+        return positions.length > 0 && positions.every(([col, row]) => {
+            const unit = this.game.getUnitAt(col, row);
+            return unit && unit.faction === faction && unit.health > 0 && !unit.escaped;
+        });
+    }
+
+    getDualObjectiveProgress() {
+        const primary = this.game.currentScenario?.victoryConditions?.primary;
+        if (!['dual_objective', 'dual_objective_battle'].includes(primary?.type)) return [];
+        return (primary.objectives || []).map(objective => {
+            const occupied = this.isObjectiveOccupied(objective);
+            const requiredTurns = objective.holdTurns || 1;
+            const heldTurns = this.game.objectiveHeldTurns?.[objective.id] || 0;
+            const achieved = objective.type === 'capture_position'
+                ? occupied && heldTurns >= requiredTurns
+                : objective.type === 'hold_position' && occupied;
+            return { ...objective, occupied, heldTurns, requiredTurns, achieved };
+        });
+    }
+
+    areDualObjectivesControlled() {
+        const progress = this.getDualObjectiveProgress();
+        return progress.length > 0 && progress.some(objective => objective.achieved)
+            && progress.every(objective => objective.occupied);
+    }
+
     // Hlavní kontrola vítězství
     checkVictory() {
         if (this.game.gameState !== 'playing') return;
@@ -217,9 +248,14 @@ class VictoryConditionsSystem {
                     achieved = playerArtillery.length >= (sec.minCount || 1);
                     break;
                 case 'both_objectives':
-                    // Special case - vyžaduje splnění všech ostatních sekundárních cílů
-                    // Toto je spíš flavor text, vždy achieved = true
-                    achieved = true;
+                    // Starší definice skutečně vyžaduje oba časové cíle.
+                    const objectiveProgress = this.getDualObjectiveProgress();
+                    achieved = objectiveProgress.length > 0 && objectiveProgress.every(obj => obj.achieved);
+                    break;
+                case 'control_objectives':
+                    // Dosažitelný bonus při okamžité výhře po jednom cíli:
+                    // časový cíl je splněný a obě lokality jsou nyní obsazené.
+                    achieved = this.areDualObjectivesControlled();
                     break;
             }
             secondaryResults.push({ ...sec, achieved });
@@ -431,36 +467,17 @@ class VictoryConditionsSystem {
             }
 
             case 'dual_objective':
-                const objectives = primary.objectives || [];
-                let anyObjectiveAchieved = false;
-                let achievedObjectives = [];
-
-                for (const obj of objectives) {
-                    let objAchieved = false;
-                    if (obj.type === 'capture_position') {
-                        const held = this.game.objectiveHeldTurns && this.game.objectiveHeldTurns[obj.id];
-                        objAchieved = held >= (obj.holdTurns || 1);
-                    } else if (obj.type === 'hold_position') {
-                        const positions = obj.positions || [];
-                        const allHeld = positions.every(([col, row]) => {
-                            const unit = this.game.getUnitAt(col, row);
-                            return unit && unit.faction === playerFaction && unit.health > 0;
-                        });
-                        objAchieved = allHeld;
-                    }
-                    if (objAchieved) {
-                        anyObjectiveAchieved = true;
-                        achievedObjectives.push(obj.description);
-                    }
-                }
-
-                victoryAchieved = anyObjectiveAchieved;
+            case 'dual_objective_battle': {
+                const achievedObjectives = this.getDualObjectiveProgress()
+                    .filter(objective => objective.achieved).map(objective => objective.description);
+                victoryAchieved = achievedObjectives.length > 0;
                 if (victoryAchieved) {
                     this.outcome(i18n.t('gameLog.victoryDualObjective', { objectives: achievedObjectives.join(', ') }));
                 } else {
                     this.outcome(i18n.t('gameLog.defeatDualObjective'));
                 }
                 break;
+            }
 
             case 'destroy_or_rout':
                 // Vítězství pokud nepřítel je zničen NEBO prchá (morální zlom)
@@ -477,39 +494,6 @@ class VictoryConditionsSystem {
                     }
                 } else {
                     this.outcome(i18n.t('gameLog.defeatDestroyOrRout'));
-                }
-                break;
-
-            case 'dual_objective_battle':
-                // Alias pro dual_objective (stejná logika)
-                const battleObjectives = primary.objectives || [];
-                let anyBattleObjectiveAchieved = false;
-                let achievedBattleObjectives = [];
-
-                for (const obj of battleObjectives) {
-                    let objAchieved = false;
-                    if (obj.type === 'capture_position') {
-                        const heldBattle = this.game.objectiveHeldTurns && this.game.objectiveHeldTurns[obj.id];
-                        objAchieved = heldBattle >= (obj.holdTurns || 1);
-                    } else if (obj.type === 'hold_position') {
-                        const positions = obj.positions || [];
-                        const allHeldBattle = positions.every(([col, row]) => {
-                            const unit = this.game.getUnitAt(col, row);
-                            return unit && unit.faction === playerFaction && unit.health > 0;
-                        });
-                        objAchieved = allHeldBattle;
-                    }
-                    if (objAchieved) {
-                        anyBattleObjectiveAchieved = true;
-                        achievedBattleObjectives.push(obj.description);
-                    }
-                }
-
-                victoryAchieved = anyBattleObjectiveAchieved;
-                if (victoryAchieved) {
-                    this.outcome(i18n.t('gameLog.victoryDualObjective', { objectives: achievedBattleObjectives.join(', ') }));
-                } else {
-                    this.outcome(i18n.t('gameLog.defeatDualObjective'));
                 }
                 break;
 
@@ -594,9 +578,7 @@ class VictoryConditionsSystem {
         if (this.game.gameState !== 'playing') return;
         if (!this.game.currentScenario || !this.game.currentScenario.victoryConditions) return;
         const conditions = this.game.currentScenario.victoryConditions;
-        if (!conditions.primary || conditions.primary.type !== 'dual_objective') return;
-
-        const playerFaction = this.game.currentScenario.playerFaction || 'hussites';
+        if (!['dual_objective', 'dual_objective_battle'].includes(conditions.primary?.type)) return;
         const objectives = conditions.primary.objectives || [];
 
         if (!this.game.objectiveHeldTurns) {
@@ -605,25 +587,24 @@ class VictoryConditionsSystem {
 
         for (const obj of objectives) {
             if (obj.type === 'capture_position') {
-                const positions = obj.positions || [];
-                const allHeld = positions.every(([col, row]) => {
-                    const unit = this.game.getUnitAt(col, row);
-                    return unit && unit.faction === playerFaction && unit.health > 0;
-                });
-
-                if (allHeld) {
+                if (this.isObjectiveOccupied(obj)) {
                     this.game.objectiveHeldTurns[obj.id] = (this.game.objectiveHeldTurns[obj.id] || 0) + 1;
-
-                    if (this.game.objectiveHeldTurns[obj.id] >= obj.holdTurns) {
-                        this.outcome(i18n.t('gameLog.victoryObjectiveHeld', { description: obj.description }));
-                        this.evaluateSecondaryConditions(playerFaction);
-                        this.game.showVictory(playerFaction);
-                        return;
-                    }
                 } else {
                     this.game.objectiveHeldTurns[obj.id] = 0;
                 }
             }
+        }
+
+        // Nejprve aktualizovat všechny cíle, až potom rozhodnout. Jinak
+        // bonus a závěr závisejí na pořadí cílů v datovém souboru.
+        const achieved = this.getDualObjectiveProgress().filter(objective => objective.achieved);
+        if (achieved.length > 0) {
+            const playerFaction = this.game.currentScenario.playerFaction || 'hussites';
+            this.outcome(i18n.t('gameLog.victoryObjectiveHeld', {
+                description: achieved.map(objective => objective.description).join(', ')
+            }));
+            this.evaluateSecondaryConditions(playerFaction);
+            this.game.showVictory(playerFaction);
         }
     }
 }

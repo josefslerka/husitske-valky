@@ -272,6 +272,11 @@ function renderRulesTab() {
 
     const lang = i18n.getCurrentLanguage();
     const isEnglish = lang === 'en';
+    // Nové herní vysvětlivky mají společný zdroj v CS/EN locale, ne druhou kopii textu.
+    const mechanicSection = (title, paragraphs) => `<div class="rules-section">
+        <h4>${i18n.t('help.mechanics.' + title)}</h4>
+        ${paragraphs.map(key => `<p>${i18n.t('help.mechanics.' + key)}</p>`).join('')}
+    </div>`;
 
     container.innerHTML = `
         <h3>${isEnglish ? 'Combat Rules' : 'Pravidla boje'}</h3>
@@ -282,6 +287,7 @@ function renderRulesTab() {
                 : 'Každá jednotka může v jednom tahu provést pohyb a útok (nebo pouze jedno z toho). Bránit spotřebuje zbývající akce a sníží příchozí poškození o 30 %. Na konci tahu se nevyužité oddíly brání automaticky, kromě stojících oddílů s dostřelem 2+ a zbývajícím výstřelem: ty připraví krycí palbu bez bonusu obrany. Střelec může zvolit Krýt se: získá ochranu, ale přijde o reakční výstřel. Jeho karta ukazuje připravenost krycí palby nebo důvod její nedostupnosti.'
             }</p>
         </div>
+        ${mechanicSection('artilleryTitle', ['artillery'])}
         <div class="rules-section">
             <h4>${isEnglish ? 'Damage Calculation' : 'Výpočet poškození'}</h4>
             <p>${isEnglish
@@ -302,9 +308,9 @@ function renderRulesTab() {
                 <li><strong>${isEnglish ? 'Charge' : 'Náraz (Charge)'}</strong>: ${isEnglish ? '+50% damage when attacking after moving' : '+50% poškození při útoku po pohybu'}</li>
                 <li><strong>${isEnglish ? 'Anti-Cavalry' : 'Proti jízdě'}</strong>: ${isEnglish ? '+50% damage against cavalry' : '+50% poškození proti kavalerii'}</li>
                 <li><strong>${isEnglish ? 'Crushing Blow' : 'Drtivý úder'}</strong>: ${isEnglish ? '+30% damage against armored units' : '+30% poškození proti obrněným'}</li>
-                <li><strong>${isEnglish ? 'Wagon Fort' : 'Vozová hradba'}</strong>: ${isEnglish ? '+3 defense for each adjacent wagon' : '+3 obrana za každý sousední vůz'}</li>
-                <li><strong>${isEnglish ? 'Range' : 'Dosah'}</strong>: ${isEnglish ? 'Attack over allied units' : 'Útok přes spojeneckou jednotku'}</li>
-                <li><strong>${isEnglish ? 'Area Attack' : 'Plošný útok'}</strong>: ${isEnglish ? 'Hits all enemies in range' : 'Zasáhne všechny nepřátele v dosahu'}</li>
+                <li>${i18n.t('special.wagenburg')}</li>
+                <li>${i18n.t('special.reach')}</li>
+                <li>${i18n.t('special.areaAttack')}</li>
                 <li><strong>${isEnglish ? 'Rapid Fire' : 'Rychlá palba'}</strong>: ${isEnglish ? '2 attacks per turn (75% damage)' : '2 útoky za tah (75% poškození)'}</li>
                 <li><strong>${isEnglish ? 'Terrifying' : 'Děsivý'}</strong>: ${isEnglish ? 'Can frighten enemy (-2 attack)' : 'Může vyděsit nepřítele (-2 útok)'}</li>
             </ul>
@@ -330,10 +336,11 @@ function renderRulesTab() {
                 : 'Jednotky vedle vozové hradby nebo v městě se na konci tahu léčí o <strong>+10 HP</strong>. Maximálně do 50% původního zdraví. Každá jednotka může regenerovat pouze jednou za bitvu.'
             }</p>
         </div>
+        ${mechanicSection('wagonTitle', ['wagonSingle', 'wagonLine', 'wagonMarch'])}
         <div class="rules-section">
             <h4>${isEnglish ? 'Wagon Fort Formation' : 'Formace vozové hradby'}</h4>
             <ul>
-                <li><strong>${isEnglish ? 'Wagon Line' : 'Linie vozů'}</strong>: ${isEnglish ? '3+ wagons side by side get +10% defense extra' : '3+ vozy vedle sebe dostávají +10% obrana navíc'}</li>
+                <li><strong>${isEnglish ? 'Wagon Line' : 'Linie vozů'}</strong>: ${i18n.t('help.mechanics.wagonLineBonus')}</li>
                 <li><strong>${isEnglish ? 'Firing Ports' : 'Střílny'}</strong>: ${isEnglish ? 'Shooters next to a wagon get +5 attack and +10% defense' : 'Střelci vedle vozu dostávají +5 útok a +10% obrana'}</li>
                 <li><strong>${isEnglish ? 'Breakthrough' : 'Průlom'}</strong>: ${isEnglish ? 'When a wagon is destroyed, adjacent wagons lose formation bonus for 1 turn' : 'Při zničení vozu sousední vozy ztratí formační bonus na 1 kolo'}</li>
             </ul>
@@ -384,9 +391,9 @@ function renderRulesTab() {
                 <li><strong>${isEnglish ? 'Commander Fall' : 'Pád velitele'}</strong>: ${isEnglish ? 'Death of commander causes immediate morale break' : 'Smrt velitele způsobí okamžitý morální zlom'}</li>
                 <li><strong>${isEnglish ? 'Heavy Losses' : 'Těžké ztráty'}</strong>: ${isEnglish ? 'Loss of 60%+ of army triggers morale break' : 'Ztráta 60%+ armády spustí morální zlom'}</li>
                 <li><strong>${isEnglish ? 'Panic' : 'Panika'}</strong>: ${isEnglish ? 'When more than half of units are fleeing' : 'Když prchá více než polovina jednotek'}</li>
-                <li><strong>${isEnglish ? 'Escape' : 'Útěk'}</strong>: ${isEnglish ? 'Fleeing units at map edge escape from battlefield' : 'Prchající jednotky na okraji mapy uprchnou z bojiště'}</li>
             </ul>
         </div>
+        ${mechanicSection('routingTitle', ['routing', 'routingEscape', 'routingDesertion', 'routingNoRetreat'])}
     `;
 }
 

@@ -84,7 +84,8 @@ const implementedSecondaryTypes = [
     'protect_wagons',
     'save_wagons',
     'protect_artillery',
-    'both_objectives'
+    'both_objectives',
+    'control_objectives'
 ];
 
 const implementedDefeatTypes = [

@@ -91,6 +91,16 @@ class ScenarioEventSystem {
                 outcome.victoryVariant = 'fieldArmyEliminated';
             }
         }
+        if (isVictory && scenario.id === 'most_1421' && debriefing.victoryVariants) {
+            const system = this.game.victoryConditionsSystem;
+            const progress = system.getDualObjectiveProgress();
+            if (system.areDualObjectivesControlled()) outcome.victoryVariant = 'bothControlled';
+            else if (progress.some(objective => objective.id === 'capture_castle' && objective.achieved)) {
+                outcome.victoryVariant = 'castleCaptured';
+            } else if (progress.some(objective => objective.id === 'block_gate' && objective.achieved)) {
+                outcome.victoryVariant = 'gateBlocked';
+            }
+        }
         return outcome;
     }
 

@@ -15,10 +15,28 @@ Prezentace bitvy je rozdělena podle odpovědností:
   mu deleguje prezentaci, zatímco souřadnice, sousedé a obsazení zůstávají v mřížce.
   Sdílené kódové vektorové značky slouží i přehledu armády; žádné další assety ani
   závislosti se nestahují. Kreslení nespotřebovává náhodná čísla herních pravidel.
+  `glyphKind()` rozlišuje siluety jízdy a dělostřelectva podle typu a třídy,
+  nezávisle na frakci. Canvas, HTML/SVG i bonusová hra čtou stejný slovník `glyphs`;
+  viditelné oddíly pro mapu a minimapu dál filtruje `BattleView`, nikoli kresba.
 - `BattlePanels` sestavuje HTML jednotek, přehledu armád, tlačítek a fázového banneru.
+  Průběh alternativních cílů čte přes `VictoryConditionsSystem.getDualObjectiveProgress()`;
+  stejný výpočet používají bonusy, závěr i tooltip. `Ukázat na mapě` ovládá jen
+  kameru a fokus, ne výběr nebo herní rozkaz. Levý panel vrací posun nahoru jen
+  při změně prohlíženého oddílu; běžná aktualizace zachovává místo čtení.
+  Vysvětlivky rozkazů vozů čtou propojení přes `Game.connectedWagonLine()`;
+  nativní `details` nevydává rozkaz a změna jazyka zachovává otevření.
+  Rozbalená nápověda posouvá celý panel, aby detail neměl nulovou výšku.
+  Popis prchání sdílí panel a tooltip přes `routingExplanation()`; pod mlhou
+  války jej tooltip nikdy nevyžádá pro skrytý oddíl. Nové texty pravidel,
+  dělostřelectva a prchání jsou v locale, nikoli ve druhé kódové kopii.
   Situační pokyn pod mapou pouze odvozuje ze stavu tahu a vybrané jednotky;
   neprohledává pozice protivníka ani nemění herní pravidla.
-- `BattleTooltip` vlastní tooltip, jeho obsah a cache pro hover.
+- `BattleTooltip` vlastní tooltip, jeho obsah a cache pro hover. Při náhledu
+  nepřátelského dojezdu hledá místo mimo promítnuté viditelné hexy a žeton.
+  Pokud karta na mapě nemá místo, dočasně ji přesune do pravého panelu;
+  sbalení panelu ani výběr oddílu se tím trvale nemění. Ukončení náhledu,
+  změna tahu, jazyka nebo velikosti okna inspekci uklidí. Dotyková inspekce
+  dál používá stejný úplný obsah bez desktopového přemisťování.
 - `BattleMapInput` vlastní gesta a kameru: posun, zoom, převody souřadnic a
   potlačení kompatibilního clicku po dotyku/tažení. Zvětšuje prezentační velikost
   Canvasu, ne logickou mřížku nebo pohybové dosahy.
@@ -67,6 +85,24 @@ ověřuje proti metodám skutečně používaným pravidly. Nepřepisujeme `Game
 
 Soubory jsou nadále klasické skripty, nikoli ES moduly. V `index.html` se proto
 `BattlePanels`, `BattleTooltip`, `BattleView` i `ScenarioEventSystem` načítají před `Game`.
+
+## Nápověda a encyklopedie
+
+`main.js` sdílí jeden dialog pro Encyklopedii (výchozí Historie) a `Jak hrát`
+(výchozí Pravidla). Otevření nastaví kartu, lokalizovatelný nadpis, rozsah jednotek
+`data-unit-scope` a návratový fokus; lišta na mobilu posune aktivní kartu do výřezu.
+Překlad obnoví obsah, nikoli zvolenou kartu. Katalog z hlavního menu zůstává úplný
+i při existenci instance bitvy, nápověda z bitvy vypisuje její typy jednotek.
+
+Statistiky karet čte `populateHelpUnits()` přímo z `UnitTypes`. Zvláštní schopnosti
+v panelu, tooltipu, katalogu a pravidlech používají stejné locale klíče;
+`BattlePanels.artilleryOrderExplanation()` sdílí popis pořadí palby a pohybu
+mezi detailem a katalogem. Pražské varianty nepřebírají schopnosti podle jména.
+Menu testy sdílejí skutečnou inicializaci přes `scripts/helpers/menu-harness.js`.
+
+Bonusová Vozová hradba se vrací nativním relativním odkazem `../../index.html`.
+Jeho překlad používá vlastní tabulku minihry. Odkaz nemění úložiště kampaně,
+nepřepisuje jazyk hlavní hry a nepotřebuje historii prohlížeče.
 
 ## Scénářové události
 

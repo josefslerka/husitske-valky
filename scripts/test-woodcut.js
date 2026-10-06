@@ -104,9 +104,98 @@ test('všechny jednotky mají sdílený vektorový znak v mapě a v panelu', () 
 
 test('pražské vozy, cepníci, kuše a děla neztrácejí vlastní značku', () => {
     const h = drawingHarness();
-    for (const [type, kind] of Object.entries({ VOZOVA_HRADBA_PRASKY: 'wagon', CEPNICI_PRASKY: 'flail', KUSINICI_PRASKY: 'crossbow', HOUFNICE_PRASKY: 'cannon', JIZDA_PRASKY: 'horse' })) {
+    for (const [type, kind] of Object.entries({ VOZOVA_HRADBA_PRASKY: 'wagon', CEPNICI_PRASKY: 'flail', KUSINICI_PRASKY: 'crossbow', HOUFNICE_PRASKY: 'howitzer', JIZDA_PRASKY: 'horse' })) {
         assert.equal(h.WoodcutRenderer.glyphKind(new h.Unit(type, 0, 0, 1)), kind);
     }
+});
+
+test('lehká jízda, obrněná jízda a rytíř mají tři různé siluety nezávislé na barvě strany', () => {
+    const h = drawingHarness();
+    const kinds = {
+        LEHKA_JIZDA: 'horse', JIZDA_HUSITI: 'horse', JIZDA_PRASKY: 'horse',
+        ZVED: 'horse', ZVED_KRIZACI: 'horse',
+        TEZKOODENCI: 'horseShield', SLECHTICKA_JIZDA_HUSITI: 'horseShield',
+        TEZKY_RYTIR: 'horseLance'
+    };
+    for (const [type, kind] of Object.entries(kinds)) {
+        const unit = new h.Unit(type, 0, 0, 1);
+        for (const faction of ['hussites', 'crusaders']) {
+            unit.faction = faction;
+            assert.equal(h.WoodcutRenderer.glyphKind(unit), kind, type);
+            assert.ok(h.WoodcutRenderer.icon(unit).includes(`d="${h.WoodcutRenderer.glyphs[kind]}"`));
+        }
+    }
+    assert.equal(new Set(['horse', 'horseShield', 'horseLance'].map(kind => h.WoodcutRenderer.glyphs[kind])).size, 3);
+    assert.equal(h.WoodcutRenderer.glyphKind({ type: 'RYTIRI', unitClass: 'cavalry' }), 'horseLance');
+    assert.equal(h.WoodcutRenderer.glyphKind({ unitClass: 'heavyCavalry' }), 'horseShield');
+    assert.equal(h.WoodcutRenderer.glyphKind({ type: 'TEZKY_RYTIR', unitClass: 'commander' }), 'captain');
+});
+
+test('tarasnice, houfnice a pevná bombarda mají vlastní profily; polní dělo zůstává dělem', () => {
+    const h = drawingHarness();
+    for (const [type, kind] of Object.entries({ TARASNICE: 'tarasnice', HOUFNICE: 'howitzer', HOUFNICE_PRASKY: 'howitzer', BOMBARDA: 'bombard', POLNI_DELO: 'cannon' })) {
+        const unit = new h.Unit(type, 0, 0, 1);
+        for (const faction of ['hussites', 'crusaders']) {
+            unit.faction = faction;
+            assert.equal(h.WoodcutRenderer.glyphKind(unit), kind, type);
+            assert.ok(h.WoodcutRenderer.icon(unit).includes(`d="${h.WoodcutRenderer.glyphs[kind]}"`));
+        }
+    }
+    assert.equal(new Set(['tarasnice', 'howitzer', 'bombard', 'cannon'].map(kind => h.WoodcutRenderer.glyphs[kind])).size, 4);
+    assert.equal(h.WoodcutRenderer.glyphKind({ type: 'HOUFNICE', unitClass: 'artillery' }), 'howitzer', 'bonus descriptor');
+    assert.equal(h.WoodcutRenderer.glyphKind({ type: 'NEW_FIELD_GUN', unitClass: 'artillery' }), 'cannon');
+});
+
+test('nové siluety se při oddálení a po vyčerpání shodují v Canvasu i SVG, nemění stavy ani zdravotní lištu', () => {
+    for (const size of [16, 24, 40, 64]) {
+        const h = drawingHarness(size);
+        for (const type of ['LEHKA_JIZDA', 'TEZKOODENCI', 'TEZKY_RYTIR', 'TARASNICE', 'HOUFNICE', 'BOMBARDA']) {
+            for (const faction of ['hussites', 'crusaders']) {
+                const unit = new h.Unit(type, 0, 0, 1);
+                unit.faction = faction;
+                unit.hasMoved = unit.hasAttacked = unit.isDefending = unit.isRouting = true;
+                const before = JSON.stringify(unit.serialize());
+                const path = h.WoodcutRenderer.glyphs[h.WoodcutRenderer.glyphKind(unit)];
+                h.calls.length = 0;
+                h.grid.renderer.unit(unit);
+                assert.ok(h.calls.some(call => call[0] === 'stroke' && call[1] === path));
+                assert.ok(h.WoodcutRenderer.icon(unit).includes(`d="${path}"`));
+                for (const mark of ['✓', '!']) assert.ok(h.calls.some(call => call[0] === 'fillText' && call[1] === mark));
+                assert.equal(h.calls.at(-2)[0], 'fillRect', 'HP segments stay above state shading');
+                assert.equal(JSON.stringify(unit.serialize()), before);
+                assert.equal(h.stack.length, 0);
+            }
+        }
+    }
+});
+
+test('nové siluety neodhalí na mapě ani minimapě rytíře a děla za mlhou války', () => {
+    const h = createHarness({ browserView: true }), game = h.newGame('sudomere_1420');
+    const player = game.unitFactory.createUnit('CEPNICI', 0, 0);
+    const enemies = ['TEZKOODENCI', 'TEZKY_RYTIR', 'TARASNICE', 'HOUFNICE', 'BOMBARDA'].map((type, i) => {
+        const unit = game.unitFactory.createUnit(type, 12 + i, 7);
+        unit.faction = 'crusaders';
+        return unit;
+    });
+    game.units = [player, ...enemies];
+    game.fogOfWar = true;
+    game.visibleHexes = new Set(['0,0']);
+    game.exploredHexes = new Set(['0,0', ...enemies.map(unit => `${unit.col},${unit.row}`)]);
+    let mapUnits, minimapUnits;
+    game.hexGrid.render = units => { mapUnits = units; };
+    game.view.minimap.render = units => { minimapUnits = units; };
+    const before = JSON.stringify(game.units.map(unit => unit.serialize()));
+    game.view.render();
+    assert.deepEqual(Array.from(mapUnits, unit => unit.id), [player.id]);
+    assert.deepEqual(Array.from(minimapUnits, unit => unit.id), [player.id]);
+    for (const enemy of enemies) {
+        game.visibleHexes.add(`${enemy.col},${enemy.row}`);
+        game.view.render();
+        assert.ok(mapUnits.includes(enemy));
+        assert.ok(minimapUnits.includes(enemy));
+    }
+    assert.equal(JSON.stringify(game.units.map(unit => unit.serialize())), before);
+    game.destroy();
 });
 
 test('velitelé obou stran mají jinou siluetu než pěchota, i bez barvy a po vyčerpání', () => {

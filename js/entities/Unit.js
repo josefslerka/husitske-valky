@@ -781,12 +781,12 @@ class Unit {
 
         this.rallyAttempts++;
 
-        // Základní šance na rally: 30% + 5% za každý bod morálky nad 0
+        // Základní šance na rally: 30% + 0.5% za každý bod morálky nad 0
         let chance = 30 + (this.morale * 0.5);
         chance += rallyBonus;
         if (this.special === 'veteran' || this.special === 'elite') chance += 15;
 
-        // Maximální 3 pokusy, pak jednotka dezertuje
+        // Dva skutečné pokusy; při třetím zpracování jednotka dezertuje bez hodu.
         if (this.rallyAttempts >= 3) {
             return {
                 success: false,

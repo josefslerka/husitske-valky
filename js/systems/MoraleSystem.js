@@ -62,7 +62,7 @@ class MoraleSystem {
 
             if (rallyResult.deserted) {
                 // Jednotka dezertovala - odstraníme ji
-                this.game.addLog(i18n.t('gameLog.unitFledBattlefield', {unit: unit.name}), 'morale');
+                this.game.addLog(i18n.t('gameLog.unitDeserted', {unit: unit.name}), 'morale');
                 unit.health = 0;
                 unit.escaped = true;
                 this.game.combatSystem.trackUnitDeath(unit, null);
@@ -71,10 +71,13 @@ class MoraleSystem {
             } else {
                 // Jednotka dále prchá - posunout směrem od nepřítele
                 this.moveRoutingUnit(unit);
-                this.game.addLog(i18n.t('gameLog.rallyFailedAttempt', {
-                    unit: unit.name,
-                    attempt: unit.rallyAttempts
-                }), 'morale');
+                // Zničený či uprchlý oddíl už nemá dostat hlášku „stále prchá“.
+                if (unit.health > 0) {
+                    this.game.addLog(i18n.t('gameLog.rallyFailedAttempt', {
+                        unit: unit.name,
+                        attempt: unit.rallyAttempts
+                    }), 'morale');
+                }
             }
         }
     }

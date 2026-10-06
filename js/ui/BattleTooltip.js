@@ -3,6 +3,8 @@ class BattleTooltip {
     constructor(game) {
         this.game = game;
         this.tooltip = document.getElementById('tooltip');
+        this.mapContainer = document.getElementById('map-container');
+        this.inspectionPanel = document.getElementById('info-panel');
         this.lastHoveredHex = null;
         this.lastTooltipContent = null;
     }
@@ -12,11 +14,27 @@ class BattleTooltip {
         canvas.addEventListener('mousemove', event => this.handleMouseMove(event), { signal });
         canvas.addEventListener('mouseleave', event => {
             // Dlouhý tooltip lze přečíst kolečkem, aniž by při vstupu myši zmizel.
-            if (!event.relatedTarget || !this.tooltip.contains(event.relatedTarget)) this.hideTooltip();
+            const target = event.relatedTarget;
+            if (!target || !(this.tooltip.contains(target) ||
+                (this.isDocked() && this.inspectionPanel.contains(target)))) this.hideTooltip();
         }, { signal });
         this.tooltip.addEventListener('mouseleave', () => this.hideTooltip(), { signal });
         this.tooltip.addEventListener('wheel', event => event.stopPropagation(), { signal, passive: true });
-        document.getElementById('map-container').addEventListener('scroll', () => this.hideTooltip(), { signal });
+        this.mapContainer.addEventListener('scroll', () => this.hideTooltip(), { signal });
+        this.inspectionPanel.addEventListener('mouseleave', () => {
+            if (this.isDocked()) this.hideTooltip();
+        }, { signal });
+        document.getElementById('toggle-right').addEventListener('click', () => this.hideTooltip(), { signal });
+        document.addEventListener('keydown', event => {
+            if (event.key !== 'Escape') return;
+            if (this.isDocked() && !this.game.isPaused) {
+                event.preventDefault();
+                event.stopPropagation(); // První Esc zavře inspekci, až další otevře pauzu.
+            }
+            this.hideTooltip();
+        }, { signal, capture: true });
+        document.addEventListener('languageChanged', () => this.hideTooltip(), { signal });
+        window.addEventListener?.('resize', () => this.hideTooltip(), { signal });
     }
 
     handleMouseMove(event) {
@@ -24,6 +42,11 @@ class BattleTooltip {
         const { x, y } = this.game.view.mapInput.screenToWorld(event.clientX, event.clientY);
 
         const hex = this.game.hexGrid.pixelToHex(x, y);
+        const unit = hex && this.game.getUnitAt(hex.col, hex.row);
+
+        // Při cestě k boční kartě ponecháme náhled nad prázdnými/skrytými
+        // poli. Kliknutí, jiný viditelný oddíl nebo Esc inspekci ukončí.
+        if (this.isDocked() && (!unit || !this.game.fogOfWarSystem.isEnemyVisible(unit))) return;
 
         if (!hex) {
             this.hideTooltip();
@@ -38,9 +61,10 @@ class BattleTooltip {
             return;
         }
 
+        // Dosah musí být spočítaný před hledáním volného místa pro kartu.
+        this.game.view.showEnemyMoveRange(unit);
         this.lastHoveredHex = hex;
         this.showTooltip(hex, event.clientX, event.clientY);
-        this.game.view.showEnemyMoveRange(this.game.getUnitAt(hex.col, hex.row));
     }
 
     showTooltip(hex, mouseX, mouseY) {
@@ -82,7 +106,7 @@ class BattleTooltip {
                     <div class="tooltip-stat"><span class="label">HP:</span> ${unit.health}/${unit.maxHealth}</div>
                     <div class="tooltip-stat"><span class="label">${i18n.t('help.unitStats.attack')}:</span> ${unit.attack}</div>
                     <div class="tooltip-stat"><span class="label">${i18n.t('help.unitStats.defense')}:</span> ${unit.defense}</div>
-                    <div class="tooltip-stat"><span class="label">${i18n.t('help.unitStats.range')}:</span> ${unit.special === 'reach' && unit.range === 1 ? '1-2' : unit.range}</div>
+                    <div class="tooltip-stat"><span class="label">${i18n.t('help.unitStats.range')}:</span> ${unit.range}</div>
                     <div class="tooltip-stat"><span class="label">${i18n.t('help.unitStats.movement')}:</span> ${unit.movement}</div>
                     <div class="tooltip-stat"><span class="label">👁 ${i18n.t('tooltip.visibility')}:</span> ${visionRange}</div>
                 </div>
@@ -140,6 +164,7 @@ class BattleTooltip {
 
             if (unit.isRouting) {
                 html += `<div class="tooltip-debuff" style="color: #ff4444; font-weight: bold;">🏃 ${i18n.t('tooltip.routing')}</div>`;
+                html += `<div class="tooltip-info">${this.game.view.panels.routingExplanation(unit)}</div>`;
             }
 
             // Informace o zbývajících útocích pro rapidFire
@@ -245,11 +270,19 @@ class BattleTooltip {
             </div>
         `;
 
+        const objective = this.game.victoryConditionsSystem.getDualObjectiveProgress().find(item =>
+            (item.positions || []).some(([col, row]) => col === hex.col && row === hex.row));
+        if (objective) {
+            const held = objective.occupied ? Math.min(objective.heldTurns, objective.requiredTurns) : 0;
+            html += `<div class="tooltip-info tooltip-objective"><strong>${objective.description}</strong><br>${i18n.t('game.holdProgress', { held, required: objective.requiredTurns })}</div>`;
+        }
+
         return html;
     }
 
     positionTooltip(mouseX, mouseY) {
-        const mapContainer = document.getElementById('map-container');
+        this.restoreToMap();
+        const mapContainer = this.mapContainer;
         const containerRect = mapContainer.getBoundingClientRect();
         const inset = 8;
         const offset = 20;
@@ -277,16 +310,85 @@ class BattleTooltip {
             ? mouseX + offset : mouseX - tooltipRect.width - offset;
         const preferredTop = mouseY + tooltipRect.height + offset <= bottomEdge
             ? mouseY + offset : mouseY - tooltipRect.height - offset;
-        const left = Math.max(leftEdge, Math.min(preferredLeft, rightEdge - tooltipRect.width));
-        const top = Math.max(topEdge, Math.min(preferredTop, bottomEdge - tooltipRect.height));
+        let left = Math.max(leftEdge, Math.min(preferredLeft, rightEdge - tooltipRect.width));
+        let top = Math.max(topEdge, Math.min(preferredTop, bottomEdge - tooltipRect.height));
+
+        const protectedRects = this.enemyPreviewRects();
+        if (protectedRects.length) {
+            const bounds = { left: leftEdge, right: rightEdge, top: topEdge, bottom: bottomEdge };
+            const placement = this.findClearPlacement({ left, top, width: tooltipRect.width, height: tooltipRect.height },
+                bounds, protectedRects);
+            if (!placement) {
+                this.dockTooltip();
+                return;
+            }
+            ({ left, top } = placement);
+        }
 
         this.tooltip.style.left = `${left - originX + mapContainer.scrollLeft}px`;
         this.tooltip.style.top = `${top - originY + mapContainer.scrollTop}px`;
         this.tooltip.classList.toggle('tooltip-scrollable', this.tooltip.scrollHeight > this.tooltip.clientHeight);
     }
 
+    enemyPreviewRects() {
+        const view = this.game.view, unit = view.previewedEnemyUnit;
+        if (!unit || !this.game.fogOfWarSystem.isEnemyVisible(unit)) return [];
+        const grid = this.game.hexGrid, scale = view.mapInput.scale;
+        // Čteme pouze již viditelný náhled, nikoli skryté jednotky či terén.
+        return [...grid.enemyMoveHexes, unit].map(hex => {
+            const world = grid.hexToPixel(hex.col, hex.row);
+            const center = view.mapInput.worldToScreen(world.x, world.y);
+            const rx = grid.hexSize * scale + 4, ry = grid.hexHeight / 2 * scale + 4;
+            return { left: center.x - rx, right: center.x + rx, top: center.y - ry, bottom: center.y + ry };
+        });
+    }
+
+    findClearPlacement(preferred, bounds, protectedRects) {
+        const { width, height } = preferred;
+        const lefts = [preferred.left, bounds.left, bounds.right - width];
+        const tops = [preferred.top, bounds.top, bounds.bottom - height];
+        // Hrany hexů dávají kandidáty i v mezerách nepravidelného dojezdu.
+        for (const rect of protectedRects) {
+            lefts.push(rect.left - width, rect.right);
+            tops.push(rect.top - height, rect.bottom);
+        }
+        let best = null, bestDistance = Infinity;
+        const uniqueLefts = new Set(lefts), uniqueTops = new Set(tops);
+        for (const left of uniqueLefts) for (const top of uniqueTops) {
+            const right = left + width, bottom = top + height;
+            if (left < bounds.left || right > bounds.right || top < bounds.top || bottom > bounds.bottom) continue;
+            if (protectedRects.some(rect => left < rect.right && right > rect.left &&
+                top < rect.bottom && bottom > rect.top)) continue;
+            const distance = (left - preferred.left) ** 2 + (top - preferred.top) ** 2;
+            if (distance < bestDistance) { best = { left, top }; bestDistance = distance; }
+        }
+        return best;
+    }
+
+    isDocked() { return this.tooltip.classList.contains('tooltip-docked'); }
+
+    dockTooltip() {
+        this.inspectionPanel.classList.add('enemy-inspection');
+        this.inspectionPanel.appendChild(this.tooltip);
+        this.tooltip.classList.add('tooltip-docked');
+        for (const property of ['left', 'top', 'maxWidth', 'maxHeight']) this.tooltip.style[property] = '';
+        this.tooltip.classList.toggle('tooltip-scrollable', this.tooltip.scrollHeight > this.tooltip.clientHeight);
+    }
+
+    restoreToMap() {
+        if (!this.isDocked()) return;
+        this.inspectionPanel.classList.remove('enemy-inspection');
+        this.mapContainer.appendChild(this.tooltip);
+        this.tooltip.classList.remove('tooltip-docked');
+    }
+
     hideTooltip() {
         this.game.view?.clearEnemyMoveRange();
+        this.dismissCard();
+    }
+
+    dismissCard() {
+        this.restoreToMap();
         this.tooltip.classList.add('hidden');
         this.tooltip.classList.remove('tooltip-scrollable');
         this.lastHoveredHex = null;

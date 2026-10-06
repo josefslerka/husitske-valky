@@ -2027,7 +2027,7 @@ const Scenarios = {
         historicalSignificance: "Významná porážka pražského svazu. Neprokazuje, že bez Žižky či vozové hradby nemohli husité vítězit.",
 
         briefing: {
-            hussites: 'Hrad Hněvín je téměř náš! Posádka nabídla kapitulaci, ale Želivský ji odmítl. Máš dva cíle: dobýt hrad NEBO zablokovat městskou bránu, odkud může přijít posila. Na obojí nemáš dost mužů - rozhodni se!',
+            hussites: 'Stačí splnit jeden cíl do konce 10. kola: obsadit obě zlatě označená pole Hněvína a držet je 2 kola, NEBO držet označenou městskou bránu 6 kol. Brána je na konci cesty před Mostem; obsazení městských polí nestačí. Držení se počítá na konci vašich tahů. Bonus získáte, pokud při vítězství současně ovládáte hrad i bránu.',
             crusaders: 'Držte hrad za každou cenu! Posily markraběte Fridricha jsou na cestě. Mostečtí vyrazí z brány a udeří husitům do boku.'
         },
 
@@ -2036,7 +2036,8 @@ const Scenarios = {
         mapLabels: [
             { text: 'Hrad Hněvín', i18nKey: 'hnevinCastle', hexes: [[8,0],[9,0],[10,0],[8,1],[9,1],[10,1]] },
             { text: 'Most', hexes: [[7,13],[8,13],[9,13],[10,13],[7,14],[8,14],[9,14],[10,14],[8,15],[9,15]] },
-            { text: 'Klášter', i18nKey: 'monastery', hexes: [[8,7],[9,7]] }
+            { text: 'Klášter', i18nKey: 'monastery', hexes: [[8,7],[9,7]] },
+            { text: 'Městská brána', i18nKey: 'mostGate', hexes: [[9,12]], offset: [0, -0.65] }
         ],
 
         terrain: {
@@ -2155,7 +2156,7 @@ const Scenarios = {
                 turnRange: [1, 2],
                 description: 'Hrad Hněvín je na dosah. Posádka nabídla kapitulaci, ale Želivský odmítl.',
                 events: [
-                    { trigger: 'turn_1', message: 'Želivský: "Žádná milost pro zrádce! Dobyjeme hrad silou!"' },
+                    { trigger: 'turn_1', message: 'Želivský: "Žádná milost pro zrádce! Dobudeme hrad silou!"' },
                     { trigger: 'turn_2', message: 'Hradní posádka se houževnatě brání. Z města se ozývá ruch...' }
                 ]
             },
@@ -2195,28 +2196,30 @@ const Scenarios = {
         victoryConditions: {
             primary: {
                 type: 'dual_objective',
-                description: 'Splň JEDEN z cílů: Dobij hrad Hněvín NEBO udrž městskou bránu zablokovanou',
+                description: 'Do 10. kola: Hněvín 2 kola NEBO městská brána 6 kol',
                 objectives: [
                     {
                         id: 'capture_castle',
+                        labelKey: 'hnevinCastle',
                         type: 'capture_position',
                         positions: [[9,0], [9,1]],
                         holdTurns: 2,
-                        description: 'Dobij a udrž hrad Hněvín (2 kola)'
+                        description: 'Obsaď obě označená pole Hněvína a drž je 2 kola'
                     },
                     {
                         id: 'block_gate',
+                        labelKey: 'mostGate',
                         type: 'capture_position',
                         positions: [[9,12]],
                         // Brána je 5 hexů od nejbližší jednotky (pohyb 2) - obsadit ji lze
                         // nejdřív v kole 3, při maxTurns 10 je tedy strop držení 8 kol
                         holdTurns: 6,
-                        description: 'Zablokuj městskou bránu a udrž 6 kol'
+                        description: 'Obsaď označenou bránu na konci cesty před Mostem a drž ji 6 kol'
                     }
                 ]
             },
             secondary: [
-                { type: 'both_objectives', description: 'Splň OBA cíle' },
+                { type: 'control_objectives', description: 'Ovládni hrad i bránu při splnění jednoho časového cíle' },
                 { type: 'survive_commander', description: 'Želivský přežije' },
                 { type: 'protect_artillery', description: 'Zachraň houfnici' },
                 { type: 'max_losses', maxLosses: 5, description: 'Méně než 5 ztracených jednotek' }
@@ -2237,12 +2240,17 @@ const Scenarios = {
             dualObjective: {
                 description: 'Dva cíle - stačí splnit jeden',
                 effect: 'alternative_victory',
-                note: 'Dobij hrad NEBO zablokuj bránu'
+                note: 'Dobyj hrad NEBO zablokuj bránu'
             }
         },
 
         debriefing: {
-            victory: 'Hrad Hněvín je váš! Kombinace dobývání hradu a blokování městské brány se vyplatila. Most je pod husitskou kontrolou a cesta do Saska otevřena pro budoucí spanilé jízdy.',
+            victory: 'Pražské vojsko vyhrálo tento herní střet. Jde o alternativní výsledek; historické obléhání Mostu skončilo porážkou.',
+            victoryVariants: {
+                castleCaptured: 'Obsadili jste obě klíčové pozice Hněvína a udrželi je po požadovanou dobu. Vítězství přineslo dobytí hradu, nikoli současné ovládnutí městské brány. Jde o herní alternativu k historické porážce pražského vojska.',
+                gateBlocked: 'Městskou bránu před Mostem jste udrželi zablokovanou po požadovanou dobu. Tento cíl přinesl vítězství; dobytí Hněvína se tím neprohlašuje. Jde o herní alternativu k historické porážce pražského vojska.',
+                bothControlled: 'Splnili jste jeden časový cíl a při vítězství současně obsadili obě klíčové pozice Hněvína i městskou bránu. Získáváte také bonus za ovládnutí obou lokalit. Jde o herní alternativu k historické porážce pražského vojska.'
+            },
             defeat: 'Mostečtí měšťané a posádka hradu udrželi své pozice. Husitský útok selhal a vojsko musí ustoupit. Severozápadní Čechy zůstávají v rukou nepřítele.'
         },
 
