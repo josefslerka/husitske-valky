@@ -95,7 +95,7 @@ The game's musical theme is an original instrumental arrangement played from a l
 
 ## Current state and known limits
 
-**Version:** Alpha 0.3.8 (30 September 2026). See the [English changelog](CHANGELOG.en.md) for details. **Production site:** [hussitewars.com](https://hussitewars.com/).
+**Version:** Alpha 0.3.9 (7 October 2026). See the [English changelog](CHANGELOG.en.md) for details. **Production site:** [hussitewars.com](https://hussitewars.com/).
 
 - The AI follows readable, historically inspired doctrines but is not a human opponent.
 - Scenario balance, particularly in later acts and the first battle at Živohošť, needs more player testing.

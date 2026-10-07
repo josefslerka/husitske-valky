@@ -4,7 +4,7 @@
 
 The older planning sections below are preserved as a record of earlier development; they are not the current release plan. See [TODO.md](TODO.md) for the current state and open tasks (currently maintained in Czech).
 
-## Unreleased
+## Alpha 0.3.9 (7 October 2026)
 
 - Cavalry and artillery now use the selected distinguishing silhouettes in the existing woodcut style: a plain horse for light cavalry, a horse with a shield for armoured and Hussite noble cavalry, and a horse with a lance for heavy knights. The tarasnice has a long narrow barrel, the howitzer a shorter wider barrel, and the bombard a fixed carriage. The map, army overview and Encyclopedia share the artwork; Prague howitzers share the howitzer profile, and the bonus Wagon Fort uses the new marks too. Faction colours and outlines, action marks, health bars and gameplay rules are unchanged.
 - Added four silhouette regression tests and expanded Czech/English catalogue checks: type mapping including Prague variants and the bonus game, matching Canvas/SVG artwork at different scales and after exhaustion, and preserved fog-of-war filtering on the map and minimap. Manually verified 64% map zoom, the bonus game's deployment menu and the Encyclopedia at 320px and 375px widths.

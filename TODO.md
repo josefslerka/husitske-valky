@@ -1,6 +1,6 @@
 # TODO — Husitské války
 
-**Aktuální verze:** Alpha 0.3.8 (30. 9. 2026)
+**Aktuální verze:** Alpha 0.3.9 (7. 10. 2026)
 
 **Cíl:** stabilní veřejná Alpha 1.0
 
@@ -16,8 +16,8 @@ Nejdřív opravit vyhodnocení cílů a dostupnost informací, potom vysvětlit 
 Obtížnost a bojové statistiky neměnit současně s těmito opravami. Most, levý panel,
 vysvětlení rozkazů a prchání, nápověda, návrat z minihry i rozlišení ikon jsou
 implementované a automaticky ověřené. Zbývá zaučení u Živohoště,
-zvětšení prohlížeče a fyzický telefon. Existující místní
-oprava nepřátelského tooltipu zůstává samostatnou připravenou změnou.
+zvětšení prohlížeče a fyzický telefon. Oprava nepřátelského tooltipu
+je součástí stejného vydání.
 
 #### 1 Most a vyhodnocení cílů
 

@@ -4,7 +4,7 @@
 
 Starší plánovací oddíly níže zachováváme jako dobový záznam; nejsou aktuálním plánem vydání. Aktuální stav a otevřené úkoly jsou v [TODO.md](TODO.md).
 
-## Připravované změny
+## Alpha 0.3.9 (7. října 2026)
 
 - Jízda a dělostřelectvo mají vybrané rozlišovací siluety v současném dřevořezovém stylu: lehká jízda prostého koně, těžkooděnci a šlechtická jízda koně se štítem, těžký rytíř koně s kopím. Tarasnice má dlouhou úzkou hlaveň, houfnice krátkou širší hlaveň a bombarda pevnou lafetu. Mapa, přehled armád a encyklopedie používají stejnou kresbu; pražské houfnice sdílejí profil houfnice a nové značky používá i bonusová Vozová hradba. Barvy a tvary stran, označení akcí, zdravotní lišty ani herní pravidla se nemění.
 - Přidány čtyři regresní testy siluet a rozšířena kontrola katalogu v CS/EN: přiřazení typů včetně pražských variant a bonusové hry, shoda Canvas/SVG v různých měřítkách i po vyčerpání a zachované skrývání jednotek na mapě a minimapě v mlze války. Ručně ověřeno oddálení mapy na 64 %, nabídka bonusové hry a encyklopedie v šířkách 320 a 375 px.
