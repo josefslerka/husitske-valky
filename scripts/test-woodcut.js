@@ -74,6 +74,24 @@ test('náhledy všech terénů přesně odpovídají kreslení izolovaného hexu
     }
 });
 
+test('svah tvoří čtyři měkké vrstevnice, ne horské štíty; barva a pravidla zůstanou oddělené', () => {
+    for (const size of [16, 24, 40, 64]) {
+        const h = drawingHarness(size), hex = { col: 1, row: 1, terrain: 'slope' };
+        const before = JSON.stringify([...h.grid.hexes]);
+        h.grid.renderer.terrain(hex);
+        const curves = h.calls.filter(call => call[0] === 'bezierCurveTo');
+        assert.equal(curves.length, 4);
+        assert.deepEqual(curves.map(call => call.slice(1)), [
+            [-14, -22, 5, -23, 35, -12], [-14, -14, 5, -15, 35, -4],
+            [-14, -6, 5, -7, 35, 4], [-14, 2, 5, 1, 35, 12]
+        ]);
+        assert.ok(h.calls.some(call => call[0] === 'lineWidth' && call[1] === 1.3));
+        assert.equal(new Set(['plains', 'hills', 'slope'].map(type => h.WoodcutRenderer.terrainColors[type])).size, 3);
+        assert.equal(JSON.stringify([...h.grid.hexes]), before);
+        assert.equal(h.stack.length, 0);
+    }
+});
+
 test('náhled bez Canvasu nespadne a neznámý typ používá výchozí pláň', () => {
     const h = drawingHarness();
     h.WoodcutRenderer.drawTerrainPreview({ getContext: () => null }, 'forest');

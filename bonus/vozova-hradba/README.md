@@ -39,13 +39,13 @@ souborů. Produkční konfigurace `CNAME` do tohoto adresáře nepatří.
   pluskem. Hnědá cesta včetně obou objížděk je vyhrazená nepříteli; tam
   stavět nelze. Legenda a první tip vysvětlují rozdíl česky i anglicky.
   Značky během náhledu dosahu a po zahájení první vlny zmizí.
-- Klepněte na volný hex, vyberte ručničáře, cepníky, houfnici nebo bojový vůz
+- Klepněte na volný hex, vyberte střelce z ručnic, cepníky, houfnici nebo bojový vůz
   a zkontrolujte náhled dosahu. Umístění potvrďte tlačítkem Postavit.
   Nabídka se přesouvá nad nebo pod zvolené pole, aby je nezakrývala.
-- Jednotky bojují samy. Ručničáři střílejí z dálky, cepníci prorážejí zbroj,
+- Jednotky bojují samy. Střelci z ručnic střílejí z dálky, cepníci prorážejí zbroj,
   houfnice zasahuje skupiny a vůz zpomaluje nepřátele a posiluje sousedy.
 - Klepnutím na oddíl jej můžete dvakrát vylepšit nebo stáhnout za část ceny.
-- Trojúhelníkem označená návrší dávají ručničářům a houfnicím další hex
+- Trojúhelníkem označená návrší dávají střelcům z ručnic a houfnicím další hex
   dostřelu. Na mapě jsou tři; používají kresbu terénu z hlavní hry.
 - Značky **I a II** na cestě nebo tlačítko **Záseky** otevřou náhled objížďky.
   Tlačítko **Výhody** ukazuje vylepšení přijatá při válečných poradách.
@@ -71,7 +71,7 @@ Nepřátelé se pohybují plynule a účinek se řídí hexem, na kterém práv�
 | Oddíl | Úroveň 1 | Úroveň 2 | Úroveň 3 |
 | --- | ---: | ---: | ---: |
 | Cepníci | 1 hex | 1 hex | 1 hex |
-| Ručničáři | 2 hexy | 2 hexy | 3 hexy |
+| Střelci z ručnic | 2 hexy | 2 hexy | 3 hexy |
 | Houfnice | 3 hexy | 3 hexy | 4 hexy |
 | Vůz – zpomalení | 1 hex | 1 hex | 2 hexy |
 
@@ -83,7 +83,7 @@ ve zvoleném hexu a poloviční v šesti sousedních hexech.
 
 ### Návrší
 
-Tři hexy `(3,0)`, `(6,6)` a `(2,9)` (indexy od nuly) dávají ručničářům
+Tři hexy `(3,0)`, `(6,6)` a `(2,9)` (indexy od nuly) dávají střelcům z ručnic
 a houfnicím **+1 hex** ke všem úrovním dostřelu. Bonus se sčítá s třetí
 úrovní jednotky. Cepníci ani vozy jej nedostávají; podpora vozů zůstává
 v šesti sousedních hexech. Náhled stavby, nabídka vylepšení i skutečná palba
@@ -112,7 +112,7 @@ oddíly daného druhu až do nové partie; druhá možnost již není dostupná.
 
 | Vlna | První možnost | Druhá možnost |
 | --- | --- | --- |
-| 2 | **Lepší prach:** ručničáři mají +20 % útoku. | **Okované cepy:** cepníci mají +25 % útoku; prorážení zbroje zůstává. |
+| 2 | **Lepší prach:** střelci z ručnic mají +20 % útoku. | **Okované cepy:** cepníci mají +25 % útoku; prorážení zbroje zůstává. |
 | 4 | **Sehraná obsluha:** houfnice mají o 25 % kratší přebíjení. | **Široký rozptyl:** první prstenec dostává 65 % poškození, druhý 35 %. |
 | 6 | **Řetězy mezi vozy:** zpomalení vozů +10 procentních bodů. | **Sehraná hradba:** podpora vozů +12 procentních bodů, součet stále nejvýše +80 % útoku. |
 

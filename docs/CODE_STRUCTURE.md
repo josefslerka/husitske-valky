@@ -29,6 +29,10 @@ Prezentace bitvy je rozdělena podle odpovědností:
   Popis prchání sdílí panel a tooltip přes `routingExplanation()`; pod mlhou
   války jej tooltip nikdy nevyžádá pro skrytý oddíl. Nové texty pravidel,
   dělostřelectva a prchání jsou v locale, nikoli ve druhé kódové kopii.
+  Živohošť čte počty původních oddílů přes `getSurvivalProgress()`; tento čtecí
+  pohled používá i vyhodnocení přežití. Počítadlo v hlavičce není součástí
+  textu cíle, který se na telefonu zkracuje. Nápověda pohybu a tooltip čtou
+  ceny přes `Game.getTerrainMoveCost()` a nezkoumají skryté obsazení cíle.
   Situační pokyn pod mapou pouze odvozuje ze stavu tahu a vybrané jednotky;
   neprohledává pozice protivníka ani nemění herní pravidla.
 - `BattleTooltip` vlastní tooltip, jeho obsah a cache pro hover. Při náhledu
@@ -99,6 +103,17 @@ v panelu, tooltipu, katalogu a pravidlech používají stejné locale klíče;
 `BattlePanels.artilleryOrderExplanation()` sdílí popis pořadí palby a pohybu
 mezi detailem a katalogem. Pražské varianty nepřebírají schopnosti podle jména.
 Menu testy sdílejí skutečnou inicializaci přes `scripts/helpers/menu-harness.js`.
+
+Medailonky v `UnitTypes.lore` mají český základ a překlady v locale. `historicalNote`
+je autorská poznámka, nikoli automaticky citát: katalog nepřidává uvozovky ani
+`blockquote`. Text i bibliografie se escapují. `HistoricalSources.units` váže
+konkrétní karty na čtení z katalogu; `HistoricalNotesView.renderUnit()` zobrazuje
+odkazy jako „K dalšímu čtení“. Stejný pomocník sestavuje bibliografii scénářů,
+povoluje jen HTTPS a neznámé položky ignoruje. Datum scénářového auditu `reviewed`
+se při revizi jednotek nepřepisuje; ta má samostatné `unitProfilesReviewed`.
+Odkaz podporuje historický rámec, nikoli přesné herní statistiky nebo nasazení
+každého typu v každé bitvě. Aktuální cílená revize pokrývá 33 medailonků,
+nikoli úplný audit všech velitelských životopisů.
 
 Bonusová Vozová hradba se vrací nativním relativním odkazem `../../index.html`.
 Jeho překlad používá vlastní tabulku minihry. Odkaz nemění úložiště kampaně,

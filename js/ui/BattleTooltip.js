@@ -270,6 +270,17 @@ class BattleTooltip {
             </div>
         `;
 
+        // Cena vstupu pro vlastní vybraný oddíl, nikoli odhad celé trasy.
+        // Nezkoumáme dostupnost cíle ani skryté překážky v mlze války.
+        const mover = this.game.selectedUnit;
+        const faction = this.game.currentScenario?.playerFaction || 'hussites';
+        if (mover?.faction === faction && mover.movement > 0 && mover.unitClass !== 'fortification'
+            && !(mover.isWagon() && mover.formationClosed)) {
+            const cost = terrain === 'water' && !hasFrozenRiver ? i18n.t('tooltip.impassable')
+                : this.game.getTerrainMoveCost(terrain, mover);
+            html += `<div class="tooltip-info tooltip-movement">${i18n.t('help.movement.entryCost', { unit: mover.name, cost })}</div>`;
+        }
+
         const objective = this.game.victoryConditionsSystem.getDualObjectiveProgress().find(item =>
             (item.positions || []).some(([col, row]) => col === hex.col && row === hex.row));
         if (objective) {

@@ -15,9 +15,11 @@ Podklad: feedback Jana Hanzelky a čtyři screenshoty, přijaté 5. 10. 2026.
 Nejdřív opravit vyhodnocení cílů a dostupnost informací, potom vysvětlit pravidla.
 Obtížnost a bojové statistiky neměnit současně s těmito opravami. Most, levý panel,
 vysvětlení rozkazů a prchání, nápověda, návrat z minihry i rozlišení ikon jsou
-implementované a automaticky ověřené. Zbývá zaučení u Živohoště,
-zvětšení prohlížeče a fyzický telefon. Oprava nepřátelského tooltipu
-je součástí stejného vydání.
+implementované a automaticky ověřené. Živohošť má nově popsané minimum
+původních oddílů, živé počítadlo a vysvětlení pohybu; srozumitelnost ještě
+ověřit s dalšími začátečníky. Zvětšení Chromu na 125–150 % je ověřené,
+fyzický telefon a systémové písmo zatím ne.
+Oprava nepřátelského tooltipu je součástí Alpha 0.3.9.
 
 #### 1 Most a vyhodnocení cílů
 
@@ -59,9 +61,12 @@ je součástí stejného vydání.
   - Desktop 1920×1080, 1366×768, 1280×720 a kompaktní 1024×576 ověřeno.
   - Mobilní viewport 375×812 a landscape 844×390: dostupné celé informace,
     rozkazy i spodní lišta. Sbalení a opětovné otevření funguje.
-- [ ] **Doplnit kontrolu zvětšení a skutečného telefonu.**
-  - Zvětšení prohlížeče 125–150 %, systémového písma a skutečné dotykové ovládání;
-    simulovaný viewport není ověření fyzického zařízení ani lišt X/LinkedIn.
+- [x] **Ověřit skutečné zvětšení prohlížeče 125–150 %.**
+  - Chrome na desktopu, CS/EN: zadání mise, karta jednotky včetně spodních
+    statistik, cíle a spodní ovládání. Dlouhý obsah se posouvá bez překrytí lišt.
+- [ ] **Doplnit kontrolu systémového písma a skutečného telefonu.**
+  - Zvětšené systémové písmo a skutečné dotykové ovládání; simulovaný viewport
+    ani desktopový zoom nenahrazují fyzické zařízení a lišty X/LinkedIn.
 
 #### 3 Vysvětlení vozů houfnice a prchání
 
@@ -119,9 +124,15 @@ je součástí stejného vydání.
   - Společná kresba v mapě, přehledu, encyklopedii i bonusové hře; čtyři nové
     testy hlídají přiřazení, Canvas/SVG, zoomy, vyčerpání a mlhu války.
     Ověřeno oddálení mapy na 64 % a katalog v šířkách 320/375 px.
-- [ ] **Zlepšit zaučení u Živohoště a pak znovu měřit obtížnost.**
-  - Jasně uvést chráněné poutníky, dobu přežití a příchod posil; případný tip
-    vysvětlí možnosti manévrování, nikoli povinný postup k vítězství.
+- [x] **Zpřehlednit podmínky Živohoště a základní pohyb bez změny obtížnosti.**
+  - Briefing a hlavní cíl uvádějí 5 celých kol a nejméně 40 % původních oddílů
+    (4 z 8). Živé počítadlo nezahrnuje posily; vysvětlen je příchod posil
+    na začátku 5. kola a rozdíl mezi přežitím a prcháním nepřítele.
+  - Opravený tip odkazuje na pojmenovaný kopec Červenka, ne na zelenou barvu terénu.
+  - Briefing, rozkazy a pravidla vysvětlují body pohybu, jednu akci přesunu,
+    náklady terénu, překážky a výjimky; ceny čtou skutečná pravidla.
+  - CS/EN a 21 nových regresních testů; síla jednotek ani posily se nemění.
+- [ ] **Znovu ověřit první zkušenost a obtížnost po úpravě zaučení.**
   - Zaznamenat první pokusy dalších nezkušených hráčů bez nutnosti hledat návod na X.
   - Teprve podle výsledků rozhodnout o změně síly jednotek nebo načasování posil.
 
@@ -171,6 +182,30 @@ potřebné cache verze. Číslo vydání, commit, push a nasazení řešit až n
 
 ### P2 — Texty a scénářové zprávy
 
+- [x] **První redakční a pramenný průchod medailonků jednotek v CS/EN.**
+  - Revidováno 26 medailonků druhů vojska a sedm velitelských; sjednoceny
+    dotčené krátké popisy. Autorské poznámky se nevydávají za citace kronik.
+  - Opraveny záměny příbuzných, Divišův vztah k Žižkovi, nepodložené výroky
+    a anachronické vybavení; nejisté složení vojska je označené jako rekonstrukce.
+  - U 18 karet konkrétní další čtení, osm nových podkladů. Deset nových testů
+    hlídá překlady, bezpečné vykreslení, zdroje, save/load a nezměněné statistiky.
+- [ ] **Dokončit historický audit zbývajících velitelských životopisů.**
+  - První průchod pokrývá sedm z 27 velitelů; dalších 20 medailonků ještě
+    potřebuje kontrolu údajů, připsaných výroků a konkrétního odborného čtení.
+  - Zvlášť Prokop, Želivský, Koranda a protivní velitelé; prověřovat současně
+    krátký popis i celý medailonek v obou jazycích. Revize jednotek nenahrazuje
+    odbornou kontrolu scénářů a obecné historie v encyklopedii.
+
+- [x] **Druhý malý textový balíček bez změny obtížnosti.**
+  - Rytířská jízda / Knightly Cavalry, Střelci z ručnic / Handgunners;
+    názvy sjednocené v herních pohledech, nápovědě, savech a u střelců v minihře.
+  - Volitelné cíle jsou výzvy do závěrečného hodnocení, ne odměny nebo nutná
+    podmínka vítězství. Vysvětlení je před bitvou, v cílech, pravidlech i výsledku.
+  - Bojový chorál viditelně ukazuje jednorázové použití; nápověda ho odlišuje
+    od přepínače hudby. Kratší Hlas z bojiště dál přiznává fikci, ne citaci.
+  - CS/EN, kompatibilita uložených her a 17 nových regresních testů;
+    jednotky, herní pravidla a obtížnost se nemění.
+
 - [ ] **Redakčně projít české texty, které působí strojově.**
   - Zachovat jasné rozlišení mezi pramenem, herní rekonstrukcí a autorskou fikcí.
   - Kontrolovat současně anglický význam, aby se jazykové verze nerozešly.
@@ -186,6 +221,10 @@ potřebné cache verze. Číslo vydání, commit, push a nasazení řešit až n
   - Vyzkoušet jemnější tón pláně a čitelnější kresbu výškového terénu v současném
     dřevorytovém stylu.
   - Jednotky, dosahy a stavové značky musí zůstat kontrastní.
+- [x] **Zjemnit kresbu svahu na Vítkově.**
+  - Ostré skalní štíty nahrazeny vrstevnicemi na světlejším podkladu;
+    společná kresba platí pro všechny mapy i legendu terénu.
+  - Ověřeno při 100% a 64% přiblížení, bez změny pravidel nebo terénních dat.
 - [ ] **Nechat kresbu vody plynule navazovat přes sousední hexy.**
   - Preferovat souvislý motiv v souřadnicích mapy nebo hranově kompatibilní varianty.
   - Ověřit velké vodní plochy, členité pobřeží a několik úrovní přiblížení.

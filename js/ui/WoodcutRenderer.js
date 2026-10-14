@@ -10,7 +10,7 @@ class WoodcutRenderer {
     static terrainColors = Object.freeze({
         plains: '#efe4cc', forest: '#b4ba95', hills: '#c4ad82', water: '#91a69a',
         town: '#e1d2ad', road: '#dfc99b', road2: '#dfc99b', dam: '#c7b18a',
-        mud: '#b6a17e', swamp: '#a9b18e', slope: '#ada58d', trenches: '#b9aa8d', church: '#e7d9b9'
+        mud: '#b6a17e', swamp: '#a9b18e', slope: '#d8c9ad', trenches: '#b9aa8d', church: '#e7d9b9'
     });
 
     // Paths are trusted, code-owned artwork, never scenario/localization input.
@@ -188,12 +188,20 @@ class WoodcutRenderer {
                 this.hatch(-8, 1, 30, 13, 5);
                 this.line([[-24, 20], [-11, 16], [2, 19], [15, 15], [27, 17]]); break;
             case 'slope':
-                ctx.strokeStyle = '#4f5145'; ctx.lineWidth = 2;
-                this.path([[-31, 15], [-10, -17], [0, -8], [11, -25], [32, 13]]); ctx.stroke();
-                this.line([[-10, -17], [-6, 12]]); this.line([[11, -25], [18, 13]]);
-                this.hatch(-4, -2, 25, 19, 5);
-                this.line([[-22, 19], [-17, 6]]); this.line([[2, 15], [7, 2]]);
-                this.line([[22, 16], [27, 4]]); break;
+                // Rounded contour lines mark a hillside, not a wall of peaks.
+                // Shared by all maps and the terrain key; no terrain rules change.
+                ctx.strokeStyle = '#786e56'; ctx.lineWidth = 1.3;
+                for (let i = 0; i < 4; i++) {
+                    const offset = i * 8;
+                    ctx.beginPath(); ctx.moveTo(-35, -9 + offset);
+                    ctx.bezierCurveTo(-14, -22 + offset, 5, -23 + offset, 35, -12 + offset);
+                    ctx.stroke();
+                }
+                for (let i = 0; i < 4; i++) {
+                    const start = -19 + i * 12;
+                    this.line([[start, 12 + (i % 2) * 2], [start - 2, 18 + (i % 2) * 2]]);
+                }
+                break;
             case 'water':
                 ctx.strokeStyle = '#496555';
                 for (let i = -3; i <= 3; i++) {

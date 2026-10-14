@@ -27,7 +27,7 @@ const Scenarios = {
         historicalSignificance: 'Ukázka nutnosti organizované obrany, předchůdce vozové hradby.',
 
         briefing: {
-            hussites: 'Petr ze Šternberka přepadl u brodu váš houf jihočeských poutníků. Stáhněte bezbranné — jsou mezi nimi ženy a děti — na kopec Červenka a udržte se, dokud nedorazí posily z Nového Knína!',
+            hussites: 'Petr ze Šternberka přepadl u brodu váš houf jihočeských poutníků. Chraňte bezbranné poutníky a využijte kopec Červenka vpravo. Hlavní cíl: do konce 5. kola musí přežít alespoň 40 % původních oddílů — na začátku jich máte 8, potřebujete nejméně 4. Posily z Nového Knína dorazí na začátku 5. kola, ale do tohoto počtu se nezapočítávají. Samotné prchání nepřítele podmínku přežití nenahrazuje.',
             crusaders: 'Dohoňte husitské poutníky dříve, než se jim dostane pomoci. Máte převahu - využijte ji!'
         },
 
@@ -126,7 +126,7 @@ const Scenarios = {
                 description: 'Šternberk útočí na unavené jihočeské poutníky.',
                 events: [
                     { trigger: 'turn_1', message: 'Petr ze Šternberka vás dostihl! Opevněte se na kopci Červenka!' },
-                    { trigger: 'turn_1', type: 'tutorial', text: 'TIP: Vaše jednotky jsou blízko kopce. Přesuňte je na zelená pole pro obranný bonus.' }
+                    { trigger: 'turn_1', type: 'tutorial', text: 'TIP: Kopec Červenka je označený názvem vpravo na mapě. Jeho kopcovitá pole poskytují obranný bonus; zelené zvýraznění po výběru oddílu ukazuje dostupný pohyb, nikoli druh terénu.' }
                 ]
             },
             {
@@ -163,7 +163,7 @@ const Scenarios = {
                 type: 'survive',
                 turns: 5,
                 minUnitsPercent: 40,
-                description: 'Stáhni poutníky na kopec Červenka a vydrž do příchodu Knínských (kolo 5). Ochraň bezbranné!'
+                description: 'Do konce 5. kola musí přežít alespoň 40 % původních oddílů (nejméně 4 z 8; posily se nepočítají).'
             },
             secondary: [
                 { type: 'hold_position', positions: [[13,6], [14,6], [15,6]], description: 'Udržte kopec Červenka' },
@@ -176,9 +176,9 @@ const Scenarios = {
             defeat: 'Poutníci byli u brodu rozprášeni a pobiti. Petr ze Šternberka slaví. Husitské hnutí utrpělo těžkou ránu hned v počátcích.',
             // Skupiny na mapě, nikoli počet jednotlivých lidí; uprchlí nejsou padlí.
             victoryVariants: {
-                allPilgrims: 'Bitva je vyhraná a všechny původní skupiny poutníků jsou stále na bojišti. Neznamená to boj beze ztrát, ale jejich cesta tady nekončí.\n\nHlas z bojiště — autorská fikce, nikoli citace pramene:\n„Než jsme začali mluvit o vítězství, volali jsme na sebe. Ze všech skupin přicházely odpovědi.“',
-                somePilgrims: 'Bitva je vyhraná, ale na bojišti zůstala jen část původních skupin poutníků. Další cesta začne s mezerami v houfu; vítězná zpráva je nezaplní.\n\nHlas z bojiště — autorská fikce, nikoli citace pramene:\n„Volali jsme přes pole. Některé hlasy odpověděly; na jiné jsme čekali marně.“',
-                noPilgrims: 'Vojsko zvítězilo, ale žádná z původních skupin poutníků už na bojišti nezůstala. Padlí a ti, kdo uprchli, nejsou totéž; původní houf však už nestojí pohromadě.\n\nHlas z bojiště — autorská fikce, nikoli citace pramene:\n„Měli jsme zprávu o vítězství. Z houfu, který jsme měli chránit, ji tu už nikdo neposlouchal.“'
+                allPilgrims: 'Bitva je vyhraná. Na bojišti zůstaly všechny původní skupiny poutníků.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Volali jsme na ostatní skupiny. Všechny se ozvaly.“',
+                somePilgrims: 'Bitva je vyhraná, ale na bojišti zůstala jen část původních skupin poutníků.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Volali jsme na ostatní. Ne všichni odpověděli.“',
+                noPilgrims: 'Vojsko zvítězilo, ale žádná z původních skupin poutníků už na bojišti nezůstala.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Bitva je naše. Ale poutníci tu už nejsou.“'
             }
         },
 

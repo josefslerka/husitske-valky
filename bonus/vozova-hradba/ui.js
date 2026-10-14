@@ -32,7 +32,7 @@
             range: 'Dosah {range}', hexOne: '1 hex', hexFew: '{count} hexy', attack: 'Útok {damage}',
             hexMany: '{count} hexů', splashStat: 'Rozptyl {range}',
             hillLegend: '△ Návrší: dostřel +1', hillLabel: 'Návrší',
-            hillNote: 'Návrší · dostřel +1 hex pro ručničáře a houfnice.',
+            hillNote: 'Návrší · dostřel +1 hex pro střelce z ručnic a houfnice.',
             hillApplied: 'Návrší · +1 hex už započtený v dosahu.',
             barricadesLabel: 'Záseky {count}/2', tacticsLabel: 'Výhody {count}/3',
             barricadeTitle: 'Zásek {mark}', gateNames: { east: 'Východní cesta', west: 'Západní cesta' },
@@ -51,7 +51,7 @@
             activeTactics: 'Výhoda: {names}',
             scatterDesc: 'Plný zásah v cílovém hexu, 65 % poškození o 1 hex dál a 35 % o 2 hexy dál.',
             tactics: {
-                powder: { name: 'Lepší prach', desc: 'Ručničáři: útok +20 %. Silnější jednotlivé zásahy.' },
+                powder: { name: 'Lepší prach', desc: 'Střelci z ručnic: útok +20 %. Silnější jednotlivé zásahy.' },
                 flails: { name: 'Okované cepy', desc: 'Cepníci: útok +25 %. Bonus proti zbroji zůstává.' },
                 reload: { name: 'Sehraná obsluha', desc: 'Houfnice: přebíjení o 25 % kratší. Častější palba.' },
                 scatter: { name: 'Široký rozptyl', desc: 'Houfnice: rozptyl 2 hexy. První prstenec zasáhne za 65 %, druhý za 35 % poškození.' },
@@ -65,10 +65,10 @@
             helpTitle: 'Jak bránit tábor', helpBody: 'Protivník postupuje po cestě od praporu k táboru. Obránci útočí sami, ty rozhoduješ o jejich rozmístění.',
             helpItems: [
                 'Zelená pole s + před první vlnou ukazují volná místa pro oddíly. Hnědá cesta a její objížďky patří nepříteli; tam stavět nelze. Klepni na volný hex u cesty, vyber oddíl, prohlédni si dosah a potvrď tlačítkem Postavit. Dosah se počítá přes společné hrany hexů.',
-                'Ručničáři střílejí z dálky, cepníci jsou silní proti obrněným, houfnice zasahuje skupiny a vůz podporuje okolí.',
+                'Střelci z ručnic střílejí z dálky, cepníci jsou silní proti obrněným, houfnice zasahuje skupiny a vůz podporuje okolí.',
                 'Červené přesýpací hodiny označují zpomalení vozem. Platí na červených hexech cesty, v překryvu nejsilnější vůz. Podpora zvyšuje útok v šesti sousedních hexech, nejvýše o 80 %.',
-                'Cepníci zasáhnou 1 hex, ručničáři 2 a houfnice 3. Na třetí úrovni získají střelci, houfnice a vůz další hex dosahu. Cepníci zůstávají u boje zblízka.',
-                'Tři návrší označená trojúhelníkem prodlužují dostřel ručničářů a houfnic o 1 hex. Vozy a cepníci bonus nedostávají.',
+                'Cepníci zasáhnou 1 hex, střelci z ručnic 2 a houfnice 3. Na třetí úrovni získají střelci, houfnice a vůz další hex dosahu. Cepníci zůstávají u boje zblízka.',
+                'Tři návrší označená trojúhelníkem prodlužují dostřel střelců z ručnic a houfnic o 1 hex. Vozy a cepníci bonus nedostávají.',
                 'Záseky I a II stojí každý 25 grošů a prodlouží cestu o 2 hexy. Klepni na značku na cestě nebo na tlačítko Záseky. Měnit je můžeš jen na prázdné cestě mezi vlnami; rozebrání vrátí celou cenu.',
                 'Po 2., 4. a 6. odražené vlně vyber jednu trvalou výhodu pro tuto partii. Boj během volby stojí i při překrytí vln. Přijaté výhody najdeš pod tlačítkem Výhody.',
                 'Chorál na 6 sekund přidá 40 % k útoku a sníží rychlost o čtvrtinu. Se základním vozem tak nepřítele zpomalí celkem o 47,5 %. Zlaté hodiny označují samotný chorál.',
@@ -92,7 +92,7 @@
             resultTips: {
                 weapons: 'Vůz potřebuje zbraně. Nejprve postav dva útočící oddíly a potom je podpoř vozem.',
                 armor: 'Proti pronikajícím obrněncům přidej cepníky k cestě. Jejich zásahy prorážejí zbroj.',
-                hill: 'Vyzkoušej ručničáře nebo houfnici na návrší. Získají celý hex dostřelu navíc.',
+                hill: 'Vyzkoušej střelce z ručnic nebo houfnici na návrší. Získají celý hex dostřelu navíc.',
                 choral: 'Chorál si nech na hustý útok. Na šest sekund posílí zbraně a zpomalí nepřátele.',
                 route: 'Prohlédni si objížďku u záseku. Delší cesta se vyplatí, když ji pokryjí tvoje zbraně.',
                 perfect: 'Zkus jinou dvojici zbraní nebo druhou možnost při válečné poradě.'
@@ -100,7 +100,7 @@
             coachLabel: 'Krátké zaučení', coachProgress: 'Tip {step}/3', coachSkip: 'Vypnout tipy', coachReplay: 'Znovu ukázat tipy',
             coach: {
                 build: { title: 'Postav první oddíl', body: 'Zelená pole s + jsou pro tvoje oddíly. Hnědá cesta i objížďky jsou pro nepřítele. Klepni na + u cesty, vyber oddíl a potvrď stavbu.', action: 'Ukázat místo' },
-                hill: { title: 'Získej výhodu návrší', body: 'Na hexu s △ dostřelí ručničáři i houfnice o 1 hex dál. V náhledu si to můžeš prohlédnout bez placení.', action: 'Ukázat návrší' },
+                hill: { title: 'Získej výhodu návrší', body: 'Na hexu s △ dostřelí střelci z ručnic i houfnice o 1 hex dál. V náhledu si to můžeš prohlédnout bez placení.', action: 'Ukázat návrší' },
                 barricade: { title: 'Veď útok kolem obrany', body: 'Zásek za 25 grošů přidá cestě 2 hexy. Modrý náhled ti ukáže, kam nepřítel půjde. Přestavuj mezi vlnami.', action: 'Ukázat zásek' }
             },
             testerButton: 'Postřehy a odkaz', feedbackTitle: 'Jak se ti hrálo?',
@@ -123,7 +123,7 @@
                 'Poslední vlna nese křižácký prapor.'
             ],
             units: {
-                rucnicari: { name: 'Ručničáři', role: 'Dálková palba', desc: 'Píšťaly střílejí rychle. Brnění jejich palbu tlumí.' },
+                rucnicari: { name: 'Střelci z ručnic', role: 'Dálková palba', desc: 'Píšťaly střílejí rychle. Brnění jejich palbu tlumí.' },
                 cepnici: { name: 'Cepníci', role: 'Proti zbroji', desc: 'Krátký dosah. Cepy prorážejí brnění a bijí obrněné silněji.' },
                 houfnice: { name: 'Houfnice', role: 'Proti skupinám', desc: 'Plný zásah v cílovém hexu, poloviční v sousedních. Pomalé přebíjení.' },
                 vuz: { name: 'Bojový vůz', role: 'Zpomalení a podpora', desc: 'Sám neútočí: podpoř jím zbraně. Červené hexy zpomalují, 6 zlatých sousedů posiluje útok. Zpomalení vozů se nesčítá.' }

@@ -18,8 +18,8 @@ pozic ani o odhad úspěšnosti skutečných hráčů.
 
 | Sestava | Zastavení / 8 | Tábor |
 | --- | ---: | ---: |
-| Houfnice + ručničáři | 8 | 20 |
-| Dva ručničáři + cepníci | 8 | 20 |
+| Houfnice + střelci z ručnic | 8 | 20 |
+| Dva střelci z ručnic + cepníci | 8 | 20 |
 | Čtyři oddíly cepníků | 8 | 20 |
 | Vůz + cepníci | 1 | 13 |
 
@@ -29,12 +29,12 @@ s vozem. Jeho cena zůstává shodná s hlavní hrou.
 
 ## Posily: dalších 120 grošů k pevné obraně za 360
 
-Základ: dvě houfnice, dva ručničáři a jedni cepníci; pozice jsou ve skriptu.
-Posily jsou buď dva ručničáři, tři cepníci, nebo jeden podpůrný vůz.
+Základ: dvě houfnice, dva střelci z ručnic a jedni cepníci; pozice jsou ve skriptu.
+Posily jsou buď dva střelci z ručnic, tři cepníci, nebo jeden podpůrný vůz.
 
 | Posila | Tábor po vlně 3 | Vlna 5 | Vlna 7 | Vlna 8 |
 | --- | ---: | ---: | ---: | ---: |
-| Dva ručničáři | 20 | 10 | 14 | 0 |
+| Dva střelci z ručnic | 20 | 10 | 14 | 0 |
 | Tři cepníci | 20 | 18 | 16 | 3 |
 | Vůz | 20 | 12 | 14 | 0 |
 

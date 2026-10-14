@@ -287,6 +287,11 @@ function renderRulesTab() {
                 : 'Každá jednotka může v jednom tahu provést pohyb a útok (nebo pouze jedno z toho). Bránit spotřebuje zbývající akce a sníží příchozí poškození o 30 %. Na konci tahu se nevyužité oddíly brání automaticky, kromě stojících oddílů s dostřelem 2+ a zbývajícím výstřelem: ty připraví krycí palbu bez bonusu obrany. Střelec může zvolit Krýt se: získá ochranu, ale přijde o reakční výstřel. Jeho karta ukazuje připravenost krycí palby nebo důvod její nedostupnosti.'
             }</p>
         </div>
+        <div class="rules-section">
+            <h4>${i18n.t('help.movement.title')}</h4>
+            ${['movement', 'movementExample', 'movementBlocks', 'movementStep']
+                .map(key => `<p>${i18n.t('help.mechanics.' + key)}</p>`).join('')}
+        </div>
         ${mechanicSection('artilleryTitle', ['artillery'])}
         <div class="rules-section">
             <h4>${isEnglish ? 'Damage Calculation' : 'Výpočet poškození'}</h4>
@@ -321,13 +326,11 @@ function renderRulesTab() {
                 ? 'Destroy all enemy units or achieve the mission objective.'
                 : 'Zničte všechny nepřátelské jednotky nebo dosáhněte cíle mise.'
             }</p>
+            <p>${i18n.t('onboarding.optionalGoalsHint')}</p>
         </div>
         <div class="rules-section">
-            <h4>${isEnglish ? 'Chorale "Ye Who Are Warriors of God"' : 'Chorál "Ktož jsú boží bojovníci"'}</h4>
-            <p>${isEnglish
-                ? 'One-time ability activated by button. Provides all Hussite units <strong>+50% attack</strong>, but <strong>-20% defense</strong> for 2 turns. Use at the right moment for a decisive attack!'
-                : 'Jednorázová schopnost aktivovaná tlačítkem. Poskytuje všem husitským jednotkám <strong>+50% útok</strong>, ale <strong>-20% obrana</strong> na 2 kola. Použijte ve správný okamžik pro rozhodující útok!'
-            }</p>
+            <h4>${i18n.t('game.choral')}</h4>
+            <p>${i18n.t('help.mechanics.choral')}</p>
         </div>
         <div class="rules-section">
             <h4>${isEnglish ? 'Passive Regeneration' : 'Pasivní regenerace'}</h4>

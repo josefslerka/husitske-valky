@@ -633,6 +633,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         objectivesList.appendChild(primaryLi);
 
         // Sekundární cíle
+        document.getElementById('mission-optional-hint').classList.toggle('hidden', !scenario.victoryConditions.secondary?.length);
         if (scenario.victoryConditions.secondary) {
             for (const secondary of scenario.victoryConditions.secondary) {
                 const li = document.createElement('li');
@@ -858,6 +859,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const secondaryObjectives = document.getElementById('secondary-objectives');
         const objectiveHud = document.getElementById('objective-hud');
         const objectiveHudText = document.getElementById('objective-hud-text');
+        document.getElementById('optional-objectives').classList.toggle('hidden', !scenario?.victoryConditions?.secondary?.length);
 
         if (!scenario || !scenario.victoryConditions) {
             primaryObjective.textContent = '';
@@ -1598,7 +1600,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Sekundární cíle
         const objectivesContainer = document.getElementById('gameover-secondary-objectives');
         if (objectivesContainer && stats?.secondaryObjectives && stats.secondaryObjectives.length > 0) {
-            let html = `<div class="secondary-objectives-header">${i18n.t('gameover.bonusObjectives')}:</div>`;
+            let html = `<div class="secondary-objectives-header" data-i18n="gameover.bonusObjectives">${i18n.t('gameover.bonusObjectives')}</div>
+                <p class="optional-objectives-note" data-i18n="onboarding.optionalGoalsHint">${i18n.t('onboarding.optionalGoalsHint')}</p>`;
             for (const obj of stats.secondaryObjectives) {
                 const icon = obj.achieved ? '✓' : '✗';
                 const statusClass = obj.achieved ? 'achieved' : 'failed';
@@ -1917,6 +1920,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 function populateHelpUnits(game) {
     const container = document.getElementById('help-units-list');
     container.replaceChildren();
+    const escapeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[char]);
 
     // Získání unikátních typů jednotek
     const unitTypesInBattle = new Map();
@@ -2068,7 +2074,7 @@ function populateHelpUnits(game) {
         // Popis jednotky
         let descHtml = '';
         if (unitType.description) {
-            descHtml = `<p class="help-unit-description">${unitType.description}</p>`;
+            descHtml = `<p class="help-unit-description">${escapeText(unitType.description)}</p>`;
         }
         const orderExplanation = BattlePanels.artilleryOrderExplanation(unitType);
         const ordersHtml = orderExplanation ? `<p class="help-unit-description">${orderExplanation}</p>` : '';
@@ -2079,30 +2085,25 @@ function populateHelpUnits(game) {
             loreHtml = '<div class="help-unit-lore">';
 
             if (unitType.lore.description) {
-                loreHtml += `<p class="lore-description">${unitType.lore.description}</p>`;
+                loreHtml += `<p class="lore-description">${escapeText(unitType.lore.description)}</p>`;
             }
 
             if (unitType.lore.equipment) {
                 const equipmentLabel = typeof i18n !== 'undefined' ? i18n.t('help.equipment') : 'Výzbroj';
-                loreHtml += `<div class="lore-item"><span class="lore-label">${equipmentLabel}:</span> ${unitType.lore.equipment}</div>`;
+                loreHtml += `<div class="lore-item"><span class="lore-label">${escapeText(equipmentLabel)}:</span> ${escapeText(unitType.lore.equipment)}</div>`;
             }
 
             if (unitType.lore.origin) {
                 const originLabel = typeof i18n !== 'undefined' ? i18n.t('help.origin') : 'Původ';
-                loreHtml += `<div class="lore-item"><span class="lore-label">${originLabel}:</span> ${unitType.lore.origin}</div>`;
+                loreHtml += `<div class="lore-item"><span class="lore-label">${escapeText(originLabel)}:</span> ${escapeText(unitType.lore.origin)}</div>`;
             }
 
             if (unitType.lore.historicalNote) {
-                // Odstranit uvozovky na začátku pokud tam jsou
-                let quote = unitType.lore.historicalNote;
-                if (!quote.startsWith('"')) {
-                    quote = '"' + quote;
-                }
-                if (!quote.endsWith('"') && !quote.includes('" -')) {
-                    quote = quote + '"';
-                }
-                loreHtml += `<blockquote class="lore-quote">${quote}</blockquote>`;
+                const noteLabel = typeof i18n !== 'undefined' ? i18n.t('help.historicalNote') : 'Poznámka';
+                loreHtml += `<p class="lore-note"><span class="lore-label">${escapeText(noteLabel)}:</span> ${escapeText(unitType.lore.historicalNote)}</p>`;
             }
+
+            if (typeof HistoricalNotesView !== 'undefined') loreHtml += HistoricalNotesView.renderUnit(unitType.type);
 
             loreHtml += '</div>';
         }

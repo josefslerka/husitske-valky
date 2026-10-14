@@ -25,8 +25,8 @@ for (const file of sources.filter(file => file.endsWith('.js'))) run(['--check',
 console.log('✓ Syntaxe JavaScriptu');
 for (const script of [
     'scripts/test-core.js', 'scripts/test-battle.js', 'scripts/test-ai-assault.js', 'scripts/test-combat-strength.js', 'scripts/test-scenario-events.js',
-    'scripts/test-save.js', 'scripts/test-presentation.js', 'scripts/test-tooltip.js', 'scripts/test-narrative.js', 'scripts/test-chronicle.js', 'scripts/test-most.js',
-    'scripts/test-order-help.js', 'scripts/test-help-navigation.js', 'scripts/test-first-experience.js', 'scripts/test-music.js', 'scripts/test-touch.js', 'scripts/test-storage.js', 'scripts/test-entrypoint.js', 'scripts/test-woodcut.js', 'scripts/test-historical-context.js',
+    'scripts/test-save.js', 'scripts/test-presentation.js', 'scripts/test-tooltip.js', 'scripts/test-narrative.js', 'scripts/test-chronicle.js', 'scripts/test-most.js', 'scripts/test-unit-editorial.js',
+    'scripts/test-order-help.js', 'scripts/test-help-navigation.js', 'scripts/test-first-experience.js', 'scripts/test-zivohost-onboarding.js', 'scripts/test-text-clarity.js', 'scripts/test-music.js', 'scripts/test-touch.js', 'scripts/test-storage.js', 'scripts/test-entrypoint.js', 'scripts/test-woodcut.js', 'scripts/test-historical-context.js',
     'scripts/test-tower-defense.js', 'scripts/test-tower-defense-session.js',
     'scripts/validate-entrypoint.js', 'scripts/validate-styles.js', 'scripts/validate-locales.js', 'validate_scenarios.js'
 ]) run([script]);

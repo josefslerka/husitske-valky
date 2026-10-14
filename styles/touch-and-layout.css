@@ -227,7 +227,10 @@
     .compact-battle #game-footer { padding: 4px; gap: 4px; }
     .compact-battle #btn-end-turn, .compact-battle #btn-choral,
     .compact-battle #btn-objectives, .compact-battle #btn-show-results,
-    .compact-battle .footer-btn { padding: 6px; font-size: 0.74rem; }
+    .compact-battle #btn-menu, .compact-battle .footer-btn { padding: 6px; font-size: 0.74rem; }
+    .compact-battle #game-footer #btn-end-turn { min-width: 6.5em; overflow-wrap: normal; }
+    .compact-battle #game-footer #btn-end-turn:lang(en) { min-width: 5.5em; }
+    .compact-battle #btn-objectives { flex-shrink: 0; overflow-wrap: normal; }
     .compact-battle #battle-order { padding: 10px; }
     .compact-battle #unit-panel, .compact-battle #info-panel { top: auto; max-height: calc(100% - 66px); }
     .compact-battle #unit-info .stat { padding: 3px 0; }

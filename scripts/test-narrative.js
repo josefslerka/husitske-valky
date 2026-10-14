@@ -28,7 +28,7 @@ for (const lang of ['cs', 'en']) {
             const key = `scenarios.zivohost_1419.debriefing.victoryVariants.${variant}`;
             assert.equal(h.i18n.hasTranslation(key), true);
             assert.equal(game.view.result.message, h.i18n.t(key));
-            assert.match(game.view.result.message, lang === 'cs' ? /autorská fikce, nikoli citace pramene/ : /fiction, not a historical quotation/);
+            assert.match(game.view.result.message, lang === 'cs' ? /fikce, ne citace pramene/ : /fiction, not a source quotation/);
             assert.equal(unitState(game), before, 'narativ nemění pravidla ani jednotky');
             assert.doesNotMatch(game.view.result.message, /Posily z Nového Knína dorazily|Reinforcements from Nový Knín arrived/,
                 'brzké vítězství nesmí oznamovat nedorazivší posily');

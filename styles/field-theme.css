@@ -486,6 +486,52 @@ body {
     color: var(--field-red-dark);
 }
 
+.optional-objectives-note {
+    margin: 8px 0 12px;
+    font-size: 0.86em;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.help-unit-lore .lore-note {
+    margin: 10px 0;
+    padding-left: 10px;
+    border-left: 2px solid var(--field-rule);
+    line-height: 1.45;
+    font-style: normal;
+    overflow-wrap: anywhere;
+}
+
+.unit-reading h5 {
+    margin: 12px 0 4px;
+}
+
+.unit-reading .historical-bibliography {
+    margin-top: 4px;
+    overflow-wrap: anywhere;
+}
+
+#optional-objectives-title {
+    margin: 14px 0 4px;
+}
+
+#btn-choral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    white-space: normal;
+    line-height: 1.2;
+}
+
+.choral-use {
+    font-size: 0.8em;
+    font-weight: normal;
+    letter-spacing: 0.01em;
+    text-transform: none;
+}
+
 .objective-text,
 .objective.primary .objective-text {
     color: var(--field-ink);
@@ -745,6 +791,26 @@ body {
 
 #objective-hud { color: var(--field-page-light); background: transparent; border-color: var(--field-rule); }
 #objective-hud #objective-hud-text { color: var(--field-page-light); text-shadow: none; }
+
+/* Počítadlo Živohoště není součástí zkracovaného textu hlavního cíle. */
+.survival-hud {
+    margin: 3px 0 0;
+    color: var(--field-page-light);
+    font-size: .8rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+.survival-hud.survival-at-risk { color: #ffb1a1; }
+.survival-objective {
+    padding: 10px;
+    margin: 8px 0;
+    border-left: 3px solid #365846;
+    background: rgba(54, 88, 70, .06);
+}
+.survival-objective p { margin: 6px 0; font-size: .85rem; line-height: 1.4; }
+.survival-objective.survival-at-risk { border-color: var(--field-red-dark); }
+.compact-battle .header-center:has(#survival-hud:not(.hidden)) { display: block; }
+.compact-battle .survival-hud { font-size: .73rem; }
 
 #phase-name {
     letter-spacing: 0.09em;
@@ -1009,6 +1075,11 @@ body {
     flex: none;
     overflow: visible;
 }
+
+.movement-costs { margin: 8px 0; }
+.movement-costs > div { display: flex; justify-content: space-between; gap: 8px; }
+.movement-costs dt { min-width: 0; }
+.movement-costs dd { margin: 0; font-weight: bold; text-align: right; }
 
 .dual-objective { padding: 12px 0; border-bottom: 1px solid var(--field-rule); }
 .dual-objective strong { color: var(--field-red-dark); }

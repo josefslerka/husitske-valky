@@ -22,10 +22,10 @@ const UnitTypes = {
         special: 'armorPiercing', // +30% poškození proti obrněným (jízda)
         unitClass: 'infantry',
         lore: {
-            description: 'Ozbrojení sedláci a měšťané tvořící páteř husitských vojsk. Bojový cep, původně zemědělský nástroj, se stal symbolem husitského odporu. Cepníci byli obáváni pro svou zuřivost a schopnost drtit i nejlepší brnění.',
-            equipment: 'Bojový cep (okovaný, často s železnými hroty), krátký meč nebo tesák, přilba, lehká brigantina',
-            origin: 'Tábor, husitská města',
-            historicalNote: '"Cepy bíti uměli tak hrozně, že šlechtický pancíř se jim vyhýbal jako ďábel kříži." - dobová kronika'
+            description: "Pěšáci s bojovými cepy upravenými ze zemědělského nářadí. Ve hře se hodí proti obrněným protivníkům, ale potřebují ochranu před střelbou.",
+            equipment: "Okovaný cep, přilba a lehká ochranná výstroj; krátká záložní zbraň.",
+            origin: "Husitské pěší houfy.",
+            historicalNote: "Bojový cep je doloženou zbraní husitské pěchoty. Bonus proti obrněným je herní zjednodušení, ne údaj z kroniky."
         },
         tactics: {
             terrain: {
@@ -58,14 +58,14 @@ const UnitTypes = {
         range: 1,
         movement: 2,
         cost: 40,
-        description: 'Pěchota s tyčovými zbraněmi. Dosah přes jednotku.',
+        description: 'Pěchota s tyčovými zbraněmi. Na vzdálenějšího nepřítele dosáhne jen přes spojence.',
         special: 'reach', // Může útočit přes sousední jednotku
         unitClass: 'infantry',
         lore: {
-            description: 'Pěšáci vyzbrojení dlouhými tyčovými zbraněmi - sudlicemi, kůsami nebo halapartnami. Jejich dosah jim umožňoval zasahovat nepřítele přes řady spolubojovníků nebo přes okraj bojového vozu.',
-            equipment: 'Sudlice (tyčová zbraň s čepelí a hákem, délka 2-3 metry), krátký nůž, lehká přilba, prošívaný kabátec',
-            origin: 'Městská domobrana a venkovské milice',
-            historicalNote: '"Sudlicí dobrý muž i rytíře z koně stáhne a k zemi přibije."'
+            description: "Pěšáci s dlouhými tyčovými zbraněmi. Herní schopnost Dosah jim umožňuje za určitých podmínek útočit přes spolubojovníka.",
+            equipment: "Sudlice či jiná tyčová zbraň, přilba, krátká záložní zbraň.",
+            origin: "Husitské pěší houfy a městská domobrana.",
+            historicalNote: "Podoby tyčových zbraní i jejich označení se lišily. Herní typ nezastupuje jednotně vyzbrojený pluk."
         },
         tactics: {
             terrain: {
@@ -102,10 +102,10 @@ const UnitTypes = {
         special: 'shieldWall', // +20% obrana sousedním střelcům
         unitClass: 'infantry',
         lore: {
-            description: 'Specialisté na obranu vyzbrojení velkými pavézami - obdélníkovými štíty vysokými téměř jako muž. Tvořili živé hradby chránící střelce při nabíjení a střelbě.',
-            equipment: 'Pavéza (velký štít, často malovaný husitskými symboly - kalich, husa), krátký meč nebo palcát, lehká zbroj',
-            origin: 'Speciálně cvičení obránci z řad městských cechů',
-            historicalNote: '"Pavézníci stáli jako zeď, a za nimi kuše zpívaly smrt na Němce."'
+            description: "Pěšáci s velkými štíty. Ve hře chrání sousední střelce, kteří jsou jinak zranitelní v boji zblízka.",
+            equipment: "Pavéza, přilba a krátká zbraň pro osobní obranu.",
+            origin: "Pěší oddíly husitských vojsk.",
+            historicalNote: "Ochrana sousedních střelců je způsob, jak hra modeluje spolupráci štítonošů a střelců. Nejde o přesný dobový organizační předpis."
         },
         tactics: {
             terrain: {
@@ -135,10 +135,10 @@ const UnitTypes = {
         special: 'antiCavalry', // +50% poškození proti jízdě
         unitClass: 'infantry',
         lore: {
-            description: 'Pěšáci s dlouhými kopími, speciálně cvičení k boji proti jízdě. Tvořili obranné čtverce nebo linie, které dokázaly zastavit i těžkou rytířskou jízdu.',
-            equipment: 'Dlouhé kopí (4-5 metrů), krátký meč, lehká přilba, prošívanice nebo brigantina',
-            origin: 'Zkušenější bojovníci z městských a vesnických milic',
-            historicalNote: '"Stůjte pevně, kopí vpřed, a žádný rytíř vás neporazí!" - údajný výrok Jana Žižky'
+            description: "Pěchota s dlouhými kopími. Ve hře pomáhá držet linii proti jízdě a chránit zranitelnější oddíly.",
+            equipment: "Dlouhé kopí, přilba, ochranný oděv a krátká záložní zbraň.",
+            origin: "Pěší oddíly husitských vojsk.",
+            historicalNote: "Účinek proti jízdě závisel i na soudržnosti šiku a terénu. Číselný bonus je herní pravidlo, nikoli doložený Žižkův výrok."
         },
         tactics: {
             terrain: {
@@ -170,10 +170,10 @@ const UnitTypes = {
         special: 'armorPiercing', // Ignoruje část obrany
         unitClass: 'ranged',
         lore: {
-            description: 'Střelci s kušemi, tvořící důležitou součást husitské palebné síly. Kuše byla přesná a průbojná, schopná prorazit i plátovou zbroj na střední vzdálenost.',
-            equipment: 'Kuše s ocelovým lukem, toulec se šipkami (bolty), krátký meč nebo tesák, lehká zbroj',
-            origin: 'Měšťané a lovci',
-            historicalNote: '"Kušiník jeden za deset mužů platí, když má čas nabíti."'
+            description: "Střelci s kušemi. Potřebují čas a kryt k nabíjení; ve hře je chrání vozy nebo pavézníci.",
+            equipment: "Kuše, šipky, napínací pomůcka a krátká záložní zbraň.",
+            origin: "Střelecké oddíly husitských vojsk.",
+            historicalNote: "Archeologické nálezy ze Sionu dokládají také pomůcky k napínání kuší. Průbojnost nelze převést na jeden univerzální údaj pro každou kuši a zbroj."
         },
         tactics: {
             terrain: {
@@ -197,7 +197,7 @@ const UnitTypes = {
     },
     RUCNICARI: {
         id: 'rucnicari',
-        name: 'Ručničáři',
+        name: 'Střelci z ručnic',
         faction: 'hussites',
         symbol: '💥',
         maxHealth: 45,
@@ -210,10 +210,10 @@ const UnitTypes = {
         special: 'terror', // -10% útok nepříteli v příštím tahu
         unitClass: 'ranged',
         lore: {
-            description: 'Elitní střelci vyzbrojení primitivními palnými zbraněmi - hákovnicemi a píšťalami. Jejich zbraně byly hlučné, nepřesné, ale devastující na krátkou vzdálenost a vyvolávající paniku mezi nepřáteli i koňmi.',
-            equipment: 'Hákovnice nebo píšťala (ruční palná zbraň), zápalné potřeby, střelný prach, olověné kule, tesák',
-            origin: 'Speciálně cvičení bojovníci z řad řemeslníků (kováři, zvonařci)',
-            historicalNote: '"Když píšťaly zahřměly, koně se splašili a rytíři padali z nich jako žaludy z dubu."'
+            description: "Střelci s ranými ručními palnými zbraněmi. Ve hře jejich zásah oslabuje útok protivníka.",
+            equipment: "Ručnice či píšťala, střelný prach, střely a potřeby k zapálení nálože.",
+            origin: "Střelecké oddíly husitských vojsk.",
+            historicalNote: "Ručnice i jejich střely jsou doložené nálezy ze Sionu. To samo nepotvrzuje jejich přítomnost v každé dřívější bitvě; rozmístění herních oddílů je rekonstrukce."
         },
         tactics: {
             terrain: {
@@ -245,10 +245,10 @@ const UnitTypes = {
         special: 'areaAttack', // Zásah sousedních jednotek (50% poškození)
         unitClass: 'artillery',
         lore: {
-            description: 'Těžká polní děla schopná devastující plošné palby. Husité byli průkopníky v použití dělostřelectva v polních bitvách, nikoli jen při obléhání.',
-            equipment: 'Houfnice (krátké dělo velkého kalibru), střelný prach, kamenné nebo železné koule, obsluha 4-6 mužů',
-            origin: 'Děla vyráběná v husitských městech (Praha, Tábor). Obsluhu tvořili specialisté - puškaři.',
-            historicalNote: '"Houfnice bila do šiku nepřátel jako Hospodinova pěst."'
+            description: "Polní dělo s krátkou hlavní. Ve hře zasahuje více oddílů v cílové oblasti, ale po přesunu už v témže tahu nevystřelí.",
+            equipment: "Dělová hlaveň na lafetě, střelný prach, střely a vybavení obsluhy.",
+            origin: "Dělostřelecké oddíly husitských vojsk.",
+            historicalNote: "Kamenné střely ze Sionu dokládají dobové dělostřelectvo. Herní plošný účinek a pořadí akcí nejsou přesným přepočtem historické rychlosti palby."
         },
         tactics: {
             terrain: {
@@ -278,10 +278,10 @@ const UnitTypes = {
         special: 'mobile', // Může střílet po pohybu
         unitClass: 'artillery',
         lore: {
-            description: 'Lehké mobilní dělo montované na vozíku nebo nosítkách. Tarasnice byla husitským vynálezem umožňujícím palebnou podporu i během manévrů.',
-            equipment: 'Tarasnice (lehké dělo), střelný prach, menší kule, obsluha 2-3 muži',
-            origin: 'Husitský vynález spojující palebnou sílu s mobilitou',
-            historicalNote: '"Tarasnice jezdila s vojskem jako věrný pes a štěkala na nepřítele olovem."'
+            description: "Dělo menší ráže pro přímou palbu. Herní oddíl je pohyblivější než houfnice a může se v jednom tahu přesunout i vystřelit.",
+            equipment: "Menší dělová hlaveň na podstavci či lafetě, střelný prach a střely.",
+            origin: "Dělostřelecké oddíly.",
+            historicalNote: "Mobilita je vlastností tohoto herního typu. Neznamená to, že všechny historické tarasnice střílely za jízdy nebo měly stejné provedení."
         },
         tactics: {
             terrain: {
@@ -337,10 +337,10 @@ const UnitTypes = {
         special: 'wagenburg', // Bonus když jsou vozy vedle sebe
         unitClass: 'wagon',
         lore: {
-            description: 'Srdce husitské vojenské doktríny. Těžké selské vozy upravené pro boj - okované, s dřevěnými štíty po stranách, střílnami pro střelce a háky na spojování. Tvořily mobilní pevnost.',
-            equipment: 'Samotný vůz (okovaný, s řetězy na spojování), obsluha zahrnuje vozku, 2-4 střelce, 2-4 obránce s cepy/sudlicemi',
-            origin: 'Původně běžné selské vozy upravené pro válku. Husité zdokonalili jejich použití na uměleckou úroveň.',
-            historicalNote: '"Vozová hradba jest jako hrad, který jde za vojskem. A z toho hradu smrt létá na nepřátele Boží pravdy." - připisováno Janu Žižkovi'
+            description: "Bojový vůz poskytuje kryt pěchotě a střelcům. Ve hře jej lze spojovat se sousedními vozy do hradby nebo s celou linií pochodovat.",
+            equipment: "Upravený vůz, ochranné desky, spojovací prostředky a zbraně posádky.",
+            origin: "Vozové oddíly husitských vojsk.",
+            historicalNote: "Vůz ve hře zastupuje vozidlo i posádku. Počet životů, kryt sousedních polí a skupinové rozkazy jsou zjednodušení; nejde o citaci Žižkova řádu."
         },
         tactics: {
             terrain: {
@@ -370,10 +370,10 @@ const UnitTypes = {
         special: 'pursuit', // +30% poškození proti prchajícím/oslabeným
         unitClass: 'cavalry',
         lore: {
-            description: 'Husitská jízda byla vždy slabší než rytířská, ale plnila důležité úkoly - průzkum, pronásledování prchajících a rychlé údery na křídla.',
-            equipment: 'Lehká kopí, meče, kuše z koně (někteří), lehká zbroj nebo jen kožený kabátec',
-            origin: 'Zemanstvo a bohatší měšťané, kteří si mohli dovolit koně. Také přeběhlíci z katolických řad.',
-            historicalNote: '"Naše jízda nemůže čelit rytířům, ale může je pronásledovat, když utíkají - a to dělá ráda!"'
+            description: "Lehčeji vystrojení jezdci pro průzkum, obchvaty a pronásledování. Ve hře dávají přednost volnému prostoru před lesem či bažinou.",
+            equipment: "Kopí nebo meč, přilba a lehčí ochranná výstroj.",
+            origin: "Jízdní oddíly husitských vojsk.",
+            historicalNote: "Husitské vojsko zahrnovalo i jezdectvo. Rozdělení na lehkou a šlechtickou jízdu pomáhá hře odlišit role, ne všechny dobové formy výstroje."
         },
         tactics: {
             terrain: {
@@ -414,10 +414,10 @@ const UnitTypes = {
         unitClass: 'heavyCavalry',
         baseMorale: 85,
         lore: {
-            description: 'U Ústí nebojovali jen pěší táboři a sirotci. V husitském šiku stáli i čeští a moravští šlechtici se svými obrněnými družinami.',
-            equipment: 'Plátová a kroužková zbroj, dlouhé kopí, meč, štít a válečný kůň',
-            origin: 'Husitská šlechta a její ozbrojené družiny, mezi nimi lidé Viktorina a Hynka Bočka či Fedora z Ostrogu.',
-            historicalNote: 'Prameny odhadují jezdectvo u Ústí přibližně na třetinu husitského vojska; část tvořila těžká šlechtická jízda.'
+            description: "Obrnění jezdci husitské šlechty a jejích družin. Ve hře doplňují pěchotu a vozové oddíly údernou jízdou.",
+            equipment: "Kopí, meč, přilba a plátové či kroužkové části zbroje.",
+            origin: "Husitská šlechta a její ozbrojené družiny.",
+            historicalNote: "Vojska husitské strany nebyla složena jen z pěchoty. Přesné zastoupení jednotlivých druhů vojska závisí na bitvě a na nejistých odhadech pramenů."
         },
         tactics: {
             terrain: {
@@ -458,10 +458,10 @@ const UnitTypes = {
         unitClass: 'infantry',
         abilities: {},
         lore: {
-            description: 'Jihočeští poutníci z Plzeňska, Klatovska, Domažlicka a Sušicka, táhnoucí na hory k přijímání pod obojí. Kněz Koranda je vyzval „ne s holemi, ale se zbraní", přesto zůstali houfem chudiny — mužů, žen i dětí — jen chabě ozbrojeným.',
-            equipment: 'Poutní hole, cepy, kosy, občas nůž. Žádná zbroj.',
-            origin: 'Sedláci, řemeslníci, ženy a děti z jihozápadních Čech.',
-            historicalNote: '„Protož nechoďte se zbraní, ale s holemi" — a přesto je Petr ze Šternberka u brodu přepadl.'
+            description: "Účastníci husitských náboženských poutí. Ve hře zastupují zranitelnou část houfu, kterou mají ozbrojené oddíly chránit.",
+            equipment: "Cestovní hole a dostupné nářadí; ochranná výstroj je omezená.",
+            origin: "Poutnické houfy z jihozápadních Čech.",
+            historicalNote: "Oddíl není pravidelná bojová jednotka. Jeho síla a výzbroj slouží hernímu modelu ochrany poutníků, nikoli přesnému soupisu účastníků."
         },
         tactics: {
             terrain: { forest: 5, hill: 10, water: 0, road: 0, village: 5 },
@@ -492,10 +492,10 @@ const UnitTypes = {
             revealHidden: true    // Odhalení - vidí skryté nepřátelské jednotky
         },
         lore: {
-            description: 'Lehcí jezdci specializovaní na průzkum, sledování nepřítele a předávání zpráv. Vyhýbali se boji a jejich hlavní zbraní byla rychlost a oči.',
-            equipment: 'Lehký meč nebo tesák, možná krátká kuše, žádná zbroj nebo jen kožený kabátec',
-            origin: 'Lovci, hraničáři, synové sedláků, kteří uměli jezdit. Často znali terén lépe než kdokoli jiný.',
-            historicalNote: '"Dobrý zvěd je jako oči hejtmana. Bez očí je i nejsilnější vojsko slepé."'
+            description: "Jezdecký průzkumník. Ve hře vidí dál než většina ostatních oddílů a dokáže rychle přenášet pozornost na jiné křídlo.",
+            equipment: "Kůň, lehká výstroj a osobní zbraň.",
+            origin: "Průzkumníci a poslové husitského vojska.",
+            historicalNote: "Zvěd je samostatný typ kvůli průzkumu v mlze války. Herní dosah vidění není historicky měřená vlastnost vojáků."
         },
         tactics: {
             terrain: {
@@ -518,7 +518,7 @@ const UnitTypes = {
     // Jízda
     TEZKY_RYTIR: {
         id: 'tezky_rytir',
-        name: 'Těžký rytíř',
+        name: 'Rytířská jízda',
         faction: 'crusaders',
         symbol: '♞',
         maxHealth: 110,
@@ -531,10 +531,10 @@ const UnitTypes = {
         special: 'charge', // +50% útok při útoku z pohybu
         unitClass: 'heavyCavalry',
         lore: {
-            description: 'Elita středověkého bojiště. Plně obrněný jezdec na obrněném koni představoval nezastavitelnou sílu - dokud nenarazil na husitské vozy a palné zbraně.',
-            equipment: 'Plátová zbroj (celková ochrana), kopí (lance), meč, štít s erbem, obrněný kůň (často i s čelenkou)',
-            origin: 'Šlechta z celé Evropy - němečtí, uherští, polští, burgundští rytíři. Někteří bojovali za víru, jiní za kořist.',
-            historicalNote: '"Když rytíř nasedne na koně, není pod nebem síla, která by ho zastavila - kromě zdi vozů a deště olova."'
+            description: "Obrněná jízda s kopími. Ve hře je nebezpečná při nárazu na volném prostranství, méně se jí daří v těžkém terénu.",
+            equipment: "Kopí, meč, přilba a zbroj; ochrana koně se mohla lišit.",
+            origin: "Šlechtické družiny a další obrnění jezdci.",
+            historicalNote: "Rytíř označuje také společenské postavení, ne přesný stupeň zbroje. Herní typ Rytířská jízda vyjadřuje bojovou roli."
         },
         tactics: {
             terrain: {
@@ -571,10 +571,10 @@ const UnitTypes = {
         special: 'charge', // +30% útok při útoku z pohybu
         unitClass: 'heavyCavalry',
         lore: {
-            description: 'Méně obrněná jízda než těžcí rytíři, ale stále formidabilní síla. Často tvořili druhou vlnu útoku nebo chránili křídla.',
-            equipment: 'Kroužková nebo částečná plátová zbroj, kopí, meč, štít',
-            origin: 'Nižší šlechta, bohatí měšťané, zkušení žoldnéři s koňmi',
-            historicalNote: '"Nejsou to praví rytíři, ale na sedláky stačí," řekl jeden kronikář. Mýlil se.'
+            description: "Obrnění jezdci, ve hře odlišení od údernější rytířské jízdy. Mohou chránit křídlo nebo navázat na útok jiného oddílu.",
+            equipment: "Kopí, meč, přilba a kroužkové či plátové části zbroje.",
+            origin: "Šlechtické družiny a placení ozbrojenci.",
+            historicalNote: "Rozhraní mezi druhy jízdní výstroje nebylo pevné. Dvě herní kategorie nejsou dobovým předpisem pro rozdělení vojska."
         },
         tactics: {
             terrain: {
@@ -604,10 +604,10 @@ const UnitTypes = {
         special: 'pursuit', // +30% poškození proti oslabeným
         unitClass: 'cavalry',
         lore: {
-            description: 'Rychlá jízda používaná k průzkumu, obchvatům a pronásledování. Uherští husaři a němečtí rejtaři byli obávanými protivníky.',
-            equipment: 'Lehké kopí, šavle nebo meč, štít, kožená nebo lehká kroužková zbroj',
-            origin: 'Uhersko, Polsko, německé země. Často najímaní žoldnéři specializovaní na jízdní boj.',
-            historicalNote: '"Lehká jízda jest jako vlk - sama neporazí medvěda, ale uhání ho k smrti."'
+            description: "Rychlí jezdci pro průzkum, obchvaty a pronásledování. Ve hře využívají volné cesty a mezery mezi nepřátelskými oddíly.",
+            equipment: "Kopí či meč, přilba a lehčí ochranná výstroj.",
+            origin: "Jízdní oddíly protivníka.",
+            historicalNote: "Označení lehká jízda shrnuje různé podoby výstroje. Nelze je automaticky ztotožnit s pozdějšími rejtary nebo jednotným národním typem."
         },
         tactics: {
             terrain: {
@@ -645,10 +645,10 @@ const UnitTypes = {
             revealHidden: true    // Odhalení
         },
         lore: {
-            description: 'Průzkumníci křižáckého vojska. Často místní šlechtici nebo najatí zvědové, kteří znali terén.',
-            equipment: 'Lehká zbroj, meč, možná kuše',
-            origin: 'Místní šlechta, žoldnéři, někdy i přeběhlíci',
-            historicalNote: '"Najít husity není těžké - jdi za kouřem hořících kostelů."'
+            description: "Jezdecký průzkumník protivníka. Ve hře hledá přístupy a pomáhá odhalovat rozestavení vašich oddílů.",
+            equipment: "Kůň, lehká výstroj a osobní zbraň.",
+            origin: "Průzkumníci a poslové protivníkova vojska.",
+            historicalNote: "Samostatný žeton zvěda slouží pravidlům viditelnosti. Neznamená jednotnou výstroj všech dobových průzkumníků."
         },
         tactics: {
             terrain: {
@@ -680,10 +680,10 @@ const UnitTypes = {
         special: 'antiCavalry', // +50% obrana proti jízdě
         unitClass: 'infantry',
         lore: {
-            description: 'Disciplinovaná pěchota s dlouhými kopími. Tvořili obrannou linii chránící střelce a dělostřelectvo, nebo formovali čtverce proti jízdě.',
-            equipment: 'Dlouhé kopí, krátký meč, přilba, gambeson nebo brigantina, někdy pavéza',
-            origin: 'Městské milice z německých říšských měst, žoldnéřské kompanie',
-            historicalNote: '"Německý kopiník stojí pevně - dokud neuslyší houfnice."'
+            description: "Pěchota s dlouhými kopími. Ve hře drží linii proti jízdě a kryje střelce nebo děla.",
+            equipment: "Dlouhé kopí, přilba, ochranný oděv a krátká záložní zbraň.",
+            origin: "Městská domobrana a placené pěší oddíly.",
+            historicalNote: "Stejná zbraň neznamenala stejný výcvik ani odhodlání. Herní statistiky tyto rozdíly shrnují do jednoho typu."
         },
         tactics: {
             terrain: {
@@ -713,10 +713,10 @@ const UnitTypes = {
         special: 'dismount', // Šance sesadit jezdce (zpomalení)
         unitClass: 'infantry',
         lore: {
-            description: 'Těžká pěchota vyzbrojená halapartnami - kombinací kopí, sekery a háku. Mohli sekat, bodat i stahovat jezdce z koní.',
-            equipment: 'Halaparta (2-2.5 metru), krátký meč, přilba, kroužková zbroj nebo brigantina',
-            origin: 'Švýcarští žoldnéři, němečtí landsknechti, městské gardy',
-            historicalNote: '"Halaparta je zbraň chytrých mužů - bodne, sekne a stáhne."'
+            description: "Pěšáci s halapartnami či příbuznými tyčovými zbraněmi. Ve hře představují silnější oddíl pro boj zblízka.",
+            equipment: "Halapartna, přilba, krátká záložní zbraň a různá ochranná výstroj.",
+            origin: "Městští a najatí pěší ozbrojenci.",
+            historicalNote: "VHÚ představuje halapartníky kolem roku 1421 jako možnou rekonstrukci. To nedokládá jejich přesnou četnost v každé bitvě; herní počty nejsou historický soupis."
         },
         tactics: {
             terrain: {
@@ -746,10 +746,10 @@ const UnitTypes = {
         special: 'shieldWall',
         unitClass: 'infantry',
         lore: {
-            description: 'Obránci s velkými štíty chránící střelce. Křižácké pavézy byly často bohatě zdobené erby a náboženskými symboly.',
-            equipment: 'Pavéza (velká, často malovaná s kříži), krátký meč, lehká zbroj',
-            origin: 'Městské milice, speciálně cvičení žoldnéři',
-            historicalNote: '"Za pavézou je kušiník jako za hradbou - dokud se hradba nepohne."'
+            description: "Pěšáci s velkými štíty. Ve hře chrání sousední střelce stejně jako pavézníci na husitské straně.",
+            equipment: "Pavéza, přilba a krátká zbraň pro osobní obranu.",
+            origin: "Pěší oddíly protivníka.",
+            historicalNote: "Barevnost štítu na žetonu označuje herní stranu. Není přesným vyobrazením konkrétního dochovaného štítu."
         },
         tactics: {
             terrain: {
@@ -781,10 +781,10 @@ const UnitTypes = {
         special: 'elite', // +10% přesnost
         unitClass: 'ranged',
         lore: {
-            description: 'Elitní žoldnéřští střelci z italské Janova, považovaní za nejlepší kušiníky v Evropě. Jejich kuše měly ocelové luky a velkou průbojnost.',
-            equipment: 'Těžká kuše s ocelovým lukem, toulec s ocelovými bolty, krátký meč, lehká zbroj, někdy pavéza',
-            origin: 'Janovská republika. Kušiníci byli exportním artiklem Janova a sloužili po celé Evropě.',
-            historicalNote: '"Janovská kuše probije brnění jako nůž máslo - na dvě stě kroků."'
+            description: "Ve hře zkušenější žoldnéřský oddíl s kušemi. Je silný při palbě z bezpečné pozice, ale potřebuje ochranu před přímým útokem.",
+            equipment: "Kuše, šipky, napínací pomůcka a osobní zbraň.",
+            origin: "Herní oddíl označený jako janovští kušiníci.",
+            historicalNote: "Vyšší statistiky jsou herním rozlišením zkušenosti. Neprokazují univerzální průbojnost kuší ani přítomnost konkrétní žoldnéřské roty na každém bojišti."
         },
         tactics: {
             terrain: {
@@ -814,10 +814,10 @@ const UnitTypes = {
         special: null,
         unitClass: 'ranged',
         lore: {
-            description: 'Běžní kušiníci tvořící střeleckou podporu křižáckých vojsk. Méně elitní než Janované, ale stále efektivní.',
-            equipment: 'Kuše, toulec, krátká zbraň, lehká zbroj',
-            origin: 'Městské milice, žoldnéřské roty',
-            historicalNote: '"Kuše je zbraň zbabělců, říkají rytíři - ale mrtvý rytíř nic neříká."'
+            description: "Střelci s kušemi poskytující palebnou podporu. Ve hře potřebují odstup od nepřítele a chráněnou pozici.",
+            equipment: "Kuše, šipky, napínací pomůcka a osobní zbraň.",
+            origin: "Městské nebo placené střelecké oddíly.",
+            historicalNote: "Kuše vyžadovala opětovné napnutí po výstřelu. Archeologické nálezy ukazují různé napínací pomůcky; herní tah není přesný časový přepočet nabíjení."
         },
         tactics: {
             terrain: {
@@ -847,10 +847,10 @@ const UnitTypes = {
         special: 'rapidFire', // 2 útoky za tah (slabší)
         unitClass: 'ranged',
         lore: {
-            description: 'Střelci s luky, schopní rychlejší střelby než kušiníci, ale s menší průbojností. Efektivní proti nezbroj ené pěchotě.',
-            equipment: 'Dlouhý luk nebo kompozitní luk, toulec s šípy, krátký nůž, minimální zbroj',
-            origin: 'Angličtí lukostřelci, uherští jízdní lučištníci, němečtí myslivci',
-            historicalNote: '"Anglický lukostřelec vystřelí deset šípů, než kušiník nabije jeden - ale jen jeden z deseti probije zbroj."'
+            description: "Střelci s luky. Ve hře mohou díky schopnosti Rychlá palba útočit dvakrát za tah, ale zůstávají zranitelní zblízka.",
+            equipment: "Luk, toulec se šípy a krátká osobní zbraň.",
+            origin: "Střelecké oddíly protivníka.",
+            historicalNote: "Dva útoky za tah jsou herní rozlišení luku a kuše, ne doložený poměr jejich rychlosti. Konkrétní počty a původ střelců jsou rekonstrukce scénáře."
         },
         tactics: {
             terrain: {
@@ -882,10 +882,10 @@ const UnitTypes = {
         special: 'siege', // +100% poškození budovám/vozům
         unitClass: 'artillery',
         lore: {
-            description: 'Masivní obléhací dělo schopné rozbíjet hradby i vozovou hradbu. Nepohyblivé na bojišti, ale devastující z pevné pozice.',
-            equipment: 'Těžká bombarda na dřevěné lafetě, velké kamenné nebo kovové koule, obsluha 8-12 mužů',
-            origin: 'Burgundské a německé zbrojnice, italští puškařští mistři',
-            historicalNote: '"Bombarda rozbije zeď jako Hospodin rozbil zdi Jericha - ale pomaleji."'
+            description: "Těžké dělo určené pro palbu z připraveného postavení. Ve hře se nepohybuje; jeho baterii je třeba chránit jinými oddíly.",
+            equipment: "Těžká hlaveň na lafetě, střely, střelný prach a vybavení obsluhy.",
+            origin: "Obléhací dělostřelectvo.",
+            historicalNote: "Nulový pohyb je zjednodušení práce s těžkou baterií během bitvy. Dostřel a účinek určují pravidla hry, ne jeden známý historický kus."
         },
         tactics: {
             terrain: {
@@ -915,10 +915,10 @@ const UnitTypes = {
         special: null,
         unitClass: 'artillery',
         lore: {
-            description: 'Těžká děla křižáckých armád. Méně mobilní než husitská, ale stejně devastující. Používána hlavně k obléhání, ale i v polních bitvách.',
-            equipment: 'Těžké dělo na lafetě, střelný prach, kamenné/železné koule, obsluha 6-8 mužů',
-            origin: 'Zbrojnice říšských měst, burgundské dílny, italští puškaři',
-            historicalNote: '"Dělo je král bojiště - pomalý král, ale jeho slovo je konečné."'
+            description: "Dělostřelecký oddíl protivníka. Ve hře potřebuje palebný prostor a ochranu před útokem na baterii.",
+            equipment: "Dělo na lafetě, střelný prach, střely a vybavení obsluhy.",
+            origin: "Dělostřelectvo královských a křižáckých vojsk.",
+            historicalNote: "Herní kategorie zjednodušuje různorodé kusy a jejich obsluhu. Neznamená, že všechna děla jedné strany byla stejná nebo horší než děla druhé."
         },
         tactics: {
             terrain: {
@@ -950,10 +950,10 @@ const UnitTypes = {
         special: 'veteran', // +10% ke všemu
         unitClass: 'infantry',
         lore: {
-            description: 'Profesionální válečníci bojující za peníze. Zkušení, tvrdí a spolehliví - dokud se platí. Tvořili páteř mnoha křižáckých armád.',
-            equipment: 'Různorodá - meče, sekery, kopí, štíty. Kvalitní zbroj. Každý měl svůj preferovaný styl.',
-            origin: 'Žoldnéřské kompanie z celé Evropy - Němci, Italové, Švýcaři, Angličané',
-            historicalNote: '"Žoldnéř se neptá, kdo má pravdu. Ptá se, kdo má zlato."'
+            description: "Placený pěší oddíl. Ve hře představuje zkušenější bojovníky s různou výzbrojí, ne samostatný druh zbraně.",
+            equipment: "Meče, kopí či jiné dostupné zbraně, přilby a ochranná výstroj.",
+            origin: "Najatí ozbrojenci.",
+            historicalNote: "Žoldnéř označuje způsob služby, nikoli jednotnou národnost, výzbroj nebo morálku. Herní typ tyto rozdíly zjednodušuje."
         },
         tactics: {
             terrain: {
@@ -985,15 +985,15 @@ const UnitTypes = {
         range: 1,
         movement: 3,
         cost: 500,
-        description: 'Legendární husitský hejtman. Nikdy neprohrál bitvu. Mistr vozové taktiky.',
+        description: 'Jan Žižka z Trocnova. Husitský hejtman, který velel polnímu vojsku i po ztrátě zraku.',
         special: 'commander',
         unitClass: 'commander',
         baseMorale: 100,
         lore: {
-            description: 'Jan Žižka z Trocnova (asi 1360-1424) je nejslavnějším českým vojevůdcem všech dob. Pocházel z drobné jihočeské šlechty. Jako žoldnéř bojoval v Polsku proti řádu německých rytířů a možná i na straně Angličanů u Azincourtu. Po upálení Jana Husa se stal vůdcem husitského hnutí.',
-            equipment: 'Železný palcát, krátký meč, lehké brnění. Po oslepnutí nosil charakteristickou pásku přes oči.',
-            origin: 'Trocnov u Borovan, jižní Čechy',
-            historicalNote: 'Žižka oslepl nejprve na jedno oko (před husitskými válkami), na druhé přišel při obléhání hradu Rábí roku 1421. Přesto vedl vojska dalších tři roky a nikdy neprohrál. Zemřel na mor při obléhání Přibyslavi. Podle legendy si přál, aby z jeho kůže udělali buben, jehož zvukem by nepřátele děsil i po smrti.'
+            description: "Jan Žižka z Trocnova patřil k hlavním husitským hejtmanům. Po ztrátě zraku dál vedl polní vojsko; zemřel během tažení roku 1424.",
+            equipment: "Zbroj a osobní zbraň; velitelský palcát je známým dobovým symbolem pravomoci.",
+            origin: "Trocnov v jižních Čechách.",
+            historicalNote: "Jeho velitelská aura je herní způsob znázornění velení. Nedoložené výroky ani pověst o bubnu z jeho kůže zde nepoužíváme jako historický důkaz."
         },
         // Speciální schopnosti velitele
         commanderAbilities: {
@@ -1220,15 +1220,15 @@ const UnitTypes = {
         range: 1,
         movement: 3,
         cost: 400,
-        description: 'Hejtman jihočeského landfrýdu. Vedl katolické pány proti Žižkovi u Sudoměře.',
+        description: 'Bohuslav ze Švamberka. Katolický hejtman, ve hře velitel části vojska u Sudoměře.',
         special: 'commander',
         unitClass: 'commander',
         baseMorale: 90,
         lore: {
-            description: 'Bohuslav ze Švamberka (?-1425) byl významný jihočeský katolický šlechtic a hejtman královského landfrýdu. Vedl vojsko katolických pánů proti Žižkovi v bitvě u Sudoměře 25. března 1420.',
-            equipment: 'Plná zbroj s erbem Švamberků (labuť), kopí, meč.',
-            origin: 'Rod pánů ze Švamberka, západní Čechy',
-            historicalNote: 'U Sudoměře vedl 2000 jezdců proti 400 husitům. Přesto utrpěl zdrcující porážku. Žižka využil úzké hráze mezi rybníky a jízda se nemohla rozvinout. Roku 1421 ho husité zajali na hradě Krasíkově - poté přestoupil ke kališnictví a padl roku 1425 jako táborský hejtman.'
+            description: "Bohuslav ze Švamberka byl katolický šlechtic a protivník raných husitských houfů. Ve hře vystupuje v čele části katolického vojska u Sudoměře.",
+            equipment: "Zbroj, kopí, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+            origin: "Rod pánů ze Švamberka, západní Čechy.",
+            historicalNote: "Počet jezdců u Sudoměře je nejistý. Herní síly a velitelské role představují rekonstrukci, nikoli přesné rozdělení každého historického oddílu."
         },
         commanderAbilities: {
             auraRange: 3,
@@ -1460,10 +1460,10 @@ const UnitTypes = {
         unitClass: 'commander',
         baseMorale: 85,
         lore: {
-            description: 'Petr Konopišťský ze Šternberka (?-1420) byl katolický šlechtic a zarytý odpůrce husitů. V listopadu 1419 vedl útok na husitské poutníky u Živohoště. Padl o rok později v bitvě pod Vyšehradem.',
-            equipment: 'Plná zbroj s hvězdou Šternberků, kopí, meč.',
-            origin: 'Rod pánů ze Šternberka, Konopiště',
-            historicalNote: 'U Živohoště Petr ze Šternberka napadl skupinu husitských poutníků směřujících do Prahy. Přesila zdánlivě zaručovala úspěch, ale příchod Břeňka Švihovského s posilami změnil průběh bitvy. Šternberk padl o rok později v bitvě pod Vyšehradem.'
+            description: "Petr Konopišťský ze Šternberka vedl roku 1419 útok na husitské poutníky u Živohoště. Ve hře představuje velitele útočící jízdy.",
+            equipment: "Zbroj, kopí, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+            origin: "Rod pánů ze Šternberka.",
+            historicalNote: "Příchod posil u Živohoště pomohl části poutníků pokračovat v cestě. Herní vítězství není dokladem přesných historických ztrát ani úplného zničení útočníků."
         },
         commanderAbilities: {
             auraRange: 3,
@@ -1522,15 +1522,15 @@ const UnitTypes = {
         range: 1,
         movement: 3,
         cost: 350,
-        description: 'Břeněk Švihovský z Rýzmburka. Přivedl 4000 mužů z Nového Knína na pomoc u Živohoště.',
+        description: 'Břeněk Švihovský z Rýzmburka. Jeden z velitelů husitského houfu u Sudoměře.',
         special: 'commander',
         unitClass: 'commander',
         baseMorale: 85,
         lore: {
-            description: 'Břeněk Švihovský z Rýzmburka byl husitský hejtman působící v oblasti Nového Knína. Jeho rychlý příchod s posilami rozhodl bitvu u Živohoště ve prospěch husitů.',
-            equipment: 'Zbroj, meč, štít s erbem Švihovských.',
-            origin: 'Rod pánů ze Švihova, západní Čechy',
-            historicalNote: 'U Živohoště přivedl Břeněk asi 4000 mužů na pomoc husitským poutníkům, kteří byli v obklíčení. Jeho příchod změnil průběh bitvy a katolíci utrpěli těžkou porážku.'
+            description: "Břeněk Švihovský patřil k velitelům husitského houfu táhnoucího od Plzně. Padl u Sudoměře v březnu 1420.",
+            equipment: "Zbroj, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+            origin: "Česká šlechta na husitské straně.",
+            historicalNote: "V raných bitvách není bezpečné připsat všechny posily a rozhodnutí jednomu veliteli. U Sudoměře bojovali v čele houfu Břeněk i Jan Žižka."
         },
         commanderAbilities: {
             auraRange: 3,
@@ -1661,10 +1661,10 @@ const UnitTypes = {
         unitClass: 'commander',
         baseMorale: 85,
         lore: {
-            description: 'Diviš Bořek z Miletínka (?-1438) byl hejtman orebských husitů a věrný Žižkův spolubojovník. Orebité byli radikální husitská frakce sídlící ve východních Čechách.',
-            equipment: 'Zbroj, meč, štít s orebským kalichem.',
-            origin: 'Miletínek, východní Čechy',
-            historicalNote: 'Diviš Bořek bojoval po Žižkově boku v mnoha bitvách včetně Hořic roku 1423. Po Žižkově smrti se orebité přejmenovali na sirotky na jeho počest. Diviš Bořek přežil Lipany a zemřel až roku 1438.'
+            description: "Diviš Bořek z Miletínka byl východočeský husitský hejtman. S Žižkou spolupracoval, ale později se jejich vojska střetla proti sobě.",
+            equipment: "Zbroj, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+            origin: "Miletínek ve východních Čechách.",
+            historicalNote: "Spolupráce u Hořic roku 1423 neznamenala trvalé spojenectví. Téhož roku došlo ke střetu u Strauchova dvora; nelze jej popisovat jako celoživotně věrného Žižkova druha."
         },
         commanderAbilities: {
             auraRange: 3,
@@ -1830,15 +1830,15 @@ const UnitTypes = {
         range: 1,
         movement: 3,
         cost: 380,
-        description: 'Hynek z Poděbrad a Kunštátu, spojenec orebitů. Otec budoucího krále Jiřího z Poděbrad.',
+        description: 'Hynek z Poděbrad a Kunštátu. Husitský šlechtic z východních Čech.',
         special: 'commander',
         unitClass: 'commander',
         baseMorale: 82,
         lore: {
-            description: 'Hynek z Poděbrad a Kunštátu (?-1426) byl moravský šlechtic a spojenec husitů. Byl strýcem Jiřího z Poděbrad, budoucího českého krále - Jiříkovým otcem byl Hynkův bratr Viktorin Boček z Kunštátu.',
-            equipment: 'Zbroj s kunštátským erbem, meč, štít.',
-            origin: 'Poděbrady a Kunštát, východní Čechy a Morava',
-            historicalNote: 'Hynek z Poděbrad bojoval na straně orebitů u Malešova roku 1424. Jeho syn Jiří se narodil roku 1420 a stal se roku 1458 českým králem - jediným husitou na českém trůně.'
+            description: "Hynek z Poděbrad a Kunštátu byl husitský šlechtic. Ve hře vystupuje mezi veliteli východočeských oddílů.",
+            equipment: "Zbroj, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+            origin: "Rod pánů z Kunštátu a Poděbrad.",
+            historicalNote: "Otcem budoucího krále Jiřího byl Viktorín Boček, nikoli tento Hynek. Při čtení o Poděbradech je třeba rozlišovat opakující se rodová jména."
         },
         commanderAbilities: {
             auraRange: 3,
@@ -1863,15 +1863,15 @@ const UnitTypes = {
         range: 1,
         movement: 4,
         cost: 350,
-        description: 'Viktorín Boček z Poděbrad, bratr Hynka. Udatný velitel husitské jízdy.',
+        description: 'Viktorín Boček z Kunštátu a Poděbrad. Husitský šlechtic a otec budoucího krále Jiřího.',
         special: 'commander',
         unitClass: 'commander',
         baseMorale: 80,
         lore: {
-            description: 'Viktorín Boček z Poděbrad byl bratr Hynka z Poděbrad a strýc budoucího krále Jiřího. Vynikal jako velitel jízdy v husitských řadách.',
-            equipment: 'Zbroj, kopí, meč, štít s kunštátským erbem.',
-            origin: 'Poděbrady, východní Čechy',
-            historicalNote: 'Viktorín Boček bojoval po boku svého bratra Hynka u Malešova roku 1424. Rod Poděbradů patřil k umírněnému husitskému křídlu a po válkách se stal jedním z nejmocnějších v Čechách.'
+            description: "Viktorín Boček z Kunštátu a Poděbrad byl husitský šlechtic a otec pozdějšího krále Jiřího z Poděbrad.",
+            equipment: "Zbroj, kopí, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+            origin: "Rod pánů z Kunštátu a Poděbrad.",
+            historicalNote: "Nezaměňovat s Hynkem z Poděbrad. Studie o Liticích připomíná Viktorínovy stavební úpravy hradu před pozdější přestavbou za vlády jeho syna Jiřího."
         },
         commanderAbilities: {
             auraRange: 3,

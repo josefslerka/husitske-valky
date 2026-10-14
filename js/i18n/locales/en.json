@@ -210,13 +210,15 @@
     "firstBattle": "First battle: Živohošť",
     "firstBattleNote": "Start here · briefing and quick controls",
     "winGoal": "How to win",
-    "optionalGoal": "Optional bonus —",
+    "optionalGoal": "Optional objective —",
+    "optionalGoalsHint": "Extra challenges, not requirements for victory. They are evaluated at the end of the battle and do not grant units or combat bonuses.",
     "controlsTitle": "Before your first turn · quick controls",
     "noRush": "This is a turn-based game. Take your time deciding; the opponent acts after you end your turn.",
     "selectStep": "Your units have red round tokens; the opponent uses blue shields. Select your unit; its status and abilities appear in the left panel or under the map in Orders and details.",
     "actionStep": "Tap a green highlighted tile to move the selected unit immediately. Tap a red-highlighted enemy to attack immediately. Touch and mouse use the same controls.",
+    "movementStep": "Movement means points, not tiles. Plains cost 1 point and a hill costs 2: a unit with 2 points can cross two plains tiles, but only one hill. Moving is one action; after it finishes, that unit cannot move again this turn. Open How movement works by its orders for details and terrain costs.",
     "endStep": "Give orders to your other units, then press End Turn. Unused units defend automatically (−30% incoming damage), but stationary units with range 2 or more and a shot left prepare covering fire instead, without the defense bonus.",
-    "helpStep": "Your main objective stays above the map. Open Objectives for details or Menu → Help for the rules. Escape opens the pause menu.",
+    "helpStep": "Your main objective stays above the map. Open Goals for details or Menu → How to Play for the rules. Escape opens the pause menu.",
     "resultReason": "Why the battle ended",
     "readChronicle": "Your chronicle",
     "togglePanel": "Collapse / expand side panel",
@@ -247,6 +249,11 @@
     "overview": "Overview",
     "objectivesTitle": "Mission Objectives",
     "captureProgress": "Occupied {captured}/{required}",
+    "survival": {
+      "counts": "Original units: {alive}/{total} · minimum {minimum}",
+      "turns": "Completed rounds: {completedTurns}/{turns}. The timed objective is checked after the enemy acts in round {turns}.",
+      "rules": "Reinforcements arrive at the start of round {reinforcementTurn}. At least {minimum} of the {total} original units ({minPercent}%) must survive through round {turns}. This counts units, not their combined health; reinforcements do not count towards the minimum. Eliminating the entire enemy force can bring an earlier victory. Routing the enemy alone does not replace the survival requirement."
+    },
     "dualObjectiveProgress": "{name} {held}/{required}",
     "holdProgress": "Turns counted: {held}/{required}",
     "objectiveOccupied": "Positions held",
@@ -277,11 +284,13 @@
     "defendExplanation": "Defend: 30% less incoming damage, ends actions. Unused units defend automatically at End Turn. A stationary unit with range 2+ and a shot left uses covering fire instead, with no defense bonus.",
     "defendExplanationRanged": "Take Cover: 30% less incoming damage. Ends this unit's actions and forfeits its remaining shot.",
     "undo": "Undo",
-    "objectives": "Objectives",
-    "choral": "Choral",
+    "objectives": "Goals",
+    "choral": "Battle hymn",
+    "choralReady": "1× per battle",
+    "choralTurns": "Rounds left: {turns}",
     "choralActive": "Battle Hymn!",
     "choralEffect": "+50% attack, -20% defense ({turns} rounds)",
-    "choralUsed": "Choral (used)",
+    "choralUsed": "Used",
     "menu": "Menu",
     "save": "Save Game",
     "load": "Load Game",
@@ -437,7 +446,7 @@
     "tutorialBadge": "📖 Tutorial",
     "objectives": "Mission Objectives",
     "primaryObjective": "Primary Objective",
-    "secondaryObjectives": "Bonus Objectives",
+    "secondaryObjectives": "Optional Objectives",
     "briefing": "Orders",
     "history": "Historical Notes",
     "hussiteSide": "Hussite Side",
@@ -487,7 +496,7 @@
     "mvp": "Battle Hero",
     "kills": "kills",
     "damage": "damage",
-    "bonusObjectives": "Bonus Objectives",
+    "bonusObjectives": "Optional Objectives",
     "trivia": "Did you know...?"
   },
   "chronicle": {
@@ -584,6 +593,16 @@
   },
   "help": {
     "unitStatsNote": "Numbers are base values, without terrain or commander bonuses. Conditional abilities are explained on each unit's card.",
+    "movement": {
+      "title": "How movement works",
+      "budget": "{unit}: {points} movement points. Below is the entry cost for one tile, not the cost of the whole route.",
+      "ready": "Highlighted tiles show where the unit can finish one move. Tapping a destination carries out that move immediately.",
+      "spent": "Movement has been used. The next move is available on its next turn, even if it did not spend all its movement points.",
+      "fixed": "This unit cannot move. It can hold position and attack if an attack is available.",
+      "linked": "A linked wagon holds position. Use March to move the group if movement is unused. Unlinking spends movement: the wagon can move independently next turn.",
+      "group": "A marching fort is an exception: the whole marching group moves one adjacent tile. Every wagon needs unused movement and a clear destination. See wagon orders for details.",
+      "entryCost": "{unit} — entry cost: {cost}"
+    },
     "title": "Help and Encyclopedia",
     "tabs": {
       "history": "History",
@@ -608,8 +627,15 @@
     },
     "equipment": "Equipment",
     "origin": "Origin",
-    "historicalNote": "Historical Note",
+    "historicalNote": "Note",
+    "unitLoreNotice": "These profiles are authored summaries, not chronicle quotations. Equipment and unit composition are simplified for the game; a card's reading link supports the historical context, not its exact game statistics.",
+    "unitReading": "Further reading",
     "mechanics": {
+      "choral": "The battle hymn is an ability, not a music switch. Pressing it uses it immediately, once per battle. It increases Hussite attack by 50% and reduces their defense by 20% for 2 rounds. It works with sound off; main-menu music has its own control.",
+      "movement": "Movement is a budget of points, not a number of tiles. Add up the entry costs of the tiles along the route. Each unit makes one move per turn: once it finishes, it cannot move again, even if it did not spend all its points.",
+      "movementExample": "Example: a unit with 2 points can cross two plains tiles at 1 point each, but a hill costing 2 points uses the whole move. Cavalry pays 1 extra point in forests, mud and swamps compared with infantry.",
+      "movementBlocks": "A unit can pass through an ally but cannot stop on it; it cannot pass through an enemy. Entering a tile next to an enemy with a zone of control stops further movement. Water is impassable, except for a scenario-specific frozen river.",
+      "movementStep": "Slow units have one exception: they can move at least one step onto a free, passable adjacent tile even if its entry cost exceeds their points. That step uses the whole move. Marching linked wagons have their own group rules.",
       "artilleryTitle": "Artillery: order matters",
       "artillery": "A howitzer or another movable gun without the Mobile ability cannot fire after moving in the same turn. The reverse order is allowed: fire first, then move. A mobile tarasnice can move and fire in either order. Immobile guns cannot move. Defend / Take Cover always spends both actions.",
       "wagonTitle": "Wagon fort orders",
@@ -709,264 +735,272 @@
     "completedText": "You have learned the basics of command. You are ready to lead the Hussite forces into a real battle!"
   },
   "units": {
+    "POUTNICI": {
+      "lore": {
+        "description": "Participants in Hussite religious pilgrimages. In the game they represent the vulnerable part of the group that armed troops must protect.",
+        "equipment": "Walking staffs and available tools; little protective equipment.",
+        "origin": "Pilgrim groups from southwestern Bohemia.",
+        "historicalNote": "This is not a regular combat unit. Its strength and equipment serve the game's protection objective, not an exact inventory of the participants."
+      }
+    },
     "CEPNICI": {
       "name": "Flailmen",
       "description": "Hussite infantry with war flails. Crushing blow against armored troops.",
       "lore": {
-        "description": "Armed peasants and townspeople forming the backbone of Hussite armies. The war flail, originally an agricultural tool, became a symbol of Hussite resistance. Flailmen were feared for their ferocity and ability to crush even the finest armor.",
-        "equipment": "War flail (reinforced with iron, often with iron spikes), short sword or dagger, helmet, light brigandine",
-        "origin": "Tábor, Hussite towns",
-        "historicalNote": "\"They knew how to strike with flails so terribly that noble armor avoided them like the devil avoids the cross.\" - period chronicle"
+        "description": "Foot soldiers with flails adapted from farm tools. In the game they are useful against armored enemies but need protection from ranged fire.",
+        "equipment": "Iron-reinforced flail, helmet and light protection; a short backup weapon.",
+        "origin": "Hussite infantry.",
+        "historicalNote": "The war flail is a documented Hussite infantry weapon. Its anti-armor bonus is a game abstraction, not a chronicle statistic."
       }
     },
     "SUDLICNICI": {
       "name": "Pikemen",
       "description": "Infantry with polearms. Reaching a more distant enemy requires an ally between them.",
       "lore": {
-        "description": "Footmen armed with long pole weapons - pikes, bills, or halberds. Their reach allowed them to strike enemies over rows of comrades or over the edge of war wagons.",
-        "equipment": "Pike (pole weapon with blade and hook, 2-3 meters long), short knife, light helmet, quilted jacket",
-        "origin": "Town militia and rural levies",
-        "historicalNote": "\"A good man with a pike can pull even a knight from his horse and pin him to the ground.\""
+        "description": "Infantry with long pole weapons. The game's Reach ability lets them attack over an ally under specific conditions.",
+        "equipment": "Bill or another pole weapon, helmet and a short backup weapon.",
+        "origin": "Hussite infantry and town militia.",
+        "historicalNote": "Pole weapons varied in shape and name. This game type does not represent a uniformly equipped regiment."
       }
     },
     "PAVEZNICI": {
       "name": "Pavise Bearers",
       "description": "Defenders with large pavises. Protect adjacent ranged units.",
       "lore": {
-        "description": "Specialists in defense armed with large pavises - rectangular shields almost as tall as a man. They formed living walls protecting archers during loading and shooting.",
-        "equipment": "Pavise (large shield, often painted with Hussite symbols - chalice, goose), short sword or club, light armor",
-        "origin": "Specially trained defenders from town guilds",
-        "historicalNote": "\"The pavise bearers stood like a wall, and behind them crossbows sang death to the Germans.\""
+        "description": "Foot soldiers with large shields. In the game they protect adjacent shooters, who are vulnerable in close combat.",
+        "equipment": "Pavise, helmet and a short weapon for personal defense.",
+        "origin": "Hussite infantry.",
+        "historicalNote": "Protecting adjacent shooters is the game's model of cooperation between shield bearers and shooters, not an exact period organization chart."
       }
     },
     "KOPINICI_HUSITI": {
       "name": "Spearmen",
       "description": "Infantry with long spears. Effective against cavalry.",
       "lore": {
-        "description": "Footmen with long spears, specially trained for fighting cavalry. They formed defensive squares or lines that could stop even heavy knightly cavalry.",
-        "equipment": "Long spear (4-5 meters), short sword, light helmet, quilted jacket or brigandine",
-        "origin": "More experienced warriors from town and village militias",
-        "historicalNote": "\"Stand firm, spears forward, and no knight shall defeat you!\" - attributed to Jan Žižka"
+        "description": "Infantry with long spears. In the game they help hold a line against cavalry and protect more vulnerable units.",
+        "equipment": "Long spear, helmet, protective clothing and a short backup weapon.",
+        "origin": "Hussite infantry.",
+        "historicalNote": "Effectiveness against cavalry also depended on formation and terrain. The numerical bonus is a game rule, not a documented saying by Žižka."
       }
     },
     "KUSINICI_HUSITI": {
       "name": "Crossbowmen",
       "description": "Archers with crossbows. Armor-piercing bolts.",
       "lore": {
-        "description": "Archers with crossbows, forming an important part of Hussite firepower. The crossbow was accurate and penetrating, capable of piercing even plate armor at medium range.",
-        "equipment": "Crossbow with steel bow, quiver with arrows (bolts), short sword or dagger, light armor",
-        "origin": "Townsmen and hunters",
-        "historicalNote": "\"One crossbowman is worth ten men when he has time to reload.\""
+        "description": "Crossbow shooters. They need time and cover to reload; wagons or pavise bearers protect them in the game.",
+        "equipment": "Crossbow, bolts, spanning aid and a short backup weapon.",
+        "origin": "Hussite ranged troops.",
+        "historicalNote": "Finds from Sion include crossbow spanning equipment. Armor penetration cannot be reduced to one universal figure for every crossbow and suit of armor."
       }
     },
     "RUCNICARI": {
       "name": "Handgunners",
       "description": "Gunners with firearms. Terror-inducing.",
       "lore": {
-        "description": "Elite gunners armed with primitive firearms - hand cannons and pistols. Their weapons were loud, inaccurate, but devastating at short range and causing panic among enemies and horses.",
-        "equipment": "Hand cannon or pistol (hand firearm), ignition supplies, gunpowder, lead balls, dagger",
-        "origin": "Specially trained warriors from craftsmen ranks (blacksmiths, bellmakers)",
-        "historicalNote": "\"When the pistols thundered, horses panicked and knights fell from them like acorns from an oak.\""
+        "description": "Shooters with early hand-held firearms. In the game their hits weaken an enemy's attack.",
+        "equipment": "Handgun or hand cannon, powder, projectiles and ignition equipment.",
+        "origin": "Hussite ranged troops.",
+        "historicalNote": "Handguns and their ammunition are documented at Sion. This does not by itself establish their presence in every earlier battle; game deployments are reconstructions."
       }
     },
     "HOUFNICE": {
       "name": "Howitzer",
       "description": "Field artillery. Devastating area attack.",
       "lore": {
-        "description": "Heavy field guns capable of devastating area bombardment. Hussites were pioneers in using artillery in field battles, not just during sieges.",
-        "equipment": "Howitzer (short large-caliber gun), gunpowder, stone or iron balls, crew of 4-6 men",
-        "origin": "Guns manufactured in Hussite towns (Prague, Tábor). Crew consisted of specialists - gunners.",
-        "historicalNote": "\"The howitzer struck enemy formations like the Lord's fist.\""
+        "description": "A short-barreled field gun. In the game it hits units around its target but cannot fire after moving in the same turn.",
+        "equipment": "Gun barrel on a carriage, powder, projectiles and crew equipment.",
+        "origin": "Hussite artillery.",
+        "historicalNote": "Stone projectiles from Sion document period artillery. The game's area effect and action order are not an exact conversion of historical rates of fire."
       }
     },
     "TARASNICE": {
       "name": "Tarasnice",
       "description": "Mobile gun. Can shoot after moving.",
       "lore": {
-        "description": "Light mobile gun mounted on a cart or stretcher. The Tarasnice was a Hussite invention enabling fire support even during maneuvers.",
-        "equipment": "Tarasnice (light gun), gunpowder, smaller balls, crew of 2-3 men",
-        "origin": "Hussite invention combining firepower with mobility",
-        "historicalNote": "\"The Tarasnice rode with the army like a faithful dog and barked at the enemy with lead.\""
+        "description": "A smaller-caliber gun for direct fire. This game unit is more mobile than the howitzer and can move and shoot in one turn.",
+        "equipment": "Smaller gun barrel on a stand or carriage, powder and projectiles.",
+        "origin": "Artillery detachments.",
+        "historicalNote": "Mobility is a property of this game type. It does not mean that every historical tarasnice fired on the move or used the same mounting."
       }
     },
     "VOZOVA_HRADBA": {
       "name": "War Wagon",
       "description": "Fortified wagon. Forms wagon fort with other wagons.",
       "lore": {
-        "description": "The heart of Hussite military doctrine. Heavy peasant wagons modified for combat - reinforced with iron, with wooden shields on the sides, loopholes for shooters, and hooks for connecting. They formed a mobile fortress.",
-        "equipment": "The wagon itself (reinforced, with chains for connecting), crew includes driver, 2-4 shooters, 2-4 defenders with flails/pikes",
-        "origin": "Originally common peasant wagons modified for war. Hussites perfected their use to an art form.",
-        "historicalNote": "\"The wagon fort is like a castle that goes with the army. And from that castle, death flies upon enemies of God's truth.\" - attributed to Jan Žižka"
+        "description": "A war wagon provides cover for infantry and shooters. In the game it can link with neighboring wagons into a fort or march with the connected line.",
+        "equipment": "Adapted wagon, protective boards, linking equipment and crew weapons.",
+        "origin": "Hussite wagon detachments.",
+        "historicalNote": "The game token represents both wagon and crew. Health, adjacent cover and group orders are abstractions, not a quotation from Žižka's military ordinance."
       }
     },
     "JIZDA_HUSITI": {
       "name": "Light Cavalry",
       "description": "Fast cavalry for reconnaissance and pursuit.",
       "lore": {
-        "description": "Hussite cavalry was always weaker than knightly cavalry, but fulfilled important tasks - reconnaissance, pursuit of fleeing enemies, and quick strikes on flanks.",
-        "equipment": "Light spears, swords, crossbows from horseback (some), light armor or just leather jacket",
-        "origin": "Gentry and wealthy townsmen who could afford horses. Also defectors from Catholic ranks.",
-        "historicalNote": "\"Our cavalry cannot face knights, but can pursue them when they flee - and gladly does so!\""
+        "description": "More lightly equipped riders for scouting, flanking and pursuit. In the game they favor open ground over forest or swamp.",
+        "equipment": "Spear or sword, helmet and lighter protective equipment.",
+        "origin": "Hussite cavalry.",
+        "historicalNote": "Hussite armies also included cavalry. The light and noble cavalry types distinguish game roles rather than every period equipment variant."
       }
     },
     "SLECHTICKA_JIZDA_HUSITI": {
       "name": "Hussite Noble Cavalry",
       "description": "Heavier cavalry fielded by nobles and their retinues.",
       "lore": {
-        "description": "The army at Ústí included more than Taborite and Orphan infantry. Czech and Moravian nobles also fought with their armored retinues.",
-        "equipment": "Plate and mail armor, long lance, sword, shield, and warhorse",
-        "origin": "Hussite nobles and their armed retinues, including men associated with Viktorin and Hynek Boček or Fedor of Ostroh.",
-        "historicalNote": "Sources estimate cavalry at roughly one third of the Hussite army at Ústí; part of it was heavy noble cavalry."
+        "description": "Armored riders from Hussite noble households and retinues. In the game they add a striking force to infantry and wagon detachments.",
+        "equipment": "Lance, sword, helmet and plate or mail protection.",
+        "origin": "Hussite nobles and their armed retinues.",
+        "historicalNote": "Hussite forces were not exclusively infantry. The proportions of troop types depend on the battle and on uncertain source estimates."
       }
     },
     "ZVED": {
       "name": "Scout",
       "description": "Light horseman for reconnaissance. Sees 6 hexes, can quickly retreat.",
       "lore": {
-        "description": "Light riders specialized in reconnaissance, enemy tracking, and message delivery. They avoided combat and their main weapons were speed and keen eyes.",
-        "equipment": "Light sword or dagger, perhaps short crossbow, no armor or just leather jacket",
-        "origin": "Hunters, border guards, sons of peasants who could ride. Often knew the terrain better than anyone.",
-        "historicalNote": "\"A good scout is like the captain's eyes. Without eyes, even the strongest army is blind.\""
+        "description": "A mounted scout. In the game it sees farther than most units and can quickly shift attention to another flank.",
+        "equipment": "Horse, light equipment and a personal weapon.",
+        "origin": "Scouts and messengers in Hussite service.",
+        "historicalNote": "The scout is a separate type to support fog-of-war play. Its sight range is not a historically measured soldier attribute."
       }
     },
     "TEZKY_RYTIR": {
-      "name": "Heavy Knight",
+      "name": "Knightly Cavalry",
       "description": "Elite armored cavalry. Devastating charge.",
       "lore": {
-        "description": "The elite of the medieval battlefield. A fully armored rider on an armored horse represented an unstoppable force - until they encountered Hussite wagons and firearms.",
-        "equipment": "Plate armor (full protection), lance, sword, heraldic shield, armored horse (often with chanfron)",
-        "origin": "Nobility from all over Europe - German, Hungarian, Polish, Burgundian knights. Some fought for faith, others for loot.",
-        "historicalNote": "\"When a knight mounts his horse, there is no power under heaven that can stop him - except a wall of wagons and a rain of lead.\""
+        "description": "Armored cavalry with lances. In the game its charge is dangerous on open ground, while difficult terrain limits its effectiveness.",
+        "equipment": "Lance, sword, helmet and armor; horse protection could vary.",
+        "origin": "Noble retinues and other armored riders.",
+        "historicalNote": "Knight also denotes social status, not an exact armor grade. Knightly Cavalry is the name of a game combat role."
       }
     },
     "TEZKOODENCI": {
       "name": "Men-at-Arms",
       "description": "Armored cavalry. Charge bonus when attacking from movement.",
       "lore": {
-        "description": "Less armored cavalry than heavy knights, but still a formidable force. They often formed the second wave of attack or protected the flanks.",
-        "equipment": "Mail or partial plate armor, lance, sword, shield",
-        "origin": "Lower nobility, wealthy townsmen, experienced mercenaries with horses",
-        "historicalNote": "\"They are not true knights, but sufficient for peasants,\" said one chronicler. He was wrong."
+        "description": "Armored riders distinguished in the game from the harder-hitting Knightly Cavalry. They can guard a flank or follow another unit's attack.",
+        "equipment": "Lance, sword, helmet and mail or plate protection.",
+        "origin": "Noble retinues and paid men-at-arms.",
+        "historicalNote": "Mounted equipment did not fall into fixed grades. These two game categories are not a period army classification."
       }
     },
     "LEHKA_JIZDA": {
       "name": "Light Cavalry",
       "description": "Fast cavalry for reconnaissance and flanking.",
       "lore": {
-        "description": "Fast cavalry used for reconnaissance, flanking, and pursuit. Hungarian hussars and German reiters were feared opponents.",
-        "equipment": "Light lance, saber or sword, shield, leather or light mail armor",
-        "origin": "Hungary, Poland, German lands. Often hired mercenaries specialized in mounted combat.",
-        "historicalNote": "\"Light cavalry is like a wolf - alone it cannot defeat a bear, but chases it to death.\""
+        "description": "Fast riders for scouting, flanking and pursuit. In the game they exploit open routes and gaps between enemy units.",
+        "equipment": "Spear or sword, helmet and lighter protective equipment.",
+        "origin": "Opposing cavalry detachments.",
+        "historicalNote": "Light Cavalry groups together varied equipment. It should not be equated automatically with later reiters or one uniform national troop type."
       }
     },
     "ZVED_KRIZACI": {
       "name": "Scout",
       "description": "Light horseman for reconnaissance. Sees 6 hexes, can quickly retreat.",
       "lore": {
-        "description": "Scouts of the crusader army. Often local nobles or hired scouts who knew the terrain.",
-        "equipment": "Light armor, sword, possibly crossbow",
-        "origin": "Local nobility, mercenaries, sometimes even defectors",
-        "historicalNote": "\"Finding Hussites isn't hard - follow the smoke of burning churches.\""
+        "description": "An opposing mounted scout. In the game it looks for approaches and helps reveal your deployment.",
+        "equipment": "Horse, light equipment and a personal weapon.",
+        "origin": "Scouts and messengers in the opposing army.",
+        "historicalNote": "A separate scout token serves the visibility rules. It does not imply uniform equipment among period scouts."
       }
     },
     "KOPINICI": {
       "name": "Pikemen",
       "description": "Infantry with long spears. Defensive hedgehog against cavalry.",
       "lore": {
-        "description": "Disciplined infantry with long spears. They formed defensive lines protecting archers and artillery, or formed squares against cavalry.",
-        "equipment": "Long spear, short sword, helmet, gambeson or brigandine, sometimes pavise",
-        "origin": "Town militias from German imperial cities, mercenary companies",
-        "historicalNote": "\"A German pikeman stands firm - until he hears howitzers.\""
+        "description": "Infantry with long spears. In the game they hold a line against cavalry and cover shooters or guns.",
+        "equipment": "Long spear, helmet, protective clothing and a short backup weapon.",
+        "origin": "Town militia and paid infantry.",
+        "historicalNote": "The same weapon did not mean the same training or resolve. Game statistics combine these differences into one type."
       }
     },
     "HALAPARTNICI": {
       "name": "Halberdiers",
       "description": "Infantry with halberds. Pulls riders from horses.",
       "lore": {
-        "description": "Heavy infantry armed with halberds - combination of spear, axe, and hook. They could chop, stab, and pull riders from horses.",
-        "equipment": "Halberd (2-2.5 meters), short sword, helmet, mail armor or brigandine",
-        "origin": "Swiss mercenaries, German Landsknechts, town guards",
-        "historicalNote": "\"The halberd is a weapon of clever men - it stabs, chops, and pulls down.\""
+        "description": "Foot soldiers with halberds or related pole weapons. In the game they form a stronger close-combat unit.",
+        "equipment": "Halberd, helmet, short backup weapon and varied protective equipment.",
+        "origin": "Town troops and hired infantry.",
+        "historicalNote": "The Military History Institute presents halberdiers around 1421 as a possible reconstruction. This does not establish their frequency in every battle; game numbers are not an historical roster."
       }
     },
     "PAVEZNICI_KRIZACI": {
       "name": "Pavise Bearers",
       "description": "Defenders with large shields. Protect archers.",
       "lore": {
-        "description": "Defenders with large shields protecting archers. Crusader pavises were often richly decorated with coats of arms and religious symbols.",
-        "equipment": "Pavise (large, often painted with crosses), short sword, light armor",
-        "origin": "Town militias, specially trained mercenaries",
-        "historicalNote": "\"Behind the pavise, a crossbowman is like behind a wall - until the wall moves.\""
+        "description": "Foot soldiers with large shields. In the game they protect adjacent shooters, as do the Hussite pavise bearers.",
+        "equipment": "Pavise, helmet and a short weapon for personal defense.",
+        "origin": "Opposing infantry.",
+        "historicalNote": "The token's shield color identifies the game faction. It is not a reproduction of a particular surviving shield."
       }
     },
     "KUSNICI_JANOV": {
       "name": "Genoese Crossbowmen",
       "description": "Elite mercenary archers from Genoa.",
       "lore": {
-        "description": "Elite mercenary archers from Italian Genoa, considered the best crossbowmen in Europe. Their crossbows had steel bows and great penetration.",
-        "equipment": "Heavy crossbow with steel bow, quiver with steel bolts, short sword, light armor, sometimes pavise",
-        "origin": "Republic of Genoa. Crossbowmen were an export article of Genoa and served throughout Europe.",
-        "historicalNote": "\"A Genoese crossbow pierces armor like a knife through butter - at two hundred paces.\""
+        "description": "A more experienced mercenary crossbow unit in the game. It excels when firing from a safe position but needs protection from direct attack.",
+        "equipment": "Crossbow, bolts, spanning aid and a personal weapon.",
+        "origin": "A game unit designated as Genoese Crossbowmen.",
+        "historicalNote": "Higher statistics distinguish experience in the game. They do not establish universal armor penetration or a particular mercenary company's presence at every battle."
       }
     },
     "KUSNICI": {
       "name": "Crossbowmen",
       "description": "Archers armed with crossbows.",
       "lore": {
-        "description": "Common crossbowmen forming ranged support for crusader armies. Less elite than Genoese, but still effective.",
-        "equipment": "Crossbow, quiver, short weapon, light armor",
-        "origin": "Town militias, mercenary companies",
-        "historicalNote": "\"The crossbow is a coward's weapon, say the knights - but a dead knight says nothing.\""
+        "description": "Crossbow troops providing ranged support. In the game they need distance from the enemy and a protected position.",
+        "equipment": "Crossbow, bolts, spanning aid and a personal weapon.",
+        "origin": "Town or paid ranged troops.",
+        "historicalNote": "A crossbow had to be spanned again after a shot. Archaeological finds document spanning aids; a game turn is not an exact reload-time conversion."
       }
     },
     "LUCISTNICI": {
       "name": "Archers",
       "description": "Archers with longbows. Rapid fire (2 attacks/turn).",
       "lore": {
-        "description": "Archers with bows, capable of faster shooting than crossbowmen, but with less penetration. Effective against unarmored infantry.",
-        "equipment": "Longbow or composite bow, quiver with arrows, short knife, minimal armor",
-        "origin": "English longbowmen, Hungarian horse archers, German huntsmen",
-        "historicalNote": "\"An English archer shoots ten arrows while a crossbowman loads one - but only one in ten pierces armor.\""
+        "description": "Bow shooters. In the game Rapid Fire lets them attack twice per turn, but they remain vulnerable at close range.",
+        "equipment": "Bow, quiver of arrows and a short personal weapon.",
+        "origin": "Opposing ranged troops.",
+        "historicalNote": "Two attacks per turn distinguish bow and crossbow in the game, not a documented firing-rate ratio. Numbers and origins are scenario reconstructions."
       }
     },
     "BOMBARDA": {
       "name": "Bombard",
       "description": "Heavy siege gun. Destroys fortifications.",
       "lore": {
-        "description": "Massive siege gun capable of breaking down walls and wagon forts. Immobile on the battlefield, but devastating from a fixed position.",
-        "equipment": "Heavy bombard on wooden carriage, large stone or metal balls, crew of 8-12 men",
-        "origin": "Burgundian and German arsenals, Italian master gunners",
-        "historicalNote": "\"The bombard breaks walls like the Lord broke the walls of Jericho - but more slowly.\""
+        "description": "A heavy gun firing from a prepared position. It cannot move in the game, so other troops must protect its battery.",
+        "equipment": "Heavy barrel on a carriage, projectiles, powder and crew equipment.",
+        "origin": "Siege artillery.",
+        "historicalNote": "Zero movement abstracts the handling of a heavy battery during battle. Range and damage are game values, not measurements of one known historical gun."
       }
     },
     "POLNI_DELO": {
       "name": "Field Gun",
       "description": "Light field artillery.",
       "lore": {
-        "description": "Heavy guns of crusader armies. Less mobile than Hussite ones, but equally devastating. Used mainly for sieges, but also in field battles.",
-        "equipment": "Heavy gun on carriage, gunpowder, stone/iron balls, crew of 6-8 men",
-        "origin": "Arsenals of imperial cities, Burgundian workshops, Italian gunners",
-        "historicalNote": "\"The gun is king of the battlefield - a slow king, but his word is final.\""
+        "description": "An opposing artillery detachment. In the game it needs a clear field of fire and protection from attacks on the battery.",
+        "equipment": "Gun on a carriage, powder, projectiles and crew equipment.",
+        "origin": "Royal and crusading artillery.",
+        "historicalNote": "This game category simplifies varied guns and crews. It does not imply that all guns on one side were identical or inferior to those on the other."
       }
     },
     "ZOLDNERI": {
       "name": "Mercenaries",
       "description": "Experienced professional soldiers.",
       "lore": {
-        "description": "Professional warriors fighting for money. Experienced, tough, and reliable - as long as payment comes. They formed the backbone of many crusader armies.",
-        "equipment": "Various - swords, axes, spears, shields. Quality armor. Each had their preferred style.",
-        "origin": "Mercenary companies from all over Europe - Germans, Italians, Swiss, English",
-        "historicalNote": "\"A mercenary doesn't ask who is right. He asks who has gold.\""
+        "description": "Paid infantry. In the game they represent experienced fighters with varied equipment, not a separate weapon type.",
+        "equipment": "Swords, spears or other available weapons, helmets and protective equipment.",
+        "origin": "Hired soldiers.",
+        "historicalNote": "Mercenary describes a form of service, not a uniform nationality, equipment set or morale. This game type simplifies those differences."
       }
     },
     "JAN_ZIZKA": {
       "name": "Jan Žižka",
-      "description": "Legendary Hussite commander. Never lost a battle. Master of wagon tactics.",
+      "description": "Jan Žižka of Trocnov. A Hussite captain who continued commanding a field army after losing his sight.",
       "lore": {
-        "description": "Jan Žižka of Trocnov (c. 1360-1424) is the most famous Czech military commander of all time. He came from minor southern Bohemian nobility. As a mercenary, he fought in Poland against the Teutonic Order and possibly on the English side at Agincourt. After Jan Hus was burned at the stake, he became leader of the Hussite movement.",
-        "equipment": "Iron mace, short sword, light armor. After going blind, he wore a characteristic eye patch.",
-        "origin": "Trocnov near Borovany, southern Bohemia",
-        "historicalNote": "Žižka first went blind in one eye (before the Hussite Wars), then lost the other during the siege of Rábí castle in 1421. Nevertheless, he led armies for three more years and never lost a battle. He died of plague during the siege of Přibyslav. According to legend, he wished for his skin to be made into a drum, whose sound would terrify enemies even after his death."
+        "description": "Jan Žižka of Trocnov was one of the leading Hussite captains. He continued commanding a field army after losing his sight and died on campaign in 1424.",
+        "equipment": "Armor and a personal weapon; the commander's mace is a period symbol of authority.",
+        "origin": "Trocnov in southern Bohemia.",
+        "historicalNote": "His command aura is the game's model of leadership. Unverified sayings and the story of a drum made from his skin are not treated here as historical evidence."
       }
     },
     "PROKOP_HOLY": {
@@ -1011,12 +1045,12 @@
     },
     "BOHUSLAV_SVAMBERK": {
       "name": "Bohuslav of Švamberk",
-      "description": "Hetman of South Bohemian Landfrieden. Led Catholic lords against Žižka at Sudoměř.",
+      "description": "Bohuslav of Švamberk. A Catholic captain who commands part of the army at Sudoměř in the game.",
       "lore": {
-        "description": "Bohuslav of Švamberk (?-1425) was a prominent South Bohemian Catholic nobleman and hetman of the royal Landfrieden. He led Catholic lords' army against Žižka in the Battle of Sudoměř on March 25, 1420.",
-        "equipment": "Full armor with Švamberk coat of arms (swan), lance, sword.",
-        "origin": "Lords of Švamberk family, western Bohemia",
-        "historicalNote": "At Sudoměř, he led 2,000 cavalry against 400 Hussites. Nevertheless, he suffered a crushing defeat. Žižka used narrow causeways between fishponds and cavalry could not deploy. The Hussites captured him at Krasíkov castle in 1421 - he then converted to the Hussite cause and fell in 1425 as a Taborite captain."
+        "description": "Bohuslav of Švamberk was a Catholic nobleman and an opponent of the early Hussite forces. In the game he leads part of the Catholic army at Sudoměř.",
+        "equipment": "Armor, lance, sword and shield; his exact personal equipment is reconstructed for the game.",
+        "origin": "The house of Švamberk in western Bohemia.",
+        "historicalNote": "Cavalry numbers at Sudoměř are uncertain. Game forces and command roles are a reconstruction, not an exact allocation of every historical detachment."
       }
     },
     "ZIKMUND": {
@@ -1073,20 +1107,20 @@
       "name": "Peter of Šternberk",
       "description": "Peter Konopišťský of Šternberk. Led assault on South Bohemian Hussite pilgrims at Živohošť.",
       "lore": {
-        "description": "Peter Konopišťský of Šternberk (?-1420) was a Catholic nobleman and staunch opponent of Hussites. In November 1419, he led an attack on Hussite pilgrims at Živohošť. He fell a year later at the Battle of Vyšehrad.",
-        "equipment": "Full armor with Šternberk star, lance, sword.",
-        "origin": "Lords of Šternberk family, Konopiště",
-        "historicalNote": "At Živohošť, Peter of Šternberk attacked a group of Hussite pilgrims heading to Prague. Overwhelming numbers seemingly guaranteed success, but the arrival of Břeněk of Švihov with reinforcements changed the course of battle. Šternberk perished in the battle."
+        "description": "Petr of Šternberk led the attack on Hussite pilgrims at Živohošť in 1419. In the game he commands the attacking cavalry.",
+        "equipment": "Armor, lance, sword and shield; his exact personal equipment is reconstructed for the game.",
+        "origin": "The house of Šternberk.",
+        "historicalNote": "Reinforcements at Živohošť helped some pilgrims continue their journey. A game victory does not establish exact historical losses or the complete destruction of the attackers."
       }
     },
     "BRENEK_SVIHOVSKY": {
       "name": "Břeněk of Švihov",
-      "description": "Břeněk Švihovský of Rýzmburk. Brought 4,000 men from Nový Knín to aid at Živohošť.",
+      "description": "Břeněk Švihovský of Rýzmburk. One of the commanders of the Hussite force at Sudoměř.",
       "lore": {
-        "description": "Břeněk Švihovský of Rýzmburk was a Hussite hetman operating in the Nový Knín area. His quick arrival with reinforcements decided the Battle of Živohošť in favor of Hussites.",
-        "equipment": "Armor, sword, shield with Švihov coat of arms.",
-        "origin": "Lords of Švihov family, western Bohemia",
-        "historicalNote": "At Živohošť, Břeněk brought about 4,000 men to aid Hussite pilgrims who were surrounded. His arrival changed the course of battle and Catholics suffered heavy defeat."
+        "description": "Břeněk Švihovský was among the commanders of the Hussite force marching from Plzeň. He fell at Sudoměř in March 1420.",
+        "equipment": "Armor, sword and shield; his exact personal equipment is reconstructed for the game.",
+        "origin": "Bohemian nobility on the Hussite side.",
+        "historicalNote": "Reinforcements and decisions in the early battles should not all be attributed to one commander. Both Břeněk and Jan Žižka led the force at Sudoměř."
       }
     },
     "HYNEK_NEKMIRE": {
@@ -1123,10 +1157,10 @@
       "name": "Diviš Bořek",
       "description": "Diviš Bořek of Miletínek, hetman of Oreb Hussites. Žižka's comrade-in-arms at Hořice.",
       "lore": {
-        "description": "Diviš Bořek of Miletínek (?-1438) was hetman of Oreb Hussites and faithful Žižka's comrade-in-arms. Orebites were a radical Hussite faction based in eastern Bohemia.",
-        "equipment": "Armor, sword, shield with Oreb chalice.",
-        "origin": "Miletínek, eastern Bohemia",
-        "historicalNote": "Diviš Bořek fought alongside Žižka in many battles including Hořice in 1423. After Žižka's death, Orebites renamed themselves Orphans in his honor. Diviš Bořek survived Lipany and died in 1438."
+        "description": "Diviš Bořek of Miletínek was a Hussite captain in eastern Bohemia. He cooperated with Žižka, but their armies later fought each other.",
+        "equipment": "Armor, sword and shield; his exact personal equipment is reconstructed for the game.",
+        "origin": "Miletínek in eastern Bohemia.",
+        "historicalNote": "Cooperation at Hořice in 1423 did not mean a lasting alliance. They fought at Strauch's Court that same year, so he should not be portrayed as Žižka's lifelong loyal companion."
       }
     },
     "CENEK_VARTENBERK": {
@@ -1171,22 +1205,22 @@
     },
     "HYNEK_PODEBRADY": {
       "name": "Hynek of Poděbrady",
-      "description": "Hynek of Poděbrady and Kunštát, Oreb ally. Father of future King George of Poděbrady.",
+      "description": "Hynek of Poděbrady and Kunštát. A Hussite nobleman from eastern Bohemia.",
       "lore": {
-        "description": "Hynek of Poděbrady and Kunštát (?-1426) was a Moravian nobleman and Hussite ally. He was the uncle of George of Poděbrady, future Czech king - George's father was Hynek's brother Viktorin Boček of Kunštát.",
-        "equipment": "Armor with Kunštát coat of arms, sword, shield.",
-        "origin": "Poděbrady and Kunštát, eastern Bohemia and Moravia",
-        "historicalNote": "Hynek of Poděbrady fought on the side of Orebites at Malešov in 1424. His son George was born in 1420 and became Czech king in 1458 - the only Hussite on Czech throne."
+        "description": "Hynek of Poděbrady and Kunštát was a Hussite nobleman. In the game he commands troops from eastern Bohemia.",
+        "equipment": "Armor, sword and shield; his exact personal equipment is reconstructed for the game.",
+        "origin": "The house of Kunštát and Poděbrady.",
+        "historicalNote": "The future King George's father was Viktorín Boček, not this Hynek. Repeated family names need to be distinguished when reading about the Poděbrady family."
       }
     },
     "VIKTORIN_BOCEK": {
       "name": "Viktorín Boček",
-      "description": "Viktorín Boček of Poděbrady, brother of Hynek. Valiant commander of Hussite cavalry.",
+      "description": "Viktorín Boček of Kunštát and Poděbrady. A Hussite nobleman and father of the future King George.",
       "lore": {
-        "description": "Viktorín Boček of Poděbrady was brother of Hynek of Poděbrady and uncle of future King George. He excelled as cavalry commander in Hussite ranks.",
-        "equipment": "Armor, lance, sword, shield with Kunštát coat of arms.",
-        "origin": "Poděbrady, eastern Bohemia",
-        "historicalNote": "Viktorín Boček fought alongside his brother Hynek at Malešov in 1424. The Poděbrady family belonged to moderate Hussite wing and after wars became one of the most powerful in Bohemia."
+        "description": "Viktorín Boček of Kunštát and Poděbrady was a Hussite nobleman and the father of the future King George of Poděbrady.",
+        "equipment": "Armor, lance, sword and shield; his exact personal equipment is reconstructed for the game.",
+        "origin": "The house of Kunštát and Poděbrady.",
+        "historicalNote": "Not to be confused with Hynek of Poděbrady. The study of Litice notes Viktorín's alterations to the castle before its later rebuilding under his son George."
       }
     },
     "VOZOVA_HRADBA_PRASKY": {
@@ -1491,14 +1525,14 @@
       "description": "First major clash of the Hussite Wars. South Bohemian pilgrims must survive the attack until reinforcements arrive.",
       "historicalSignificance": "Demonstration of necessity for organized defense, precursor to wagon fort.",
       "briefing": {
-        "hussites": "Petr ze Šternberka ambushed your band of South Bohemian pilgrims at the ford. Pull the defenceless — there are women and children among them — back to Červenka hill and hold until reinforcements from Nový Knín arrive!",
+        "hussites": "Petr ze Šternberka ambushed your band of South Bohemian pilgrims at the ford. Protect the defenceless pilgrims and use Červenka hill on the right. Main objective: at least 40% of your original units must survive through round 5 — you start with 8 and need at least 4. Reinforcements from Nový Knín arrive at the start of round 5, but do not count towards that minimum. Routing the enemy alone does not replace the survival requirement.",
         "crusaders": "Catch up with the Hussite pilgrims before they get help. You have the advantage - use it!"
       },
       "reinforcements": {
         "hussites": "Reinforcements from Nový Knín arrive! Břeněk Švihovský leads detachment to help!"
       },
       "objectives": {
-        "primary": "Pull the pilgrims onto Červenka hill and hold until the men of Knín arrive (turn 5). Protect the defenceless!",
+        "primary": "Survive through round 5 with at least 40% of the original units (at least 4 of 8; reinforcements do not count).",
         "secondary": [
           "Hold Červenka hill",
           "Capture or kill Petr ze Šternberka"
@@ -1508,9 +1542,9 @@
         "victory": "Victory at Živohošť opens the road ahead. Its cost also lies in the fate of those you were meant to protect.",
         "defeat": "The pilgrims were scattered and slaughtered at the ford. Petr ze Šternberka celebrates. The Hussite movement suffered a heavy blow at its very start.",
         "victoryVariants": {
-          "allPilgrims": "Your army has won, and every original group of pilgrims is still on the battlefield. That does not mean the fighting cost nothing, but their journey does not end here.\n\nA voice from the battlefield — fiction, not a historical quotation:\n“We called out to one another before we spoke of victory. Every group answered.”",
-          "somePilgrims": "The battle is won, but only some of the original pilgrim groups remain on the field. The next march will begin with gaps in the ranks; a victory report cannot fill them.\n\nA voice from the battlefield — fiction, not a historical quotation:\n“We called across the field. Some voices answered; for others, we waited in vain.”",
-          "noPilgrims": "Your army has won, but none of the original pilgrim groups remain on the battlefield. Those who fell and those who fled are not the same; the original band is no longer together.\n\nA voice from the battlefield — fiction, not a historical quotation:\n“We had news of victory. Of the band we were meant to protect, no one was left here to hear it.”"
+          "allPilgrims": "The battle is won. Every original group of pilgrims is still on the field.\n\nA voice from the field (fiction, not a source quotation):\n“We called to the other groups. Every one answered.”",
+          "somePilgrims": "The battle is won, but only some of the original pilgrim groups remain on the field.\n\nA voice from the field (fiction, not a source quotation):\n“We called to the others. Not everyone answered.”",
+          "noPilgrims": "Your army has won, but none of the original pilgrim groups remain on the field.\n\nA voice from the field (fiction, not a source quotation):\n“The battle is ours. But the pilgrims are gone.”"
         }
       },
       "phases": [
@@ -1523,8 +1557,8 @@
               "sourceHash": "2d92336d81943c4a"
             },
             {
-              "text": "TIP: Your units are close to hill. Move them to green fields for defensive bonus.",
-              "sourceHash": "81b28fabbb1093b0"
+              "text": "TIP: Červenka hill is labelled on the right of the map. Its hill tiles provide a defensive bonus; green highlights after selecting a unit show movement destinations, not a terrain type.",
+              "sourceHash": "7fe96700a15f0d01"
             }
           ]
         },
@@ -3709,12 +3743,12 @@
     "quickEscapeBtn": "Escape!",
     "quickEscapeStay": "Stay",
     "choralName": "♪ Ktož jsú boží bojovníci! ♪",
-    "choralEffect": "The choral terrifies enemies!",
-    "choralActivated": "Hussites sing their battle choral! (+50% attack, -20% defense for 2 rounds)",
-    "choralAlreadyUsed": "The choral has already been used in this battle!",
-    "choralWrongFaction": "The choral can only be used during the Hussite turn!",
-    "choralExpired": "The choral effect has expired.",
-    "choralRemaining": "The choral lasts for {turns} more round.",
+    "choralEffect": "The battle hymn terrifies enemies!",
+    "choralActivated": "Hussites sing their battle hymn! (+50% attack, -20% defense for 2 rounds)",
+    "choralAlreadyUsed": "The battle hymn has already been used in this battle!",
+    "choralWrongFaction": "The battle hymn can only be used during the Hussite turn!",
+    "choralExpired": "The battle hymn's effect has expired.",
+    "choralRemaining": "Battle hymn — rounds left: {turns}.",
     "enemyDemoralized": "Enemy units are demoralized!",
     "reinforcements": "Reinforcements: {unit} arrived on the battlefield!",
     "reinforcementsWaiting": "Reinforcements are waiting for space on the battlefield.",
@@ -3726,7 +3760,7 @@
     "commanderFallen": "Commander has fallen! Defeat!",
     "keyPositionsLost": "Enemy has captured key positions! Defeat!",
     "tooManyCasualties": "You have lost too many units ({percent}%)! Defeat!",
-    "objectiveComplete": "Bonus objective completed: {description}",
+    "objectiveComplete": "Optional objective completed: {description}",
     "victorySurvival": "Victory! You survived until round {turn} with {percent}% of units.",
     "victoryFieldArmyEliminated": "A costly victory! {percent}% of your units survived through round {turn}, but the enemy field army was eliminated.",
     "victoryAlternativeFieldArmy": "Alternative victory! The enemy field army was shattered and Žižka survived.",

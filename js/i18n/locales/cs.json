@@ -210,13 +210,15 @@
     "firstBattle": "První bitva: Živohošť",
     "firstBattleNote": "Začněte tady · rozkazy a stručné ovládání",
     "winGoal": "Jak vyhrát",
-    "optionalGoal": "Volitelný bonus —",
+    "optionalGoal": "Volitelný cíl —",
+    "optionalGoalsHint": "Výzvy navíc, ne podmínky vítězství. Vyhodnotí se v závěru bitvy; nepřidávají jednotky ani bojové bonusy.",
     "controlsTitle": "Před prvním tahem · ovládání v kostce",
     "noRush": "Je to tahová hra. Při rozhodování vás nic nehoní; protivník jedná až po ukončení vašeho tahu.",
     "selectStep": "Vaše oddíly mají červené kruhové žetony, protivník modré štíty. Vyberte vlastní oddíl; jeho stav a schopnosti najdete v levém panelu nebo pod mapou v tlačítku Rozkazy a detail.",
     "actionStep": "Klepnutí na zeleně zvýrazněné pole rovnou přesune vybraný oddíl. Klepnutí na červeně zvýrazněného nepřítele rovnou provede útok. Stejné ovládání platí na dotyku i myší.",
+    "movementStep": "Pohyb udává body, ne počet polí. Pláň stojí 1 bod, kopec 2: oddíl se 2 body projde dvě pláně, ale jen jeden kopec. Přesun je jedna akce; po jeho dokončení už oddíl znovu nepřesunete. Podrobnosti a ceny terénu najdete u rozkazů pod Jak funguje pohyb.",
     "endStep": "Rozdejte rozkazy dalším oddílům a stiskněte Ukončit tah. Nevyužité oddíly se automaticky brání (−30 % příchozího poškození), ale stojící oddíly s dostřelem 2+ a zbývajícím výstřelem místo toho připraví krycí palbu bez bonusu obrany.",
-    "helpStep": "Hlavní cíl zůstává nad mapou. Podrobnosti najdete pod Cíle, pravidla pod Menu → Nápověda. Escape otevře pauzu.",
+    "helpStep": "Hlavní cíl zůstává nad mapou. Podrobnosti najdete pod Cíle, pravidla pod Menu → Jak hrát. Escape otevře pauzu.",
     "resultReason": "Proč bitva skončila",
     "readChronicle": "Vaše kronika",
     "togglePanel": "Sbalit / rozbalit postranní panel",
@@ -247,6 +249,11 @@
     "overview": "Přehled",
     "objectivesTitle": "Cíle mise",
     "captureProgress": "Obsazeno {captured}/{required}",
+    "survival": {
+      "counts": "Původní oddíly: {alive}/{total} · minimum {minimum}",
+      "turns": "Dokončená kola: {completedTurns}/{turns}. Časový cíl se vyhodnotí po tahu nepřítele v {turns}. kole.",
+      "rules": "Posily dorazí na začátku {reinforcementTurn}. kola. Do konce {turns}. kola musí přežít nejméně {minimum} z {total} původních oddílů ({minPercent} %). Počítají se oddíly, ne součet jejich zdraví; posily se do minima nezapočítávají. Úplné vyřazení nepřítele může přinést dřívější vítězství. Samotné prchání nepřítele podmínku přežití nenahrazuje."
+    },
     "dualObjectiveProgress": "{name} {held}/{required}",
     "holdProgress": "Započtená kola: {held}/{required}",
     "objectiveOccupied": "Pole držíte",
@@ -278,10 +285,12 @@
     "defendExplanationRanged": "Krýt se: o 30 % menší příchozí poškození. Ukončí akce oddílu a spotřebuje zbývající výstřel.",
     "undo": "Zpět",
     "objectives": "Cíle",
-    "choral": "Chorál",
+    "choral": "Bojový chorál",
+    "choralReady": "1× za bitvu",
+    "choralTurns": "Zbývá kol: {turns}",
     "choralActive": "Chorál!",
     "choralEffect": "+50 % útok, -20 % obrana ({turns} kola)",
-    "choralUsed": "Chorál (použit)",
+    "choralUsed": "Použit",
     "menu": "Menu",
     "save": "Uložit hru",
     "load": "Načíst hru",
@@ -437,7 +446,7 @@
     "tutorialBadge": "📖 Tutoriál",
     "objectives": "Cíle mise",
     "primaryObjective": "Hlavní cíl",
-    "secondaryObjectives": "Bonusové cíle",
+    "secondaryObjectives": "Volitelné cíle",
     "briefing": "Rozkazy",
     "history": "Historické poznámky",
     "hussiteSide": "Husitská strana",
@@ -487,7 +496,7 @@
     "mvp": "Hrdina bitvy",
     "kills": "zabitých",
     "damage": "poškození",
-    "bonusObjectives": "Bonusové cíle",
+    "bonusObjectives": "Volitelné cíle",
     "trivia": "Věděli jste, že...?"
   },
   "chronicle": {
@@ -584,6 +593,16 @@
   },
   "help": {
     "unitStatsNote": "Čísla jsou základní hodnoty bez bonusů terénu a velitelů. Podmíněné schopnosti jsou popsány u každého oddílu.",
+    "movement": {
+      "title": "Jak funguje pohyb",
+      "budget": "{unit}: {points} b. pohybu. Níže je cena vstupu na jedno pole v bodech, ne cena celé trasy.",
+      "ready": "Zvýrazněná pole ukazují, kam oddíl dojde jedním přesunem. Klepnutí na cílové pole přesun rovnou provede.",
+      "spent": "Přesun už byl použit. Další až v příštím vlastním tahu, i když oddíl nevyužil všechny pohybové body.",
+      "fixed": "Tento oddíl je nepohyblivý. Může držet pozici a útočit, pokud má útok k dispozici.",
+      "linked": "Sepnutý vůz stojí. Skupinu přesunete pomocí Pochodu, pokud má volný pohyb. Rozevření spotřebuje pohyb: samostatně se vůz rozjede až příští tah.",
+      "group": "Pochod hradby je výjimka: celá pochodující skupina se posune o jedno sousední pole. Všichni potřebují volný pohyb i volnou cestu. Podrobnosti jsou v rozkazech vozů.",
+      "entryCost": "{unit} — cena vstupu: {cost}"
+    },
     "title": "Nápověda a Encyklopedie",
     "tabs": {
       "history": "Historie",
@@ -608,8 +627,15 @@
     },
     "equipment": "Výzbroj",
     "origin": "Původ",
-    "historicalNote": "Historická poznámka",
+    "historicalNote": "Poznámka",
+    "unitLoreNotice": "Medailonky jsou autorská shrnutí, ne citace kronik. Výzbroj a složení oddílů jsou zjednodušené pro hru; odkaz u karty dokládá uvedený historický rámec, nikoli přesné herní statistiky.",
+    "unitReading": "K dalšímu čtení",
     "mechanics": {
+      "choral": "Bojový chorál je schopnost, ne přepínač hudby. Stisknutím ho ihned použijete, jednou za bitvu. Na 2 kola zvýší útok husitů o 50 % a sníží jejich obranu o 20 %. Funguje i při vypnutém zvuku; hudba v hlavním menu má vlastní ovládání.",
+      "movement": "Pohyb udává zásobu bodů, ne počet polí. Sčítají se ceny polí, na která oddíl vstoupí. Jednotka provede jeden přesun za tah: po jeho dokončení už znovu nejde, ani když všechny body nevyužila.",
+      "movementExample": "Příklad: oddíl se 2 body projde dvě pláně po 1 bodu, ale kopec za 2 body spotřebuje celý přesun. Jízda platí v lese, bahně a bažině o 1 bod více než pěchota.",
+      "movementBlocks": "Přes spojence lze projít, ale ne na něm skončit; přes nepřítele projít nelze. Vstup do sousedství nepřítele se zónou kontroly zastaví další postup. Voda je neprůchodná, kromě scénářové zamrzlé řeky.",
+      "movementStep": "Výjimka pro pomalé oddíly: na volné sousední průchozí pole mohou udělat alespoň jeden krok, i když jeho cena přesahuje jejich body. Tento krok spotřebuje celý přesun. Pochod sepnutých vozů má vlastní skupinová pravidla.",
       "artilleryTitle": "Dělostřelectvo: záleží na pořadí",
       "artillery": "Houfnice a další pohyblivá děla bez schopnosti Mobilní po přesunu už v témže tahu nevystřelí. Opačné pořadí je možné: nejdřív výstřel, potom přesun. Mobilní tarasnice může jet i střílet v libovolném pořadí. Nepohyblivá děla se nepřesouvají. Bránit / Krýt se vždy ukončí obě akce.",
       "wagonTitle": "Rozkazy vozové hradby",
@@ -800,7 +826,7 @@
     "commanderFallen": "Velitel padl! Porážka!",
     "keyPositionsLost": "Nepřítel obsadil klíčové pozice! Porážka!",
     "tooManyCasualties": "Ztratili jste příliš mnoho jednotek ({percent}%)! Porážka!",
-    "objectiveComplete": "Bonusový cíl splněn: {description}",
+    "objectiveComplete": "Volitelný cíl splněn: {description}",
     "victorySurvival": "Vítězství! Přežili jste do kola {turn} s {percent}% jednotek.",
     "victoryFieldArmyEliminated": "Draze zaplacené vítězství! Do kola {turn} přežilo {percent}% vašich oddílů, ale nepřátelská bojová síla byla zničena.",
     "victoryAlternativeFieldArmy": "Alternativní vítězství! Nepřátelská polní armáda byla rozbita a Žižka přežil.",
@@ -1687,14 +1713,14 @@
       "description": "První větší střetnutí husitských válek. Jihočeští poutníci musí přežít útok do příchodu posil.",
       "historicalSignificance": "Ukázka nutnosti organizované obrany, předchůdce vozové hradby.",
       "briefing": {
-        "hussites": "Petr ze Šternberka přepadl u brodu váš houf jihočeských poutníků. Stáhněte bezbranné — jsou mezi nimi ženy a děti — na kopec Červenka a udržte se, dokud nedorazí posily z Nového Knína!",
+        "hussites": "Petr ze Šternberka přepadl u brodu váš houf jihočeských poutníků. Chraňte bezbranné poutníky a využijte kopec Červenka vpravo. Hlavní cíl: do konce 5. kola musí přežít alespoň 40 % původních oddílů — na začátku jich máte 8, potřebujete nejméně 4. Posily z Nového Knína dorazí na začátku 5. kola, ale do tohoto počtu se nezapočítávají. Samotné prchání nepřítele podmínku přežití nenahrazuje.",
         "crusaders": "Dohoňte husitské poutníky dříve, než se jim dostane pomoci. Máte převahu - využijte ji!"
       },
       "reinforcements": {
         "hussites": "Posily z Nového Knína přicházejí! Břeněk Švihovský vede oddíl na pomoc!"
       },
       "objectives": {
-        "primary": "Stáhni poutníky na kopec Červenka a vydrž do příchodu Knínských (kolo 5). Ochraň bezbranné!",
+        "primary": "Do konce 5. kola musí přežít alespoň 40 % původních oddílů (nejméně 4 z 8; posily se nepočítají).",
         "secondary": [
           "Udržte kopec Červenka",
           "Zajměte nebo zabijte Petra ze Šternberka"
@@ -1704,9 +1730,9 @@
         "victory": "Vítězství u Živohoště otevírá cestu dál. O jeho ceně však rozhoduje i osud těch, které jste měli chránit.",
         "defeat": "Poutníci byli u brodu rozprášeni a pobiti. Petr ze Šternberka slaví. Husitské hnutí utrpělo těžkou ránu hned v počátcích.",
         "victoryVariants": {
-          "allPilgrims": "Bitva je vyhraná a všechny původní skupiny poutníků jsou stále na bojišti. Neznamená to boj beze ztrát, ale jejich cesta tady nekončí.\n\nHlas z bojiště — autorská fikce, nikoli citace pramene:\n„Než jsme začali mluvit o vítězství, volali jsme na sebe. Ze všech skupin přicházely odpovědi.“",
-          "somePilgrims": "Bitva je vyhraná, ale na bojišti zůstala jen část původních skupin poutníků. Další cesta začne s mezerami v houfu; vítězná zpráva je nezaplní.\n\nHlas z bojiště — autorská fikce, nikoli citace pramene:\n„Volali jsme přes pole. Některé hlasy odpověděly; na jiné jsme čekali marně.“",
-          "noPilgrims": "Vojsko zvítězilo, ale žádná z původních skupin poutníků už na bojišti nezůstala. Padlí a ti, kdo uprchli, nejsou totéž; původní houf však už nestojí pohromadě.\n\nHlas z bojiště — autorská fikce, nikoli citace pramene:\n„Měli jsme zprávu o vítězství. Z houfu, který jsme měli chránit, ji tu už nikdo neposlouchal.“"
+          "allPilgrims": "Bitva je vyhraná. Na bojišti zůstaly všechny původní skupiny poutníků.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Volali jsme na ostatní skupiny. Všechny se ozvaly.“",
+          "somePilgrims": "Bitva je vyhraná, ale na bojišti zůstala jen část původních skupin poutníků.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Volali jsme na ostatní. Ne všichni odpověděli.“",
+          "noPilgrims": "Vojsko zvítězilo, ale žádná z původních skupin poutníků už na bojišti nezůstala.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Bitva je naše. Ale poutníci tu už nejsou.“"
         }
       },
       "phases": [
@@ -1719,8 +1745,8 @@
               "sourceHash": "2d92336d81943c4a"
             },
             {
-              "text": "TIP: Vaše jednotky jsou blízko kopce. Přesuňte je na zelená pole pro obranný bonus.",
-              "sourceHash": "81b28fabbb1093b0"
+              "text": "TIP: Kopec Červenka je označený názvem vpravo na mapě. Jeho kopcovitá pole poskytují obranný bonus; zelené zvýraznění po výběru oddílu ukazuje dostupný pohyb, nikoli druh terénu.",
+              "sourceHash": "7fe96700a15f0d01"
             }
           ]
         },
@@ -3112,8 +3138,277 @@
     }
   },
   "units": {
+    "PETR_STERNBERK": {
+      "lore": {
+        "description": "Petr Konopišťský ze Šternberka vedl roku 1419 útok na husitské poutníky u Živohoště. Ve hře představuje velitele útočící jízdy.",
+        "equipment": "Zbroj, kopí, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+        "origin": "Rod pánů ze Šternberka.",
+        "historicalNote": "Příchod posil u Živohoště pomohl části poutníků pokračovat v cestě. Herní vítězství není dokladem přesných historických ztrát ani úplného zničení útočníků."
+      }
+    },
+    "HYNEK_PODEBRADY": {
+      "description": "Hynek z Poděbrad a Kunštátu. Husitský šlechtic z východních Čech.",
+      "lore": {
+        "description": "Hynek z Poděbrad a Kunštátu byl husitský šlechtic. Ve hře vystupuje mezi veliteli východočeských oddílů.",
+        "equipment": "Zbroj, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+        "origin": "Rod pánů z Kunštátu a Poděbrad.",
+        "historicalNote": "Otcem budoucího krále Jiřího byl Viktorín Boček, nikoli tento Hynek. Při čtení o Poděbradech je třeba rozlišovat opakující se rodová jména."
+      }
+    },
+    "DIVIS_BOREK": {
+      "lore": {
+        "description": "Diviš Bořek z Miletínka byl východočeský husitský hejtman. S Žižkou spolupracoval, ale později se jejich vojska střetla proti sobě.",
+        "equipment": "Zbroj, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+        "origin": "Miletínek ve východních Čechách.",
+        "historicalNote": "Spolupráce u Hořic roku 1423 neznamenala trvalé spojenectví. Téhož roku došlo ke střetu u Strauchova dvora; nelze jej popisovat jako celoživotně věrného Žižkova druha."
+      }
+    },
+    "BRENEK_SVIHOVSKY": {
+      "description": "Břeněk Švihovský z Rýzmburka. Jeden z velitelů husitského houfu u Sudoměře.",
+      "lore": {
+        "description": "Břeněk Švihovský patřil k velitelům husitského houfu táhnoucího od Plzně. Padl u Sudoměře v březnu 1420.",
+        "equipment": "Zbroj, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+        "origin": "Česká šlechta na husitské straně.",
+        "historicalNote": "V raných bitvách není bezpečné připsat všechny posily a rozhodnutí jednomu veliteli. U Sudoměře bojovali v čele houfu Břeněk i Jan Žižka."
+      }
+    },
+    "BOHUSLAV_SVAMBERK": {
+      "description": "Bohuslav ze Švamberka. Katolický hejtman, ve hře velitel části vojska u Sudoměře.",
+      "lore": {
+        "description": "Bohuslav ze Švamberka byl katolický šlechtic a protivník raných husitských houfů. Ve hře vystupuje v čele části katolického vojska u Sudoměře.",
+        "equipment": "Zbroj, kopí, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+        "origin": "Rod pánů ze Švamberka, západní Čechy.",
+        "historicalNote": "Počet jezdců u Sudoměře je nejistý. Herní síly a velitelské role představují rekonstrukci, nikoli přesné rozdělení každého historického oddílu."
+      }
+    },
+    "POLNI_DELO": {
+      "lore": {
+        "description": "Dělostřelecký oddíl protivníka. Ve hře potřebuje palebný prostor a ochranu před útokem na baterii.",
+        "equipment": "Dělo na lafetě, střelný prach, střely a vybavení obsluhy.",
+        "origin": "Dělostřelectvo královských a křižáckých vojsk.",
+        "historicalNote": "Herní kategorie zjednodušuje různorodé kusy a jejich obsluhu. Neznamená, že všechna děla jedné strany byla stejná nebo horší než děla druhé."
+      }
+    },
+    "ZOLDNERI": {
+      "lore": {
+        "description": "Placený pěší oddíl. Ve hře představuje zkušenější bojovníky s různou výzbrojí, ne samostatný druh zbraně.",
+        "equipment": "Meče, kopí či jiné dostupné zbraně, přilby a ochranná výstroj.",
+        "origin": "Najatí ozbrojenci.",
+        "historicalNote": "Žoldnéř označuje způsob služby, nikoli jednotnou národnost, výzbroj nebo morálku. Herní typ tyto rozdíly zjednodušuje."
+      }
+    },
+    "JAN_ZIZKA": {
+      "description": "Jan Žižka z Trocnova. Husitský hejtman, který velel polnímu vojsku i po ztrátě zraku.",
+      "lore": {
+        "description": "Jan Žižka z Trocnova patřil k hlavním husitským hejtmanům. Po ztrátě zraku dál vedl polní vojsko; zemřel během tažení roku 1424.",
+        "equipment": "Zbroj a osobní zbraň; velitelský palcát je známým dobovým symbolem pravomoci.",
+        "origin": "Trocnov v jižních Čechách.",
+        "historicalNote": "Jeho velitelská aura je herní způsob znázornění velení. Nedoložené výroky ani pověst o bubnu z jeho kůže zde nepoužíváme jako historický důkaz."
+      }
+    },
+    "VIKTORIN_BOCEK": {
+      "description": "Viktorín Boček z Kunštátu a Poděbrad. Husitský šlechtic a otec budoucího krále Jiřího.",
+      "lore": {
+        "description": "Viktorín Boček z Kunštátu a Poděbrad byl husitský šlechtic a otec pozdějšího krále Jiřího z Poděbrad.",
+        "equipment": "Zbroj, kopí, meč a štít; přesná osobní výstroj je herní rekonstrukce.",
+        "origin": "Rod pánů z Kunštátu a Poděbrad.",
+        "historicalNote": "Nezaměňovat s Hynkem z Poděbrad. Studie o Liticích připomíná Viktorínovy stavební úpravy hradu před pozdější přestavbou za vlády jeho syna Jiřího."
+      }
+    },
+    "KUSNICI_JANOV": {
+      "lore": {
+        "description": "Ve hře zkušenější žoldnéřský oddíl s kušemi. Je silný při palbě z bezpečné pozice, ale potřebuje ochranu před přímým útokem.",
+        "equipment": "Kuše, šipky, napínací pomůcka a osobní zbraň.",
+        "origin": "Herní oddíl označený jako janovští kušiníci.",
+        "historicalNote": "Vyšší statistiky jsou herním rozlišením zkušenosti. Neprokazují univerzální průbojnost kuší ani přítomnost konkrétní žoldnéřské roty na každém bojišti."
+      }
+    },
+    "KUSNICI": {
+      "lore": {
+        "description": "Střelci s kušemi poskytující palebnou podporu. Ve hře potřebují odstup od nepřítele a chráněnou pozici.",
+        "equipment": "Kuše, šipky, napínací pomůcka a osobní zbraň.",
+        "origin": "Městské nebo placené střelecké oddíly.",
+        "historicalNote": "Kuše vyžadovala opětovné napnutí po výstřelu. Archeologické nálezy ukazují různé napínací pomůcky; herní tah není přesný časový přepočet nabíjení."
+      }
+    },
+    "LUCISTNICI": {
+      "lore": {
+        "description": "Střelci s luky. Ve hře mohou díky schopnosti Rychlá palba útočit dvakrát za tah, ale zůstávají zranitelní zblízka.",
+        "equipment": "Luk, toulec se šípy a krátká osobní zbraň.",
+        "origin": "Střelecké oddíly protivníka.",
+        "historicalNote": "Dva útoky za tah jsou herní rozlišení luku a kuše, ne doložený poměr jejich rychlosti. Konkrétní počty a původ střelců jsou rekonstrukce scénáře."
+      }
+    },
+    "BOMBARDA": {
+      "lore": {
+        "description": "Těžké dělo určené pro palbu z připraveného postavení. Ve hře se nepohybuje; jeho baterii je třeba chránit jinými oddíly.",
+        "equipment": "Těžká hlaveň na lafetě, střely, střelný prach a vybavení obsluhy.",
+        "origin": "Obléhací dělostřelectvo.",
+        "historicalNote": "Nulový pohyb je zjednodušení práce s těžkou baterií během bitvy. Dostřel a účinek určují pravidla hry, ne jeden známý historický kus."
+      }
+    },
+    "ZVED_KRIZACI": {
+      "lore": {
+        "description": "Jezdecký průzkumník protivníka. Ve hře hledá přístupy a pomáhá odhalovat rozestavení vašich oddílů.",
+        "equipment": "Kůň, lehká výstroj a osobní zbraň.",
+        "origin": "Průzkumníci a poslové protivníkova vojska.",
+        "historicalNote": "Samostatný žeton zvěda slouží pravidlům viditelnosti. Neznamená jednotnou výstroj všech dobových průzkumníků."
+      }
+    },
+    "KOPINICI": {
+      "lore": {
+        "description": "Pěchota s dlouhými kopími. Ve hře drží linii proti jízdě a kryje střelce nebo děla.",
+        "equipment": "Dlouhé kopí, přilba, ochranný oděv a krátká záložní zbraň.",
+        "origin": "Městská domobrana a placené pěší oddíly.",
+        "historicalNote": "Stejná zbraň neznamenala stejný výcvik ani odhodlání. Herní statistiky tyto rozdíly shrnují do jednoho typu."
+      }
+    },
+    "HALAPARTNICI": {
+      "lore": {
+        "description": "Pěšáci s halapartnami či příbuznými tyčovými zbraněmi. Ve hře představují silnější oddíl pro boj zblízka.",
+        "equipment": "Halapartna, přilba, krátká záložní zbraň a různá ochranná výstroj.",
+        "origin": "Městští a najatí pěší ozbrojenci.",
+        "historicalNote": "VHÚ představuje halapartníky kolem roku 1421 jako možnou rekonstrukci. To nedokládá jejich přesnou četnost v každé bitvě; herní počty nejsou historický soupis."
+      }
+    },
+    "PAVEZNICI_KRIZACI": {
+      "lore": {
+        "description": "Pěšáci s velkými štíty. Ve hře chrání sousední střelce stejně jako pavézníci na husitské straně.",
+        "equipment": "Pavéza, přilba a krátká zbraň pro osobní obranu.",
+        "origin": "Pěší oddíly protivníka.",
+        "historicalNote": "Barevnost štítu na žetonu označuje herní stranu. Není přesným vyobrazením konkrétního dochovaného štítu."
+      }
+    },
+    "ZVED": {
+      "lore": {
+        "description": "Jezdecký průzkumník. Ve hře vidí dál než většina ostatních oddílů a dokáže rychle přenášet pozornost na jiné křídlo.",
+        "equipment": "Kůň, lehká výstroj a osobní zbraň.",
+        "origin": "Průzkumníci a poslové husitského vojska.",
+        "historicalNote": "Zvěd je samostatný typ kvůli průzkumu v mlze války. Herní dosah vidění není historicky měřená vlastnost vojáků."
+      }
+    },
+    "TEZKOODENCI": {
+      "lore": {
+        "description": "Obrnění jezdci, ve hře odlišení od údernější rytířské jízdy. Mohou chránit křídlo nebo navázat na útok jiného oddílu.",
+        "equipment": "Kopí, meč, přilba a kroužkové či plátové části zbroje.",
+        "origin": "Šlechtické družiny a placení ozbrojenci.",
+        "historicalNote": "Rozhraní mezi druhy jízdní výstroje nebylo pevné. Dvě herní kategorie nejsou dobovým předpisem pro rozdělení vojska."
+      }
+    },
+    "LEHKA_JIZDA": {
+      "lore": {
+        "description": "Rychlí jezdci pro průzkum, obchvaty a pronásledování. Ve hře využívají volné cesty a mezery mezi nepřátelskými oddíly.",
+        "equipment": "Kopí či meč, přilba a lehčí ochranná výstroj.",
+        "origin": "Jízdní oddíly protivníka.",
+        "historicalNote": "Označení lehká jízda shrnuje různé podoby výstroje. Nelze je automaticky ztotožnit s pozdějšími rejtary nebo jednotným národním typem."
+      }
+    },
+    "VOZOVA_HRADBA": {
+      "lore": {
+        "description": "Bojový vůz poskytuje kryt pěchotě a střelcům. Ve hře jej lze spojovat se sousedními vozy do hradby nebo s celou linií pochodovat.",
+        "equipment": "Upravený vůz, ochranné desky, spojovací prostředky a zbraně posádky.",
+        "origin": "Vozové oddíly husitských vojsk.",
+        "historicalNote": "Vůz ve hře zastupuje vozidlo i posádku. Počet životů, kryt sousedních polí a skupinové rozkazy jsou zjednodušení; nejde o citaci Žižkova řádu."
+      }
+    },
+    "JIZDA_HUSITI": {
+      "lore": {
+        "description": "Lehčeji vystrojení jezdci pro průzkum, obchvaty a pronásledování. Ve hře dávají přednost volnému prostoru před lesem či bažinou.",
+        "equipment": "Kopí nebo meč, přilba a lehčí ochranná výstroj.",
+        "origin": "Jízdní oddíly husitských vojsk.",
+        "historicalNote": "Husitské vojsko zahrnovalo i jezdectvo. Rozdělení na lehkou a šlechtickou jízdu pomáhá hře odlišit role, ne všechny dobové formy výstroje."
+      }
+    },
+    "SLECHTICKA_JIZDA_HUSITI": {
+      "lore": {
+        "description": "Obrnění jezdci husitské šlechty a jejích družin. Ve hře doplňují pěchotu a vozové oddíly údernou jízdou.",
+        "equipment": "Kopí, meč, přilba a plátové či kroužkové části zbroje.",
+        "origin": "Husitská šlechta a její ozbrojené družiny.",
+        "historicalNote": "Vojska husitské strany nebyla složena jen z pěchoty. Přesné zastoupení jednotlivých druhů vojska závisí na bitvě a na nejistých odhadech pramenů."
+      }
+    },
+    "POUTNICI": {
+      "lore": {
+        "description": "Účastníci husitských náboženských poutí. Ve hře zastupují zranitelnou část houfu, kterou mají ozbrojené oddíly chránit.",
+        "equipment": "Cestovní hole a dostupné nářadí; ochranná výstroj je omezená.",
+        "origin": "Poutnické houfy z jihozápadních Čech.",
+        "historicalNote": "Oddíl není pravidelná bojová jednotka. Jeho síla a výzbroj slouží hernímu modelu ochrany poutníků, nikoli přesnému soupisu účastníků."
+      }
+    },
+    "KUSINICI_HUSITI": {
+      "lore": {
+        "description": "Střelci s kušemi. Potřebují čas a kryt k nabíjení; ve hře je chrání vozy nebo pavézníci.",
+        "equipment": "Kuše, šipky, napínací pomůcka a krátká záložní zbraň.",
+        "origin": "Střelecké oddíly husitských vojsk.",
+        "historicalNote": "Archeologické nálezy ze Sionu dokládají také pomůcky k napínání kuší. Průbojnost nelze převést na jeden univerzální údaj pro každou kuši a zbroj."
+      }
+    },
+    "HOUFNICE": {
+      "lore": {
+        "description": "Polní dělo s krátkou hlavní. Ve hře zasahuje více oddílů v cílové oblasti, ale po přesunu už v témže tahu nevystřelí.",
+        "equipment": "Dělová hlaveň na lafetě, střelný prach, střely a vybavení obsluhy.",
+        "origin": "Dělostřelecké oddíly husitských vojsk.",
+        "historicalNote": "Kamenné střely ze Sionu dokládají dobové dělostřelectvo. Herní plošný účinek a pořadí akcí nejsou přesným přepočtem historické rychlosti palby."
+      }
+    },
+    "TARASNICE": {
+      "lore": {
+        "description": "Dělo menší ráže pro přímou palbu. Herní oddíl je pohyblivější než houfnice a může se v jednom tahu přesunout i vystřelit.",
+        "equipment": "Menší dělová hlaveň na podstavci či lafetě, střelný prach a střely.",
+        "origin": "Dělostřelecké oddíly.",
+        "historicalNote": "Mobilita je vlastností tohoto herního typu. Neznamená to, že všechny historické tarasnice střílely za jízdy nebo měly stejné provedení."
+      }
+    },
+    "CEPNICI": {
+      "lore": {
+        "description": "Pěšáci s bojovými cepy upravenými ze zemědělského nářadí. Ve hře se hodí proti obrněným protivníkům, ale potřebují ochranu před střelbou.",
+        "equipment": "Okovaný cep, přilba a lehká ochranná výstroj; krátká záložní zbraň.",
+        "origin": "Husitské pěší houfy.",
+        "historicalNote": "Bojový cep je doloženou zbraní husitské pěchoty. Bonus proti obrněným je herní zjednodušení, ne údaj z kroniky."
+      }
+    },
+    "PAVEZNICI": {
+      "lore": {
+        "description": "Pěšáci s velkými štíty. Ve hře chrání sousední střelce, kteří jsou jinak zranitelní v boji zblízka.",
+        "equipment": "Pavéza, přilba a krátká zbraň pro osobní obranu.",
+        "origin": "Pěší oddíly husitských vojsk.",
+        "historicalNote": "Ochrana sousedních střelců je způsob, jak hra modeluje spolupráci štítonošů a střelců. Nejde o přesný dobový organizační předpis."
+      }
+    },
+    "KOPINICI_HUSITI": {
+      "lore": {
+        "description": "Pěchota s dlouhými kopími. Ve hře pomáhá držet linii proti jízdě a chránit zranitelnější oddíly.",
+        "equipment": "Dlouhé kopí, přilba, ochranný oděv a krátká záložní zbraň.",
+        "origin": "Pěší oddíly husitských vojsk.",
+        "historicalNote": "Účinek proti jízdě závisel i na soudržnosti šiku a terénu. Číselný bonus je herní pravidlo, nikoli doložený Žižkův výrok."
+      }
+    },
+    "RUCNICARI": {
+      "name": "Střelci z ručnic",
+      "lore": {
+        "description": "Střelci s ranými ručními palnými zbraněmi. Ve hře jejich zásah oslabuje útok protivníka.",
+        "equipment": "Ručnice či píšťala, střelný prach, střely a potřeby k zapálení nálože.",
+        "origin": "Střelecké oddíly husitských vojsk.",
+        "historicalNote": "Ručnice i jejich střely jsou doložené nálezy ze Sionu. To samo nepotvrzuje jejich přítomnost v každé dřívější bitvě; rozmístění herních oddílů je rekonstrukce."
+      }
+    },
+    "TEZKY_RYTIR": {
+      "name": "Rytířská jízda",
+      "lore": {
+        "description": "Obrněná jízda s kopími. Ve hře je nebezpečná při nárazu na volném prostranství, méně se jí daří v těžkém terénu.",
+        "equipment": "Kopí, meč, přilba a zbroj; ochrana koně se mohla lišit.",
+        "origin": "Šlechtické družiny a další obrnění jezdci.",
+        "historicalNote": "Rytíř označuje také společenské postavení, ne přesný stupeň zbroje. Herní typ Rytířská jízda vyjadřuje bojovou roli."
+      }
+    },
     "SUDLICNICI": {
-      "description": "Pěchota s tyčovými zbraněmi. Na vzdálenějšího nepřítele dosáhne jen přes spojence."
+      "description": "Pěchota s tyčovými zbraněmi. Na vzdálenějšího nepřítele dosáhne jen přes spojence.",
+      "lore": {
+        "description": "Pěšáci s dlouhými tyčovými zbraněmi. Herní schopnost Dosah jim umožňuje za určitých podmínek útočit přes spolubojovníka.",
+        "equipment": "Sudlice či jiná tyčová zbraň, přilba, krátká záložní zbraň.",
+        "origin": "Husitské pěší houfy a městská domobrana.",
+        "historicalNote": "Podoby tyčových zbraní i jejich označení se lišily. Herní typ nezastupuje jednotně vyzbrojený pluk."
+      }
     },
     "VOZOVA_HRADBA_PRASKY": {
       "description": "Obranný vůz umírněných kališníků. Lze jej spojit do hradby a pochodovat s linií; nemá zvláštní bonus sousedních vozů husitského typu."

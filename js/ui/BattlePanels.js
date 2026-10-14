@@ -53,7 +53,9 @@ class BattlePanels {
         }
 
         // Číslo kola - u misí s limitem ukaž i deadline (Kolo X/Y)
-        const maxT = this.game.currentScenario && this.game.currentScenario.maxTurns;
+        const maxT = this.game.currentScenario?.id === 'zivohost_1419'
+            ? this.game.currentScenario.victoryConditions.primary.turns
+            : this.game.currentScenario?.maxTurns;
         const displayedTurn = finished
             ? (this.game.gameOverTurn ?? (maxT ? Math.min(this.game.turnNumber, maxT) : this.game.turnNumber))
             : this.game.turnNumber;
@@ -74,6 +76,7 @@ class BattlePanels {
     }
 
     updateObjectiveProgress() {
+        this.updateSurvivalObjective();
         const primary = this.game.currentScenario?.victoryConditions?.primary;
         const targets = document.getElementById('dual-objectives');
         const hint = document.getElementById('dual-objective-hint');
@@ -135,6 +138,30 @@ class BattlePanels {
         for (const id of ['primary-objective', 'objective-hud-text']) {
             const element = document.getElementById(id);
             if (element && element.textContent !== text) element.textContent = text;
+        }
+    }
+
+    updateSurvivalObjective() {
+        const progress = this.game.currentScenario?.id === 'zivohost_1419'
+            ? this.game.victoryConditionsSystem.getSurvivalProgress() : null;
+        const visible = !!progress?.total;
+        for (const id of ['survival-hud', 'survival-objective']) {
+            const element = document.getElementById(id);
+            if (!element) continue;
+            element.classList.toggle('hidden', !visible);
+            element.classList.toggle('survival-at-risk', visible && progress.alive < progress.minimum);
+        }
+        if (!visible) {
+            document.getElementById('survival-hud').textContent = '';
+            return;
+        }
+        const values = { ...progress,
+            reinforcementTurn: this.game.currentScenario.forces.hussites.reinforcements.turn };
+        for (const [id, key] of [['survival-hud', 'counts'], ['survival-counts', 'counts'],
+            ['survival-turns', 'turns'], ['survival-rules', 'rules']]) {
+            const element = document.getElementById(id);
+            const text = i18n.t('game.survival.' + key, values);
+            if (element.textContent !== text) element.textContent = text;
         }
     }
 
@@ -376,6 +403,36 @@ class BattlePanels {
         }
     }
 
+    updateMovementHelp(unit) {
+        const help = document.getElementById('movement-help');
+        const faction = this.game.currentScenario?.playerFaction || 'hussites';
+        const visible = !!unit && unit.faction === faction;
+        help.classList.toggle('hidden', !visible);
+        if (!visible) return;
+        const fixed = unit.movement <= 0 || unit.unitClass === 'fortification';
+        const linked = unit.isWagon() && unit.formationClosed;
+        const state = fixed ? 'fixed' : unit.hasMoved ? 'spent'
+            : linked ? (unit.marching ? 'group' : 'linked') : 'ready';
+        document.getElementById('movement-state').textContent = i18n.t('help.movement.' + state);
+        document.getElementById('movement-standard').classList.toggle('hidden', fixed || linked);
+        document.getElementById('movement-budget').textContent = i18n.t('help.movement.budget', {
+            unit: unit.name, points: unit.movement });
+        const costs = document.getElementById('movement-costs');
+        costs.replaceChildren();
+        if (fixed || linked) return;
+        for (const terrain of ['plains', 'road', 'hills', 'slope', 'forest', 'mud', 'swamp', 'water']) {
+            const row = document.createElement('div');
+            row.dataset.terrain = terrain;
+            const name = document.createElement('dt');
+            name.textContent = i18n.t('terrain.' + terrain);
+            const cost = document.createElement('dd');
+            cost.textContent = terrain === 'water' && !this.game.currentScenario?.specialMechanics?.frozenRiver
+                ? i18n.t('tooltip.impassable') : String(this.game.getTerrainMoveCost(terrain, unit));
+            row.append(name, cost);
+            costs.appendChild(row);
+        }
+    }
+
     routingExplanation(unit) {
         const key = 'game.routingDetails.';
         const noQuarter = this.game.currentScenario?.specialMechanics?.noQuarterGiven;
@@ -410,6 +467,7 @@ class BattlePanels {
         this.updateGuidance();
         this.updateCoverFirePanel(unit);
         this.updateWagonOrderHelp(unit);
+        this.updateMovementHelp(unit);
         const infoDiv = document.getElementById('unit-info');
         const actionsDiv = document.getElementById('unit-actions');
         const attackBtn = document.getElementById('btn-attack');
@@ -423,6 +481,7 @@ class BattlePanels {
             infoDiv.scrollTop = 0;
             const wagonHelp = document.getElementById('wagon-order-help');
             if (wagonHelp) wagonHelp.open = false;
+            document.getElementById('movement-help').open = false;
             this.displayedUnitId = displayedUnitId;
         }
 
@@ -659,21 +718,31 @@ class BattlePanels {
         const choralBtn = document.getElementById('btn-choral');
         if (!choralBtn) return;
 
+        let status;
         if (this.game.choralActive) {
             // Chorál je aktivní - zobrazit zbývající kola
             choralBtn.disabled = true;
             choralBtn.classList.add('active');
-            choralBtn.textContent = `⚔️ ${i18n.t('game.choral')} (${this.game.choralTurnsRemaining})`;
+            status = i18n.t('game.choralTurns', { turns: this.game.choralTurnsRemaining });
         } else if (this.game.choralUsed) {
             // Chorál byl použit a už vypršel
             choralBtn.disabled = true;
             choralBtn.classList.remove('active');
-            choralBtn.textContent = `⚔️ ${i18n.t('game.choralUsed')}`;
+            status = i18n.t('game.choralUsed');
         } else {
             choralBtn.disabled = this.game.currentFaction !== 'hussites';
             choralBtn.classList.remove('active');
-            choralBtn.textContent = `⚔️ ${i18n.t('game.choral')}`;
+            status = i18n.t('game.choralReady');
         }
+
+        const label = document.createElement('span');
+        label.textContent = `⚔️ ${i18n.t('game.choral')}`;
+        const use = document.createElement('span');
+        use.className = 'choral-use';
+        use.textContent = status;
+        choralBtn.replaceChildren(label, use);
+        choralBtn.title = i18n.t('help.mechanics.choral');
+        choralBtn.setAttribute('aria-label', `${i18n.t('game.choral')} · ${status}`);
     }
 
     showPhase(newPhase) {

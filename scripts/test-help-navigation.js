@@ -109,7 +109,8 @@ for (const language of ['cs', 'en']) {
         }
         for (const type of ['VOZOVA_HRADBA_PRASKY', 'CEPNICI_PRASKY', 'KUSINICI_PRASKY', 'HOUFNICE_PRASKY', 'JIZDA_PRASKY']) {
             assert.ok(h.i18n.hasTranslation(`units.${type}.description`));
-            assert.ok(details(cardFor(h, type)).includes(h.i18n.t(`units.${type}.description`)));
+            const expected = vm.runInContext('HistoricalNotesView', h.context).escape(h.i18n.t(`units.${type}.description`));
+            assert.ok(details(cardFor(h, type)).includes(expected));
         }
         const wagon = details(cardFor(h, 'VOZOVA_HRADBA_PRASKY'));
         assert.ok(wagon.includes(h.i18n.t('special.wagon'))); assert.doesNotMatch(wagon, />wagon</);

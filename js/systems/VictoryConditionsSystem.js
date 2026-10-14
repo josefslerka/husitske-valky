@@ -61,6 +61,26 @@ class VictoryConditionsSystem {
             && progress.every(objective => objective.occupied);
     }
 
+    // Čtecí pohled pro pravidla i vysvětlení přežití. Posily nenahrazují
+    // původní obranu; stejné počítání používáme při rozhodnutí o výsledku.
+    getSurvivalProgress() {
+        const scenario = this.game.currentScenario;
+        const primary = scenario?.victoryConditions?.primary;
+        if (primary?.type !== 'survive') return null;
+        const faction = scenario.playerFaction || 'hussites';
+        const total = this.game.initialPlayerUnits;
+        const alive = this.game.units.filter(unit =>
+            unit.faction === faction && unit.health > 0 && !unit.isReinforcement).length;
+        const minPercent = primary.minUnitsPercent || 0;
+        const turns = primary.turns || scenario.maxTurns;
+        return {
+            alive, total, minPercent, turns,
+            minimum: Math.ceil(total * minPercent / 100),
+            percent: Math.min(100, alive / total * 100),
+            completedTurns: Math.min(turns, Math.max(0, this.game.turnNumber - 1))
+        };
+    }
+
     // Hlavní kontrola vítězství
     checkVictory() {
         if (this.game.gameState !== 'playing') return;
@@ -291,12 +311,10 @@ class VictoryConditionsSystem {
 
         switch (primary.type) {
             case 'survive':
-                const minPercent = primary.minUnitsPercent || 0;
-                // Posily se nepočítají - mise měří, kolik z PŮVODNÍ obrany přežilo.
-                // Bez tohoto by příchod posil nafoukl procento nad 100 % ("160% jednotek").
-                const originalSurvivors = playerUnits.filter(u => !u.isReinforcement).length;
-                const currentPercent = Math.min(100, (originalSurvivors / this.game.initialPlayerUnits) * 100);
-                const requiredTurnsSurvive = primary.turns || this.game.currentScenario.maxTurns;
+                const survival = this.getSurvivalProgress();
+                const minPercent = survival.minPercent;
+                const currentPercent = survival.percent;
+                const requiredTurnsSurvive = survival.turns;
 
                 // Kontrola proběhne až po DOKONČENÍ požadovaného počtu kol.
                 // turnNumber se zvyšuje při přepnutí na husity - vyhodnocení
