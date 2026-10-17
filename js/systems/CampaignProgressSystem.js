@@ -144,18 +144,18 @@ const CampaignProgressSystem = {
         if (!result?.scenarioId || !this.getActForBattle(result.scenarioId)) return null;
 
         const progress = this.load();
+        const reputationBefore = progress.reputation;
         const previous = progress.battles[result.scenarioId] || null;
         const contribution = this._resultContribution(result);
         const previousContribution = Number.isFinite(previous?.reputationContribution)
             ? previous.reputationContribution
             : null;
-        let reputationDelta = 0;
 
         // Počítá se pouze nejlepší dosažený výsledek dané bitvy.
         // Opakovaným hraním tedy nelze pověst neomezeně farmit.
         if (previousContribution === null || contribution > previousContribution) {
-            reputationDelta = contribution - (previousContribution || 0);
-            progress.reputation = Math.max(0, Math.min(100, progress.reputation + reputationDelta));
+            const contributionDelta = contribution - (previousContribution || 0);
+            progress.reputation = Math.max(0, Math.min(100, progress.reputation + contributionDelta));
         }
 
         const victoryImprovesResult = result.result === 'victory' && previous?.result !== 'victory';
@@ -173,12 +173,11 @@ const CampaignProgressSystem = {
             lastPlayed: Date.now()
         };
 
-        // Lipany lámou pověst neporazitelnosti bez ohledu na kontrafaktuální
-        // výsledek hráče; jednorázový zlom je ale později možné částečně napravit.
-        if (result.scenarioId === 'lipany_1434' && !progress.lipanyBreakApplied) {
-            const beforeBreak = progress.reputation;
+        // Propad patří skutečné porážce v partii, nikoli vítězné odbočce od historie.
+        // Pozdější prohra nesmí znehodnotit už získané vítězství kampaně.
+        if (result.scenarioId === 'lipany_1434' && result.result !== 'victory' &&
+            previous?.result !== 'victory' && !progress.lipanyBreakApplied) {
             progress.reputation = Math.max(0, Math.min(35, progress.reputation - 15));
-            reputationDelta += progress.reputation - beforeBreak;
             progress.lipanyBreakApplied = true;
         }
 
@@ -194,7 +193,7 @@ const CampaignProgressSystem = {
         this.save(progress);
         return {
             reputation: progress.reputation,
-            reputationDelta,
+            reputationDelta: progress.reputation - reputationBefore,
             tier: this.getReputationTier(progress.reputation),
             actCompleted,
             newlyUnlockedAct: this.getHighestUnlockedAct(progress)

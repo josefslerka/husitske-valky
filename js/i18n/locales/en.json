@@ -231,7 +231,7 @@
       "defend": "{unit}: movement and attack are unavailable. You can defend or select another unit.",
       "routing": "{unit} is routing. Its retreat is automatic; give orders to another unit.",
       "endTurn": "Your units can no longer act. Press End Turn to continue.",
-      "enemyTurn": "The opponent is acting. Click its turn indicator to shorten the wait.",
+      "enemyTurn": "The opponent is acting. Its turn indicator switches speed in both directions; you can switch back in Menu too.",
       "busy": "Carrying out your order… You can give the next one when this action finishes.",
       "paused": "The battle is paused. Orders can wait until you return.",
       "review": "The battle is over. Inspect units, pan the map, and use the button below to return to the result."
@@ -249,6 +249,8 @@
     "overview": "Overview",
     "objectivesTitle": "Mission Objectives",
     "captureProgress": "Occupied {captured}/{required}",
+    "optionalPositionProgress": "Occupied {captured}/{total} hexes · minimum {required}",
+    "optionalPositionHint": "Gold ◇ marks the exact target hexes. They must be occupied by your units when you win; continuous occupation is not required.",
     "survival": {
       "counts": "Original units: {alive}/{total} · minimum {minimum}",
       "turns": "Completed rounds: {completedTurns}/{turns}. The timed objective is checked after the enemy acts in round {turns}.",
@@ -301,9 +303,13 @@
     "returnToMenu": "Return to Menu",
     "confirmReturn": "Do you really want to leave the battle and return to the main menu?",
     "aiThinking": "Crusaders are thinking...",
-    "aiThinkingNamed": "{faction} is thinking...",
-    "skipAiTurn": "▶▶ skip",
-    "skipAiHint": "Click to speed up the enemy's turns",
+    "aiThinkingNamed": "Enemy turn: {faction}",
+    "aiSpeedNormal": "Normal",
+    "aiSpeedFast": "Fast",
+    "aiSpeedMenu": "Enemy turns: {mode}",
+    "aiSpeedSpeedUp": "Speed up",
+    "aiSpeedSlowDown": "Slow down",
+    "aiSpeedHint": "Switch between normal and fast presentation of enemy turns. You can switch back in the battle menu too; AI orders and game rules are unchanged.",
     "closeFort": "⛓ Chain the wagons",
     "openFort": "⛓ Open the wall",
     "toggleFortLine": "⛓ Whole line",
@@ -1428,23 +1434,31 @@
           ]
         },
         {
-          "name": "Six Assaults",
-          "description": "Erkinger drives his infantry at the walls - one assault after another.",
+          "name": "Defending the approaches",
+          "description": "Guard the western approach to Žatec.",
           "events": [
             {
-              "message": "Erkinger launches the assault on the western wall! Hold the line!",
-              "sourceHash": "fe7bf43dfd17c22f"
+              "message": "Guard the western approach to the town.",
+              "sourceHash": "43632ae1ce78a2cc",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Erkinger of Seinsheim remains on the field. Guard the approaches to the town.",
+                  "routing": "Erkinger of Seinsheim is routing and cannot take orders.",
+                  "fallen": "Erkinger of Seinsheim has fallen.",
+                  "escaped": "Erkinger of Seinsheim has left the field."
+                }
+              }
             },
             {
-              "title": "Sally from the gates!",
-              "text": "The Žatec men sallied from the gates, cut down many besiegers and withdrew behind the walls. The defenders take heart!",
-              "sourceHash": "f71e3eb7ed221b21"
+              "title": "Defenders’ resolve",
+              "text": "The defenders’ morale rises. Make use of their resolve.",
+              "sourceHash": "928f0a27162dda75"
             }
           ]
         },
         {
-          "name": "The Camp Ablaze",
-          "description": "The crusader camp burns, the princes quarrel, hunger grips the camp.",
+          "name": "The expedition in crisis",
+          "description": "Reports from the camp weaken the expedition’s morale.",
           "events": [
             {
               "title": "The camp is burning!",
@@ -1455,7 +1469,7 @@
         }
       ],
       "debriefing": {
-        "victory": "Žatec held! Six assaults repelled, the camp in flames - and on a false report that the Praguers were marching, the crusade flees on October 2 with the Žatec men driving it in rout. The Second Crusade falls apart without ever facing Žižka. The \"Fortress of the Sun\" was held by the whole town, without the name of a single hero - glory to the city, not to a man.",
+        "victory": "Žatec held out. The historical expedition ended in retreat; the battle results show the cost of your defence.",
         "defeat": "The walls of Žatec have fallen. The crusaders broke into the \"Fortress of the Sun\" and the Hussite northwest lies open. The Second Crusade celebrates a bloody success."
       }
     },
@@ -1540,7 +1554,7 @@
       },
       "debriefing": {
         "victory": "Victory at Živohošť opens the road ahead. Its cost also lies in the fate of those you were meant to protect.",
-        "defeat": "The pilgrims were scattered and slaughtered at the ford. Petr ze Šternberka celebrates. The Hussite movement suffered a heavy blow at its very start.",
+        "defeat": "You did not meet the survival conditions at Živohošť. That does not mean every pilgrim died.",
         "victoryVariants": {
           "allPilgrims": "The battle is won. Every original group of pilgrims is still on the field.\n\nA voice from the field (fiction, not a source quotation):\n“We called to the other groups. Every one answered.”",
           "somePilgrims": "The battle is won, but only some of the original pilgrim groups remain on the field.\n\nA voice from the field (fiction, not a source quotation):\n“We called to the others. Not everyone answered.”",
@@ -1567,8 +1581,8 @@
           "description": "Hussites build improvised defenses.",
           "events": [
             {
-              "text": "TIP: Pull the defenceless pilgrims onto the hill behind your fighters. Shooters on high ground fire farther and harder (elevation bonus).",
-              "sourceHash": "bd8a50ba168700c3"
+              "text": "TIP: If pilgrims are still on the field, withdraw them uphill behind your fighters. Shooters on hills gain an elevation bonus.",
+              "sourceHash": "909c583983c0fba3"
             }
           ]
         },
@@ -1633,8 +1647,16 @@
           "description": "The force uses its wagons as a defensive position.",
           "events": [
             {
-              "message": "Žižka: \"Pull wagons together! Shooters behind wagons, flailmen ready!\"",
-              "sourceHash": "5814377600ad017d"
+              "message": "Check wagon links and cover for your shooters.",
+              "sourceHash": "15801f2477f574b4",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka is still in the fight. Link the wagons and protect your shooters.",
+                  "routing": "Jan Žižka is routing and cannot take orders.",
+                  "fallen": "Jan Žižka has fallen.",
+                  "escaped": "Jan Žižka has left the field."
+                }
+              }
             },
             {
               "text": "The wagons are holding together. Your shooters can cover the infantry more safely — use the opening against Hynek.",
@@ -1643,12 +1665,19 @@
           ]
         },
         {
-          "name": "Cavalry Attack on Wagon Fort",
-          "description": "Švamberk throws cavalry against wagons.",
+          "name": "Threat of a cavalry attack",
+          "description": "Watch the approaches to the wagons and gaps in the wagon fort.",
           "events": [
             {
-              "message": "Heavy cavalry of landfrieden attacks! Will wagon fort hold?",
-              "sourceHash": "e7d18daacf8da2ec"
+              "message": "Watch the regional league’s cavalry reach and the gaps between wagons.",
+              "sourceHash": "9fabc982b543d4d3",
+              "forceStatus": {
+                "texts": {
+                  "ready": "The regional league’s cavalry is still a threat. Watch the gaps between wagons.",
+                  "routing": "The remaining enemy cavalry is routing. Watch the other units.",
+                  "absent": "No enemy cavalry remains on the field. Watch the other units."
+                }
+              }
             }
           ]
         },
@@ -1694,7 +1723,7 @@
       },
       "debriefing": {
         "victory": "Fishpond and swamps became grave for iron lords! Hussites used terrain and repelled superior numbers. This battle showed that properly chosen battlefield can balance even significant numerical disadvantage. Žižka's genius fully manifested.",
-        "defeat": "Swamps of Sudoměř became trap not for enemy, but for you. Knights broke through your defense. Žižka's career ends before it could truly begin.",
+        "defeat": "The defence at Sudoměř failed. You met neither the survival conditions nor the alternative victory condition.",
         "victoryVariants": {
           "fieldArmyEliminated": "You shattered the enemy field army, but at the cost of most of your own companies. The lone commander could no longer alter the battle. It is a victory — but the chronicler will not erase your losses."
         }
@@ -1710,8 +1739,15 @@
           "description": "Knights Hospitaller and royal army attack along dyke.",
           "events": [
             {
-              "message": "Crusaders begin attack along narrow dam!",
-              "sourceHash": "fc4441e3cd264b66"
+              "message": "The dam is narrow. Watch the enemy units’ approach.",
+              "sourceHash": "5b6fdb8654cc01e1",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Enemy units can still fight. Guard the dam and the other passages.",
+                  "routing": "The remaining enemy fighting units are routing. Keep the main objective in mind.",
+                  "absent": "No enemy fighting units remain on the field. Keep the main objective in mind."
+                }
+              }
             }
           ]
         },
@@ -1746,8 +1782,8 @@
         ]
       },
       "debriefing": {
-        "victory": "Vítkov held! Defending the hill and receiving help from Prague defeated the attack in this battle. Historically, the victory helped preserve Prague’s connections with the countryside; it did not by itself end the siege or the war.",
-        "defeat": "Fortifications on Vítkov fell and with them Prague's hope. Crusaders occupied strategic height and Prague is under siege. Hussite revolution ends before it could develop its strength."
+        "victory": "You defended Vítkov. Historically, holding the height helped preserve Prague’s links with its surroundings; it did not end the siege or the war.",
+        "defeat": "You did not hold Vítkov. Defeat on the height does not mean all Prague has fallen."
       },
       "phases": [
         {
@@ -1755,19 +1791,19 @@
           "description": "Meissen and Thuringian cavalry press into the narrow approach along the ridge.",
           "events": [
             {
-              "message": "The attack is concentrating on the ridge. The blockhouse garrison holds the narrow approach; help from Prague is on its way.",
-              "sourceHash": "a6e480c6ca234f34"
+              "message": "Guard the approaches to the blockhouses. Help from Prague is expected.",
+              "sourceHash": "9d6bffbc45a4a7cf"
             }
           ]
         },
         {
-          "name": "Fight for the fortifications",
-          "description": "Crusaders penetrate to the fortifications. Reinforcements from Prague are on the way!",
+          "name": "Fighting for the approaches",
+          "description": "Guard the approaches to the blockhouses. Help from Prague is expected.",
           "events": []
         },
         {
-          "name": "Counterattack",
-          "description": "Hussites push crusaders off the hill.",
+          "name": "Closing defence",
+          "description": "Keep the required number of units through the end of the specified round.",
           "events": []
         }
       ],
@@ -1794,7 +1830,7 @@
       },
       "debriefing": {
         "victory": "Your defence below Vyšehrad held. Historically, the royal army suffered a severe defeat and Vyšehrad passed to the Hussites. Many Bohemian and Moravian nobles died, including Henry of Plumlov. Exact losses remain uncertain, and not all of Prague was yet under Hussite control.",
-        "defeat": "Sigismund's forces broke through to Vyšehrad in time. Garrison was saved and Hussites suffered heavy losses. Siege of Prague continues and Hussite cause is endangered."
+        "defeat": "The defence below Vyšehrad failed in this game. This does not mean that Sigismund arrived before the agreed deadline or that the garrison was automatically rescued."
       },
       "phases": [
         {
@@ -1806,8 +1842,16 @@
               "sourceHash": "52068d36f780960d"
             },
             {
-              "message": "Sigismund vainly waves sword toward Vyšehrad. It's too late.",
-              "sourceHash": "49718985c17ba745"
+              "message": "Under the agreement, Vyšehrad’s garrison is not to join the fighting.",
+              "sourceHash": "93894a6897133986",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Sigismund remains on the field. Under the agreement, Vyšehrad’s garrison is not to join the fighting.",
+                  "routing": "Sigismund is routing and cannot take orders.",
+                  "fallen": "Sigismund has fallen.",
+                  "escaped": "Sigismund has left the field."
+                }
+              }
             }
           ]
         },
@@ -1816,8 +1860,8 @@
           "description": "Hungarians and Germans attack Hussite trenches frontally.",
           "events": [
             {
-              "message": "Hungarians and Germans begin frontal attack on your trenches!",
-              "sourceHash": "b3398588f64bb938"
+              "message": "Check the enemy units by the trenches and their options for advancing.",
+              "sourceHash": "06ad47a0af273fda"
             },
             {
               "text": "Prepared positions provide +3 to defense!",
@@ -1834,22 +1878,22 @@
               "sourceHash": "36bb2c650df069e8"
             },
             {
-              "message": "Insulted Czech nobility attacks! Must dismount due to steep slope.",
-              "sourceHash": "a23c064fd5ee9d4c"
+              "message": "The steep approach hinders cavalry. Watch the enemy’s route.",
+              "sourceHash": "2166be0aae4482b7"
             },
             {
-              "text": "Czech nobility loses cavalry advantage on steep slope!",
-              "sourceHash": "ac277f214ed078ff"
+              "text": "Cavalry on slopes loses its charge ability and some movement.",
+              "sourceHash": "d7a7b53ba193f563"
             }
           ]
         },
         {
-          "name": "Hussite counterattack",
-          "description": "Hynek Krušina deploys reserves.",
+          "name": "A chance to counterattack",
+          "description": "Weigh a counterattack against the enemy’s strength. Watch for reserves.",
           "events": [
             {
-              "message": "\"The enemies are fleeing!\" Hynek Krušina turns the pressed Praguers to counterattack and deploys the Oreb flailmen from reserve!",
-              "sourceHash": "ac07bf1cc99b6ecb"
+              "message": "Consider a counterattack and watch for reserves.",
+              "sourceHash": "728523a1581ccdb4"
             },
             {
               "message": "Units freed from besieging Vyšehrad join the battle!",
@@ -1858,30 +1902,38 @@
           ]
         },
         {
-          "name": "Massacre of Czech nobility",
-          "description": "Nobility trapped in ravine and slaughtered.",
+          "name": "Fighting in the sunken road",
+          "description": "The sunken road can hinder retreat. Watch the passage and routing units.",
           "events": [
             {
-              "message": "Czech nobility stuck in ravine! Cannot escape!",
-              "sourceHash": "dc1ce311e5eff28c"
+              "message": "Routing enemy units are in the sunken road. Watch the map for their further retreat and losses.",
+              "sourceHash": "5ccce554c3d25dc6"
             },
             {
-              "text": "Taborites and Orebites took no prisoners... Massacre in the ravine!",
-              "sourceHash": "c150d9b8348a5a32"
+              "text": "Routing units in the sunken road risk further losses.",
+              "sourceHash": "de25d5beb13b5ec6"
             }
           ]
         },
         {
-          "name": "General retreat",
-          "description": "Sigismund orders retreat.",
+          "name": "Closing rounds",
+          "description": "Watch the royal army’s condition and keep the defence objective in mind.",
           "events": [
             {
-              "message": "Sigismund orders retreat! Royal army flees to Český Brod.",
-              "sourceHash": "3f55aba6ba5d4f32"
+              "message": "Watch the remaining royal units and their retreat routes.",
+              "sourceHash": "8fd04c566e0d8d65",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Sigismund remains on the field. Watch his units’ movement.",
+                  "routing": "Sigismund is routing and cannot take orders.",
+                  "fallen": "Sigismund has fallen.",
+                  "escaped": "Sigismund has left the field."
+                }
+              }
             },
             {
-              "message": "The battle decides Vyšehrad’s fate. Its outcome does not automatically mean control of all Prague.",
-              "sourceHash": "4ed29ad480d54e57"
+              "message": "Keep the defence objective below Vyšehrad in mind until the battle ends.",
+              "sourceHash": "043d39472a5cc287"
             }
           ]
         }
@@ -1908,7 +1960,7 @@
       },
       "debriefing": {
         "victory": "The breakout succeeded! Your escaping units are heading towards Kolín. Historically, Žižka escaped the encirclement and returned to the offensive in early January 1422. The results show the wagons saved in your battle, not a chronicler’s totals for the entire campaign.",
-        "defeat": "Breakthrough failed. Wagon fort was broken and Žižka's army destroyed. Kutná Hora remains in enemy hands and Hussite movement loses its most capable commander.",
+        "defeat": "You did not save enough units or meet the alternative objective. The battle ends in defeat.",
         "victoryVariants": {
           "fieldArmyEliminated": "Instead of making the historical withdrawal towards Kolín, you shattered Sigismund's field army on the battlefield. Žižka survived and the reason for the breakout disappeared. This is an alternative victory: the result deliberately diverges from the documented course of the battle."
         }
@@ -1983,7 +2035,10 @@
       },
       "debriefing": {
         "victory": "You caught the retreating army at Brod. Historically, the town was then captured and devastated. Losses in battle, during the retreat and in violence after the capture must not be conflated. Accounts of breaking ice and vast booty need caution, not treatment as an exact score for your game.",
-        "defeat": "Sigismund escaped! Most of his army crossed Sázava and burned bridge behind them. Loot is minimal and next crusade will come much sooner."
+        "defeat": "You did not secure the town approach to the bridge in time. The pursuit ended in defeat.",
+        "victoryVariants": {
+          "enemyEliminated": "You won by putting the enemy out of action. Too few main target hexes were occupied to meet the capture objective."
+        }
       },
       "phases": [
         {
@@ -1991,8 +2046,8 @@
           "description": "Žižka's army pursues retreating crusaders.",
           "events": [
             {
-              "message": "Sigismund fled! Scolari's army retreating to Německý Brod. Pursue them!",
-              "sourceHash": "9f56b8df032af73f"
+              "message": "This mission follows the historical pursuit from Kutná Hora. You face Scolari’s rearguard.",
+              "sourceHash": "a3b31cd1432148ca"
             },
             {
               "message": "Crusaders leave loot along the way. Don't get distracted - destroy the army!",
@@ -2009,32 +2064,39 @@
               "sourceHash": "c592f010d7134649"
             },
             {
-              "message": "Crusaders cannot hold positions - begin fleeing to river!",
-              "sourceHash": "fc53207ead306054"
+              "message": "Watch whether the rearguard holds position or is already retreating towards the river.",
+              "sourceHash": "da0a4ed3ff037275"
             }
           ]
         },
         {
-          "name": "Flight across Sázava",
-          "description": "Panicking army rushes to bridge and onto frozen river.",
+          "name": "The route across the Sázava",
+          "description": "Watch the escape routes across the bridge and the frozen Sázava.",
           "events": [
             {
-              "message": "Bridge is overcrowded! Part of army tries to cross frozen Sázava!",
-              "sourceHash": "b78d905ec88f4e68"
+              "message": "Watch the escape routes across the bridge and the frozen Sázava.",
+              "sourceHash": "ed8e14fa155a6b37"
             },
             {
-              "message": "Ice cracks under heavy wagons! River swallows the fleeing!",
-              "sourceHash": "fb796240286149cd"
+              "message": "Heavy units on the frozen river risk losses.",
+              "sourceHash": "b0a9803dab9676fa"
             }
           ]
         },
         {
-          "name": "Destruction of retreating army",
-          "description": "Hussites finish off remnants of royal army.",
+          "name": "Closing pursuit",
+          "description": "Complete the breakthrough towards the town and bridge.",
           "events": [
             {
-              "message": "Royal army is scattered! Collect loot and finish off resistance.",
-              "sourceHash": "324f79d0e6388c7d"
+              "message": "Check the remaining resistance and the route to your main objective.",
+              "sourceHash": "5c83ec50282d2dee",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some royal units still hold their ground. Complete the breakthrough to the objective.",
+                  "routing": "The remaining enemy fighting units are routing. Keep the main objective in mind.",
+                  "absent": "No enemy fighting units remain on the field. Keep the main objective in mind."
+                }
+              }
             },
             {
               "message": "The retreat route leads across the river towards Jihlava. Victory depends on completing this battle’s objective.",
@@ -2077,7 +2139,7 @@
           "gateBlocked": "You kept the city gate outside Most blocked for the required time. This objective secured victory; it does not imply that Hněvín was captured. This is an alternative game outcome to the Prague army's historical defeat.",
           "bothControlled": "You completed one holding objective while also occupying both key Hněvín positions and the city gate. You earned the bonus for controlling both locations. This is an alternative game outcome to the Prague army's historical defeat."
         },
-        "defeat": "Most townsmen and castle garrison held their positions. Hussite attack failed and army must retreat. Northwestern Bohemia remains in enemy hands."
+        "defeat": "You did not meet either main objective in time. As in history, the siege ended in defeat for Prague’s army."
       },
       "phases": [
         {
@@ -2085,22 +2147,30 @@
           "description": "Hněvín castle is within reach. Garrison offered capitulation, but Želivský refused.",
           "events": [
             {
-              "message": "Želivský: \"No mercy for traitors! We shall take the castle by force!\"",
-              "sourceHash": "50994c2dc2121962"
+              "message": "Choose between holding Hněvín and blocking the city gate.",
+              "sourceHash": "c465b08443dba0b2",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Želivský is still in the fight. Hold Hněvín or block the city gate.",
+                  "routing": "Jan Želivský is routing and cannot take orders.",
+                  "fallen": "Jan Želivský has fallen.",
+                  "escaped": "Jan Želivský has left the field."
+                }
+              }
             },
             {
-              "message": "Castle garrison defends stubbornly. Noise comes from city...",
-              "sourceHash": "a0bdb0f12bb3957d"
+              "message": "Check both Hněvín target hexes and the route to the city gate.",
+              "sourceHash": "df0e35e7a2a2625e"
             }
           ]
         },
         {
-          "name": "Flank strike",
-          "description": "Most townsmen sallied from gate! Strike to flank of Hussite army.",
+          "name": "Threat of a flank attack",
+          "description": "Watch the city gate. The Most militia is expected here.",
           "events": [
             {
-              "message": "Most militia sallies from city gate! Flank strike!",
-              "sourceHash": "d3e768c23b339449"
+              "message": "The Most militia is expected by the city gate. Guard your flank.",
+              "sourceHash": "10237ea643dcc2ef"
             },
             {
               "message": "You must decide - continue castle assault, or turn around?",
@@ -2109,20 +2179,20 @@
           ]
         },
         {
-          "name": "Arrival of reinforcements",
-          "description": "Meissen army! Margrave Friedrich comes from north!",
+          "name": "Expected reinforcements",
+          "description": "Meissen relief is expected from the north.",
           "events": [
             {
-              "message": "Meissen banners on horizon! Margrave Friedrich comes with reinforcements!",
-              "sourceHash": "8590244cc34e678e"
+              "message": "Meissen relief is expected from the north. Cover the northern approaches.",
+              "sourceHash": "bf93f79aae9c2551"
             },
             {
               "message": "Castle assault is now very risky. Consider alternative objective.",
               "sourceHash": "cbb4efc01d0fba71"
             },
             {
-              "message": "A hit on the Hussite standard-bearer's horse throws the ranks into disorder - and with the Meissen reinforcements arriving, fear spreads among the Hussites.",
-              "sourceHash": "1445d14dafc7777d"
+              "message": "Watch for incoming reinforcements and keep an eye on your troops’ morale.",
+              "sourceHash": "47c77d652bac80fb"
             }
           ]
         },
@@ -2161,7 +2231,7 @@
         ]
       },
       "debriefing": {
-        "victory": "Massacre at Na Běhání! According to the Old Annals only 19 Czechs fell - and no one of note except the burgher Jan Bradatý; chronicles put German losses in the thousands, up to 15,000. The double wagon fort proved an insurmountable obstacle. Yet the victory carried a dark shadow: 24 kneeling counts and bannerlords who begged for mercy were, by the mutual vow to spare no one, slain to the last man. The legend of Czech invincibility is born — and with it the dangerous belief that victory permits everything.",
+        "victory": "You defeated the enemy field army. The battle statistics show your losses; historical accounts of casualties and prisoners follow below.",
         "defeat": "Saxon cavalry broke through your fort! Catastrophic Hussite defeat changes balance of power. Without wagon fort you're defenseless against heavy cavalry."
       },
       "phases": [
@@ -2174,27 +2244,41 @@
               "sourceHash": "71334fd2f55ac335"
             },
             {
-              "message": "Saxon and Meissen cavalry charge uphill in the unbearable June heat!",
-              "sourceHash": "e30d7f590805761f"
+              "message": "Watch enemy cavalry reach and the approaches to the slope.",
+              "sourceHash": "f8589a601bc520f5",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some enemy cavalry still holds its ground. Watch its movement range.",
+                  "routing": "The remaining enemy cavalry is routing. Watch the other units.",
+                  "absent": "No enemy cavalry remains on the field. Watch the other units."
+                }
+              }
             }
           ]
         },
         {
-          "name": "Fire from wagons",
-          "description": "Hussite firearms decimate attackers.",
+          "name": "Firing positions",
+          "description": "Use your shooters’ range and the cover of the wagon fort.",
           "events": []
         },
         {
-          "name": "Panic and flight",
-          "description": "Crusaders break into headlong flight.",
+          "name": "Remaining resistance",
+          "description": "Watch the remaining resistance and routing units.",
           "events": [
             {
-              "message": "\"They run! Germans run!\" - crusaders flee!",
-              "sourceHash": "ff26e7e8b05c28c9"
+              "message": "Watch the remaining resistance and routing enemy units.",
+              "sourceHash": "64b048fefea2c930",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some enemy units still hold their ground. Keep up the pressure.",
+                  "routing": "The remaining enemy fighting units are routing. Keep the main objective in mind.",
+                  "absent": "No enemy fighting units remain on the field. Keep the main objective in mind."
+                }
+              }
             },
             {
-              "message": "Under the German banner, 24 counts and bannerlords knelt with swords driven into the ground and begged for mercy - but by the vow taken before the battle, they are slain to the last.",
-              "sourceHash": "b7b309812f4f023b"
+              "message": "Historical note: sources mention the killing of captured lords.",
+              "sourceHash": "1e2e4204978d51c3"
             }
           ]
         }
@@ -2290,7 +2374,7 @@
       },
       "debriefing": {
         "victory": "The opposing field force withdrew. Historically, the clash at Nisa belonged to the 1428 Silesian campaign. Victory outside the walls did not automatically mean capturing the city or ending resistance throughout Silesia.",
-        "defeat": "Silesian defense held. Půta of Častolovic successfully defended Nysa. Beautiful Ride must continue elsewhere and Hussite reputation of invincibility suffered crack."
+        "defeat": "You did not defeat the Silesian field army in this battle. The town’s defence and historical campaign are a wider story; this result alone does not determine Půta’s personal fate."
       },
       "phases": [
         {
@@ -2302,36 +2386,36 @@
               "sourceHash": "59805265269bf8b3"
             },
             {
-              "message": "Peasants and villagers oppose Hussites before suburbs.",
-              "sourceHash": "d577a80245eaf69f"
+              "message": "Inspect the approaches outside the walls and through the suburb.",
+              "sourceHash": "eeaea432bd01d45a"
             }
           ]
         },
         {
-          "name": "Breakthrough of defense",
-          "description": "Hussites break through Silesian defense.",
+          "name": "Pressure on the defence",
+          "description": "Look for a weak point in the Silesian defence.",
           "events": [
             {
-              "text": "Silesian units begin retreating under pressure of Hussite attack!",
-              "sourceHash": "2ee9f00a1a1c8dbc"
+              "text": "The Silesian units lose attack strength. Look for a weak point in their defence.",
+              "sourceHash": "e7d76b5cf671a20f"
             },
             {
-              "message": "Půta of Častolovic tries to organize defense at walls.",
-              "sourceHash": "2b6ea1f22bd551c4"
+              "message": "Check the defenders outside the walls and the route towards them.",
+              "sourceHash": "dc4347ceb4a58a51"
             }
           ]
         },
         {
-          "name": "Massacre and flight",
-          "description": "Defenders flee, many perish in river.",
+          "name": "Closing engagement",
+          "description": "Break the resistance of the Silesian units outside the walls.",
           "events": [
             {
-              "text": "Defenders flee in panic - many perish in river Nysa!",
-              "sourceHash": "bb99bcbd40d498c8"
+              "text": "Fear weakens the Silesian units. Watch the remaining resistance.",
+              "sourceHash": "58b56f69af50c000"
             },
             {
-              "message": "Hussites burn suburbs and attack walls!",
-              "sourceHash": "426674b2390b58dc"
+              "message": "The objective is to defeat the field army, not capture the town.",
+              "sourceHash": "ea96b73157226c18"
             }
           ]
         }
@@ -2349,12 +2433,15 @@
       "objectives": {
         "primary": "Cause flight of crusader army (destroy 60%)",
         "secondary": [
-          "Relieve the approach to besieged Domažlice"
+          "Have one of your units on each of the two marked hexes by Domažlice when you win"
         ]
       },
       "debriefing": {
-        "victory": "The expedition withdrew and the route to Domažlice is open. Historically, confusion, troop movements and fear of the Hussites contributed to the army’s collapse, but there was still some fighting. The chorale became a symbol of victory; a song defeating an entire army without a fight is an oversimplification.",
-        "defeat": "Crusaders overcame their fear and formed defense. Despite your choral they didn't collapse. Hussite reputation of invincibility is shaken."
+        "victory": "You broke the crusading field army’s resistance. Securing the approach to Domažlice is a separate optional objective. The historical expedition broke up amid confusion and fear of the Hussites, although some troops still fought.",
+        "defeat": "You did not break the crusading army’s resistance. The battle ends in defeat.",
+        "victoryVariants": {
+          "approachSecured": "You broke the crusading army’s resistance and occupied both marked approach hexes by Domažlice. The optional objective is complete. The historical expedition did not collapse from a song alone."
+        }
       },
       "phases": [
         {
@@ -2388,8 +2475,8 @@
               "sourceHash": "ad788be9e3227c64"
             },
             {
-              "message": "Cardinal Cesarini flees and loses cardinal hat!",
-              "sourceHash": "2f808c8919d67fd2"
+              "message": "Historical note: the story tells of Cesarini’s flight and his lost hat.",
+              "sourceHash": "7fdde0a3095632c1"
             },
             {
               "text": "Panic spreads through crusader camp!",
@@ -2403,12 +2490,19 @@
           ]
         },
         {
-          "name": "Flight to Bavaria",
-          "description": "Crusaders flee through Všeruby pass to Bavaria.",
+          "name": "Retreat routes",
+          "description": "Watch the retreat routes towards Bavaria and the approach to Domažlice.",
           "events": [
             {
-              "text": "Entire crusader army breaks into flight!",
-              "sourceHash": "950dab7be6f14046"
+              "text": "Watch retreating units and the approach to Domažlice.",
+              "sourceHash": "1182c8ce4374ec32",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some crusader units still hold their ground. Watch the approach to Domažlice.",
+                  "routing": "The remaining enemy fighting units are routing. Keep the main objective in mind.",
+                  "absent": "No enemy fighting units remain on the field. Keep the main objective in mind."
+                }
+              }
             }
           ]
         }
@@ -2433,42 +2527,67 @@
       },
       "debriefing": {
         "victory": "You broke into the city. Your game has departed from history: the siege of 1433–1434 ended in failure for the field armies. You captured the city positions, not the lost unity of the Hussite leagues.",
-        "defeat": "Plzeň held, as it did in the historical siege that ended on 9 May 1434. The long campaign weakened the field armies and deepened their crisis. The captured camel became a civic symbol; the people of Plzeň added it to their arms themselves, not as a reward granted by Sigismund."
+        "defeat": "Plzeň held, as it did in the historical siege that ended on 9 May 1434. The long campaign weakened the field armies and deepened their crisis. The captured camel became a civic symbol; the people of Plzeň added it to their arms themselves, not as a reward granted by Sigismund.",
+        "victoryVariants": {
+          "enemyEliminated": "You won by putting the enemy out of action. Too few main target hexes were occupied to meet the capture objective."
+        }
       },
       "phases": [
         {
           "name": "Artillery preparation",
-          "description": "Hussite guns bombard walls. Defenders respond from city positions.",
+          "description": "Guns can cover the advance on the town. Watch their range.",
           "events": [
             {
-              "message": "Hussite bombards open fire on Plzeň walls!",
-              "sourceHash": "decc760ba12e4f23"
+              "message": "The bombard can fire at defenders within range.",
+              "sourceHash": "7220e1290d730af2"
             },
             {
-              "message": "Defenders take cover behind battlements. Vilém Švihovský encourages garrison.",
-              "sourceHash": "6b210a6ed905aa71"
+              "message": "Check the defenders by the town positions and their range.",
+              "sourceHash": "b4cb980df9fb5293",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Vilém Švihovský remains on the field. Beware of the defenders’ town cover.",
+                  "routing": "Vilém Švihovský is routing and cannot take orders.",
+                  "fallen": "Vilém Švihovský has fallen.",
+                  "escaped": "Vilém Švihovský has left the field."
+                }
+              }
             },
             {
-              "message": "First cracks appear in walls!",
-              "sourceHash": "9b70fb96f95d3cf7"
+              "message": "Occupy three marked town hexes to meet the objective.",
+              "sourceHash": "6da61d5c8a3db087"
             }
           ]
         },
         {
-          "name": "Assault on walls",
-          "description": "Infantry advances to walls. Heavy losses on both sides.",
+          "name": "Approaches to the town",
+          "description": "Check defenders, terrain and covering fire before advancing on the town.",
           "events": [
             {
-              "message": "Jan Pardus of Horka leads Taborite infantry to attack!",
-              "sourceHash": "432033a139859f9c"
+              "message": "Check cover and enemy range before advancing on the town.",
+              "sourceHash": "3faaf85b25c988e9",
+              "forceStatus": {
+                "texts": {
+                  "ready": "You still have troops able to fight. Consider advancing on the town.",
+                  "routing": "Your remaining fighting units are routing. Watch for them to rally.",
+                  "absent": "Your fighting units are no longer on the field. Check your remaining forces."
+                }
+              }
             },
             {
-              "message": "The defenders cover the approaches to the walls and repel the attacking infantry.",
-              "sourceHash": "8c88ded47d067fdc"
+              "message": "Inspect the approaches to the town positions.",
+              "sourceHash": "5af9737be9816bfc",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some defenders still hold their ground. Watch the approaches and enemy range.",
+                  "routing": "The remaining enemy fighting units are routing. Keep the main objective in mind.",
+                  "absent": "No enemy fighting units remain on the field. Keep the main objective in mind."
+                }
+              }
             },
             {
-              "message": "Bloody fighting at walls! Hussites try to break defense.",
-              "sourceHash": "4d522511db436e8b"
+              "message": "Break through to the marked target hexes.",
+              "sourceHash": "b06b42d53c1dc407"
             }
           ]
         },
@@ -2491,12 +2610,20 @@
           "description": "Attack either succeeds, or Hussites must retreat.",
           "events": [
             {
-              "message": "Last chance for breakthrough! Prokop the Great sends reserves.",
-              "sourceHash": "8494bcee206c5eba"
+              "message": "Time to occupy the town positions is running out.",
+              "sourceHash": "f689a2d3fae88475",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Prokop is still in the fight. Time to occupy the town positions is running out.",
+                  "routing": "Prokop the Great is routing and cannot take orders.",
+                  "fallen": "Prokop the Great has fallen.",
+                  "escaped": "Prokop the Great has left the field."
+                }
+              }
             },
             {
-              "text": "Hunger, violent foraging in the countryside, and quarrels among the captains break the camp. Some soldiers desert.",
-              "sourceHash": "1fcc8155d64d644d"
+              "text": "Siege fatigue reduces your troops’ attack strength and morale.",
+              "sourceHash": "50cb0c4f0d7b5a8e"
             }
           ]
         }
@@ -2610,8 +2737,15 @@
         ]
       },
       "debriefing": {
-        "victory": "Sion held in your game and Jan Roháč survived. This is a counterfactual outcome: the castle fell on 6 September 1437 and Roháč and his companions were executed in Prague three days later. Your victory changes this defence, not the historical siege.",
-        "defeat": "Sion’s defence has ended in your game. Historically, the castle fell on 6 September 1437; the captured Jan Roháč and his companions were executed in Prague on 9 September. Accounts differ on exact totals and dramatic details. Fortifications and ammunition finds indicate real fighting, not merely a staged siege."
+        "victory": "You defended Sion. Your victory diverges from history: the castle fell on 6 September 1437, and the captured Roháč and his companions were executed in Prague three days later.",
+        "defeat": "Sion’s defence has ended in your game. Historically, the castle fell on 6 September 1437; the captured Jan Roháč and his companions were executed in Prague on 9 September. Accounts differ on exact totals and dramatic details. Fortifications and ammunition finds indicate real fighting, not merely a staged siege.",
+        "unitStatus": {
+          "texts": {
+            "alive": "Jan Roháč survived this battle.",
+            "fallen": "Jan Roháč fell in this battle.",
+            "escaped": "Jan Roháč left the field."
+          }
+        }
       },
       "phases": [
         {
@@ -2637,12 +2771,12 @@
           "description": "Hungarian reinforcements change balance of power.",
           "events": [
             {
-              "message": "Michal Országh brings Hungarian knights! Situation desperate.",
-              "sourceHash": "6f8e49fdb6062e29"
+              "message": "Hungarian reinforcements are expected. Guard the approaches to the castle.",
+              "sourceHash": "a0c2f8e238a29b94"
             },
             {
-              "text": "Hungarian knights encourage royal army to decisive attack!",
-              "sourceHash": "37d2371f34b4f687"
+              "text": "The royal troops’ morale rises. Watch the siege positions.",
+              "sourceHash": "a07494ba5bc3e67b"
             }
           ]
         },
@@ -2655,8 +2789,16 @@
               "sourceHash": "a438d7f1b24418b2"
             },
             {
-              "text": "Some defenders lose hope. Jan Roháč encourages them to fight!",
-              "sourceHash": "7452a7510edad80f"
+              "text": "Fatigue weakens the defenders. Check the garrison’s cohesion.",
+              "sourceHash": "4d3fbd8008124a90",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Roháč is still in the fight. Watch the garrison’s cohesion.",
+                  "routing": "Jan Roháč is routing and cannot take orders.",
+                  "fallen": "Jan Roháč has fallen.",
+                  "escaped": "Jan Roháč has left the field."
+                }
+              }
             },
             {
               "message": "The attackers are seeking a way across the ditches. Watch the passages between the banks.",
@@ -2673,8 +2815,8 @@
               "sourceHash": "f08242481d546c24"
             },
             {
-              "message": "The defence reaches its final stage. The garrison and held positions decide this battle, not a prewritten legend.",
-              "sourceHash": "777a2480e3c0b8b5"
+              "message": "Hold the key hexes of the castle core. Sion’s defence depends on them.",
+              "sourceHash": "0ad2abe3cbfcd646"
             }
           ]
         }
@@ -2695,12 +2837,12 @@
       "objectives": {
         "primary": "Destroy 60% of Catholic army",
         "secondary": [
-          "Hold Gothard hill throughout battle"
+          "Hold at least 2 of the 4 marked Gothard hexes when you win"
         ]
       },
       "debriefing": {
-        "victory": "The defence of Gothard held. Wagons, fire and the slope helped repel the attack in this battle. Historically, the victory strengthened Žižka’s position in eastern Bohemia; exact deployments and losses remain uncertain.",
-        "defeat": "Catholic superiority broke through. Gothard hill fell and with it hope of holding eastern Bohemia. Hussite forces scattered and Čeněk of Wartenberg celebrates victory."
+        "victory": "You defeated the Lords’ League in this battle. Holding the marked Gothard hexes is evaluated separately as an optional objective. Historically, Žižka’s victory strengthened his position in eastern Bohemia; exact deployment and losses are uncertain.",
+        "defeat": "The Lords’ League held out in this battle. You did not repeat Žižka’s victory."
       },
       "phases": [
         {
@@ -2708,8 +2850,16 @@
           "description": "Hussites fortify on Gothard hill, Catholics gather.",
           "events": [
             {
-              "message": "Žižka: \"To the hill! Hold slopes, shooters forward!\"",
-              "sourceHash": "d33ea65170c2d50c"
+              "message": "Use the hill and check your shooters’ positions.",
+              "sourceHash": "ec2862c17a1594ee",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka is still in the fight. Use Gothard and shelter your shooters behind wagons.",
+                  "routing": "Jan Žižka is routing and cannot take orders.",
+                  "fallen": "Jan Žižka has fallen.",
+                  "escaped": "Jan Žižka has left the field."
+                }
+              }
             },
             {
               "message": "Catholic nobility forms for attack below hill.",
@@ -2718,66 +2868,119 @@
           ]
         },
         {
-          "name": "Frontal assault",
-          "description": "Čeněk of Wartenberg throws cavalry into frontal assault on hill.",
+          "name": "Threat of a frontal attack",
+          "description": "Watch the approaches to Gothard and enemy cavalry reach.",
           "events": [
             {
-              "message": "Čeněk of Wartenberg: \"Forward! Crush heretics!\"",
-              "sourceHash": "bd9d066a177c6183"
+              "message": "Watch the approaches to Gothard and the Lords’ League’s movement.",
+              "sourceHash": "56948dfdfdf6e438",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Čeněk of Vartenberk remains on the field. Guard the approaches to Gothard.",
+                  "routing": "Čeněk of Vartenberk is routing and cannot take orders.",
+                  "fallen": "Čeněk of Vartenberk has fallen.",
+                  "escaped": "Čeněk of Vartenberk has left the field."
+                }
+              }
             },
             {
-              "message": "Heavy cavalry crashes into Hussite infantry! Attack bogs down on steep slope.",
-              "sourceHash": "583b6451ec561952"
+              "message": "The approaches to the hill are difficult for cavalry. Watch its reach.",
+              "sourceHash": "8b157c5be659abc5",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some enemy cavalry still holds its ground. Watch its movement range.",
+                  "routing": "The remaining enemy cavalry is routing. Watch the other units.",
+                  "absent": "No enemy cavalry remains on the field. Watch the other units."
+                }
+              }
             },
             {
-              "text": "The lords must dismount - there is no charging uphill onto the wagons and pikes on horseback.",
-              "sourceHash": "369c9666dd0b8e5b"
+              "text": "Enemy cavalry loses its charge ability in this phase.",
+              "sourceHash": "9a0cbd9c12942f4d"
             }
           ]
         },
         {
-          "name": "Three-hour battle",
-          "description": "Furious fighting on Gothard slopes. Catholics suffer heavy losses.",
+          "name": "Fight for Gothard",
+          "description": "Use the slope and protect your shooters.",
           "events": [
             {
-              "message": "Hussite hand cannons and shooters mow down attackers!",
-              "sourceHash": "95b5059c8ef46819"
+              "message": "Check your shooters and their range before advancing.",
+              "sourceHash": "934014eacfe27ef9",
+              "forceStatus": {
+                "texts": {
+                  "ready": "You still have shooters able to fight. Check range and remaining shots before firing.",
+                  "routing": "Your remaining shooters are routing. Check your other units.",
+                  "absent": "Your shooters are no longer on the field. Check your other units."
+                }
+              }
             },
             {
-              "message": "Arnošt Flaška's troop collapses under fire!",
-              "sourceHash": "f31f4738c98a037a"
+              "message": "Look for a weak point in the enemy force.",
+              "sourceHash": "cdc5cee6aa8266c4",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Arnošt Flaška remains on the field. Look for a weak point in the enemy force.",
+                  "routing": "Arnošt Flaška is routing and cannot take orders.",
+                  "fallen": "Arnošt Flaška has fallen.",
+                  "escaped": "Arnošt Flaška has left the field."
+                }
+              }
             },
             {
-              "text": "The collapse of Flaška's troop shook the Catholics.",
-              "sourceHash": "d569262f7d6bc625"
+              "text": "The Lords’ League’s morale falls. Look for a weak point.",
+              "sourceHash": "1be187b06478a49d"
             }
           ]
         },
         {
-          "name": "Hussite counterattack",
-          "description": "Žižka orders counterattack. Orebite cavalry and infantry charge from hill.",
+          "name": "A chance to counterattack",
+          "description": "Check both sides’ strength before counterattacking.",
           "events": [
             {
-              "message": "Žižka: \"Now! Forward, for the chalice!\"",
-              "sourceHash": "07438cc0389ba7cf"
+              "message": "Consider a counterattack only if you have units able to carry it out.",
+              "sourceHash": "bf1a22b925617b78",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka is still in the fight. Consider whether you have the strength to counterattack.",
+                  "routing": "Jan Žižka is routing and cannot take orders.",
+                  "fallen": "Jan Žižka has fallen.",
+                  "escaped": "Jan Žižka has left the field."
+                }
+              }
             },
             {
-              "message": "Catholics break into flight! Čeněk flees with handful of men!",
-              "sourceHash": "e29d86e0d90e7308"
+              "message": "Watch for remaining resistance from the Lords’ League.",
+              "sourceHash": "008b5ca0f35b1d7d",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some enemy units still hold their ground. Keep up the pressure.",
+                  "routing": "The remaining enemy fighting units are routing. Keep the main objective in mind.",
+                  "absent": "No enemy fighting units remain on the field. Keep the main objective in mind."
+                }
+              }
             }
           ]
         },
         {
-          "name": "Pursuit",
-          "description": "Hussites pursue fleeing Catholics and capture their wagons.",
+          "name": "Closing rounds",
+          "description": "The end is near. Keep the main objective in mind.",
           "events": [
             {
-              "message": "All Catholic wagons and guns captured!",
-              "sourceHash": "ef53eba8aabefc5b"
+              "message": "When pursuing, keep an eye on enemy wagons and guns too.",
+              "sourceHash": "e583edf61e3a9727"
             },
             {
-              "message": "Čeněk of Wartenberg escaped. Hussite victory is complete.",
-              "sourceHash": "6e06c27625f7267a"
+              "message": "The end is near. Keep the main objective in mind.",
+              "sourceHash": "2c9d0f8b0b6db626",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Čeněk of Vartenberk remains on the field. Keep the main objective in mind.",
+                  "routing": "Čeněk of Vartenberk is routing and cannot take orders.",
+                  "fallen": "Čeněk of Vartenberk has fallen.",
+                  "escaped": "Čeněk of Vartenberk has left the field."
+                }
+              }
             }
           ]
         }
@@ -2798,63 +3001,104 @@
       "objectives": {
         "primary": "Advance down the slope and break the coalition line — occupy its position by turn 10",
         "secondary": [
-          "Hold command position on slope",
+          "Hold at least 2 of the 4 marked command-post hexes when you win",
           "Jan Žižka must survive",
           "Lose less than 30% own units"
         ]
       },
       "debriefing": {
         "victory": "The coalition line is broken! Your advance down the slope succeeded. Historically, victory at Malešov opened Žižka’s way towards Kutná Hora. The later story of stone-filled wagons is not a securely documented explanation for that success.",
-        "defeat": "The coalition repelled your advance. Žižka’s eastern Bohemian army must withdraw. Your game has diverged from history; the name Orphans was adopted by some of his followers only after his death."
+        "defeat": "The coalition repelled your advance. Žižka’s eastern Bohemian army must withdraw. Your game has diverged from history; the name Orphans was adopted by some of his followers only after his death.",
+        "victoryVariants": {
+          "enemyEliminated": "You won by putting the enemy out of action. Too few main target hexes were occupied to meet the capture objective."
+        }
       },
       "phases": [
         {
           "name": "Taking positions",
-          "description": "Žižka recognizes terrain with help of Roháč and Hvězda. Hussites fortify on slope.",
+          "description": "Use the slope above the Bohynka and the narrow valley approaches.",
           "events": [
             {
-              "message": "Jan Roháč: \"Lord captain, we have good slope above valley. Bohynka stream covers our center.\"",
-              "sourceHash": "8fc5193ff7e19104"
+              "message": "Inspect the slope and Bohynka valley before giving orders.",
+              "sourceHash": "d51befd81c31a9f8",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Roháč is still in the fight. Use the slope above the Bohynka.",
+                  "routing": "Jan Roháč is routing and cannot take orders.",
+                  "fallen": "Jan Roháč has fallen.",
+                  "escaped": "Jan Roháč has left the field."
+                }
+              }
             },
             {
-              "message": "Jan Hvězda: \"I know these places. Valley is narrow - enemy won't be able to deploy.\"",
-              "sourceHash": "74cf88c9cb2f5a79"
+              "message": "The narrow valley limits deployment. Use the terrain.",
+              "sourceHash": "b4d9fcc1900e9473",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Jan Hvězda is still in the fight. Guard the narrow valley passages.",
+                  "routing": "Jan Hvězda is routing and cannot take orders.",
+                  "fallen": "Jan Hvězda has fallen.",
+                  "escaped": "Jan Hvězda has left the field."
+                }
+              }
             }
           ]
         },
         {
-          "name": "Coalition attack",
-          "description": "Anti-Žižka coalition throws cavalry into valley. Enemy cannot fully deploy.",
+          "name": "Valley approaches",
+          "description": "The valley limits cavalry deployment. Watch the other approaches too.",
           "events": [
             {
-              "message": "Čeněk of Wartenberg: \"To attack! We'll crush the blind man once and for all!\"",
-              "sourceHash": "b22753775f55632b"
+              "message": "Watch the coalition’s movement and its approaches to the valley.",
+              "sourceHash": "c9c63cdecd61614e",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Diviš Bořek remains on the field. Guard the approaches to the valley.",
+                  "routing": "Diviš Bořek is routing and cannot take orders.",
+                  "fallen": "Diviš Bořek has fallen.",
+                  "escaped": "Diviš Bořek has left the field."
+                }
+              }
             },
             {
-              "message": "Heavy cavalry enters narrow valley... Ranks crowd!",
-              "sourceHash": "9bd7766c9ca46c89"
+              "message": "Watch whether the cavalry uses the valley or seeks another approach.",
+              "sourceHash": "eda3502e555dd612",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some enemy cavalry still holds its ground. Watch the valley approaches.",
+                  "routing": "The remaining enemy cavalry is routing. Watch the other units.",
+                  "absent": "No enemy cavalry remains on the field. Watch the other units."
+                }
+              }
             },
             {
-              "text": "Cavalry loses momentum in marshy valley!",
-              "sourceHash": "3a701a788d5f29ad"
+              "text": "Enemy cavalry loses one movement point in this phase, to a minimum of one.",
+              "sourceHash": "43245138d75faddc"
             }
           ]
         },
         {
-          "name": "Bloody valley",
-          "description": "Fire and constricted terrain disrupt the attackers’ advance. The defenders look for a chance to counterattack.",
+          "name": "Decisions in the valley",
+          "description": "Use your shooters’ range and look for a way to break through.",
           "events": [
             {
-              "message": "Hand cannons and handguns fire into crowded enemy ranks!",
-              "sourceHash": "b0e62fc3982ceb42"
+              "message": "Check your shooters’ range and remaining shots.",
+              "sourceHash": "99279e4b8c933c8f",
+              "forceStatus": {
+                "texts": {
+                  "ready": "You still have shooters able to fight. Check range and remaining shots before firing.",
+                  "routing": "Your remaining shooters are routing. Check your other units.",
+                  "absent": "Your shooters are no longer on the field. Check your other units."
+                }
+              }
             },
             {
-              "message": "Coalition losses grow! Valley colors with blood!",
-              "sourceHash": "640bd08acde62d8e"
+              "message": "Check the coalition’s units on the map and in the army overview.",
+              "sourceHash": "9f88b9bb353ba56f"
             },
             {
-              "text": "Coalition army loses courage in murderous fire.",
-              "sourceHash": "879d45f151f1cb7d"
+              "text": "The coalition’s morale falls. Watch which units still hold their ground.",
+              "sourceHash": "2bc538476dc3f573"
             },
             {
               "title": "Disrupted vanguard",
@@ -2864,16 +3108,31 @@
           ]
         },
         {
-          "name": "Žižka's counterattack",
-          "description": "Žižka orders deadly counterattack down slope.",
+          "name": "A chance to break through",
+          "description": "Break through to the marked target hexes before time runs out.",
           "events": [
             {
-              "message": "Žižka: \"Now! Down the hill! For God's truth!\"",
-              "sourceHash": "b89410c09e58058c"
+              "message": "Get a unit able to fight onto a marked target before time runs out.",
+              "sourceHash": "9f66734aefed2e42",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka is still in the fight. Prepare to break through to the marked target hexes.",
+                  "routing": "Jan Žižka is routing and cannot take orders.",
+                  "fallen": "Jan Žižka has fallen.",
+                  "escaped": "Jan Žižka has left the field."
+                }
+              }
             },
             {
-              "message": "Hussite cavalry and infantry rush down slope at disoriented enemy!",
-              "sourceHash": "426dfb85f78623f1"
+              "message": "Check your remaining forces before counterattacking.",
+              "sourceHash": "2b541a907c876dec",
+              "forceStatus": {
+                "texts": {
+                  "ready": "You still have troops able to fight. Consider where to break through.",
+                  "routing": "Your remaining fighting units are routing. Watch for them to rally.",
+                  "absent": "Your fighting units are no longer on the field. Check your remaining forces."
+                }
+              }
             },
             {
               "text": "Attack from hill! +15% to Hussite units' attack.",
@@ -2882,24 +3141,39 @@
           ]
         },
         {
-          "name": "Coalition collapse",
-          "description": "Coalition army collapses. Rear units flee without fight.",
+          "name": "Closing engagement",
+          "description": "Time is running out. Watch the target hexes and remaining resistance.",
           "events": [
             {
-              "message": "Coalition collapses! Men flee toward Malešov!",
-              "sourceHash": "5b715986bd22d6c7"
+              "message": "Watch the coalition’s remaining resistance and the route to the objective.",
+              "sourceHash": "526ef5b0cdf682b7",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Some coalition units still hold their ground. Keep up the pressure.",
+                  "routing": "The remaining enemy fighting units are routing. Keep the main objective in mind.",
+                  "absent": "No enemy fighting units remain on the field. Keep the main objective in mind."
+                }
+              }
             },
             {
-              "message": "Čeněk of Wartenberg: \"Back! Everyone back!\" Rear units didn't even enter battle.",
-              "sourceHash": "00bad03020fbf3c7"
+              "message": "Watch the coalition units’ movement.",
+              "sourceHash": "14dd8577dcf15b76",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Diviš Bořek remains on the field. Watch his units’ movement.",
+                  "routing": "Diviš Bořek is routing and cannot take orders.",
+                  "fallen": "Diviš Bořek has fallen.",
+                  "escaped": "Diviš Bořek has left the field."
+                }
+              }
             },
             {
-              "message": "Unit cohesion will decide the outcome. Historical casualty estimates are not a count of losses in this game.",
-              "sourceHash": "05c68a3910e0278d"
+              "message": "Weigh your next move against both sides’ cohesion and losses.",
+              "sourceHash": "bd6d156defee6e2a"
             },
             {
-              "message": "Žižka controls battlefield. Road to Kutná Hora open!",
-              "sourceHash": "c6e069a760281120"
+              "message": "Complete the breakthrough to the marked target hexes.",
+              "sourceHash": "678f3a36269a436e"
             }
           ]
         }

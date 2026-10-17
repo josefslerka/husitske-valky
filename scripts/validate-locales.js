@@ -251,6 +251,8 @@ for (const [scenarioId, scenario] of scenarioEntries) {
                 const eventLocation = `${language.toUpperCase()}: ${scenarioId}, fáze ${phaseIndex + 1}, event ${eventIndex + 1}`;
                 validateTextVariants(event.unitStatus?.texts, localizedEvent.unitStatus?.texts,
                     `${location}.phases.${phaseIndex}.events.${eventIndex}.unitStatus.texts`);
+                validateTextVariants(event.forceStatus?.texts, localizedEvent.forceStatus?.texts,
+                    `${location}.phases.${phaseIndex}.events.${eventIndex}.forceStatus.texts`);
                 for (const field of ['message', 'text', 'title']) {
                     if (hasOwn(event, field) && (typeof localizedEvent[field] !== 'string' || !localizedEvent[field].trim())) {
                         error(`${eventLocation}: chybí neprázdné ${field}.`);

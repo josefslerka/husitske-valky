@@ -41,9 +41,11 @@ class BattleView {
         this.orders.refresh();
     }
     updateEndTurnButton() { this.panels.updateEndTurnButton(); this.orders.refresh(); }
-    updateArmyOverview() { return this.panels.updateArmyOverview(); }
+    updateArmyOverview() { this.panels.updateArmyOverview(); this.panels.updateSecondaryObjectives(); }
     renderMoraleBar(prefix, faction, aliveCount) { return this.panels.renderMoraleBar(prefix, faction, aliveCount); }
-    updateUnitPanel(unit) { this.panels.updateUnitPanel(unit); this.orders.refresh(); }
+    updateUnitPanel(unit) {
+        this.panels.updateUnitPanel(unit); this.panels.updateSecondaryObjectives(); this.orders.refresh();
+    }
     updateChoralButton() { return this.panels.updateChoralButton(); }
 
     showPhase(phase) { this.panels.showPhase(phase); }
@@ -73,7 +75,10 @@ class BattleView {
     configureScenario(scenario) {
         // Nastavení zvýrazněné cílové zóny (únik, průlom nebo obsazení pozic)
         // Game už převedl souřadnice vítězných podmínek na mapu.
-        const _primary = scenario.victoryConditions && scenario.victoryConditions.primary;
+        this.game.hexGrid.setEscapeZone([]);
+        this.game.hexGrid.secondaryObjectiveHexes = this.game.victoryConditionsSystem.getSecondaryPositionProgress()
+            .flatMap(objective => objective.positions.map(([col, row]) => ({ col, row })));
+        const _primary = scenario?.victoryConditions?.primary;
         if (_primary) {
             const zoneHexes = _primary.type === 'escape' ? (_primary.escapeZone || [])
                             : ['breakthrough', 'capture_position'].includes(_primary.type) ? (_primary.positions || [])
@@ -92,7 +97,7 @@ class BattleView {
         }
 
         // Nastavení map labels (názvy měst, řek, etc.) - s převodem souřadnic
-        this.game.hexGrid.mapLabels = (scenario.mapLabels || []).map(label => ({
+        this.game.hexGrid.mapLabels = (scenario?.mapLabels || []).map(label => ({
             text: label.text,
             offset: Array.isArray(label.offset) ? [...label.offset] : [0, 0],
             hexes: label.hexes.map(([col, row]) => {
@@ -439,13 +444,14 @@ class BattleView {
             this.game.endTurn();
         }, { signal });
 
-        // Klik na indikátor "Křižáci přemýšlí" zrychlí (přeskočí) animaci tahu AI.
-        // Sticky: jakmile hráč klikne, AI tahy běží zrychleně až do konce bitvy.
-        const aiThinking = document.getElementById('ai-thinking');
-        if (aiThinking) {
-            aiThinking.addEventListener('click', () => {
-                if (this.game.skipAIAnimations()) {
-                    aiThinking.classList.add('skipping');
+        // Stejná vratná volba v indikátoru AI i v menu mezi tahy.
+        for (const id of ['ai-thinking', 'btn-ai-speed']) {
+            document.getElementById(id)?.addEventListener('click', () => {
+                if (this.game.toggleAISpeed()) {
+                    this.syncAISpeedControls();
+                    if (this.game.currentFaction === 'hussites' && !this.game.actions.busy) {
+                        this.game.saveGame({ automatic: true });
+                    }
                 }
             }, { signal });
         }
@@ -523,6 +529,7 @@ class BattleView {
     }
 
     showAIThinking(show) {
+        this.syncAISpeedControls();
         const indicator = document.getElementById('ai-thinking');
         if (indicator) {
             if (show) {
@@ -535,6 +542,26 @@ class BattleView {
             } else {
                 indicator.classList.add('hidden');
             }
+        }
+    }
+
+    syncAISpeedControls() {
+        const fast = this.game.fastForwardAI;
+        const mode = i18n.t(fast ? 'game.aiSpeedFast' : 'game.aiSpeedNormal');
+        const indicator = document.getElementById('ai-thinking');
+        if (indicator) {
+            indicator.classList.toggle('skipping', fast);
+            indicator.setAttribute('aria-pressed', String(fast));
+            indicator.title = i18n.t('game.aiSpeedHint');
+            const speed = indicator.querySelector('.ai-thinking-speed');
+            if (speed) speed.textContent = `${mode} · ${i18n.t(fast ? 'game.aiSpeedSlowDown' : 'game.aiSpeedSpeedUp')}`;
+        }
+        const button = document.getElementById('btn-ai-speed');
+        if (button) {
+            button.textContent = i18n.t('game.aiSpeedMenu', { mode });
+            button.title = i18n.t('game.aiSpeedHint');
+            button.setAttribute('aria-pressed', String(fast));
+            button.disabled = this.game.gameState !== 'playing';
         }
     }
 

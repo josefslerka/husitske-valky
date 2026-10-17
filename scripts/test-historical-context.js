@@ -86,7 +86,7 @@ test('Sudoměř zachová terén, síly a načasování; navíc výslovně dovol�
     const h = createHarness(), scenario = h.Scenarios.sudomere_1420;
     assert.equal(scenario.victoryConditions.primary.alternative?.type, 'eliminate_field_army');
     const stripText = value => Array.isArray(value) ? value.map(stripText) : value && typeof value === 'object'
-        ? Object.fromEntries(Object.entries(value).filter(([key]) => !['name','date','description','message','text','title','commander'].includes(key)).map(([key,v]) => [key,stripText(v)])) : value;
+        ? Object.fromEntries(Object.entries(value).filter(([key]) => !['name','date','description','message','text','title','commander','unitStatus','forceStatus'].includes(key)).map(([key,v]) => [key,stripText(v)])) : value;
     const keys = ['mapSize','terrain','forces','victoryConditions','phases','specialMechanics','defeatConditions','turnLimit'];
     const data = stripText(Object.fromEntries(keys.filter(key => scenario[key] !== undefined).map(key => [key,scenario[key]])));
     // Snapshot po výslovné alternativě výsledku; nevyžaduje dostupný Git při spuštění testů.

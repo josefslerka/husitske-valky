@@ -288,6 +288,17 @@ class BattleTooltip {
             html += `<div class="tooltip-info tooltip-objective"><strong>${objective.description}</strong><br>${i18n.t('game.holdProgress', { held, required: objective.requiredTurns })}</div>`;
         }
 
+        const optional = this.game.victoryConditionsSystem.getSecondaryPositionProgress().find(item =>
+            item.positions.some(([col, row]) => col === hex.col && row === hex.row));
+        if (optional) {
+            const escape = value => String(value).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[char]);
+            const progress = i18n.t('game.optionalPositionProgress', {
+                captured: optional.captured, total: optional.positions.length, required: optional.required });
+            html += `<div class="tooltip-info tooltip-objective"><strong>◇ ${escape(optional.description)}</strong><br>${escape(progress)}<br>${escape(i18n.t('game.optionalPositionHint'))}</div>`;
+        }
+
         return html;
     }
 

@@ -275,18 +275,19 @@ class WoodcutRenderer {
         ctx.save();
         const color = kind === 'attack' ? p.danger
             : kind === 'selected' ? p.ink
+            : kind === 'optional-objective' ? '#8c5c20'
             : kind === 'objective' ? p.gold
             : kind === 'enemy-move' ? p.red
             : p.move;
-        this.hexPath(hex.col, hex.row, 3);
+        this.hexPath(hex.col, hex.row, kind === 'optional-objective' ? 0 : 3);
         ctx.fillStyle = kind === 'attack' ? 'rgba(152,46,38,.15)'
             : kind === 'enemy-move' ? 'rgba(128,53,45,.12)'
-            : kind === 'objective' ? 'rgba(183,137,55,.16)'
+            : ['objective', 'optional-objective'].includes(kind) ? 'rgba(183,137,55,.16)'
             : 'rgba(242,232,211,.22)'; ctx.fill();
         ctx.strokeStyle = p.light; ctx.lineWidth = 5; ctx.stroke();
         ctx.strokeStyle = color; ctx.lineWidth = 2;
         if (kind === 'move' || kind === 'enemy-move') ctx.setLineDash(kind === 'enemy-move' ? [2, 4] : [4, 5]);
-        if (kind === 'objective') ctx.setLineDash([3, 4]);
+        if (kind === 'objective' || kind === 'optional-objective') ctx.setLineDash([3, 4]);
         ctx.stroke(); ctx.setLineDash([]);
         if (kind === 'selected') { this.hexPath(hex.col, hex.row, 7); ctx.lineWidth = 1; ctx.stroke(); }
         if (kind === 'move') { ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2); ctx.fill(); }
@@ -296,6 +297,11 @@ class WoodcutRenderer {
             for (const dx of [-r, r]) this.line([[x + dx - 3, y + 3], [x + dx + 3, y - 3]]);
         }
         if (kind === 'escape') this.line([[x - 6, y + 4], [x + 6, y + 4], [x + 1, y - 1], [x + 6, y + 4], [x + 1, y + 9]]);
+        if (kind === 'optional-objective') {
+            const markX = x + this.grid.hexSize * .83, size = this.grid.hexSize * .15;
+            this.path([[markX, y - size], [markX + size, y], [markX, y + size], [markX - size, y]], true);
+            ctx.fillStyle = p.light; ctx.fill(); ctx.stroke();
+        }
         ctx.restore();
     }
 
@@ -370,6 +376,8 @@ class WoodcutRenderer {
         for (const hex of grid.highlightedHexes) this.highlight(hex, 'move');
         for (const hex of grid.attackableHexes) this.highlight(hex, 'attack');
         if (grid.selectedHex) this.highlight(grid.selectedHex, 'selected');
+        // Veřejně zadané cíle; značka nečte obsazení ani skrytý terén.
+        for (const hex of grid.secondaryObjectiveHexes) this.highlight(hex, 'optional-objective');
         grid.drawMapLabels(fog?.fogOfWar, fog?.exploredHexes);
         grid.drawWagonChains(units);
         for (const unit of units) if (unit.health > 0) this.unit(unit, tokenPositions?.get(unit.id));

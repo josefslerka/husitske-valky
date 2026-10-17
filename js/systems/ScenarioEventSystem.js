@@ -18,11 +18,41 @@ class ScenarioEventSystem {
         return status?.texts?.[this.getUnitState(status)] || '';
     }
 
+    // Jen vyprávění: čtení nikdy nepodmiňuje provedení bojového účinku eventu.
+    // Skrytá nepřátelská jednotka nesmí novou variantou prozradit svůj stav.
+    canNarrateUnit(unit) {
+        const player = this.game.currentScenario?.playerFaction || 'hussites';
+        return !this.game.fogOfWar || unit.faction === player ||
+            this.game.visibleHexes.has(`${unit.col},${unit.row}`);
+    }
+
+    getEventUnitState(status) {
+        if (!status) return null;
+        const units = this.game.units.filter(unit => unit.type === status.type && unit.faction === status.faction);
+        if (units.length !== 1 || !this.canNarrateUnit(units[0])) return null;
+        const state = this.getUnitState(status);
+        return state === 'alive' && units[0].isRouting && status.texts?.routing
+            ? 'routing' : state;
+    }
+
+    getForceState(status) {
+        if (!status) return null;
+        const units = this.game.units.filter(unit => unit.faction === status.faction &&
+            (status.kind === 'cavalry' ? unit.isCavalry?.()
+                : status.kind === 'ranged' ? unit.isRanged?.()
+                : !unit.isCommander?.()));
+        if (!units.length || units.some(unit => !this.canNarrateUnit(unit))) return null;
+        const present = units.filter(unit => unit.health > 0 && !unit.escaped);
+        if (!present.length) return 'absent';
+        return present.some(unit => !unit.isRouting) ? 'ready' : 'routing';
+    }
+
     // Hláška může čekat ve frontě, zatímco hráč přepne jazyk. Uchováme její
     // identitu a jednou vybranou narativní variantu, ne hotový překlad.
-    showScenarioEventNotification(event, fallbackTitleKey, { unitStatus = false, titleKey = null, suffixKey = null } = {}) {
+    showScenarioEventNotification(event, fallbackTitleKey, { titleKey = null, suffixKey = null } = {}) {
         const scenarioId = this.game.currentScenario?.id;
-        const unitState = unitStatus ? this.getUnitState(event.unitStatus) : null;
+        const unitState = this.getEventUnitState(event.unitStatus);
+        const forceState = this.getForceState(event.forceStatus);
         const resolve = () => {
             let currentEvent = event;
             let currentPhase = null;
@@ -40,7 +70,8 @@ class ScenarioEventSystem {
             const title = titleKey ? i18n.t(titleKey)
                 : (currentEvent.title || currentPhase?.name || event.title || i18n.t(fallbackTitleKey));
             const variant = unitState ? currentEvent.unitStatus?.texts?.[unitState] : null;
-            const body = variant || currentEvent.text || currentEvent.message || event.text || event.message || '';
+            const forceVariant = forceState ? currentEvent.forceStatus?.texts?.[forceState] : null;
+            const body = forceVariant || variant || currentEvent.text || currentEvent.message || event.text || event.message || '';
             return { title, text: body + (suffixKey ? `\n\n${i18n.t(suffixKey)}` : '') };
         };
         const { title, text } = resolve();
@@ -100,6 +131,18 @@ class ScenarioEventSystem {
             } else if (progress.some(objective => objective.id === 'block_gate' && objective.achieved)) {
                 outcome.victoryVariant = 'gateBlocked';
             }
+        }
+        const player = scenario.playerFaction || 'hussites';
+        const enemies = this.game.units.filter(unit => unit.faction !== player);
+        if (isVictory && ['nemecky_brod_1422', 'oblehani_plzne_1433', 'malesov_1424'].includes(scenario.id) &&
+            debriefing.victoryVariants?.enemyEliminated &&
+            enemies.length > 0 && enemies.every(unit => unit.health <= 0 || unit.escaped) &&
+            !this.game.victoryConditionsSystem.getPositionObjectiveProgress(scenario.victoryConditions.primary).achieved) {
+            outcome.victoryVariant = 'enemyEliminated';
+        }
+        if (isVictory && scenario.id === 'domazlice_1431' && debriefing.victoryVariants?.approachSecured &&
+            this.game.victoryConditionsSystem.getSecondaryPositionProgress().some(objective => objective.achieved)) {
+            outcome.victoryVariant = 'approachSecured';
         }
         return outcome;
     }
@@ -162,7 +205,7 @@ class ScenarioEventSystem {
     processEvent(event) {
         switch (event.type) {
             case 'message':
-                this.showScenarioEventNotification(event, 'messages.messageTitle', { unitStatus: true });
+                this.showScenarioEventNotification(event, 'messages.messageTitle');
                 break;
 
             case 'reinforcement':

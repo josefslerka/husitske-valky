@@ -248,9 +248,9 @@ for (const lang of ['cs', 'en']) {
     });
 }
 
-test('ostatní scénáře zachovají dosavadní texty debriefingu', async () => {
+test('scénáře bez vybrané varianty nebo osudu velitele používají základní debriefing', async () => {
     const { h } = await fixture('sudomere_1420');
-    for (const id of Object.keys(h.Scenarios).filter(id => !['zivohost_1419', 'sudomere_1420', 'lipany_1434'].includes(id))) {
+    for (const id of Object.keys(h.Scenarios).filter(id => !['zivohost_1419', 'sudomere_1420', 'lipany_1434', 'sion_1437'].includes(id))) {
         const game = h.newGame(id);
         for (const victory of [true, false]) {
             assert.equal(game.scenarioEventSystem.getDebriefing(victory), game.currentScenario.debriefing[victory ? 'victory' : 'defeat'], id);

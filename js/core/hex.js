@@ -39,6 +39,7 @@ class HexGrid {
         this.escapeZoneHexes = [];
         this.escapeZoneLabel = '';
         this.escapeZoneKind = 'escape';
+        this.secondaryObjectiveHexes = [];
         this.mapLabels = [];
 
         // Animace

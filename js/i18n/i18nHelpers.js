@@ -170,6 +170,9 @@ function getLocalizedScenario(scenarioId, baseScenario) {
                     if (event.unitStatus) {
                         localizedEvent.unitStatus = localizeUnitStatus(event.unitStatus, `${eventKey}.unitStatus`);
                     }
+                    if (event.forceStatus) {
+                        localizedEvent.forceStatus = localizeUnitStatus(event.forceStatus, `${eventKey}.forceStatus`);
+                    }
 
                     return localizedEvent;
                 });

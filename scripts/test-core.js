@@ -377,14 +377,14 @@ test('kampaň odemyká akty a opakováním nefarmí pověst', () => {
         'opakovaná prohra už získanou odměnu nevezme');
 });
 
-test('pověst mění morálku, paniku a zlomí se u Lipan', () => {
+test('pověst mění morálku, paniku a zlomí se při porážce u Lipan', () => {
     assert.ok(CampaignProgressSystem.getStartingMoraleModifier('tachov_1427', 80) < 0);
     assert.ok(CampaignProgressSystem.getStartingMoraleModifier('tachov_1427', 20) > 0);
     assert.strictEqual(CampaignProgressSystem.adjustPanicLevel(2, 'domazlice_1431', 80), 3);
     assert.strictEqual(CampaignProgressSystem.adjustPanicLevel(2, 'domazlice_1431', 20), 1);
 
     const lipany = CampaignProgressSystem.recordBattle({
-        scenarioId: 'lipany_1434', result: 'victory', turns: 10, maxTurns: 14, lossRatio: 0.4
+        scenarioId: 'lipany_1434', result: 'defeat', turns: 10, maxTurns: 14, lossRatio: 0.4
     });
     assert.ok(lipany.reputation <= 35);
 });

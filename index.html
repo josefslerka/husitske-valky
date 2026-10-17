@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://hussitewars.com/imgs/social-preview.png">
     <meta name="twitter:image:alt" content="Husitská vozová hradba pod kalichem · A Hussite wagon fort beneath the chalice banner">
 
-    <link rel="stylesheet" href="style.css?v=8.50">
+    <link rel="stylesheet" href="style.css?v=8.51">
 </head>
 <body class="booting">
     <section id="startup-status" class="startup-status">
@@ -354,6 +354,7 @@
                         <span class="btn-icon">↻</span> <span data-i18n="pause.retry"></span>
                     </button>
                     <div class="dropdown-divider"></div>
+                    <button id="btn-ai-speed" type="button" aria-pressed="false">Tah soupeře: Normálně</button>
                     <button id="btn-sound" title="Zapnout/Vypnout zvuk">
                         <span class="btn-icon">🔊</span> <span data-i18n="game.sound"></span>
                     </button>
@@ -1092,13 +1093,13 @@
         </div>
     </div>
 
-    <!-- AI Thinking Indicator (klik = přeskočit/zrychlit tah AI) -->
-    <div id="ai-thinking" class="ai-thinking hidden" role="button" tabindex="0"
-         data-i18n-title="game.skipAiHint" title="Klikni pro zrychlení tahů křižáků">
-        <div class="ai-thinking-spinner"></div>
+    <!-- Rychlost AI lze přepnout zpět; nativní tlačítko funguje i klávesnicí. -->
+    <button id="ai-thinking" type="button" class="ai-thinking hidden" aria-pressed="false"
+         data-i18n-title="game.aiSpeedHint" title="Přepíná normální a zrychlené tahy soupeře">
+        <span class="ai-thinking-spinner" aria-hidden="true"></span>
         <span class="ai-thinking-text">Křižáci přemýšlí...</span>
-        <span class="ai-thinking-skip" data-i18n="game.skipAiTurn">▶▶ přeskočit</span>
-    </div>
+        <span class="ai-thinking-speed">Normálně · Zrychlit</span>
+    </button>
 
     <!-- Tutorial Modal -->
     <div id="tutorial-modal" class="modal hidden">
@@ -1145,41 +1146,41 @@
 
     <!-- i18n - lokalizační systém (načíst jako první) -->
     <script src="js/core/GameStorage.js?v=8.9"></script>
-    <script src="js/i18n/i18n.js?v=8.51"></script>
-    <script src="js/i18n/i18nHelpers.js?v=8.21"></script>
+    <script src="js/i18n/i18n.js?v=8.54"></script>
+    <script src="js/i18n/i18nHelpers.js?v=8.22"></script>
     <script src="js/i18n/encyclopediaRenderer.js?v=8.33"></script>
     <!-- ?v= cache-busting: bumpni číslo při každém vydání, ať hráči nedostanou starý JS -->
     <script src="js/ui/sound.js?v=3.9"></script>
     <script src="js/ui/music.js?v=8.20"></script>
-    <script src="js/ui/WoodcutRenderer.js?v=8.29"></script>
-    <script src="js/core/hex.js?v=8.14"></script>
+    <script src="js/ui/WoodcutRenderer.js?v=8.30"></script>
+    <script src="js/core/hex.js?v=8.15"></script>
     <script src="js/data/unitTypes.js?v=8.21"></script>
     <script src="js/entities/Unit.js?v=8.19"></script>
     <script src="js/entities/UnitFactory.js?v=3.9"></script>
     <script src="js/data/battleLore.js?v=8.17"></script>
     <script src="js/data/historicalSources.js?v=8.18"></script>
     <script src="js/data/campaign.js?v=8.0"></script>
-    <script src="js/systems/CampaignProgressSystem.js?v=8.10"></script>
-    <script src="js/data/scenarios.js?v=8.28"></script>
+    <script src="js/systems/CampaignProgressSystem.js?v=8.11"></script>
+    <script src="js/data/scenarios.js?v=8.31"></script>
     <script src="js/systems/CombatSystem.js?v=8.2"></script>
     <script src="js/systems/BattleActionSystem.js?v=8.8"></script>
     <script src="js/systems/SaveGameSystem.js?v=8.17"></script>
-    <script src="js/systems/ScenarioEventSystem.js?v=8.9"></script>
+    <script src="js/systems/ScenarioEventSystem.js?v=8.10"></script>
     <script src="js/systems/FogOfWarSystem.js?v=3.9"></script>
-    <script src="js/systems/VictoryConditionsSystem.js?v=8.5"></script>
+    <script src="js/systems/VictoryConditionsSystem.js?v=8.6"></script>
     <script src="js/systems/TutorialSystem.js?v=8.2"></script>
     <script src="js/systems/MoraleSystem.js?v=8.4"></script>
-    <script src="js/systems/ChronicleSystem.js?v=8.10"></script>
+    <script src="js/systems/ChronicleSystem.js?v=8.11"></script>
     <script src="js/ui/HistoricalNotesView.js?v=8.18"></script>
     <script src="js/ui/ChronicleView.js?v=8.17"></script>
-    <script src="js/ui/BattlePanels.js?v=8.25"></script>
-    <script src="js/ui/BattleTooltip.js?v=8.24"></script>
+    <script src="js/ui/BattlePanels.js?v=8.26"></script>
+    <script src="js/ui/BattleTooltip.js?v=8.25"></script>
     <script src="js/ui/BattleMapInput.js?v=8.9"></script>
     <script src="js/ui/BattleOrders.js?v=8.13"></script>
-    <script src="js/ui/BattleView.js?v=8.24"></script>
-    <script src="js/core/game.js?v=8.23"></script>
+    <script src="js/ui/BattleView.js?v=8.25"></script>
+    <script src="js/core/game.js?v=8.24"></script>
     <script src="js/ai.js?v=8.21"></script>
-    <script src="js/ui/main.js?v=8.38"></script>
+    <script src="js/ui/main.js?v=8.39"></script>
 
     <!-- Cloudflare Web Analytics: souhrnné návštěvy bez cookies. -->
     <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"

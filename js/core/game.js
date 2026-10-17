@@ -77,8 +77,7 @@ class Game {
         this.armyMorale = { hussites: 100, crusaders: 100 };
         this.wavering = { hussites: false, crusaders: false };
 
-        // Přeskočení animace tahu AI (klik na indikátor "Křižáci přemýšlí")
-        // - sticky pro celou bitvu: jakmile zapnuto, AI tahy běží zrychleně
+        // Vratná prezentační rychlost AI, uložená s rozehranou bitvou.
         this.fastForwardAI = false;
 
         // Tutoriál
@@ -112,9 +111,9 @@ class Game {
         this.view.onPauseChange(paused);
     }
 
-    skipAIAnimations() {
-        if (this.gameState !== 'playing' || this.currentFaction !== 'crusaders' || this.fastForwardAI) return false;
-        this.fastForwardAI = true;
+    toggleAISpeed() {
+        if (this.gameState !== 'playing' || this.isPaused) return false;
+        this.fastForwardAI = !this.fastForwardAI;
         return true;
     }
 
@@ -131,6 +130,9 @@ class Game {
         this.gameState = 'playing';
         this.clearLog();
         this.currentScenario = null;
+        this.fastForwardAI = false;
+        this.view.configureScenario(null);
+        this.showAIThinking(false);
         this.currentPhase = null;
         this.processedEvents = new Set();
         this.campaignRecorded = false;
@@ -228,6 +230,8 @@ class Game {
         this.gameState = 'playing';
         this.clearLog();
         this.currentScenario = scenario;
+        this.fastForwardAI = false;
+        this.showAIThinking(false);
         this.processedEvents = new Set();
         this.currentPhase = null;  // Reset fáze při načtení scénáře
 

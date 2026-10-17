@@ -64,6 +64,7 @@ class BattlePanels {
             : `${i18n.t('game.roundLabel')} ${displayedTurn}`;
 
         this.updateObjectiveProgress();
+        this.game.view.syncAISpeedControls?.();
 
         // Přehled armád
         this.updateArmyOverview();
@@ -77,6 +78,7 @@ class BattlePanels {
 
     updateObjectiveProgress() {
         this.updateSurvivalObjective();
+        this.updateSecondaryObjectives();
         const primary = this.game.currentScenario?.victoryConditions?.primary;
         const targets = document.getElementById('dual-objectives');
         const hint = document.getElementById('dual-objective-hint');
@@ -119,15 +121,7 @@ class BattlePanels {
                 locate.textContent = i18n.t('game.showObjectiveOnMap');
                 locate.setAttribute('aria-label', `${name}: ${locate.textContent}`);
                 locate.addEventListener('click', () => {
-                    const points = (objective.positions || []).map(([col, row]) => this.game.hexGrid.hexToPixel(col, row));
-                    if (!points.length) return;
-                    this.game.view.hideTooltip();
-                    this.game.view.mapInput.centerOnWorld(
-                        points.reduce((sum, point) => sum + point.x, 0) / points.length,
-                        points.reduce((sum, point) => sum + point.y, 0) / points.length
-                    );
-                    document.getElementById('objectives-panel').classList.add('hidden');
-                    document.getElementById('btn-objectives').focus();
+                    this.locateObjective(objective);
                 });
                 row.append(title, description, state, locate);
                 targets.appendChild(row);
@@ -138,6 +132,59 @@ class BattlePanels {
         for (const id of ['primary-objective', 'objective-hud-text']) {
             const element = document.getElementById(id);
             if (element && element.textContent !== text) element.textContent = text;
+        }
+    }
+
+    locateObjective(objective) {
+        const points = (objective.positions || []).map(([col, row]) => this.game.hexGrid.hexToPixel(col, row));
+        if (!points.length) return;
+        this.game.view.hideTooltip();
+        this.game.view.mapInput.centerOnWorld(
+            points.reduce((sum, point) => sum + point.x, 0) / points.length,
+            points.reduce((sum, point) => sum + point.y, 0) / points.length
+        );
+        document.getElementById('objectives-panel').classList.add('hidden');
+        document.getElementById('btn-objectives').focus();
+    }
+
+    updateSecondaryObjectives() {
+        const list = document.getElementById('secondary-objectives');
+        if (!list) return;
+        const objectives = this.game.currentScenario?.victoryConditions?.secondary || [];
+        const progress = this.game.victoryConditionsSystem.getSecondaryPositionProgress();
+        const signature = JSON.stringify([i18n.currentLanguage, objectives,
+            progress.map(objective => [objective.captured, objective.required])]);
+        // Obnovit jen změněný stav: přesun po mapě nesmí ztrácet fokus tlačítka.
+        if (list.dataset.progressSignature === signature) return;
+        list.dataset.progressSignature = signature;
+        list.replaceChildren();
+        document.getElementById('optional-objectives')?.classList.toggle('hidden', objectives.length === 0);
+        for (const [index, objective] of objectives.entries()) {
+            const current = progress.find(item => item.id === objective.id);
+            const row = document.createElement('div');
+            row.className = 'objective secondary';
+            row.dataset.objective = objective.id || `secondary-${index}`;
+            const status = document.createElement('span');
+            status.className = 'objective-status'; status.textContent = '◇';
+            const description = document.createElement('span');
+            description.className = 'objective-text'; description.textContent = objective.description;
+            row.append(status);
+            if (current) {
+                row.classList.add('position-objective');
+                row.classList.toggle('objective-held', current.achieved);
+                const detail = document.createElement('div'); detail.className = 'position-objective-details';
+                const count = document.createElement('p'); count.className = 'objective-progress';
+                count.textContent = i18n.t('game.optionalPositionProgress', {
+                    captured: current.captured, total: current.positions.length, required: current.required });
+                const hint = document.createElement('p'); hint.className = 'optional-objectives-note';
+                hint.textContent = i18n.t('game.optionalPositionHint');
+                const locate = document.createElement('button'); locate.type = 'button';
+                locate.className = 'objective-locate'; locate.textContent = i18n.t('game.showObjectiveOnMap');
+                locate.setAttribute('aria-label', `${objective.description}: ${locate.textContent}`);
+                locate.addEventListener('click', () => this.locateObjective(current));
+                detail.append(description, count, hint, locate); row.append(detail);
+            } else row.append(description);
+            list.appendChild(row);
         }
     }
 

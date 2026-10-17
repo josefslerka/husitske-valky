@@ -276,12 +276,12 @@ test('prozkoumaný a viditelný terén jsou odlišné; objevování nic nemění
 
 test('výběr, vlastní i nepřátelský dojezd, útok a únik mají různé značky i bez barvy', () => {
     const h = drawingHarness(), recordings = [];
-    for (const kind of ['selected', 'move', 'enemy-move', 'attack', 'escape']) {
+    for (const kind of ['selected', 'move', 'enemy-move', 'attack', 'escape', 'objective', 'optional-objective']) {
         h.calls.length = 0; h.grid.renderer.highlight({ col: 1, row: 1 }, kind);
         recordings.push(JSON.stringify(h.calls.filter(call => !['fillStyle', 'strokeStyle'].includes(call[0]))));
         assert.equal(h.stack.length, 0);
     }
-    assert.equal(new Set(recordings).size, 5);
+    assert.equal(new Set(recordings).size, 7);
 });
 
 test('strany se liší tvarem a zdravotní lišta zůstává viditelná po vyčerpání', () => {
@@ -298,6 +298,30 @@ test('strany se liší tvarem a zdravotní lišta zůstává viditelná po vyče
     for (const label of ['✓', '!', '1', '➜']) assert.ok(h.calls.some(call => call[0] === 'fillText' && call[1] === label));
     assert.equal(h.calls.at(-2)[0], 'fillRect'); // health segments drawn last, above state shading
     assert.equal(h.stack.length, 0);
+});
+
+test('označený volitelný cíl má čitelný kosočtverec i při oddálení a neruší pohybové značky', () => {
+    for (const size of [16, 24, 40, 64]) {
+        const h = drawingHarness(size);
+        h.grid.secondaryObjectiveHexes = [{ col: 1, row: 1 }];
+        h.grid.highlightedHexes = [{ col: 1, row: 1 }];
+        const before = JSON.stringify([...h.grid.hexes]); h.grid.render([]);
+        assert.ok(h.calls.some(call => call[0] === 'strokeStyle' && call[1] === '#8c5c20'));
+        const point = h.grid.hexToPixel(1, 1);
+        assert.ok(h.calls.some(call => call[0] === 'moveTo' && call[1] === point.x + size * .83 && call[2] === point.y - size * .15));
+        assert.ok(h.calls.some(call => call[0] === 'arc' && call[3] === 2.5), 'pohyb si ponechá vlastní tečku');
+        assert.equal(JSON.stringify([...h.grid.hexes]), before); assert.equal(h.stack.length, 0);
+    }
+});
+
+test('veřejná značka cíle neprozradí skrytý terén nebo nepřátelské obsazení', () => {
+    const h = drawingHarness(40, 1, 1), fog = { fogOfWar: true, visibleHexes: new Set(), exploredHexes: new Set() };
+    h.grid.secondaryObjectiveHexes = [{ col: 0, row: 0 }];
+    const drawings = [];
+    for (const terrain of ['plains', 'forest', 'hills']) {
+        h.grid.setTerrain(0, 0, terrain); h.calls.length = 0; h.grid.render([], fog); drawings.push(JSON.stringify(h.calls));
+    }
+    assert.equal(new Set(drawings).size, 1);
 });
 
 test('hrany kreslených hexů odpovídají existujícím sousedům, nezdvojují mřížku', () => {

@@ -127,11 +127,14 @@
     }
 }
 
-/* Klikatelný indikátor AI - klik zrychlí (přeskočí) tah křižáků */
+/* Vratný přepínač tempa, nikoli přeskočení pravidel nebo jediného tahu. */
 .ai-thinking {
     cursor: pointer;
     user-select: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    max-width: calc(100vw - 24px);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .ai-thinking:hover,
@@ -141,7 +144,7 @@
     outline: none;
 }
 
-.ai-thinking-skip {
+.ai-thinking-speed {
     color: var(--gold-light);
     font-size: 0.8rem;
     font-weight: 700;
@@ -152,16 +155,16 @@
     white-space: nowrap;
 }
 
-.ai-thinking:hover .ai-thinking-skip {
+.ai-thinking:hover .ai-thinking-speed {
     opacity: 1;
 }
 
-/* Zapnutý rychlý režim: hráč už klikl, prodlevy jsou zrušené pro celou bitvu */
+/* Rychlý režim zůstává viditelný a opětovný klik vrací normální tempo. */
 .ai-thinking.skipping {
     border-color: var(--gold-light);
 }
 
-.ai-thinking.skipping .ai-thinking-skip {
+.ai-thinking.skipping .ai-thinking-speed {
     color: var(--parchment-light);
     opacity: 0.6;
 }

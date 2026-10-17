@@ -61,6 +61,27 @@ class VictoryConditionsSystem {
             && progress.every(objective => objective.occupied);
     }
 
+    // Jediný výpočet obsazení pro volitelné cíle, jejich náhled a výsledek.
+    // Držení se posuzuje při vítězství; nevede se skrytá historie opuštění pole.
+    getPositionObjectiveProgress(objective) {
+        const faction = this.game.currentScenario?.playerFaction || 'hussites';
+        const positions = objective.positions || [];
+        const required = objective.count ?? (objective.type === 'hold_position'
+            ? Math.ceil(positions.length / 2) : positions.length);
+        const captured = positions.filter(([col, row]) => {
+            const unit = this.game.getUnitAt(col, row);
+            return unit && unit.faction === faction && unit.health > 0 && !unit.escaped;
+        }).length;
+        return { ...objective, captured, required,
+            achieved: positions.length > 0 && required > 0 && captured >= required };
+    }
+
+    getSecondaryPositionProgress() {
+        return (this.game.currentScenario?.victoryConditions?.secondary || [])
+            .filter(objective => objective.mapMarker && ['hold_position', 'capture_position'].includes(objective.type))
+            .map(objective => this.getPositionObjectiveProgress(objective));
+    }
+
     // Čtecí pohled pro pravidla i vysvětlení přežití. Posily nenahrazují
     // původní obranu; stejné počítání používáme při rozhodnutí o výsledku.
     getSurvivalProgress() {
@@ -187,26 +208,16 @@ class VictoryConditionsSystem {
                 case 'max_losses':
                     achieved = this.game.unitsLost <= (sec.maxLosses || 0);
                     break;
+                case 'max_losses_percent':
+                    achieved = this.game.initialPlayerUnits > 0 &&
+                        this.game.unitsLost * 100 < this.game.initialPlayerUnits * sec.percent;
+                    break;
                 case 'fast_victory':
                     achieved = this.game.turnNumber <= (sec.maxTurns || 5);
                     break;
                 case 'hold_position':
-                    // Kontrola zda hráč drží určité pozice
-                    const holdPositions = sec.positions || [];
-                    const heldCount = holdPositions.filter(pos => {
-                        const unit = this.game.getUnitAt(pos[0], pos[1]);
-                        return unit && unit.faction === playerFaction && unit.health > 0;
-                    });
-                    achieved = heldCount.length >= Math.ceil(holdPositions.length / 2);
-                    break;
                 case 'capture_position':
-                    // Kontrola zda hráč obsadil určité pozice
-                    const capturePos = sec.positions || [];
-                    const capturedCount = capturePos.filter(pos => {
-                        const unit = this.game.getUnitAt(pos[0], pos[1]);
-                        return unit && unit.faction === playerFaction && unit.health > 0;
-                    });
-                    achieved = capturedCount.length >= (sec.count || capturePos.length);
+                    achieved = this.getPositionObjectiveProgress(sec).achieved;
                     break;
                 case 'destroy_percent':
                     // Kontrola zda hráč zničil X% nepřátel
@@ -227,7 +238,8 @@ class VictoryConditionsSystem {
                     const playerCommanders = this.game.units.filter(u =>
                         u.faction === playerFaction &&
                         u.unitClass === 'commander' &&
-                        u.health > 0
+                        (!sec.target || u.type === sec.target) &&
+                        u.health > 0 && !u.escaped
                     );
                     achieved = playerCommanders.length > 0;
                     break;

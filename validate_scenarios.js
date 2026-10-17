@@ -73,6 +73,7 @@ const implementedSecondaryTypes = [
     'kill_commander',
     'no_losses',
     'max_losses',
+    'max_losses_percent',
     'fast_victory',
     'hold_position',
     'capture_position',
@@ -246,6 +247,14 @@ function validateScenario(scenario) {
                 if (!implementedSecondaryTypes.includes(sec.type)) {
                     errors.push(`Secondary victory type '${sec.type}' není implementovaný`);
                 }
+                if (sec.type === 'max_losses_percent' &&
+                    (!Number.isFinite(sec.percent) || sec.percent <= 0 || sec.percent > 100)) {
+                    errors.push('Procentní limit ztrát musí být číslo větší než 0 a nejvýše 100');
+                }
+                if (sec.mapMarker && (!sec.id || !sec.positions?.length ||
+                    !['hold_position', 'capture_position'].includes(sec.type))) {
+                    errors.push('Označený volitelný cíl musí mít ID, cílové pozice a podporovaný typ');
+                }
 
                 if (sec.positions) {
                     for (const pos of sec.positions) {
@@ -285,11 +294,25 @@ function validateScenario(scenario) {
         }
     }
 
+    // Narativní metadata smějí vybírat jen text, nikoli přepisovat účinek eventu.
+    const validateNarrative = (status, force = false) => {
+        if (!status) return;
+        const states = force ? ['ready', 'routing', 'absent'] : ['alive', 'fallen', 'escaped'];
+        if (!['hussites', 'crusaders'].includes(status.faction) ||
+            (force ? !['field', 'cavalry', 'ranged'].includes(status.kind) : !UnitTypes[status.type]) ||
+            states.some(key => typeof status.texts?.[key] !== 'string' || !status.texts[key].trim())) {
+            errors.push(`Neplatná narativní definice ${force ? 'forceStatus' : 'unitStatus'}`);
+        }
+    };
+    validateNarrative(scenario.debriefing?.unitStatus);
+
     // 5. Validace reinforcements
     if (scenario.phases) {
         for (const phase of scenario.phases) {
             if (phase.events) {
                 for (const event of phase.events) {
+                    validateNarrative(event.unitStatus);
+                    validateNarrative(event.forceStatus, true);
                     if (event.type === 'reinforce' && event.units) {
                         for (const unit of event.units) {
                             if (unit.col < 0 || unit.col >= mapWidth) {

@@ -35,6 +35,15 @@ Prezentace bitvy je rozdělena podle odpovědností:
   ceny přes `Game.getTerrainMoveCost()` a nezkoumají skryté obsazení cíle.
   Situační pokyn pod mapou pouze odvozuje ze stavu tahu a vybrané jednotky;
   neprohledává pozice protivníka ani nemění herní pravidla.
+  Označené volitelné poziční cíle čtou `getSecondaryPositionProgress()`;
+  počítadlo, tooltip i závěrečné vyhodnocení sdílejí
+  `getPositionObjectiveProgress()`. Hořice a Malešov vyžadují dvě ze čtyř
+  cílových polí, Domažlice obě. Obsazení se hodnotí při vítězství, nikoli
+  nepřetržitě. Počítají se jen živé vlastní oddíly, které neopustily bojiště.
+  `mapMarker: true` a stabilní ID zapínají zlaté značky v
+  `HexGrid.secondaryObjectiveHexes`; ty jsou nezávislé na hlavní únikové či
+  průlomové zóně a kresba z nich nečte obsazení ani skrytý terén.
+  Změna počtu obnoví panel, stejný stav zachová jeho DOM a fokus.
 - `BattleTooltip` vlastní tooltip, jeho obsah a cache pro hover. Při náhledu
   nepřátelského dojezdu hledá místo mimo promítnuté viditelné hexy a žeton.
   Pokud karta na mapě nemá místo, dočasně ji přesune do pravého panelu;
@@ -53,7 +62,11 @@ nebo příslušného systému, nikoli přímým přepisováním jeho polí. Nap�
 Canvas převede `BattleView.handleClick()` přes kameru na hex. Myš na desktopu jej
 předá `Game.handleHexClick()` přímo. Dotyk/kompaktní režim stejnou cestou provádí
 přesun, pochod i útok bez mezikroku. Filtr gest zůstává v `BattleMapInput`.
-Přepnutí rychlosti AI jde přes `Game.skipAIAnimations()`.
+Vratné přepnutí rychlosti AI jde přes `Game.toggleAISpeed()` z indikátoru tahu
+nebo herního menu, i mezi tahy. Normální režim respektuje rychlost z Nastavení;
+zrychlení mění jen prezentační čekání, nikoli rozhodování AI. Rozpracovaná akce
+doběhne bez rušení nebo opakování. Volba se ukládá do dosavadního
+`fastForwardAI` v rozehrané bitvě; nová bitva začíná v normálním režimu.
 
 Dosavadní metody `Game.updateUI()`, `Game.updateUnitPanel()` a další veřejné vstupy
 pro prezentaci jsou zatím tenké delegáty. Udržují kompatibilitu s `main.js`, AI
@@ -89,6 +102,24 @@ ověřuje proti metodám skutečně používaným pravidly. Nepřepisujeme `Game
 
 Soubory jsou nadále klasické skripty, nikoli ES moduly. V `index.html` se proto
 `BattlePanels`, `BattleTooltip`, `BattleView` i `ScenarioEventSystem` načítají před `Game`.
+
+### Vyhodnocení volitelných cílů a pověsti
+
+`max_losses` nadále znamená absolutní počet ztracených oddílů včetně uvedené
+hranice. `max_losses_percent` je samostatný typ pro přísně menší procento
+z původního hráčského vojska; Malešov používá `percent: 30`.
+`survive_commander.target` určuje konkrétní typ velitele, v Malešově Žižku,
+nikoli libovolného jiného přeživšího velitele. Formát uložené hry se nemění;
+definice podmínek načtené bitvy pochází z aktuálních dat scénáře.
+
+`CampaignProgressSystem.recordBattle()` uplatní jednorázový propad Lipan pouze
+při skutečné herní porážce, pokud kampaň ještě neeviduje jejich vítězství.
+Pověst dál čerpá pouze nejlepší příspěvek každé bitvy, bez farmení opakováním.
+Vrácený `reputationDelta` je skutečný rozdíl před a po celé změně, včetně
+omezení na 0–100 a případného propadu. Staré záznamy a již snížená pověst se
+zpětně nepřepisují, protože úložiště neobsahuje spolehlivou předchozí hodnotu.
+Regrese jsou v `test-objective-feedback.js`, `test-ai-speed.js` a
+`test-campaign-results.js`; vizuální kontrakt značek hlídá `test-woodcut.js`.
 
 ## Nápověda a encyklopedie
 
@@ -178,6 +209,28 @@ Varianty jsou v české bázi i v CS/EN overlay pod stabilními názvy. Lokaliza
 kopíruje pouze texty, nikoli typ jednotky nebo frakci. Validátor vyžaduje překlad
 každé větve v obou jazycích. Není přidán nový stav ani formát savu: výběr přežije
 načtení díky již ukládaným jednotkám a deduplikaci událostí.
+
+Události mohou navíc obsahovat `unitStatus.texts.routing` a
+`forceStatus: { faction, kind, texts }`, kde `kind` je `field` (bez velitelů),
+`cavalry` nebo `ranged`. Varianty skupiny jsou `ready`, `routing`, `absent`.
+`ready` znamená alespoň jeden živý, přítomný, neprchající oddíl, nikoli slib
+zbývající akce v tomto tahu. Děs z ručnic sám není prchání. Velitelé se
+nepočítají za bojeschopnou polní armádu. Neznámý či duplicitní velitel a
+skrytá nepřátelská část skupiny používají neutrální základ bez prozrazení stavu.
+Tyto varianty mění **jen text**: bojový účinek, podmínky, ID, pořadí a časování
+se provedou stejně. Stav se zachytí při vzniku zprávy; její překlad ve frontě
+nepřepíše minulost pozdějším osudem oddílů. Názvy a popisy problematických
+fází nepředjímají automatický útok, útěk nebo hráčův protiútok.
+
+Brod, Plzeň a Malešov mají vítěznou větev `enemyEliminated` pouze při skutečném
+vyřazení všech nepřátel a nesplněném obsazení hlavních cílových polí. Domažlice
+používají `approachSecured` pouze při obsazení obou polí volitelného cíle.
+Sion přidává skutečný Roháčův osud z `unitStatus` i do Kroniky. Nové větve
+rozšiřují povolené hodnoty stávajícího otisku v1; staré záznamy se nepřepisují
+a neznámý osud zůstává neznámý. Save bitvy zůstává v4.
+`test-reactive-messages.js` porovnává i účinky eventů a spotřebu RNG proti
+stejným událostem bez narativních metadat. Otisk všech herních dat hlídá
+nezměněnou obtížnost; samostatné otisky chrání celý Tachov včetně CS/EN textů.
 
 Při porážce Lipan je nejprve skutečný výsledek a Prokopův osud, teprve potom jasně
 označený nespolehlivý hlas vítězné protistrany. Samotná kronika si záměrné zkreslení

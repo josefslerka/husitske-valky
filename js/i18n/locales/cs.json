@@ -231,7 +231,7 @@
       "defend": "{unit}: pohyb ani útok už nejsou k dispozici. Můžete zvolit obranu nebo vybrat další oddíl.",
       "routing": "{unit} prchá. Jeho ústup probíhá automaticky; rozkaz dejte jinému oddílu.",
       "endTurn": "Vaše oddíly už nemohou jednat. Pokračujte tlačítkem Ukončit tah.",
-      "enemyTurn": "Teď jedná protivník. Kliknutím na ukazatel jeho tahu můžete zkrátit čekání.",
+      "enemyTurn": "Teď jedná protivník. Ukazatel jeho tahu přepíná rychlost oběma směry; vrátit ji lze i v Menu.",
       "busy": "Rozkaz se provádí… Další můžete vydat po dokončení akce.",
       "paused": "Bitva je pozastavená. Rozkazy počkají na návrat do hry.",
       "review": "Bitva skončila. Prohlédněte si oddíly, posouvejte mapu a k výsledku se vraťte tlačítkem dole."
@@ -249,6 +249,8 @@
     "overview": "Přehled",
     "objectivesTitle": "Cíle mise",
     "captureProgress": "Obsazeno {captured}/{required}",
+    "optionalPositionProgress": "Obsazeno {captured}/{total} polí · minimum {required}",
+    "optionalPositionHint": "Zlaté ◇ označují přesná cílová pole. Počítá se jejich obsazení vlastními oddíly při vítězství, ne nepřetržité držení.",
     "survival": {
       "counts": "Původní oddíly: {alive}/{total} · minimum {minimum}",
       "turns": "Dokončená kola: {completedTurns}/{turns}. Časový cíl se vyhodnotí po tahu nepřítele v {turns}. kole.",
@@ -302,8 +304,12 @@
     "confirmReturn": "Opravdu chcete opustit bitvu a vrátit se do hlavního menu?",
     "aiThinking": "Křižáci přemýšlí...",
     "aiThinkingNamed": "{faction} přemýšlí...",
-    "skipAiTurn": "▶▶ přeskočit",
-    "skipAiHint": "Klikni pro zrychlení tahů nepřítele",
+    "aiSpeedNormal": "Normálně",
+    "aiSpeedFast": "Zrychleně",
+    "aiSpeedMenu": "Tah soupeře: {mode}",
+    "aiSpeedSpeedUp": "Zrychlit",
+    "aiSpeedSlowDown": "Zpomalit",
+    "aiSpeedHint": "Přepíná normální a zrychlené zobrazení tahů soupeře. Volbu lze vrátit i v herním menu; pravidla ani rozkazy AI se nemění.",
     "closeFort": "⛓ Sepnout hradbu",
     "openFort": "⛓ Rozevřít hradbu",
     "toggleFortLine": "⛓ Celá linie",
@@ -1728,7 +1734,7 @@
       },
       "debriefing": {
         "victory": "Vítězství u Živohoště otevírá cestu dál. O jeho ceně však rozhoduje i osud těch, které jste měli chránit.",
-        "defeat": "Poutníci byli u brodu rozprášeni a pobiti. Petr ze Šternberka slaví. Husitské hnutí utrpělo těžkou ránu hned v počátcích.",
+        "defeat": "Podmínky přežití u Živohoště se nepodařilo splnit. To však neznamená, že padli všichni poutníci.",
         "victoryVariants": {
           "allPilgrims": "Bitva je vyhraná. Na bojišti zůstaly všechny původní skupiny poutníků.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Volali jsme na ostatní skupiny. Všechny se ozvaly.“",
           "somePilgrims": "Bitva je vyhraná, ale na bojišti zůstala jen část původních skupin poutníků.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Volali jsme na ostatní. Ne všichni odpověděli.“",
@@ -1755,8 +1761,8 @@
           "description": "Husité budují improvizovanou obranu.",
           "events": [
             {
-              "text": "TIP: Stáhni bezbranné poutníky na kopec za bojovníky. Střelci z kopce střílejí dál a silněji (bonus z výšiny).",
-              "sourceHash": "bd8a50ba168700c3"
+              "text": "TIP: Pokud ještě máte poutníky na bojišti, stáhněte je na kopec za bojovníky. Střelci na kopci získávají výškový bonus.",
+              "sourceHash": "909c583983c0fba3"
             }
           ]
         },
@@ -1821,8 +1827,16 @@
           "description": "Houf využívá vozy jako obranné postavení.",
           "events": [
             {
-              "message": "Žižka: „Sražte vozy k sobě! Střelci za vozy, cepníci připraveni!“",
-              "sourceHash": "5814377600ad017d"
+              "message": "Zkontrolujte propojení vozů a kryt střelců.",
+              "sourceHash": "15801f2477f574b4",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka zůstává v boji. Sepněte vozy a kryjte střelce.",
+                  "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Žižka padl.",
+                  "escaped": "Jan Žižka opustil bojiště."
+                }
+              }
             },
             {
               "text": "Vozy drží pohromadě. Střelci mohou bezpečněji krýt pěchotu — využijte chvíle k útoku na Hynka.",
@@ -1831,12 +1845,19 @@
           ]
         },
         {
-          "name": "Útok jízdy na vozovou hradbu",
-          "description": "Švamberk vrhá jízdu proti vozům.",
+          "name": "Hrozba jezdeckého útoku",
+          "description": "Hlídejte přístupy k vozům a mezery v hradbě.",
           "events": [
             {
-              "message": "Těžká jízda landfrýdu útočí! Vydrží vozová hradba?",
-              "sourceHash": "e7d18daacf8da2ec"
+              "message": "Hlídejte dojezd jízdy landfrýdu a mezery mezi vozy.",
+              "sourceHash": "9fabc982b543d4d3",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Jízda landfrýdu je stále hrozbou. Hlídejte mezery mezi vozy.",
+                  "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                  "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                }
+              }
             }
           ]
         },
@@ -1882,7 +1903,7 @@
       },
       "debriefing": {
         "victory": "Rybník a bahna se staly hrobem pro železné pány! Husité využili terénu a odrazili přesilu. Tato bitva ukázala, že správně zvolené bojiště může vyvážit i značnou početní nevýhodu. Žižkův génius se projevil naplno.",
-        "defeat": "Bahna u Sudoměře se nestala pastí pro nepřítele, ale pro vás. Rytíři prolomili vaši obranu. Žižkova kariéra končí dříve, než mohla skutečně začít.",
+        "defeat": "Obrana u Sudoměře neuspěla. Nesplnili jste podmínky přežití ani alternativního vítězství.",
         "victoryVariants": {
           "fieldArmyEliminated": "Nepřátelskou polní armádu jste rozbili, ale za cenu většiny vlastních oddílů. Osamělý velitel už výsledek bitvy nemohl zvrátit. Je to vítězství — kronikář z něj však vaše ztráty nevymaže."
         }
@@ -1898,8 +1919,15 @@
           "description": "Johanité a královské vojsko útočí po hrázi.",
           "events": [
             {
-              "message": "Křižáci zahajují útok po úzké hrázi!",
-              "sourceHash": "fc4441e3cd264b66"
+              "message": "Hráz je úzká. Sledujte přístup nepřátelských oddílů.",
+              "sourceHash": "5b6fdb8654cc01e1",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Nepřátelské oddíly mohou stále bojovat. Hlídejte hráz i další průchody.",
+                  "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                  "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                }
+              }
             }
           ]
         },
@@ -1934,8 +1962,8 @@
         ]
       },
       "debriefing": {
-        "victory": "Vítkov obstál! Obrana výšiny a příchod pomoci z Prahy zmařily v této partii nepřátelský útok. Historicky vítězství pomohlo uchovat spojení Prahy s okolím; samo ještě neukončilo obléhání ani válku.",
-        "defeat": "Sruby na Vítkově padly a s nimi i naděje Prahy. Křižáci obsadili strategickou výšinu a Praha je v obležení. Husitská revoluce končí dříve, než mohla rozvinout svou sílu."
+        "victory": "Vítkov jste ubránili. Historicky obrana výšiny pomohla uchovat spojení Prahy s okolím; obléhání ani válku tím ještě neukončila.",
+        "defeat": "Vítkov se nepodařilo ubránit. Prohra na výšině však není dobytím celé Prahy."
       },
       "phases": [
         {
@@ -1943,19 +1971,19 @@
           "description": "Míšeňská a duryňská jízda se valí do úzkého hrdla šíje.",
           "events": [
             {
-              "message": "Útok se soustřeďuje na šíji. Posádka srubů drží úzký přístup; pražská pomoc je na cestě.",
-              "sourceHash": "a6e480c6ca234f34"
+              "message": "Hlídejte přístupy ke srubům. Pomoc z Prahy je očekávána.",
+              "sourceHash": "9d6bffbc45a4a7cf"
             }
           ]
         },
         {
-          "name": "Boj o sruby",
-          "description": "Křižáci pronikají k opevnění. Posily z Prahy jsou na cestě!",
+          "name": "Boj o přístupy",
+          "description": "Hlídejte přístupy ke srubům. Pomoc z Prahy je očekávána.",
           "events": []
         },
         {
-          "name": "Protiútok",
-          "description": "Husité vytlačují křižáky z kopce.",
+          "name": "Závěr obrany",
+          "description": "Udržte potřebný počet oddílů do konce stanoveného kola.",
           "events": []
         }
       ],
@@ -1982,7 +2010,7 @@
       },
       "debriefing": {
         "victory": "Vaše obrana pod Vyšehradem obstála. Historicky královské vojsko utrpělo těžkou porážku a Vyšehrad přešel do rukou husitů. Padla řada českých a moravských pánů včetně Jindřicha z Plumlova. Přesné součty ztrát jsou nejisté; Praha přitom ještě nebyla celá pod husitskou kontrolou.",
-        "defeat": "Zikmundovy síly prorazily k Vyšehradu včas. Posádka byla zachráněna a husité utrpěli těžké ztráty. Obléhání Prahy pokračuje a husitská věc je v ohrožení."
+        "defeat": "Obrana pod Vyšehradem v této partii neuspěla. Z toho neplyne, že Zikmund dorazil před dohodnutou lhůtou nebo že byla posádka automaticky zachráněna."
       },
       "phases": [
         {
@@ -1994,8 +2022,16 @@
               "sourceHash": "52068d36f780960d"
             },
             {
-              "message": "Zikmund marně mává mečem směrem k Vyšehradu. Je pozdě.",
-              "sourceHash": "49718985c17ba745"
+              "message": "Podle dohody se vyšehradská posádka nemá zapojit do boje.",
+              "sourceHash": "93894a6897133986",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Zikmund zůstává na bojišti. Podle dohody se vyšehradská posádka nemá zapojit do boje.",
+                  "routing": "Zikmund prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Zikmund padl.",
+                  "escaped": "Zikmund opustil bojiště."
+                }
+              }
             }
           ]
         },
@@ -2004,8 +2040,8 @@
           "description": "Uhři a Němci čelně útočí na husitské příkopy.",
           "events": [
             {
-              "message": "Uhři a Němci zahajují čelní útok na vaše příkopy!",
-              "sourceHash": "b3398588f64bb938"
+              "message": "Zkontrolujte nepřátelské oddíly u příkopů a jejich možnosti postupu.",
+              "sourceHash": "06ad47a0af273fda"
             },
             {
               "text": "Připravené pozice poskytují +3 k obraně!",
@@ -2022,22 +2058,22 @@
               "sourceHash": "36bb2c650df069e8"
             },
             {
-              "message": "Uražená česká šlechta útočí! Musí sesednout kvůli strmému svahu.",
-              "sourceHash": "a23c064fd5ee9d4c"
+              "message": "Strmý přístup ztěžuje postup jízdy. Hlídejte, kudy nepřítel postupuje.",
+              "sourceHash": "2166be0aae4482b7"
             },
             {
-              "text": "Česká šlechta ztrácí výhodu jízdy na strmém svahu!",
-              "sourceHash": "ac277f214ed078ff"
+              "text": "Jízda na svahu ztrácí bonus nárazu a část pohybu.",
+              "sourceHash": "d7a7b53ba193f563"
             }
           ]
         },
         {
-          "name": "Husitský protiútok",
-          "description": "Hynek Krušina nasazuje zálohy.",
+          "name": "Možnost protiútoku",
+          "description": "Zvažte protiútok podle stavu nepřítele. Sledujte příchod záloh.",
           "events": [
             {
-              "message": "„Běží nepřátelé!“ Hynek Krušina obrací zatlačené Pražany do protiútoku a nasazuje orebské cepníky z rezervy!",
-              "sourceHash": "ac07bf1cc99b6ecb"
+              "message": "Zvažte protiútok a sledujte příchod záloh.",
+              "sourceHash": "728523a1581ccdb4"
             },
             {
               "message": "Jednotky uvolněné z obléhání Vyšehradu se připojují k bitvě!",
@@ -2046,30 +2082,38 @@
           ]
         },
         {
-          "name": "Masakr české šlechty",
-          "description": "Šlechta je uvězněna v úvozu a pobita.",
+          "name": "Boj v úvozu",
+          "description": "Úvoz může ztížit ústup. Hlídejte průchod a prchající oddíly.",
           "events": [
             {
-              "message": "Česká šlechta uvízla v úvozu! Nemůže uniknout!",
-              "sourceHash": "dc1ce311e5eff28c"
+              "message": "V úvozu jsou prchající nepřátelské oddíly. Jejich další ústup a ztráty sledujte na mapě.",
+              "sourceHash": "5ccce554c3d25dc6"
             },
             {
-              "text": "Táboři a orebité nebrali zajatce... Masakr v úvozu!",
-              "sourceHash": "c150d9b8348a5a32"
+              "text": "Prchající oddíly v úvozu riskují další ztráty.",
+              "sourceHash": "de25d5beb13b5ec6"
             }
           ]
         },
         {
-          "name": "Všeobecný ústup",
-          "description": "Zikmund dává rozkaz k ústupu.",
+          "name": "Závěrečná kola",
+          "description": "Sledujte stav královského vojska a stále platný cíl obrany.",
           "events": [
             {
-              "message": "Zikmund dává rozkaz k ústupu! Královské vojsko prchá k Českému Brodu.",
-              "sourceHash": "3f55aba6ba5d4f32"
+              "message": "Hlídejte zbývající královské oddíly a jejich ústupové cesty.",
+              "sourceHash": "8fd04c566e0d8d65",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Zikmund zůstává na bojišti. Hlídejte pohyb jeho oddílů.",
+                  "routing": "Zikmund prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Zikmund padl.",
+                  "escaped": "Zikmund opustil bojiště."
+                }
+              }
             },
             {
-              "message": "Bitva rozhoduje o osudu Vyšehradu. Ovládnutí celé Prahy však z jejího výsledku automaticky neplyne.",
-              "sourceHash": "4ed29ad480d54e57"
+              "message": "Hlídejte cíl obrany pod Vyšehradem až do konce bitvy.",
+              "sourceHash": "043d39472a5cc287"
             }
           ]
         }
@@ -2096,7 +2140,7 @@
       },
       "debriefing": {
         "victory": "Průlom se podařil! Zachráněné oddíly se vydávají ke Kolínu. Historicky Žižka unikl z obklíčení a na začátku ledna 1422 se vrátil do protiútoku. Počty zachráněných vozů v této partii najdete ve výsledcích, nikoli v kronikářských součtech celého tažení.",
-        "defeat": "Průlom selhal. Vozová hradba byla rozbita a Žižkova armáda zničena. Kutná Hora zůstává v rukou nepřítele a husitské hnutí přichází o svého nejschopnějšího vojevůdce.",
+        "defeat": "Nepodařilo se zachránit dost oddílů ani splnit alternativní cíl. Bitva končí porážkou.",
         "victoryVariants": {
           "fieldArmyEliminated": "Místo historického ústupu ke Kolínu jste na bojišti rozdrtili Zikmundovu polní armádu. Žižka přežil a důvod k průlomu zanikl. Je to alternativní vítězství: výsledek se od doloženého průběhu bitvy vědomě odchyluje."
         }
@@ -2171,7 +2215,10 @@
       },
       "debriefing": {
         "victory": "Dostihli jste ustupující vojsko u Brodu. Historicky následovalo dobytí a zpustošení města; ztráty v bitvě, při útěku a při násilí po dobytí nelze zaměňovat. Zprávy o propadajícím se ledu a množství kořisti je třeba číst s opatrností, ne jako přesné počítadlo této partie.",
-        "defeat": "Zikmund unikl! Většina jeho vojska překročila Sázavu a spálila most za sebou. Kořist je minimální a příští křížová výprava přijde mnohem dříve."
+        "defeat": "Městský přístup k mostu se nepodařilo včas zajistit. Pronásledování skončilo porážkou.",
+        "victoryVariants": {
+          "enemyEliminated": "Vyhráli jste vyřazením nepřítele. Potřebný počet hlavních cílových polí však při vítězství obsazený nebyl."
+        }
       },
       "phases": [
         {
@@ -2179,8 +2226,8 @@
           "description": "Žižkovo vojsko pronásleduje ustupující křižáky.",
           "events": [
             {
-              "message": "Zikmund uprchl! Scolariho vojsko ustupuje k Německému Brodu. Pronásledujte je!",
-              "sourceHash": "9f56b8df032af73f"
+              "message": "Tato mise navazuje na historické pronásledování od Kutné Hory. Proti vám stojí Scolariho zadní voj.",
+              "sourceHash": "a3b31cd1432148ca"
             },
             {
               "message": "Křižáci zanechávají kořist po cestě. Nedejte se rozptýlit - ničte vojsko!",
@@ -2197,32 +2244,39 @@
               "sourceHash": "c592f010d7134649"
             },
             {
-              "message": "Křižáci neudrží pozice - začínají prchat k řece!",
-              "sourceHash": "fc53207ead306054"
+              "message": "Sledujte, zda zadní voj drží pozice, nebo už ustupuje k řece.",
+              "sourceHash": "da0a4ed3ff037275"
             }
           ]
         },
         {
-          "name": "Útěk přes Sázavu",
-          "description": "Panikařící vojsko se valí k mostu a na zamrzlou řeku.",
+          "name": "Cesta přes Sázavu",
+          "description": "Hlídejte ústupové cesty přes most a zamrzlou Sázavu.",
           "events": [
             {
-              "message": "Most je přeplněný! Část vojska se pokouší přejít přes zamrzlou Sázavu!",
-              "sourceHash": "b78d905ec88f4e68"
+              "message": "Hlídejte ústupové cesty přes most a zamrzlou Sázavu.",
+              "sourceHash": "ed8e14fa155a6b37"
             },
             {
-              "message": "Led praská pod těžkými vozy! Řeka pohlcuje prchající!",
-              "sourceHash": "fb796240286149cd"
+              "message": "Těžké oddíly na zamrzlé řece riskují ztráty.",
+              "sourceHash": "b0a9803dab9676fa"
             }
           ]
         },
         {
-          "name": "Zničení ustupujícího vojska",
-          "description": "Husité dobíjejí zbytky královského vojska.",
+          "name": "Závěr pronásledování",
+          "description": "Dokončete průlom k městu a mostu.",
           "events": [
             {
-              "message": "Královské vojsko je rozprášeno! Sbírejte kořist a dobijte zbytky odporu.",
-              "sourceHash": "324f79d0e6388c7d"
+              "message": "Zkontrolujte zbývající odpor i cestu k hlavnímu cíli.",
+              "sourceHash": "5c83ec50282d2dee",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část královského vojska stále drží. Dokončete průlom k cíli.",
+                  "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                  "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                }
+              }
             },
             {
               "message": "Ústupová cesta vede přes řeku k Jihlavě. Vítězství závisí na splnění cíle této bitvy.",
@@ -2265,7 +2319,7 @@
           "gateBlocked": "Městskou bránu před Mostem jste udrželi zablokovanou po požadovanou dobu. Tento cíl přinesl vítězství; dobytí Hněvína se tím neprohlašuje. Jde o herní alternativu k historické porážce pražského vojska.",
           "bothControlled": "Splnili jste jeden časový cíl a při vítězství současně obsadili obě klíčové pozice Hněvína i městskou bránu. Získáváte také bonus za ovládnutí obou lokalit. Jde o herní alternativu k historické porážce pražského vojska."
         },
-        "defeat": "Mostečtí měšťané a posádka hradu udrželi své pozice. Husitský útok selhal a vojsko musí ustoupit. Severozápadní Čechy zůstávají v rukou nepřítele."
+        "defeat": "Žádný hlavní cíl jste nesplnili včas. Stejně jako historicky skončilo obléhání porážkou pražského vojska."
       },
       "phases": [
         {
@@ -2273,22 +2327,30 @@
           "description": "Hrad Hněvín je na dosah. Posádka nabídla kapitulaci, ale Želivský odmítl.",
           "events": [
             {
-              "message": "Želivský: „Žádná milost pro zrádce! Dobudeme hrad silou!“",
-              "sourceHash": "50994c2dc2121962"
+              "message": "Rozhodněte se mezi držením Hněvína a blokováním městské brány.",
+              "sourceHash": "c465b08443dba0b2",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Želivský zůstává v boji. Držte Hněvín, nebo blokujte městskou bránu.",
+                  "routing": "Jan Želivský prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Želivský padl.",
+                  "escaped": "Jan Želivský opustil bojiště."
+                }
+              }
             },
             {
-              "message": "Hradní posádka se houževnatě brání. Z města se ozývá ruch...",
-              "sourceHash": "a0bdb0f12bb3957d"
+              "message": "Zkontrolujte obě cílová pole Hněvína a cestu k městské bráně.",
+              "sourceHash": "df0e35e7a2a2625e"
             }
           ]
         },
         {
-          "name": "Boční úder",
-          "description": "Mostečtí vyrazili z brány! Úder do boku husitského vojska.",
+          "name": "Hrozba bočního úderu",
+          "description": "Hlídejte městskou bránu. Zde je očekávána mostecká hotovost.",
           "events": [
             {
-              "message": "Z městské brány vyráží mostecká hotovost! Úder do boku!",
-              "sourceHash": "d3e768c23b339449"
+              "message": "Mostecká hotovost je očekávána u městské brány. Hlídejte bok.",
+              "sourceHash": "10237ea643dcc2ef"
             },
             {
               "message": "Musíte se rozhodnout - pokračovat v útoku na hrad, nebo se otočit?",
@@ -2297,20 +2359,20 @@
           ]
         },
         {
-          "name": "Příchod posil",
-          "description": "Míšeňská armáda! Markrabě Fridrich přichází ze severu!",
+          "name": "Očekávané posily",
+          "description": "Míšeňská pomoc je očekávána ze severu.",
           "events": [
             {
-              "message": "Na obzoru míšeňské prapory! Markrabě Fridrich přichází s posilami!",
-              "sourceHash": "8590244cc34e678e"
+              "message": "Míšeňská pomoc je očekávána ze severu. Kryjte severní přístupy.",
+              "sourceHash": "bf93f79aae9c2551"
             },
             {
               "message": "Útok na hrad je nyní velmi riskantní. Zvažte alternativní cíl.",
               "sourceHash": "cbb4efc01d0fba71"
             },
             {
-              "message": "Zásah koně husitského praporečníka rozvrací šik - a s příchodem míšeňských posil se mezi husity šíří strach.",
-              "sourceHash": "1445d14dafc7777d"
+              "message": "Hlídejte příchozí posily a morálku vlastních oddílů.",
+              "sourceHash": "47c77d652bac80fb"
             }
           ]
         },
@@ -2349,7 +2411,7 @@
         ]
       },
       "debriefing": {
-        "victory": "Masakr Na Běhání! Podle Starých letopisů padlo Čechů jen 19 - a nikdo významný kromě měšťana Jana Bradatého; německé ztráty kroniky kladou na tisíce, až k 15 000. Dvojitá vozová hradba se ukázala jako nepřekonatelná překážka. Vítězství ale neslo i temný stín: 24 klečících hrabat a korouhevních pánů, kteří prosili o milost, bylo pro vzájemný slib nešetřit nikoho do jednoho pobito. Pověst o české nepřemožitelnosti je na světě — a s ní nebezpečná víra, že vítězům je dovoleno vše.",
+        "victory": "Nepřátelskou polní armádu jste porazili. Vaše ztráty ukazují statistiky bitvy; historické zprávy o padlých a zajatcích najdete níže.",
         "defeat": "Saská jízda prorazila vaši hradbu! Katastrofální porážka husitů mění rovnováhu sil. Bez vozové hradby jste bezbranní proti těžké jízdě."
       },
       "phases": [
@@ -2362,27 +2424,41 @@
               "sourceHash": "71334fd2f55ac335"
             },
             {
-              "message": "Saské a míšeňské jezdectvo útočí do svahu v nesnesitelném červnovém vedru!",
-              "sourceHash": "e30d7f590805761f"
+              "message": "Sledujte dojezd nepřátelské jízdy a přístupy do svahu.",
+              "sourceHash": "f8589a601bc520f5",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část nepřátelské jízdy stále drží. Hlídejte její dojezd.",
+                  "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                  "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                }
+              }
             }
           ]
         },
         {
-          "name": "Palba z vozů",
-          "description": "Husitské palné zbraně decimují útočníky.",
+          "name": "Palebná postavení",
+          "description": "Využijte dostřel střelců a kryt vozové hradby.",
           "events": []
         },
         {
-          "name": "Panika a útěk",
-          "description": "Křižáci se dávají na bezhlavý útěk.",
+          "name": "Závěrečný odpor",
+          "description": "Hlídejte zbývající odpor i prchající oddíly.",
           "events": [
             {
-              "message": "„Běží! Němci běží!“ - křižáci prchají!",
-              "sourceHash": "ff26e7e8b05c28c9"
+              "message": "Hlídejte zbývající odpor a prchající nepřátelské oddíly.",
+              "sourceHash": "64b048fefea2c930",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část nepřátelských oddílů stále drží. Nepolevujte.",
+                  "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                  "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                }
+              }
             },
             {
-              "message": "Pod německou korouhví pokleklo 24 hrabat a korouhevních pánů s meči zabodnutými do země a prosili o milost - pro slib daný před bojem jsou ale do jednoho pobiti.",
-              "sourceHash": "b7b309812f4f023b"
+              "message": "Historická poznámka: prameny zmiňují zabíjení zajatých pánů.",
+              "sourceHash": "1e2e4204978d51c3"
             }
           ]
         }
@@ -2478,7 +2554,7 @@
       },
       "debriefing": {
         "victory": "Polní protivník ustoupil. Historicky střet u Nisy patřil k tažení do Slezska v roce 1428. Vítězství mimo hradby neznamenalo automatické dobytí města ani konec odporu celého Slezska.",
-        "defeat": "Slezská obrana vydržela. Půta z Častolovic úspěšně ubránil Nisu. Spanilá jízda musí pokračovat jinudy a husitská pověst neporazitelnosti utrpěla trhlinu."
+        "defeat": "V této partii jste slezské polní vojsko neporazili. Obrana města a historické tažení jsou širší příběh; tento výsledek sám neurčuje Půtův osobní osud."
       },
       "phases": [
         {
@@ -2490,36 +2566,36 @@
               "sourceHash": "59805265269bf8b3"
             },
             {
-              "message": "Sedláci a vesničané se staví husitům na odpor před předměstím.",
-              "sourceHash": "d577a80245eaf69f"
+              "message": "Prohlédněte přístupy před hradbami a v předměstí.",
+              "sourceHash": "eeaea432bd01d45a"
             }
           ]
         },
         {
-          "name": "Průlom obrany",
-          "description": "Husité prolamují slezskou obranu.",
+          "name": "Tlak na obranu",
+          "description": "Hledejte slabé místo slezské obrany.",
           "events": [
             {
-              "text": "Slezské oddíly začínají ustupovat pod tlakem husitského útoku!",
-              "sourceHash": "2ee9f00a1a1c8dbc"
+              "text": "Slezským oddílům klesá útok. Hledejte slabé místo obrany.",
+              "sourceHash": "e7d76b5cf671a20f"
             },
             {
-              "message": "Půta z Častolovic se snaží organizovat obranu u hradeb.",
-              "sourceHash": "2b6ea1f22bd551c4"
+              "message": "Prohlédněte obránce před hradbami a cestu k nim.",
+              "sourceHash": "dc4347ceb4a58a51"
             }
           ]
         },
         {
-          "name": "Masakr a útěk",
-          "description": "Obránci prchají, mnozí hynou v řece.",
+          "name": "Závěrečný střet",
+          "description": "Zlomte odpor slezských oddílů před hradbami.",
           "events": [
             {
-              "text": "Obránci v panice prchají - mnoho jich hyne v řece Nise!",
-              "sourceHash": "bb99bcbd40d498c8"
+              "text": "Strach oslabuje slezské oddíly. Hlídejte zbývající odpor.",
+              "sourceHash": "58b56f69af50c000"
             },
             {
-              "message": "Husité pálí předměstí a útočí na hradby!",
-              "sourceHash": "426674b2390b58dc"
+              "message": "Cílem je porazit polní vojsko, ne dobýt město.",
+              "sourceHash": "ea96b73157226c18"
             }
           ]
         }
@@ -2537,12 +2613,15 @@
       "objectives": {
         "primary": "Způsobte útěk křižácké armády (zničte 60%)",
         "secondary": [
-          "Uvolněte přístup k obleženým Domažlicím"
+          "Při vítězství mějte vlastní oddíl na obou označených polích u Domažlic"
         ]
       },
       "debriefing": {
-        "victory": "Výprava ustoupila a cesta k Domažlicím je volná. Historický rozpad křižáckého vojska souvisel se zmatkem, přesuny a obavou z husitů; místy se přesto bojovalo. Chorál se stal symbolem vítězství, ale příběh o samotné písni, která bez boje porazila celou armádu, je zjednodušení.",
-        "defeat": "Křižáci překonali svůj strach a zformovali obranu. I přes váš chorál se nezhroutili. Husitská pověst neporazitelnosti je otřesena."
+        "victory": "Zlomili jste odpor křižáckého polního vojska. Přístup k Domažlicím je samostatný volitelný cíl. Historická výprava se rozpadla ve zmatku a strachu z husitů; místy se přesto bojovalo.",
+        "defeat": "Odpor křižáckého vojska se nepodařilo zlomit. Bitva končí porážkou.",
+        "victoryVariants": {
+          "approachSecured": "Zlomili jste odpor křižáckého vojska a obsadili obě označená pole přístupu k Domažlicím. Volitelný cíl je splněn. Historický rozpad výpravy však nezpůsobila samotná píseň."
+        }
       },
       "phases": [
         {
@@ -2576,8 +2655,8 @@
               "sourceHash": "ad788be9e3227c64"
             },
             {
-              "message": "Kardinál Cesarini prchá a ztrácí kardinálský klobouk!",
-              "sourceHash": "2f808c8919d67fd2"
+              "message": "Historická poznámka: traduje se příběh o Cesariniho útěku a ztraceném klobouku.",
+              "sourceHash": "7fdde0a3095632c1"
             },
             {
               "text": "Panika se šíří křižáckým táborem!",
@@ -2591,12 +2670,19 @@
           ]
         },
         {
-          "name": "Útěk k Bavorsku",
-          "description": "Křižáci prchají Všerubským průsmykem do Bavorska.",
+          "name": "Ústupové cesty",
+          "description": "Hlídejte ústupové cesty k Bavorsku i přístup k Domažlicím.",
           "events": [
             {
-              "text": "Celá křižácká armáda se dává na útěk!",
-              "sourceHash": "950dab7be6f14046"
+              "text": "Hlídejte ustupující oddíly i přístup k Domažlicím.",
+              "sourceHash": "1182c8ce4374ec32",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část křižáckých oddílů stále drží. Hlídejte přístup k Domažlicím.",
+                  "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                  "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                }
+              }
             }
           ]
         }
@@ -2621,42 +2707,67 @@
       },
       "debriefing": {
         "victory": "Do města jste pronikli. Tím se tato partie odchýlila od historie: obléhání v letech 1433–1434 skončilo neúspěchem polních vojsk. Dobyli jste městské pozice, ne však ztracenou jednotu husitských svazů.",
-        "defeat": "Plzeň odolala, stejně jako při historickém obléhání ukončeném 9. května 1434. Dlouhé tažení oslabovalo polní vojska a prohlubovalo jejich krizi. Ukořistěný velbloud se stal městským symbolem; tuto figuru si Plzeňané přidali do znaku sami, ne jako Zikmundovu odměnu."
+        "defeat": "Plzeň odolala, stejně jako při historickém obléhání ukončeném 9. května 1434. Dlouhé tažení oslabovalo polní vojska a prohlubovalo jejich krizi. Ukořistěný velbloud se stal městským symbolem; tuto figuru si Plzeňané přidali do znaku sami, ne jako Zikmundovu odměnu.",
+        "victoryVariants": {
+          "enemyEliminated": "Vyhráli jste vyřazením nepřítele. Potřebný počet hlavních cílových polí však při vítězství obsazený nebyl."
+        }
       },
       "phases": [
         {
           "name": "Dělostřelecká příprava",
-          "description": "Husitská děla ostřelují hradby. Obránci odpovídají z městských pozic.",
+          "description": "Děla mohou krýt postup k městu. Hlídejte jejich dostřel.",
           "events": [
             {
-              "message": "Husitské bombardy zahajují palbu na hradby Plzně!",
-              "sourceHash": "decc760ba12e4f23"
+              "message": "Bombarda může ostřelovat obránce v dostřelu.",
+              "sourceHash": "7220e1290d730af2"
             },
             {
-              "message": "Obránci se kryjí za cimbuřím. Vilém Švihovský povzbuzuje posádku.",
-              "sourceHash": "6b210a6ed905aa71"
+              "message": "Zkontrolujte obránce u městských pozic a jejich dostřel.",
+              "sourceHash": "b4cb980df9fb5293",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Vilém Švihovský zůstává na bojišti. Pozor na městský kryt obránců.",
+                  "routing": "Vilém Švihovský prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Vilém Švihovský padl.",
+                  "escaped": "Vilém Švihovský opustil bojiště."
+                }
+              }
             },
             {
-              "message": "V hradbách se objevují první trhliny!",
-              "sourceHash": "9b70fb96f95d3cf7"
+              "message": "Ke splnění cíle obsaďte tři označená městská pole.",
+              "sourceHash": "6da61d5c8a3db087"
             }
           ]
         },
         {
-          "name": "Útok na hradby",
-          "description": "Pěchota postupuje k hradbám. Těžké ztráty na obou stranách.",
+          "name": "Přístupy k městu",
+          "description": "Před postupem k městu zkontrolujte obránce, terén a možnosti krycí palby.",
           "events": [
             {
-              "message": "Jan Pardus z Horky vede táborskou pěchotu do útoku!",
-              "sourceHash": "432033a139859f9c"
+              "message": "Před postupem k městu zkontrolujte kryt a nepřátelský dostřel.",
+              "sourceHash": "3faaf85b25c988e9",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Máte bojeschopné oddíly. Zvažte postup k městu.",
+                  "routing": "Vaše zbývající bojové oddíly prchají. Vyčkejte, zda se znovu zformují.",
+                  "absent": "Vaše bojové oddíly už na bojišti nejsou. Zkontrolujte zbývající síly."
+                }
+              }
             },
             {
-              "message": "Obránci kryjí přístupy ke hradbám a odrážejí útočící pěchotu.",
-              "sourceHash": "8c88ded47d067fdc"
+              "message": "Prohlédněte přístupy k městským pozicím.",
+              "sourceHash": "5af9737be9816bfc",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část obránců ještě drží. Hlídejte přístupy a nepřátelský dostřel.",
+                  "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                  "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                }
+              }
             },
             {
-              "message": "Krvavé boje u hradeb! Husité se snaží prolomit obranu.",
-              "sourceHash": "4d522511db436e8b"
+              "message": "Prorazte k označeným cílovým polím.",
+              "sourceHash": "b06b42d53c1dc407"
             }
           ]
         },
@@ -2679,12 +2790,20 @@
           "description": "Útok buď uspěje, nebo husité budou muset ustoupit.",
           "events": [
             {
-              "message": "Poslední šance na průlom! Prokop Holý posílá zálohy.",
-              "sourceHash": "8494bcee206c5eba"
+              "message": "Čas na obsazení městských pozic se krátí.",
+              "sourceHash": "f689a2d3fae88475",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Prokop zůstává v boji. Čas na obsazení městských pozic se krátí.",
+                  "routing": "Prokop Holý prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Prokop Holý padl.",
+                  "escaped": "Prokop Holý opustil bojiště."
+                }
+              }
             },
             {
-              "text": "Hlad, násilné „picování“ okolí a spory mezi hejtmany lámou tábor. Někteří vojáci dezertují.",
-              "sourceHash": "1fcc8155d64d644d"
+              "text": "Únava obléhání snižuje útok i morálku vašich oddílů.",
+              "sourceHash": "50cb0c4f0d7b5a8e"
             }
           ]
         }
@@ -2798,8 +2917,15 @@
         ]
       },
       "debriefing": {
-        "victory": "Sion v této partii vydržel a Jan Roháč přežil. To je herní odbočka od historie: hrad padl 6. září 1437 a Roháč byl se svými druhy o tři dny později popraven v Praze. Vaše vítězství mění osud této obrany, ne výsledek skutečného obléhání.",
-        "defeat": "Obrana Sionu v této partii skončila. Historicky hrad padl 6. září 1437; zajatý Jan Roháč a jeho druhové byli 9. září popraveni v Praze. Přesné počty obětí a dramatické podrobnosti popravy se v podáních liší. Nálezy opevnění a střeliva svědčí o skutečném boji, ne pouze předstíraném obléhání."
+        "victory": "Sion jste ubránili. Vaše vítězství se odchýlilo od historie: hrad padl 6. září 1437 a zajatý Roháč byl se svými druhy o tři dny později popraven v Praze.",
+        "defeat": "Obrana Sionu v této partii skončila. Historicky hrad padl 6. září 1437; zajatý Jan Roháč a jeho druhové byli 9. září popraveni v Praze. Přesné počty obětí a dramatické podrobnosti popravy se v podáních liší. Nálezy opevnění a střeliva svědčí o skutečném boji, ne pouze předstíraném obléhání.",
+        "unitStatus": {
+          "texts": {
+            "alive": "Jan Roháč tuto bitvu přežil.",
+            "fallen": "Jan Roháč v této bitvě padl.",
+            "escaped": "Jan Roháč opustil bojiště."
+          }
+        }
       },
       "phases": [
         {
@@ -2825,12 +2951,12 @@
           "description": "Uherské posily mění rovnováhu sil.",
           "events": [
             {
-              "message": "Michal Országh přivádí uherské rytíře! Situace je zoufalá.",
-              "sourceHash": "6f8e49fdb6062e29"
+              "message": "Uherské posily jsou očekávány. Hlídejte přístupy k hradu.",
+              "sourceHash": "a0c2f8e238a29b94"
             },
             {
-              "text": "Uherští rytíři povzbuzují královské vojsko k rozhodnému útoku!",
-              "sourceHash": "37d2371f34b4f687"
+              "text": "Morálka královských oddílů roste. Hlídejte obléhací postavení.",
+              "sourceHash": "a07494ba5bc3e67b"
             }
           ]
         },
@@ -2843,8 +2969,16 @@
               "sourceHash": "a438d7f1b24418b2"
             },
             {
-              "text": "Někteří obránci ztrácejí naději. Jan Roháč je povzbuzuje k boji!",
-              "sourceHash": "7452a7510edad80f"
+              "text": "Únava oslabuje obránce. Zkontrolujte soudržnost posádky.",
+              "sourceHash": "4d3fbd8008124a90",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Roháč zůstává v boji. Hlídejte soudržnost posádky.",
+                  "routing": "Jan Roháč prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Roháč padl.",
+                  "escaped": "Jan Roháč opustil bojiště."
+                }
+              }
             },
             {
               "message": "Útočníci hledají cestu přes příkopy. Hlídejte průchody mezi valy.",
@@ -2861,8 +2995,8 @@
               "sourceHash": "f08242481d546c24"
             },
             {
-              "message": "Závěr obrany. O osudu této partie rozhoduje posádka a držené pozice, ne předem napsaná legenda.",
-              "sourceHash": "777a2480e3c0b8b5"
+              "message": "Udržte klíčová pole hradního jádra. Na nich stojí obrana Sionu.",
+              "sourceHash": "0ad2abe3cbfcd646"
             }
           ]
         }
@@ -2883,12 +3017,12 @@
       "objectives": {
         "primary": "Zničte 60% katolického vojska",
         "secondary": [
-          "Udržte kopec Gothard po celou bitvu"
+          "Při vítězství držte alespoň 2 ze 4 označených polí Gothardu"
         ]
       },
       "debriefing": {
-        "victory": "Obrana Gothardu obstála. Vozy, palba a výhoda svahu pomohly v této partii odrazit útok. Historicky Žižkovo vítězství posílilo jeho postavení ve východních Čechách; přesné rozmístění a počty ztrát neznáme.",
-        "defeat": "Katolická přesila prolomena. Kopec Gothard padl a s ním i naděje na udržení východních Čech. Husitské síly jsou rozptýleny a Čeněk z Vartenberka slaví vítězství."
+        "victory": "V této partii jste porazili panskou jednotu. Držení označených polí Gothardu se hodnotí zvlášť jako volitelný cíl. Historicky Žižkovo vítězství posílilo jeho postavení ve východních Čechách; přesné rozmístění a počty ztrát neznáme.",
+        "defeat": "Panská jednota v této partii obstála. Žižkovo vítězství jste nezopakovali."
       },
       "phases": [
         {
@@ -2896,8 +3030,16 @@
           "description": "Husité se opevňují na kopci Gothard, katolíci se shromažďují.",
           "events": [
             {
-              "message": "Žižka: „Na kopec! Držte svahy, střelci dopředu!“",
-              "sourceHash": "d33ea65170c2d50c"
+              "message": "Využijte kopec a zkontrolujte postavení střelců.",
+              "sourceHash": "ec2862c17a1594ee",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka zůstává v boji. Využijte Gothard a kryjte střelce vozy.",
+                  "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Žižka padl.",
+                  "escaped": "Jan Žižka opustil bojiště."
+                }
+              }
             },
             {
               "message": "Katolická šlechta se formuje k útoku pod kopcem.",
@@ -2906,66 +3048,119 @@
           ]
         },
         {
-          "name": "Čelní útok",
-          "description": "Čeněk z Vartenberka vrhá jízdu do čelního útoku na kopec.",
+          "name": "Hrozba čelního útoku",
+          "description": "Hlídejte přístupy ke Gothardu a dojezd nepřátelské jízdy.",
           "events": [
             {
-              "message": "Čeněk z Vartenberka: „Vpřed! Rozdrťte kacíře!“",
-              "sourceHash": "bd9d066a177c6183"
+              "message": "Hlídejte přístupy ke Gothardu a pohyb panské jednoty.",
+              "sourceHash": "56948dfdfdf6e438",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Čeněk z Vartenberka zůstává na bojišti. Hlídejte přístupy ke Gothardu.",
+                  "routing": "Čeněk z Vartenberka prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Čeněk z Vartenberka padl.",
+                  "escaped": "Čeněk z Vartenberka opustil bojiště."
+                }
+              }
             },
             {
-              "message": "Těžká jízda naráží na husitskou pěchotu! Útok vázne ve strmém svahu.",
-              "sourceHash": "583b6451ec561952"
+              "message": "Přístupy ke kopci jsou pro jízdu obtížné. Sledujte její dojezd.",
+              "sourceHash": "8b157c5be659abc5",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část nepřátelské jízdy stále drží. Hlídejte její dojezd.",
+                  "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                  "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                }
+              }
             },
             {
-              "text": "Páni musí sesednout z koní - do strmého svahu na vozy a sudlice se koňmo zaútočit nedá.",
-              "sourceHash": "369c9666dd0b8e5b"
+              "text": "Nepřátelská jízda v této fázi ztrácí bonus nárazu.",
+              "sourceHash": "9a0cbd9c12942f4d"
             }
           ]
         },
         {
-          "name": "Tříhodinový boj",
-          "description": "Zuřivé boje na svazích Gothardu. Katolíci utrpí těžké ztráty.",
+          "name": "Boj o Gothard",
+          "description": "Využijte svah a kryjte vlastní střelce.",
           "events": [
             {
-              "message": "Husitské houfnice a střelci kosí útočníky!",
-              "sourceHash": "95b5059c8ef46819"
+              "message": "Před dalším postupem zkontrolujte střelce a jejich dostřel.",
+              "sourceHash": "934014eacfe27ef9",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Máte bojeschopné střelce. Před palbou zkontrolujte dostřel a zbývající výstřely.",
+                  "routing": "Vaši zbývající střelci prchají. Zkontrolujte ostatní oddíly.",
+                  "absent": "Vaši střelci už na bojišti nejsou. Zkontrolujte ostatní oddíly."
+                }
+              }
             },
             {
-              "message": "Houf Arnošta Flašky se hroutí pod palbou!",
-              "sourceHash": "f31f4738c98a037a"
+              "message": "Hledejte slabé místo nepřátelského houfu.",
+              "sourceHash": "cdc5cee6aa8266c4",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Arnošt Flaška zůstává na bojišti. Hledejte slabé místo nepřátelského houfu.",
+                  "routing": "Arnošt Flaška prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Arnošt Flaška padl.",
+                  "escaped": "Arnošt Flaška opustil bojiště."
+                }
+              }
             },
             {
-              "text": "Zhroucení Flaškova houfu otřáslo katolíky.",
-              "sourceHash": "d569262f7d6bc625"
+              "text": "Morálka panské jednoty klesá. Hledejte slabé místo.",
+              "sourceHash": "1be187b06478a49d"
             }
           ]
         },
         {
-          "name": "Husitský protiútok",
-          "description": "Žižka nařizuje protiútok. Orebitská jízda a pěchota vyráží z kopce.",
+          "name": "Příležitost k protiútoku",
+          "description": "Před protiútokem zkontrolujte sílu obou stran.",
           "events": [
             {
-              "message": "Žižka: „Teď! Vpřed, za kalich!“",
-              "sourceHash": "07438cc0389ba7cf"
+              "message": "Zvažte protiútok, jen pokud pro něj máte bojeschopné oddíly.",
+              "sourceHash": "bf1a22b925617b78",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka zůstává v boji. Zvažte, zda máte sílu k protiútoku.",
+                  "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Žižka padl.",
+                  "escaped": "Jan Žižka opustil bojiště."
+                }
+              }
             },
             {
-              "message": "Katolíci se dávají na útěk! Čeněk prchá s hrstkou mužů!",
-              "sourceHash": "e29d86e0d90e7308"
+              "message": "Hlídejte zbývající odpor panské jednoty.",
+              "sourceHash": "008b5ca0f35b1d7d",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část nepřátelských oddílů stále drží. Nepolevujte.",
+                  "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                  "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                }
+              }
             }
           ]
         },
         {
-          "name": "Pronásledování",
-          "description": "Husité pronásledují prchající katolíky a ukořisťují jejich vozy.",
+          "name": "Závěrečná kola",
+          "description": "Závěr se blíží. Hlídejte hlavní cíl.",
           "events": [
             {
-              "message": "Ukořistěny všechny katolické vozy a děla!",
-              "sourceHash": "ef53eba8aabefc5b"
+              "message": "Při pronásledování hlídejte i nepřátelské vozy a děla.",
+              "sourceHash": "e583edf61e3a9727"
             },
             {
-              "message": "Čeněk z Vartenberka uprchl. Husitské vítězství je úplné.",
-              "sourceHash": "6e06c27625f7267a"
+              "message": "Závěr se blíží. Hlídejte hlavní cíl.",
+              "sourceHash": "2c9d0f8b0b6db626",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Čeněk z Vartenberka zůstává na bojišti. Hlídejte hlavní cíl.",
+                  "routing": "Čeněk z Vartenberka prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Čeněk z Vartenberka padl.",
+                  "escaped": "Čeněk z Vartenberka opustil bojiště."
+                }
+              }
             }
           ]
         }
@@ -2986,63 +3181,104 @@
       "objectives": {
         "primary": "Vyrazte ze svahu a prorazte koaliční šik — obsaďte jeho pozici do kola 10",
         "secondary": [
-          "Udržte velitelskou pozici na svahu",
+          "Při vítězství držte alespoň 2 ze 4 označených polí velitelského stanoviště",
           "Jan Žižka musí přežít",
           "Ztratit méně než 30% vlastních jednotek"
         ]
       },
       "debriefing": {
         "victory": "Koaliční obrana je prolomena! V této partii uspěl váš postup ze svahu. Historicky vítězství u Malešova otevřelo Žižkovi cestu ke Kutné Hoře. Pozdější příběh o vozech s kamením není spolehlivě doloženým vysvětlením tohoto úspěchu.",
-        "defeat": "Koalice odrazila váš postup. Žižkovo východočeské vojsko se musí stáhnout. Tato partie se rozešla s historickým výsledkem; označení sirotci se pro část jeho následovníků ujalo až po Žižkově smrti."
+        "defeat": "Koalice odrazila váš postup. Žižkovo východočeské vojsko se musí stáhnout. Tato partie se rozešla s historickým výsledkem; označení sirotci se pro část jeho následovníků ujalo až po Žižkově smrti.",
+        "victoryVariants": {
+          "enemyEliminated": "Vyhráli jste vyřazením nepřítele. Potřebný počet hlavních cílových polí však při vítězství obsazený nebyl."
+        }
       },
       "phases": [
         {
           "name": "Zaujmutí pozic",
-          "description": "Žižka rozpoznává terén s pomocí Roháče a Hvězdy. Husité se opevňují na svahu.",
+          "description": "Využijte svah nad Bohynkou a úzké přístupy údolím.",
           "events": [
             {
-              "message": "Jan Roháč: „Pane hejtmane, máme dobrý svah nad údolím. Potok Bohynka nám kryje střed.“",
-              "sourceHash": "8fc5193ff7e19104"
+              "message": "Před rozkazy si prohlédněte svah a údolí Bohynky.",
+              "sourceHash": "d51befd81c31a9f8",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Roháč zůstává v boji. Využijte svah nad Bohynkou.",
+                  "routing": "Jan Roháč prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Roháč padl.",
+                  "escaped": "Jan Roháč opustil bojiště."
+                }
+              }
             },
             {
-              "message": "Jan Hvězda: „Znám tato místa. Údolí je úzké - nepřítel se nebude moci rozvinout.“",
-              "sourceHash": "74cf88c9cb2f5a79"
+              "message": "Úzké údolí omezuje možnosti rozvinutí. Využijte terén.",
+              "sourceHash": "b4d9fcc1900e9473",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Jan Hvězda zůstává v boji. Hlídejte úzké průchody údolím.",
+                  "routing": "Jan Hvězda prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Hvězda padl.",
+                  "escaped": "Jan Hvězda opustil bojiště."
+                }
+              }
             }
           ]
         },
         {
-          "name": "Koaliční útok",
-          "description": "Protižižkovská koalice vrhá jízdu do údolí. Nepřítel se nemůže plně rozvinout.",
+          "name": "Přístupy údolím",
+          "description": "Údolí omezuje rozvinutí jízdy. Hlídejte i ostatní přístupy.",
           "events": [
             {
-              "message": "Čeněk z Vartenberka: „Do útoku! Rozdrtíme slepce jednou provždy!“",
-              "sourceHash": "b22753775f55632b"
+              "message": "Sledujte pohyb koalice a její přístupy do údolí.",
+              "sourceHash": "c9c63cdecd61614e",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Diviš Bořek zůstává na bojišti. Hlídejte přístupy do údolí.",
+                  "routing": "Diviš Bořek prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Diviš Bořek padl.",
+                  "escaped": "Diviš Bořek opustil bojiště."
+                }
+              }
             },
             {
-              "message": "Těžká jízda vjíždí do úzkého údolí... Řady se tísní!",
-              "sourceHash": "9bd7766c9ca46c89"
+              "message": "Sledujte, zda jízda využije údolí, nebo hledá jiný přístup.",
+              "sourceHash": "eda3502e555dd612",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část nepřátelské jízdy stále drží. Hlídejte přístupy do údolí.",
+                  "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                  "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                }
+              }
             },
             {
-              "text": "Jízda ztrácí hybnost v bažinatém údolí!",
-              "sourceHash": "3a701a788d5f29ad"
+              "text": "V této fázi mají nepřátelské jezdecké oddíly o bod pohybu méně, nejméně však jeden.",
+              "sourceHash": "43245138d75faddc"
             }
           ]
         },
         {
-          "name": "Krvavé údolí",
-          "description": "Palba a tísnivý terén narušují postup útočníků. Obránci hledají chvíli k protiútoku.",
+          "name": "Rozhodování v údolí",
+          "description": "Využijte dostřel střelců a hledejte cestu k průlomu.",
           "events": [
             {
-              "message": "Houfnice a ručnice pálí do natěsnaných řad nepřítele!",
-              "sourceHash": "b0e62fc3982ceb42"
+              "message": "Zkontrolujte dostřel a zbývající výstřely svých střelců.",
+              "sourceHash": "99279e4b8c933c8f",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Máte bojeschopné střelce. Před palbou zkontrolujte dostřel a zbývající výstřely.",
+                  "routing": "Vaši zbývající střelci prchají. Zkontrolujte ostatní oddíly.",
+                  "absent": "Vaši střelci už na bojišti nejsou. Zkontrolujte ostatní oddíly."
+                }
+              }
             },
             {
-              "message": "Ztráty koalice rostou! Údolí se barví krví!",
-              "sourceHash": "640bd08acde62d8e"
+              "message": "Prohlédněte koaliční oddíly na mapě a v přehledu armády.",
+              "sourceHash": "9f88b9bb353ba56f"
             },
             {
-              "text": "Koaliční vojsko ztrácí odvahu v zabijácké palbě.",
-              "sourceHash": "879d45f151f1cb7d"
+              "text": "Morálka koalice klesá. Sledujte, které oddíly ještě drží.",
+              "sourceHash": "2bc538476dc3f573"
             },
             {
               "title": "Rozvrácené čelo kolony",
@@ -3052,16 +3288,31 @@
           ]
         },
         {
-          "name": "Žižkův protiútok",
-          "description": "Žižka nařizuje smrtící protiútok ze svahu dolů.",
+          "name": "Příležitost k průlomu",
+          "description": "Včas proražte k označeným cílovým polím.",
           "events": [
             {
-              "message": "Žižka: „Teď! Dolů z kopce! Za pravdu Boží!“",
-              "sourceHash": "b89410c09e58058c"
+              "message": "Dostaňte bojeschopný oddíl na označený cíl před koncem limitu.",
+              "sourceHash": "9f66734aefed2e42",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Žižka zůstává v boji. Připravte průlom k označeným cílovým polím.",
+                  "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Jan Žižka padl.",
+                  "escaped": "Jan Žižka opustil bojiště."
+                }
+              }
             },
             {
-              "message": "Husitská jízda a pěchota se řítí ze svahu na dezorientovaného nepřítele!",
-              "sourceHash": "426dfb85f78623f1"
+              "message": "Před protiútokem zkontrolujte zbývající síly.",
+              "sourceHash": "2b541a907c876dec",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Máte bojeschopné oddíly. Zvažte, kudy je vést k průlomu.",
+                  "routing": "Vaše zbývající bojové oddíly prchají. Vyčkejte, zda se znovu zformují.",
+                  "absent": "Vaše bojové oddíly už na bojišti nejsou. Zkontrolujte zbývající síly."
+                }
+              }
             },
             {
               "text": "Útok z kopce! +15% k útoku husitských jednotek.",
@@ -3070,24 +3321,39 @@
           ]
         },
         {
-          "name": "Zhroucení koalice",
-          "description": "Koaliční vojsko se hroutí. Zadní voje prchají bez boje.",
+          "name": "Závěr střetu",
+          "description": "Čas se krátí. Hlídejte cílová pole i zbývající odpor.",
           "events": [
             {
-              "message": "Koalice se hroutí! Muži prchají směrem k Malešovu!",
-              "sourceHash": "5b715986bd22d6c7"
+              "message": "Hlídejte zbývající odpor koalice a cestu k cíli.",
+              "sourceHash": "526ef5b0cdf682b7",
+              "forceStatus": {
+                "texts": {
+                  "ready": "Část koaličních oddílů stále drží. Nepolevujte.",
+                  "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                  "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                }
+              }
             },
             {
-              "message": "Čeněk z Vartenberka: „Zpět! Všichni zpět!“ Zadní voje už ani nevstoupily do boje.",
-              "sourceHash": "00bad03020fbf3c7"
+              "message": "Sledujte pohyb koaličních oddílů.",
+              "sourceHash": "14dd8577dcf15b76",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Diviš Bořek zůstává na bojišti. Sledujte pohyb jeho oddílů.",
+                  "routing": "Diviš Bořek prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Diviš Bořek padl.",
+                  "escaped": "Diviš Bořek opustil bojiště."
+                }
+              }
             },
             {
-              "message": "O výsledku rozhoduje soudržnost oddílů. Historické odhady padlých nejsou součtem ztrát této partie.",
-              "sourceHash": "05c68a3910e0278d"
+              "message": "Další postup zvažte podle soudržnosti a ztrát obou stran.",
+              "sourceHash": "bd6d156defee6e2a"
             },
             {
-              "message": "Žižka ovládl bojiště. Cesta na Kutnou Horu je volná!",
-              "sourceHash": "c6e069a760281120"
+              "message": "Dokončete průlom k označeným cílovým polím.",
+              "sourceHash": "678f3a36269a436e"
             }
           ]
         }
@@ -3108,23 +3374,31 @@
           ]
         },
         {
-          "name": "Šest útoků",
-          "description": "Erkinger žene pěchotu na hradby - jeden útok za druhým.",
+          "name": "Obrana přístupů",
+          "description": "Hlídejte západní přístup k Žatci.",
           "events": [
             {
-              "message": "Erkinger zahajuje útok na západní hradbu! Držte linii!",
-              "sourceHash": "fe7bf43dfd17c22f"
+              "message": "Hlídejte západní přístup k městu.",
+              "sourceHash": "43632ae1ce78a2cc",
+              "unitStatus": {
+                "texts": {
+                  "alive": "Erkinger ze Seinsheimu zůstává na bojišti. Hlídejte přístupy k městu.",
+                  "routing": "Erkinger ze Seinsheimu prchá; nemůže přijímat rozkazy.",
+                  "fallen": "Erkinger ze Seinsheimu padl.",
+                  "escaped": "Erkinger ze Seinsheimu opustil bojiště."
+                }
+              }
             },
             {
-              "text": "Žatečtí vyrazili z bran, pobili množství obléhatelů a stáhli se zpět za hradby. Obránci nabírají odvahu!",
-              "title": "Výpad z bran!",
-              "sourceHash": "f71e3eb7ed221b21"
+              "text": "Morálka obránců roste. Využijte jejich odhodlání.",
+              "title": "Odhodlání obránců",
+              "sourceHash": "928f0a27162dda75"
             }
           ]
         },
         {
-          "name": "Požár ležení",
-          "description": "Křižácké ležení hoří, knížata se hádají, tábor svírá hlad.",
+          "name": "Krize výpravy",
+          "description": "Zprávy z ležení oslabují morálku výpravy.",
           "events": [
             {
               "text": "Křižácké ležení vzplálo! Hlad, spory knížat a falešná zpráva o blížícím se pražském vojsku lámou výpravu.",
@@ -3134,7 +3408,10 @@
           ]
         }
       ],
-      "description": "Křižácká výprava obléhá město nad Ohří. Udržte opevnění, dokud se útočící vojsko nestáhne."
+      "description": "Křižácká výprava obléhá město nad Ohří. Udržte opevnění, dokud se útočící vojsko nestáhne.",
+      "debriefing": {
+        "victory": "Žatec obstál. Historická výprava skončila ústupem; cenu vaší obrany ukazují výsledky bitvy."
+      }
     }
   },
   "units": {

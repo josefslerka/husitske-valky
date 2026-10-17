@@ -172,7 +172,7 @@ const AI = {
         let delay = (isAttack ? 700 : 500) * speedFactor * largeArmyFactor;
         delay = Math.max(isAttack ? 320 : 120, delay);
 
-        // Hráč klikl na "přeskočit tah AI": minimální prodlevy.
+        // Zrychlený režim má minimální prodlevy; hráč jej může opět vypnout.
         // Dokončení akce hlídá await; tyto hodnoty určují jen minimální tempo.
         if (game.fastForwardAI) return isAttack ? 320 : 40;
         return delay;

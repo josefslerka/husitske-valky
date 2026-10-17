@@ -135,7 +135,7 @@ const Scenarios = {
                 turnRange: [3, 4],
                 description: 'Husité budují improvizovanou obranu.',
                 events: [
-                    { trigger: 'turn_3', type: 'tutorial', text: 'TIP: Stáhni bezbranné poutníky na kopec za bojovníky. Střelci z kopce střílejí dál a silněji (bonus z výšiny).' }
+                    { trigger: 'turn_3', type: 'tutorial', text: "TIP: Pokud ještě máte poutníky na bojišti, stáhněte je na kopec za bojovníky. Střelci na kopci získávají výškový bonus." }
                 ]
             },
             {
@@ -173,7 +173,7 @@ const Scenarios = {
 
         debriefing: {
             victory: 'Vítězství u Živohoště otevírá cestu dál. O jeho ceně však rozhoduje i osud těch, které jste měli chránit.',
-            defeat: 'Poutníci byli u brodu rozprášeni a pobiti. Petr ze Šternberka slaví. Husitské hnutí utrpělo těžkou ránu hned v počátcích.',
+            defeat: "Podmínky přežití u Živohoště se nepodařilo splnit. To však neznamená, že padli všichni poutníci.",
             // Skupiny na mapě, nikoli počet jednotlivých lidí; uprchlí nejsou padlí.
             victoryVariants: {
                 allPilgrims: 'Bitva je vyhraná. Na bojišti zůstaly všechny původní skupiny poutníků.\n\nHlas z bojiště (fikce, ne citace pramene):\n„Volali jsme na ostatní skupiny. Všechny se ozvaly.“',
@@ -321,17 +321,34 @@ const Scenarios = {
                 turnRange: [3,4],
                 description: "Houf využívá vozy jako obranné postavení.",
                 events: [
-                    {"trigger":"turn_3","message":"Žižka: \"Sražte vozy k sobě! Střelci za vozy, cepníci připraveni!\""},
+                    {"trigger":"turn_3",message: "Zkontrolujte propojení vozů a kryt střelců.", unitStatus: {
+                            "type": "JAN_ZIZKA",
+                            "faction": "hussites",
+                            "texts": {
+                                "alive": "Žižka zůstává v boji. Sepněte vozy a kryjte střelce.",
+                                "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Jan Žižka padl.",
+                                "escaped": "Jan Žižka opustil bojiště."
+                            }
+                        }},
                     {"trigger":"turn_4","type":"message","condition":{"type":"closed_wagons","faction":"hussites","minCount":3},"text":"Vozy drží pohromadě. Střelci mohou bezpečněji krýt pěchotu — využijte chvíle k útoku na Hynka."}
                 ]
             },
             {
                 id: 3,
-                name: "Útok jízdy na vozovou hradbu",
+                name: "Hrozba jezdeckého útoku",
                 turnRange: [5,5],
-                description: "Švamberk vrhá jízdu proti vozům.",
+                description: "Hlídejte přístupy k vozům a mezery v hradbě.",
                 events: [
-                    {"trigger":"turn_5","message":"Těžká jízda landfrýdu útočí! Vydrží vozová hradba?"}
+                    {"trigger":"turn_5",message: "Hlídejte dojezd jízdy landfrýdu a mezery mezi vozy.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "cavalry",
+                            "texts": {
+                                "ready": "Jízda landfrýdu je stále hrozbou. Hlídejte mezery mezi vozy.",
+                                "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                                "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                            }
+                        }}
                 ]
             },
             {
@@ -536,7 +553,15 @@ const Scenarios = {
                 turnRange: [4, 7],
                 description: 'Johanité a královské vojsko útočí po hrázi.',
                 events: [
-                    { trigger: 'turn_4', message: 'Křižáci zahajují útok po úzké hrázi!' }
+                    { trigger: 'turn_4', message: "Hráz je úzká. Sledujte přístup nepřátelských oddílů.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Nepřátelské oddíly mohou stále bojovat. Hlídejte hráz i další průchody.",
+                                "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                                "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                            }
+                        } }
                 ]
             },
             {
@@ -565,7 +590,7 @@ const Scenarios = {
 
         debriefing: {
             victory: 'Rybník a bahna se staly hrobem pro železné pány! Husité využili terénu a odrazili přesilu. Tato bitva ukázala, že správně zvolené bojiště může vyvážit i značnou početní nevýhodu. Žižkův génius se projevil naplno.',
-            defeat: 'Bahna u Sudoměře se nestala pastí pro nepřítele, ale pro vás. Rytíři prolomili vaši obranu. Žižkova kariéra končí dříve, než mohla skutečně začít.',
+            defeat: "Obrana u Sudoměře neuspěla. Nesplnili jste podmínky přežití ani alternativního vítězství.",
             victoryVariants: {
                 fieldArmyEliminated: 'Nepřátelskou polní armádu jste rozbili, ale za cenu většiny vlastních oddílů. Osamělý velitel už výsledek bitvy nemohl zvrátit. Je to vítězství — kronikář z něj však vaše ztráty nevymaže.'
             }
@@ -683,22 +708,22 @@ const Scenarios = {
                 events: [
                     {
                         trigger: "turn_3",
-                        message: "Útok se soustřeďuje na šíji. Posádka srubů drží úzký přístup; pražská pomoc je na cestě."
+                        message: "Hlídejte přístupy ke srubům. Pomoc z Prahy je očekávána."
                     }
                 ]
             },
             {
                 id: 2,
-                name: "Boj o sruby",
+                name: "Boj o přístupy",
                 turnRange: [4,6],
-                description: "Křižáci pronikají k opevnění. Posily z Prahy jsou na cestě!",
+                description: "Hlídejte přístupy ke srubům. Pomoc z Prahy je očekávána.",
                 events: []
             },
             {
                 id: 3,
-                name: "Protiútok",
+                name: "Závěr obrany",
                 turnRange: [7,8],
-                description: "Husité vytlačují křižáky z kopce.",
+                description: "Udržte potřebný počet oddílů do konce stanoveného kola.",
                 events: []
             }
         ],
@@ -716,8 +741,8 @@ const Scenarios = {
         },
 
         debriefing: {
-            victory: "Vítkov obstál! Obrana výšiny a příchod pomoci z Prahy zmařily v této partii nepřátelský útok. Historicky vítězství pomohlo uchovat spojení Prahy s okolím; samo ještě neukončilo obléhání ani válku.",
-            defeat: "Sruby na Vítkově padly a s nimi i naděje Prahy. Křižáci obsadili strategickou výšinu a Praha je v obležení. Husitská revoluce končí dříve, než mohla rozvinout svou sílu."
+            victory: "Vítkov jste ubránili. Historicky obrana výšiny pomohla uchovat spojení Prahy s okolím; obléhání ani válku tím ještě neukončila.",
+            defeat: "Vítkov se nepodařilo ubránit. Prohra na výšině však není dobytím celé Prahy."
         },
 
         maxTurns: 8,
@@ -1122,7 +1147,16 @@ const Scenarios = {
                 description: "Dohodnutá lhůta pro pomoc posádce vypršela; královské vojsko teprve nastupuje do bitvy.",
                 events: [
                     {"trigger":"turn_1","message":"Lhůta vypršela. Vyšehradská posádka se podle dohody nemá zapojit do boje."},
-                    {"trigger":"turn_2","message":"Zikmund marně mává mečem směrem k Vyšehradu. Je pozdě."}
+                    {"trigger":"turn_2",message: "Podle dohody se vyšehradská posádka nemá zapojit do boje.", unitStatus: {
+                            "type": "ZIKMUND",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Zikmund zůstává na bojišti. Podle dohody se vyšehradská posádka nemá zapojit do boje.",
+                                "routing": "Zikmund prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Zikmund padl.",
+                                "escaped": "Zikmund opustil bojiště."
+                            }
+                        }}
                 ]
             },
             {
@@ -1141,7 +1175,7 @@ const Scenarios = {
                             area: {"minCol":10,"maxCol":20,"minRow":10,"maxRow":16},
                             minCount: 3
                         },
-                        message: "Uhři a Němci zahajují čelní útok na vaše příkopy!"
+                        message: "Zkontrolujte nepřátelské oddíly u příkopů a jejich možnosti postupu."
                     },
                     {"trigger":"turn_3","type":"trench_bonus","text":"Připravené pozice poskytují +3 k obraně!"}
                 ]
@@ -1174,7 +1208,7 @@ const Scenarios = {
                             area: {"minCol":6,"maxCol":10,"minRow":18,"maxRow":23},
                             minCount: 2
                         },
-                        message: "Uražená česká šlechta útočí! Musí sesednout kvůli strmému svahu."
+                        message: "Strmý přístup ztěžuje postup jízdy. Hlídejte, kudy nepřítel postupuje."
                     },
                     {
                         id: "nobility_dismount_effect",
@@ -1188,25 +1222,25 @@ const Scenarios = {
                         },
                         type: "dismount",
                         faction: "crusaders",
-                        text: "Česká šlechta ztrácí výhodu jízdy na strmém svahu!"
+                        text: "Jízda na svahu ztrácí bonus nárazu a část pohybu."
                     }
                 ]
             },
             {
                 id: 4,
-                name: "Husitský protiútok",
+                name: "Možnost protiútoku",
                 turnRange: [7,9],
-                description: "Hynek Krušina nasazuje zálohy.",
+                description: "Zvažte protiútok podle stavu nepřítele. Sledujte příchod záloh.",
                 events: [
-                    {"trigger":"turn_7","message":"„Běží nepřátelé!“ Orebští cepníci vyrážejí do protiútoku — zálohy jsou nasazeny."},
+                    {"trigger":"turn_7",message: "Zvažte protiútok a sledujte příchod záloh."},
                     {"trigger":"turn_8","message":"Jednotky z obléhání Vyšehradu se připojují k bitvě!"}
                 ]
             },
             {
                 id: 5,
-                name: "Masakr české šlechty",
+                name: "Boj v úvozu",
                 turnRange: [10,14],
-                description: "Šlechta je uvězněna v úvozu a pobita.",
+                description: "Úvoz může ztížit ústup. Hlídejte průchod a prchající oddíly.",
                 events: [
                     {
                         id: "nobility_trapped",
@@ -1218,7 +1252,7 @@ const Scenarios = {
                             "minCount":2,
                             "area":{"minCol":6,"maxCol":10,"minRow":18,"maxRow":23}
                         },
-                        message: "Česká šlechta uvízla v úvozu! Nemůže uniknout!"
+                        message: "V úvozu jsou prchající nepřátelské oddíly. Jejich další ústup a ztráty sledujte na mapě."
                     },
                     {
                         id: "massacre_event",
@@ -1232,26 +1266,35 @@ const Scenarios = {
                         },
                         type: "massacre",
                         faction: "crusaders",
-                        text: "Táboři a orebité nebrali zajatce... Masakr v úvozu!"
+                        text: "Prchající oddíly v úvozu riskují další ztráty."
                     }
                 ]
             },
             {
                 id: 6,
-                name: "Všeobecný ústup",
+                name: "Závěrečná kola",
                 turnRange: [15,17],
-                description: "Zikmund dává rozkaz k ústupu.",
+                description: "Sledujte stav královského vojska a stále platný cíl obrany.",
                 events: [
                     {
                         id: "retreat_order",
                         trigger: "turn_12",
                         triggerBefore: "turn_17",
                         condition: {"type":"faction_losses_percent","faction":"crusaders","percent":40},
-                        message: "Zikmund dává rozkaz k ústupu! Královské vojsko prchá k Českému Brodu."
+                        message: "Hlídejte zbývající královské oddíly a jejich ústupové cesty.", unitStatus: {
+                                "type": "ZIKMUND",
+                                "faction": "crusaders",
+                                "texts": {
+                                    "alive": "Zikmund zůstává na bojišti. Hlídejte pohyb jeho oddílů.",
+                                    "routing": "Zikmund prchá; nemůže přijímat rozkazy.",
+                                    "fallen": "Zikmund padl.",
+                                    "escaped": "Zikmund opustil bojiště."
+                                }
+                            }
                     },
                     {
                         trigger: "turn_17",
-                        message: "Bitva rozhoduje o osudu Vyšehradu. Ovládnutí celé Prahy však z jejího výsledku automaticky neplyne."
+                        message: "Hlídejte cíl obrany pod Vyšehradem až do konce bitvy."
                     }
                 ]
             }
@@ -1300,7 +1343,7 @@ const Scenarios = {
 
         debriefing: {
             victory: "Vaše obrana pod Vyšehradem obstála. Historicky královské vojsko utrpělo těžkou porážku a Vyšehrad přešel do rukou husitů. Padla řada českých a moravských pánů včetně Jindřicha z Plumlova. Přesné součty ztrát jsou nejisté; Praha přitom ještě nebyla celá pod husitskou kontrolou.",
-            defeat: "Zikmundovy síly prorazily k Vyšehradu včas. Posádka byla zachráněna a husité utrpěli těžké ztráty. Obléhání Prahy pokračuje a husitská věc je v ohrožení."
+            defeat: "Obrana pod Vyšehradem v této partii neuspěla. Z toho neplyne, že Zikmund dorazil před dohodnutou lhůtou nebo že byla posádka automaticky zachráněna."
         },
 
         maxTurns: 17,
@@ -1416,19 +1459,28 @@ const Scenarios = {
             },
             {
                 id: 2,
-                name: 'Šest útoků',
+                name: "Obrana přístupů",
                 turnRange: [4, 8],
-                description: 'Erkinger žene pěchotu na hradby - jeden útok za druhým.',
+                description: "Hlídejte západní přístup k Žatci.",
                 events: [
-                    { trigger: 'turn_4', message: 'Erkinger zahajuje útok na západní hradbu! Držte linii!' },
-                    { trigger: 'turn_6', type: 'morale_boost', faction: 'hussites', modifier: 12, title: 'Výpad z bran!', text: 'Žatečtí vyrazili z bran, pobili množství obléhatelů a stáhli se zpět za hradby. Obránci nabírají odvahu!' }
+                    { trigger: 'turn_4', message: "Hlídejte západní přístup k městu.", unitStatus: {
+                            "type": "ERKINGER_SEINSHEIM",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Erkinger ze Seinsheimu zůstává na bojišti. Hlídejte přístupy k městu.",
+                                "routing": "Erkinger ze Seinsheimu prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Erkinger ze Seinsheimu padl.",
+                                "escaped": "Erkinger ze Seinsheimu opustil bojiště."
+                            }
+                        } },
+                    { trigger: 'turn_6', type: 'morale_boost', faction: 'hussites', modifier: 12, title: "Odhodlání obránců", text: "Morálka obránců roste. Využijte jejich odhodlání." }
                 ]
             },
             {
                 id: 3,
-                name: 'Požár ležení',
+                name: "Krize výpravy",
                 turnRange: [8, 12],
-                description: 'Křižácké ležení hoří, knížata se hádají, tábor svírá hlad.',
+                description: "Zprávy z ležení oslabují morálku výpravy.",
                 events: [
                     { trigger: 'turn_8', type: 'panic', faction: 'crusaders', level: 2, title: 'Požár ležení!', text: 'Křižácké ležení vzplálo! Hlad, spory knížat a falešná zpráva o blížícím se pražském vojsku lámou výpravu.' }
                 ]
@@ -1448,7 +1500,7 @@ const Scenarios = {
         },
 
         debriefing: {
-            victory: 'Žatec obstál! Šest útoků odraženo, ležení v plamenech - a na falešnou zprávu, že táhnou pražané, výprava 2. října prchá a Žatečtí ji ženou na útěku. Druhá křížová výprava se rozpadá, aniž stanula proti Žižkovi. "Pevnost Slunce" obhájila celá obec, beze jména jediného hrdiny - sláva města, ne muže.',
+            victory: "Žatec obstál. Historická výprava skončila ústupem; cenu vaší obrany ukazují výsledky bitvy.",
             defeat: 'Hradby Žatce padly. Křižáci vnikli do "pevnosti Slunce" a husitský severozápad leží otevřený. Druhá výprava slaví krvavý úspěch.'
         },
 
@@ -1702,7 +1754,7 @@ const Scenarios = {
 
         debriefing: {
             victory: "Průlom se podařil! Zachráněné oddíly se vydávají ke Kolínu. Historicky Žižka unikl z obklíčení a na začátku ledna 1422 se vrátil do protiútoku. Počty zachráněných vozů v této partii najdete ve výsledcích, nikoli v kronikářských součtech celého tažení.",
-            defeat: "Průlom selhal. Vozová hradba byla rozbita a Žižkova armáda zničena. Kutná Hora zůstává v rukou nepřítele a husitské hnutí přichází o svého nejschopnějšího vojevůdce.",
+            defeat: "Nepodařilo se zachránit dost oddílů ani splnit alternativní cíl. Bitva končí porážkou.",
             victoryVariants: {
                 fieldArmyEliminated: "Místo historického ústupu ke Kolínu jste na bojišti rozdrtili Zikmundovu polní armádu. Žižka přežil a důvod k průlomu zanikl. Je to alternativní vítězství: výsledek se od doloženého průběhu bitvy vědomě odchyluje."
             }
@@ -1928,7 +1980,7 @@ const Scenarios = {
                 turnRange: [1,3],
                 description: "Žižkovo vojsko pronásleduje ustupující křižáky.",
                 events: [
-                    {"trigger":"turn_1","message":"Zikmund uprchl! Scolariho vojsko ustupuje k Německému Brodu. Pronásledujte je!"},
+                    {"trigger":"turn_1",message: "Tato mise navazuje na historické pronásledování od Kutné Hory. Proti vám stojí Scolariho zadní voj."},
                     {"trigger":"turn_2","message":"Křižáci zanechávají kořist po cestě. Nedejte se rozptýlit - ničte vojsko!"}
                 ]
             },
@@ -1939,26 +1991,34 @@ const Scenarios = {
                 description: "Po dřívějším střetu u Habrů kryje zadní voj přístup do Německého Brodu.",
                 events: [
                     {"trigger":"turn_4","message":"Zadní voj se staví do cesty před Brodem. Prorazte k městu a mostu."},
-                    {"trigger":"turn_5","message":"Křižáci neudrží pozice - začínají prchat k řece!"}
+                    {"trigger":"turn_5",message: "Sledujte, zda zadní voj drží pozice, nebo už ustupuje k řece."}
                 ]
             },
             {
                 id: 3,
-                name: "Útěk přes Sázavu",
+                name: "Cesta přes Sázavu",
                 turnRange: [7,9],
-                description: "Panikařící vojsko se valí k mostu a na zamrzlou řeku.",
+                description: "Hlídejte ústupové cesty přes most a zamrzlou Sázavu.",
                 events: [
-                    {"trigger":"turn_7","message":"Most je přeplněný! Část vojska se pokouší přejít přes zamrzlou Sázavu!"},
-                    {"trigger":"turn_8","message":"Led praská pod těžkými vozy! Řeka pohlcuje prchající!"}
+                    {"trigger":"turn_7",message: "Hlídejte ústupové cesty přes most a zamrzlou Sázavu."},
+                    {"trigger":"turn_8",message: "Těžké oddíly na zamrzlé řece riskují ztráty."}
                 ]
             },
             {
                 id: 4,
-                name: "Zničení ustupujícího vojska",
+                name: "Závěr pronásledování",
                 turnRange: [10,12],
-                description: "Husité dobíjejí zbytky královského vojska.",
+                description: "Dokončete průlom k městu a mostu.",
                 events: [
-                    {"trigger":"turn_10","message":"Královské vojsko je rozprášeno! Sbírejte kořist a dobijte zbytky odporu."},
+                    {"trigger":"turn_10",message: "Zkontrolujte zbývající odpor i cestu k hlavnímu cíli.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Část královského vojska stále drží. Dokončete průlom k cíli.",
+                                "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                                "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                            }
+                        }},
                     {
                         trigger: "turn_12",
                         message: "Ústupová cesta vede přes řeku k Jihlavě. Vítězství závisí na splnění cíle této bitvy."
@@ -2006,8 +2066,8 @@ const Scenarios = {
         },
 
         debriefing: {
-            victory: "Dostihli jste ustupující vojsko u Brodu. Historicky následovalo dobytí a zpustošení města; ztráty v bitvě, při útěku a při násilí po dobytí nelze zaměňovat. Zprávy o propadajícím se ledu a množství kořisti je třeba číst s opatrností, ne jako přesné počítadlo této partie.",
-            defeat: "Zikmund unikl! Většina jeho vojska překročila Sázavu a spálila most za sebou. Kořist je minimální a příští křížová výprava přijde mnohem dříve."
+            victory: "Dostihli jste ustupující vojsko u Brodu. Historicky následovalo dobytí a zpustošení města; ztráty v bitvě, při útěku a při násilí po dobytí nelze zaměňovat. Zprávy o propadajícím se ledu a množství kořisti je třeba číst s opatrností, ne jako přesné počítadlo této partie.", victoryVariants: {"enemyEliminated":"Vyhráli jste vyřazením nepřítele. Potřebný počet hlavních cílových polí však při vítězství obsazený nebyl."},
+            defeat: "Městský přístup k mostu se nepodařilo včas zajistit. Pronásledování skončilo porážkou."
         },
 
         maxTurns: 12,
@@ -2156,29 +2216,38 @@ const Scenarios = {
                 turnRange: [1, 2],
                 description: 'Hrad Hněvín je na dosah. Posádka nabídla kapitulaci, ale Želivský odmítl.',
                 events: [
-                    { trigger: 'turn_1', message: 'Želivský: "Žádná milost pro zrádce! Dobudeme hrad silou!"' },
-                    { trigger: 'turn_2', message: 'Hradní posádka se houževnatě brání. Z města se ozývá ruch...' }
+                    { trigger: 'turn_1', message: "Rozhodněte se mezi držením Hněvína a blokováním městské brány.", unitStatus: {
+                            "type": "JAN_ZELIVSKY",
+                            "faction": "hussites",
+                            "texts": {
+                                "alive": "Želivský zůstává v boji. Držte Hněvín, nebo blokujte městskou bránu.",
+                                "routing": "Jan Želivský prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Jan Želivský padl.",
+                                "escaped": "Jan Želivský opustil bojiště."
+                            }
+                        } },
+                    { trigger: 'turn_2', message: "Zkontrolujte obě cílová pole Hněvína a cestu k městské bráně." }
                 ]
             },
             {
                 id: 2,
-                name: 'Boční úder',
+                name: "Hrozba bočního úderu",
                 turnRange: [3, 4],
-                description: 'Mostečtí vyrazili z brány! Úder do boku husitského vojska.',
+                description: "Hlídejte městskou bránu. Zde je očekávána mostecká hotovost.",
                 events: [
-                    { trigger: 'turn_3', message: 'Z městské brány vyráží mostecká hotovost! Úder do boku!' },
+                    { trigger: 'turn_3', message: "Mostecká hotovost je očekávána u městské brány. Hlídejte bok." },
                     { trigger: 'turn_4', message: 'Musíte se rozhodnout - pokračovat v útoku na hrad, nebo se otočit?' }
                 ]
             },
             {
                 id: 3,
-                name: 'Příchod posil',
+                name: "Očekávané posily",
                 turnRange: [5, 7],
-                description: 'Míšeňská armáda! Markrabě Fridrich přichází ze severu!',
+                description: "Míšeňská pomoc je očekávána ze severu.",
                 events: [
-                    { trigger: 'turn_5', message: 'Na obzoru míšeňské prapory! Markrabě Fridrich přichází s posilami!' },
+                    { trigger: 'turn_5', message: "Míšeňská pomoc je očekávána ze severu. Kryjte severní přístupy." },
                     { trigger: 'turn_6', message: 'Útok na hrad je nyní velmi riskantní. Zvažte alternativní cíl.' },
-                    { trigger: 'turn_5', message: 'Zásah koně husitského praporečníka rozvrací šik - a s příchodem míšeňských posil se mezi husity šíří strach.' }
+                    { trigger: 'turn_5', message: "Hlídejte příchozí posily a morálku vlastních oddílů." }
                 ]
             },
             {
@@ -2251,7 +2320,7 @@ const Scenarios = {
                 gateBlocked: 'Městskou bránu před Mostem jste udrželi zablokovanou po požadovanou dobu. Tento cíl přinesl vítězství; dobytí Hněvína se tím neprohlašuje. Jde o herní alternativu k historické porážce pražského vojska.',
                 bothControlled: 'Splnili jste jeden časový cíl a při vítězství současně obsadili obě klíčové pozice Hněvína i městskou bránu. Získáváte také bonus za ovládnutí obou lokalit. Jde o herní alternativu k historické porážce pražského vojska.'
             },
-            defeat: 'Mostečtí měšťané a posádka hradu udrželi své pozice. Husitský útok selhal a vojsko musí ustoupit. Severozápadní Čechy zůstávají v rukou nepřítele.'
+            defeat: "Žádný hlavní cíl jste nesplnili včas. Stejně jako historicky skončilo obléhání porážkou pražského vojska."
         },
 
         maxTurns: 10,
@@ -2370,24 +2439,40 @@ const Scenarios = {
                 description: 'Němci útočí v parném vedru.',
                 events: [
                     { trigger: 'turn_1', message: 'Smírný list odmítnut! Němci pyšně vzkázali, že "nikoho neživit nebudou a všechny pobijí" - Češi se proto zavázali stejným slibem. Pardon nedá nikdo.' },
-                    { trigger: 'turn_2', message: 'Saské a míšeňské jezdectvo útočí do svahu v nesnesitelném červnovém vedru!' }
+                    { trigger: 'turn_2', message: "Sledujte dojezd nepřátelské jízdy a přístupy do svahu.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "cavalry",
+                            "texts": {
+                                "ready": "Část nepřátelské jízdy stále drží. Hlídejte její dojezd.",
+                                "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                                "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                            }
+                        } }
                 ]
             },
             {
                 id: 2,
-                name: 'Palba z vozů',
+                name: "Palebná postavení",
                 turnRange: [5, 8],
-                description: 'Husitské palné zbraně decimují útočníky.',
+                description: "Využijte dostřel střelců a kryt vozové hradby.",
                 events: []
             },
             {
                 id: 3,
-                name: 'Panika a útěk',
+                name: "Závěrečný odpor",
                 turnRange: [9, 12],
-                description: 'Křižáci se dávají na bezhlavý útěk.',
+                description: "Hlídejte zbývající odpor i prchající oddíly.",
                 events: [
-                    { trigger: 'turn_9', message: '"Běží! Němci běží!" - křižáci prchají!' },
-                    { trigger: 'turn_11', message: 'Pod německou korouhví pokleklo 24 hrabat a korouhevních pánů s meči zabodnutými do země a prosili o milost - pro slib daný před bojem jsou ale do jednoho pobiti.' }
+                    { trigger: 'turn_9', message: "Hlídejte zbývající odpor a prchající nepřátelské oddíly.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Část nepřátelských oddílů stále drží. Nepolevujte.",
+                                "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                                "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                            }
+                        } },
+                    { trigger: 'turn_11', message: "Historická poznámka: prameny zmiňují zabíjení zajatých pánů." }
                 ]
             }
         ],
@@ -2412,7 +2497,7 @@ const Scenarios = {
         },
 
         debriefing: {
-            victory: 'Masakr Na Běhání! Podle Starých letopisů padlo Čechů jen 19 - a nikdo významný kromě měšťana Jana Bradatého; německé ztráty kroniky kladou na tisíce, až k 15 000. Dvojitá vozová hradba se ukázala jako nepřekonatelná překážka. Vítězství ale neslo i temný stín: 24 klečících hrabat a korouhevních pánů, kteří prosili o milost, bylo pro vzájemný slib nešetřit nikoho do jednoho pobito. Pověst o české nepřemožitelnosti je na světě — a s ní nebezpečná víra, že vítězům je dovoleno vše.',
+            victory: "Nepřátelskou polní armádu jste porazili. Vaše ztráty ukazují statistiky bitvy; historické zprávy o padlých a zajatcích najdete níže.",
             defeat: 'Saská jízda prorazila vaši hradbu! Katastrofální porážka husitů mění rovnováhu sil. Bez vozové hradby jste bezbranní proti těžké jízdě.'
         },
 
@@ -2752,27 +2837,27 @@ const Scenarios = {
                 description: 'Husité zahajují útok na slezské vojsko před hradbami.',
                 events: [
                     { trigger: 'turn_1', message: 'Husitské vojsko postupuje s vozy a děly proti obráncům Nisy!' },
-                    { trigger: 'turn_2', message: 'Sedláci a vesničané se staví husitům na odpor před předměstím.' }
+                    { trigger: 'turn_2', message: "Prohlédněte přístupy před hradbami a v předměstí." }
                 ]
             },
             {
                 id: 2,
-                name: 'Průlom obrany',
+                name: "Tlak na obranu",
                 turnRange: [4, 6],
-                description: 'Husité prolamují slezskou obranu.',
+                description: "Hledejte slabé místo slezské obrany.",
                 events: [
-                    { trigger: 'turn_4', type: 'panic', faction: 'crusaders', level: 1, text: 'Slezské oddíly začínají ustupovat pod tlakem husitského útoku!' },
-                    { trigger: 'turn_5', message: 'Půta z Častolovic se snaží organizovat obranu u hradeb.' }
+                    { trigger: 'turn_4', type: 'panic', faction: 'crusaders', level: 1, text: "Slezským oddílům klesá útok. Hledejte slabé místo obrany." },
+                    { trigger: 'turn_5', message: "Prohlédněte obránce před hradbami a cestu k nim." }
                 ]
             },
             {
                 id: 3,
-                name: 'Masakr a útěk',
+                name: "Závěrečný střet",
                 turnRange: [7, 10],
-                description: 'Obránci prchají, mnozí hynou v řece.',
+                description: "Zlomte odpor slezských oddílů před hradbami.",
                 events: [
-                    { trigger: 'turn_7', type: 'panic', faction: 'crusaders', level: 2, text: 'Obránci v panice prchají - mnoho jich hyne v řece Nise!' },
-                    { trigger: 'turn_8', message: 'Husité pálí předměstí a útočí na hradby!' }
+                    { trigger: 'turn_7', type: 'panic', faction: 'crusaders', level: 2, text: "Strach oslabuje slezské oddíly. Hlídejte zbývající odpor." },
+                    { trigger: 'turn_8', message: "Cílem je porazit polní vojsko, ne dobýt město." }
                 ]
             }
         ],
@@ -2791,7 +2876,7 @@ const Scenarios = {
 
         debriefing: {
             victory: "Polní protivník ustoupil. Historicky střet u Nisy patřil k tažení do Slezska v roce 1428. Vítězství mimo hradby neznamenalo automatické dobytí města ani konec odporu celého Slezska.",
-            defeat: "Slezská obrana vydržela. Půta z Častolovic úspěšně ubránil Nisu. Spanilá jízda musí pokračovat jinudy a husitská pověst neporazitelnosti utrpěla trhlinu."
+            defeat: "V této partii jste slezské polní vojsko neporazili. Obrana města a historické tažení jsou širší příběh; tento výsledek sám neurčuje Půtův osobní osud."
         },
 
         maxTurns: 10,
@@ -2959,7 +3044,7 @@ const Scenarios = {
                         level: 2,
                         text: "Zmatek a strach oslabují morálku křižáckého vojska."
                     },
-                    {"trigger":"turn_5","message":"Kardinál Cesarini prchá a ztrácí kardinálský klobouk!"},
+                    {"trigger":"turn_5",message: "Historická poznámka: traduje se příběh o Cesariniho útěku a ztraceném klobouku."},
                     {"trigger":"turn_5","type":"panic","faction":"crusaders","level":3,"text":"Panika se šíří křižáckým táborem!"},
                     {
                         trigger: "turn_4",
@@ -2973,11 +3058,19 @@ const Scenarios = {
             },
             {
                 id: 3,
-                name: "Útěk k Bavorsku",
+                name: "Ústupové cesty",
                 turnRange: [7,12],
-                description: "Křižáci prchají Všerubským průsmykem do Bavorska.",
+                description: "Hlídejte ústupové cesty k Bavorsku i přístup k Domažlicím.",
                 events: [
-                    {"trigger":"turn_7","type":"rout","faction":"crusaders","text":"Celá křižácká armáda se dává na útěk!"}
+                    {"trigger":"turn_7","type":"rout","faction":"crusaders",text: "Hlídejte ustupující oddíly i přístup k Domažlicím.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Část křižáckých oddílů stále drží. Hlídejte přístup k Domažlicím.",
+                                "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                                "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                            }
+                        }}
                 ]
             }
         ],
@@ -2987,11 +3080,13 @@ const Scenarios = {
             secondary: [
                 {
                     type: "capture_position",
+                    id: "reach_domazlice",
+                    mapMarker: true,
                     positions: [
                         [16,6],
                         [17,6]
                     ],
-                    description: "Uvolněte přístup k obleženým Domažlicím"
+                    description: "Při vítězství mějte vlastní oddíl na obou označených polích u Domažlic"
                 }
             ]
         },
@@ -3003,8 +3098,8 @@ const Scenarios = {
         },
 
         debriefing: {
-            victory: "Výprava ustoupila a cesta k Domažlicím je volná. Historický rozpad křižáckého vojska souvisel se zmatkem, přesuny a obavou z husitů; místy se přesto bojovalo. Chorál se stal symbolem vítězství, ale příběh o samotné písni, která bez boje porazila celou armádu, je zjednodušení.",
-            defeat: "Křižáci překonali svůj strach a zformovali obranu. I přes váš chorál se nezhroutili. Husitská pověst neporazitelnosti je otřesena."
+            victory: "Zlomili jste odpor křižáckého polního vojska. Přístup k Domažlicím je samostatný volitelný cíl. Historická výprava se rozpadla ve zmatku a strachu z husitů; místy se přesto bojovalo.", victoryVariants: {"approachSecured":"Zlomili jste odpor křižáckého vojska a obsadili obě označená pole přístupu k Domažlicím. Volitelný cíl je splněn. Historický rozpad výpravy však nezpůsobila samotná píseň."},
+            defeat: "Odpor křižáckého vojska se nepodařilo zlomit. Bitva končí porážkou."
         },
 
         maxTurns: 12,
@@ -3159,22 +3254,47 @@ const Scenarios = {
                 id: 1,
                 name: "Dělostřelecká příprava",
                 turnRange: [1,3],
-                description: "Husitská děla ostřelují hradby. Obránci odpovídají z městských pozic.",
+                description: "Děla mohou krýt postup k městu. Hlídejte jejich dostřel.",
                 events: [
-                    {"trigger":"turn_1","message":"Husitské bombardy zahajují palbu na hradby Plzně!"},
-                    {"trigger":"turn_2","message":"Obránci se kryjí za cimbuřím. Vilém Švihovský povzbuzuje posádku."},
-                    {"trigger":"turn_3","message":"V hradbách se objevují první trhliny!"}
+                    {"trigger":"turn_1",message: "Bombarda může ostřelovat obránce v dostřelu."},
+                    {"trigger":"turn_2",message: "Zkontrolujte obránce u městských pozic a jejich dostřel.", unitStatus: {
+                            "type": "VILEM_SVIHOVSKY",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Vilém Švihovský zůstává na bojišti. Pozor na městský kryt obránců.",
+                                "routing": "Vilém Švihovský prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Vilém Švihovský padl.",
+                                "escaped": "Vilém Švihovský opustil bojiště."
+                            }
+                        }},
+                    {"trigger":"turn_3",message: "Ke splnění cíle obsaďte tři označená městská pole."}
                 ]
             },
             {
                 id: 2,
-                name: "Útok na hradby",
+                name: "Přístupy k městu",
                 turnRange: [4,7],
-                description: "Pěchota postupuje k hradbám. Těžké ztráty na obou stranách.",
+                description: "Před postupem k městu zkontrolujte obránce, terén a možnosti krycí palby.",
                 events: [
-                    {"trigger":"turn_4","message":"Jan Pardus z Horky vede táborskou pěchotu do útoku!"},
-                    {"trigger":"turn_5","message":"Obránci kryjí přístupy ke hradbám a odrážejí útočící pěchotu."},
-                    {"trigger":"turn_6","message":"Krvavé boje u hradeb! Husité se snaží prolomit obranu."}
+                    {"trigger":"turn_4",message: "Před postupem k městu zkontrolujte kryt a nepřátelský dostřel.", forceStatus: {
+                            "faction": "hussites",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Máte bojeschopné oddíly. Zvažte postup k městu.",
+                                "routing": "Vaše zbývající bojové oddíly prchají. Vyčkejte, zda se znovu zformují.",
+                                "absent": "Vaše bojové oddíly už na bojišti nejsou. Zkontrolujte zbývající síly."
+                            }
+                        }},
+                    {"trigger":"turn_5",message: "Prohlédněte přístupy k městským pozicím.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Část obránců ještě drží. Hlídejte přístupy a nepřátelský dostřel.",
+                                "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                                "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                            }
+                        }},
+                    {"trigger":"turn_6",message: "Prorazte k označeným cílovým polím."}
                 ]
             },
             {
@@ -3209,13 +3329,22 @@ const Scenarios = {
                 turnRange: [11,14],
                 description: "Útok buď uspěje, nebo husité budou muset ustoupit.",
                 events: [
-                    {"trigger":"turn_11","message":"Poslední šance na průlom! Prokop Holý posílá zálohy."},
+                    {"trigger":"turn_11",message: "Čas na obsazení městských pozic se krátí.", unitStatus: {
+                            "type": "PROKOP_HOLY",
+                            "faction": "hussites",
+                            "texts": {
+                                "alive": "Prokop zůstává v boji. Čas na obsazení městských pozic se krátí.",
+                                "routing": "Prokop Holý prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Prokop Holý padl.",
+                                "escaped": "Prokop Holý opustil bojiště."
+                            }
+                        }},
                     {
                         trigger: "turn_13",
                         type: "morale",
                         faction: "hussites",
                         amount: 2,
-                        text: "Hlad, násilné „picování“ okolí a spory mezi hejtmany lámou tábor. Někteří vojáci dezertují."
+                        text: "Únava obléhání snižuje útok i morálku vašich oddílů."
                     }
                 ]
             }
@@ -3244,7 +3373,7 @@ const Scenarios = {
         },
 
         debriefing: {
-            victory: "Do města jste pronikli. Tím se tato partie odchýlila od historie: obléhání v letech 1433–1434 skončilo neúspěchem polních vojsk. Dobyli jste městské pozice, ne však ztracenou jednotu husitských svazů.",
+            victory: "Do města jste pronikli. Tím se tato partie odchýlila od historie: obléhání v letech 1433–1434 skončilo neúspěchem polních vojsk. Dobyli jste městské pozice, ne však ztracenou jednotu husitských svazů.", victoryVariants: {"enemyEliminated":"Vyhráli jste vyřazením nepřítele. Potřebný počet hlavních cílových polí však při vítězství obsazený nebyl."},
             defeat: "Plzeň odolala, stejně jako při historickém obléhání ukončeném 9. května 1434. Dlouhé tažení oslabovalo polní vojska a prohlubovalo jejich krizi. Ukořistěný velbloud se stal městským symbolem; tuto figuru si Plzeňané přidali do znaku sami, ne jako Zikmundovu odměnu."
         },
 
@@ -3731,13 +3860,13 @@ const Scenarios = {
                 turnRange: [4,6],
                 description: "Uherské posily mění rovnováhu sil.",
                 events: [
-                    {"trigger":"turn_4","message":"Michal Országh přivádí uherské rytíře! Situace je zoufalá."},
+                    {"trigger":"turn_4",message: "Uherské posily jsou očekávány. Hlídejte přístupy k hradu."},
                     {
                         trigger: "turn_5",
                         type: "morale_boost",
                         faction: "crusaders",
                         modifier: 20,
-                        text: "Uherští rytíři povzbuzují královské vojsko k rozhodnému útoku!"
+                        text: "Morálka královských oddílů roste. Hlídejte obléhací postavení."
                     }
                 ]
             },
@@ -3756,7 +3885,16 @@ const Scenarios = {
                         type: "panic",
                         faction: "hussites",
                         level: 1,
-                        text: "Někteří obránci ztrácejí naději. Jan Roháč je povzbuzuje k boji!"
+                        text: "Únava oslabuje obránce. Zkontrolujte soudržnost posádky.", unitStatus: {
+                                "type": "JAN_ROHAC",
+                                "faction": "hussites",
+                                "texts": {
+                                    "alive": "Roháč zůstává v boji. Hlídejte soudržnost posádky.",
+                                    "routing": "Jan Roháč prchá; nemůže přijímat rozkazy.",
+                                    "fallen": "Jan Roháč padl.",
+                                    "escaped": "Jan Roháč opustil bojiště."
+                                }
+                            }
                     },
                     {"trigger":"turn_9","message":"Útočníci hledají cestu přes příkopy. Hlídejte průchody mezi valy."}
                 ]
@@ -3770,7 +3908,7 @@ const Scenarios = {
                     {"trigger":"turn_11","message":"Bojuje se o přístupy k jádru. Ztráta jeho klíčových pozic ukončí obranu."},
                     {
                         trigger: "turn_12",
-                        message: "Závěr obrany. O osudu této partie rozhoduje posádka a držené pozice, ne předem napsaná legenda."
+                        message: "Udržte klíčová pole hradního jádra. Na nich stojí obrana Sionu."
                     }
                 ]
             }
@@ -3803,7 +3941,15 @@ const Scenarios = {
         specialMechanics: {"lastStand":true},
 
         debriefing: {
-            victory: "Sion v této partii vydržel a Jan Roháč přežil. To je herní odbočka od historie: hrad padl 6. září 1437 a Roháč byl se svými druhy o tři dny později popraven v Praze. Vaše vítězství mění osud této obrany, ne výsledek skutečného obléhání.",
+            victory: "Sion jste ubránili. Vaše vítězství se odchýlilo od historie: hrad padl 6. září 1437 a zajatý Roháč byl se svými druhy o tři dny později popraven v Praze.", unitStatus: {
+                    "type": "JAN_ROHAC",
+                    "faction": "hussites",
+                    "texts": {
+                        "alive": "Jan Roháč tuto bitvu přežil.",
+                        "fallen": "Jan Roháč v této bitvě padl.",
+                        "escaped": "Jan Roháč opustil bojiště."
+                    }
+                },
             defeat: "Obrana Sionu v této partii skončila. Historicky hrad padl 6. září 1437; zajatý Jan Roháč a jeho druhové byli 9. září popraveni v Praze. Přesné počty obětí a dramatické podrobnosti popravy se v podáních liší. Nálezy opevnění a střeliva svědčí o skutečném boji, ne pouze předstíraném obléhání."
         },
 
@@ -3976,50 +4122,119 @@ const Scenarios = {
                 turnRange: [1, 2],
                 description: 'Husité se opevňují na kopci Gothard, panská jednota se shromažďuje.',
                 events: [
-                    { trigger: 'turn_1', message: 'Žižka: "Na kopec! Držte svahy, střelci dopředu!"' },
+                    { trigger: 'turn_1', message: "Využijte kopec a zkontrolujte postavení střelců.", unitStatus: {
+                            "type": "JAN_ZIZKA",
+                            "faction": "hussites",
+                            "texts": {
+                                "alive": "Žižka zůstává v boji. Využijte Gothard a kryjte střelce vozy.",
+                                "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Jan Žižka padl.",
+                                "escaped": "Jan Žižka opustil bojiště."
+                            }
+                        } },
                     { trigger: 'turn_2', message: 'Panská jednota se formuje k útoku pod kopcem.' }
                 ]
             },
             {
                 id: 2,
-                name: 'Čelní útok',
+                name: "Hrozba čelního útoku",
                 turnRange: [3, 5],
-                description: 'Čeněk z Vartenberka vrhá jízdu do čelního útoku na kopec.',
+                description: "Hlídejte přístupy ke Gothardu a dojezd nepřátelské jízdy.",
                 events: [
-                    { trigger: 'turn_3', message: 'Čeněk z Vartenberka: "Vpřed! Rozbijte Žižkovy radikály!"' },
-                    { trigger: 'turn_4', message: 'Těžká jízda naráží na husitskou pěchotu! Útok vázne ve strmém svahu.' },
-                    { trigger: 'turn_5', type: 'cavalry_charge_blocked', text: 'Páni musí sesednout z koní - do strmého svahu na vozy a sudlice se koňmo zaútočit nedá.' }
+                    { trigger: 'turn_3', message: "Hlídejte přístupy ke Gothardu a pohyb panské jednoty.", unitStatus: {
+                            "type": "CENEK_VARTENBERK",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Čeněk z Vartenberka zůstává na bojišti. Hlídejte přístupy ke Gothardu.",
+                                "routing": "Čeněk z Vartenberka prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Čeněk z Vartenberka padl.",
+                                "escaped": "Čeněk z Vartenberka opustil bojiště."
+                            }
+                        } },
+                    { trigger: 'turn_4', message: "Přístupy ke kopci jsou pro jízdu obtížné. Sledujte její dojezd.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "cavalry",
+                            "texts": {
+                                "ready": "Část nepřátelské jízdy stále drží. Hlídejte její dojezd.",
+                                "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                                "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                            }
+                        } },
+                    { trigger: 'turn_5', type: 'cavalry_charge_blocked', text: "Nepřátelská jízda v této fázi ztrácí bonus nárazu." }
                 ]
             },
             {
                 id: 3,
-                name: 'Tříhodinový boj',
+                name: "Boj o Gothard",
                 turnRange: [6, 8],
-                description: 'Zuřivé boje na svazích Gothardu. Panská jednota utrpí těžké ztráty.',
+                description: "Využijte svah a kryjte vlastní střelce.",
                 events: [
-                    { trigger: 'turn_6', message: 'Husitské houfnice a střelci kosí útočníky!' },
-                    { trigger: 'turn_7', message: 'Houf Arnošta Flašky se hroutí pod palbou!' },
-                    { trigger: 'turn_7', type: 'morale_drop', faction: 'crusaders', amount: 2, text: 'Zhroucení Flaškova houfu otřáslo panskou jednotou.' }
+                    { trigger: 'turn_6', message: "Před dalším postupem zkontrolujte střelce a jejich dostřel.", forceStatus: {
+                            "faction": "hussites",
+                            "kind": "ranged",
+                            "texts": {
+                                "ready": "Máte bojeschopné střelce. Před palbou zkontrolujte dostřel a zbývající výstřely.",
+                                "routing": "Vaši zbývající střelci prchají. Zkontrolujte ostatní oddíly.",
+                                "absent": "Vaši střelci už na bojišti nejsou. Zkontrolujte ostatní oddíly."
+                            }
+                        } },
+                    { trigger: 'turn_7', message: "Hledejte slabé místo nepřátelského houfu.", unitStatus: {
+                            "type": "ARNOST_FLASKA",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Arnošt Flaška zůstává na bojišti. Hledejte slabé místo nepřátelského houfu.",
+                                "routing": "Arnošt Flaška prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Arnošt Flaška padl.",
+                                "escaped": "Arnošt Flaška opustil bojiště."
+                            }
+                        } },
+                    { trigger: 'turn_7', type: 'morale_drop', faction: 'crusaders', amount: 2, text: "Morálka panské jednoty klesá. Hledejte slabé místo." }
                 ]
             },
             {
                 id: 4,
-                name: 'Husitský protiútok',
+                name: "Příležitost k protiútoku",
                 turnRange: [9, 11],
-                description: 'Žižka nařizuje protiútok. Orebitská jízda a pěchota vyráží z kopce.',
+                description: "Před protiútokem zkontrolujte sílu obou stran.",
                 events: [
-                    { trigger: 'turn_9', message: 'Žižka: "Teď! Vpřed, za kalich!"' },
-                    { trigger: 'turn_10', message: 'Panská jednota se dává na útěk! Čeněk prchá s hrstkou mužů!' }
+                    { trigger: 'turn_9', message: "Zvažte protiútok, jen pokud pro něj máte bojeschopné oddíly.", unitStatus: {
+                            "type": "JAN_ZIZKA",
+                            "faction": "hussites",
+                            "texts": {
+                                "alive": "Žižka zůstává v boji. Zvažte, zda máte sílu k protiútoku.",
+                                "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Jan Žižka padl.",
+                                "escaped": "Jan Žižka opustil bojiště."
+                            }
+                        } },
+                    { trigger: 'turn_10', message: "Hlídejte zbývající odpor panské jednoty.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Část nepřátelských oddílů stále drží. Nepolevujte.",
+                                "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                                "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                            }
+                        } }
                 ]
             },
             {
                 id: 5,
-                name: 'Pronásledování',
+                name: "Závěrečná kola",
                 turnRange: [12, 14],
-                description: 'Husité pronásledují prchající pány a ukořisťují jejich vozy.',
+                description: "Závěr se blíží. Hlídejte hlavní cíl.",
                 events: [
-                    { trigger: 'turn_12', message: 'Ukořistěny všechny nepřátelské vozy a děla!' },
-                    { trigger: 'turn_13', message: 'Čeněk z Vartenberka uprchl. Husitské vítězství je úplné.' }
+                    { trigger: 'turn_12', message: "Při pronásledování hlídejte i nepřátelské vozy a děla." },
+                    { trigger: 'turn_13', message: "Závěr se blíží. Hlídejte hlavní cíl.", unitStatus: {
+                            "type": "CENEK_VARTENBERK",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Čeněk z Vartenberka zůstává na bojišti. Hlídejte hlavní cíl.",
+                                "routing": "Čeněk z Vartenberka prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Čeněk z Vartenberka padl.",
+                                "escaped": "Čeněk z Vartenberka opustil bojiště."
+                            }
+                        } }
                 ]
             }
         ],
@@ -4031,13 +4246,15 @@ const Scenarios = {
                 description: 'Zničte 60% vojska panské jednoty'
             },
             secondary: [
-                { type: 'hold_position', positions: [[8,5], [9,5], [10,5], [11,5]], description: 'Udržte kopec Gothard po celou bitvu' }
+                { type: 'hold_position', id: 'hold_gothard', mapMarker: true, count: 2,
+                    positions: [[8,5], [9,5], [10,5], [11,5]],
+                    description: 'Při vítězství držte alespoň 2 ze 4 označených polí Gothardu' }
             ]
         },
 
         debriefing: {
-            victory: "Obrana Gothardu obstála. Vozy, palba a výhoda svahu pomohly v této partii odrazit útok. Historicky Žižkovo vítězství posílilo jeho postavení ve východních Čechách; přesné rozmístění a počty ztrát neznáme.",
-            defeat: "Panská jednota prolomila obranu. Kopec Gothard padl a s ním i naděje na udržení východních Čech. Husitské síly jsou rozptýleny a Čeněk z Vartenberka slaví vítězství."
+            victory: "V této partii jste porazili panskou jednotu. Držení označených polí Gothardu se hodnotí zvlášť jako volitelný cíl. Historicky Žižkovo vítězství posílilo jeho postavení ve východních Čechách; přesné rozmístění a počty ztrát neznáme.",
+            defeat: "Panská jednota v této partii obstála. Žižkovo vítězství jste nezopakovali."
         },
 
         maxTurns: 14,
@@ -4197,48 +4414,91 @@ const Scenarios = {
                 id: 1,
                 name: "Zaujmutí pozic",
                 turnRange: [1,2],
-                description: "Žižka rozpoznává terén s pomocí Roháče a Hvězdy. Husité se opevňují na svahu.",
+                description: "Využijte svah nad Bohynkou a úzké přístupy údolím.",
                 events: [
                     {
                         trigger: "turn_1",
-                        message: "Jan Roháč: \"Pane hejtmane, máme dobrý svah nad údolím. Potok Bohynka nám kryje střed.\""
+                        message: "Před rozkazy si prohlédněte svah a údolí Bohynky.", unitStatus: {
+                                "type": "JAN_ROHAC",
+                                "faction": "hussites",
+                                "texts": {
+                                    "alive": "Roháč zůstává v boji. Využijte svah nad Bohynkou.",
+                                    "routing": "Jan Roháč prchá; nemůže přijímat rozkazy.",
+                                    "fallen": "Jan Roháč padl.",
+                                    "escaped": "Jan Roháč opustil bojiště."
+                                }
+                            }
                     },
                     {
                         trigger: "turn_2",
-                        message: "Jan Hvězda: \"Znám tato místa. Údolí je úzké - nepřítel se nebude moci rozvinout.\""
+                        message: "Úzké údolí omezuje možnosti rozvinutí. Využijte terén.", unitStatus: {
+                                "type": "JAN_HVEZDA",
+                                "faction": "hussites",
+                                "texts": {
+                                    "alive": "Jan Hvězda zůstává v boji. Hlídejte úzké průchody údolím.",
+                                    "routing": "Jan Hvězda prchá; nemůže přijímat rozkazy.",
+                                    "fallen": "Jan Hvězda padl.",
+                                    "escaped": "Jan Hvězda opustil bojiště."
+                                }
+                            }
                     }
                 ]
             },
             {
                 id: 2,
-                name: "Koaliční útok",
+                name: "Přístupy údolím",
                 turnRange: [3,5],
-                description: "Protižižkovská koalice vrhá jízdu do údolí. Nepřítel se nemůže plně rozvinout.",
+                description: "Údolí omezuje rozvinutí jízdy. Hlídejte i ostatní přístupy.",
                 events: [
-                    {"trigger":"turn_3","message":"Diviš Bořek: \"Do útoku! Rozdrtíme slepce jednou provždy!\""},
-                    {"trigger":"turn_4","message":"Těžká jízda vjíždí do úzkého údolí... Řady se tísní!"},
+                    {"trigger":"turn_3",message: "Sledujte pohyb koalice a její přístupy do údolí.", unitStatus: {
+                            "type": "DIVIS_BOREK",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Diviš Bořek zůstává na bojišti. Hlídejte přístupy do údolí.",
+                                "routing": "Diviš Bořek prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Diviš Bořek padl.",
+                                "escaped": "Diviš Bořek opustil bojiště."
+                            }
+                        }},
+                    {"trigger":"turn_4",message: "Sledujte, zda jízda využije údolí, nebo hledá jiný přístup.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "cavalry",
+                            "texts": {
+                                "ready": "Část nepřátelské jízdy stále drží. Hlídejte přístupy do údolí.",
+                                "routing": "Zbývající nepřátelská jízda prchá. Hlídejte ostatní oddíly.",
+                                "absent": "Nepřátelská jízda už na bojišti není. Hlídejte ostatní oddíly."
+                            }
+                        }},
                     {
                         trigger: "turn_5",
                         type: "terrain_penalty",
                         faction: "crusaders",
-                        text: "Jízda ztrácí hybnost v bažinatém údolí!"
+                        text: "V této fázi mají nepřátelské jezdecké oddíly o bod pohybu méně, nejméně však jeden."
                     }
                 ]
             },
             {
                 id: 3,
-                name: "Krvavé údolí",
+                name: "Rozhodování v údolí",
                 turnRange: [6,8],
-                description: "Palba a tísnivý terén narušují postup útočníků. Obránci hledají chvíli k protiútoku.",
+                description: "Využijte dostřel střelců a hledejte cestu k průlomu.",
                 events: [
-                    {"trigger":"turn_6","message":"Houfnice a ručnice pálí do natěsnaných řad nepřítele!"},
-                    {"trigger":"turn_7","message":"Ztráty koalice rostou! Údolí se barví krví!"},
+                    {"trigger":"turn_6",message: "Zkontrolujte dostřel a zbývající výstřely svých střelců.", forceStatus: {
+                            "faction": "hussites",
+                            "kind": "ranged",
+                            "texts": {
+                                "ready": "Máte bojeschopné střelce. Před palbou zkontrolujte dostřel a zbývající výstřely.",
+                                "routing": "Vaši zbývající střelci prchají. Zkontrolujte ostatní oddíly.",
+                                "absent": "Vaši střelci už na bojišti nejsou. Zkontrolujte ostatní oddíly."
+                            }
+                        }},
+                    {"trigger":"turn_7",message: "Prohlédněte koaliční oddíly na mapě a v přehledu armády."},
                     {
                         trigger: "turn_8",
                         type: "morale_drop",
                         faction: "crusaders",
                         amount: 3,
-                        text: "Koaliční vojsko ztrácí odvahu v zabijácké palbě."
+                        text: "Morálka koalice klesá. Sledujte, které oddíly ještě drží."
                     },
                     {
                         trigger: "turn_5",
@@ -4259,12 +4519,29 @@ const Scenarios = {
             },
             {
                 id: 4,
-                name: "Žižkův protiútok",
+                name: "Příležitost k průlomu",
                 turnRange: [9,11],
-                description: "Žižka nařizuje smrtící protiútok ze svahu dolů.",
+                description: "Včas proražte k označeným cílovým polím.",
                 events: [
-                    {"trigger":"turn_9","message":"Žižka: \"Teď! Dolů z kopce! Za pravdu Boží!\""},
-                    {"trigger":"turn_10","message":"Husitská jízda a pěchota se řítí ze svahu na dezorientovaného nepřítele!"},
+                    {"trigger":"turn_9",message: "Dostaňte bojeschopný oddíl na označený cíl před koncem limitu.", unitStatus: {
+                            "type": "JAN_ZIZKA",
+                            "faction": "hussites",
+                            "texts": {
+                                "alive": "Žižka zůstává v boji. Připravte průlom k označeným cílovým polím.",
+                                "routing": "Jan Žižka prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Jan Žižka padl.",
+                                "escaped": "Jan Žižka opustil bojiště."
+                            }
+                        }},
+                    {"trigger":"turn_10",message: "Před protiútokem zkontrolujte zbývající síly.", forceStatus: {
+                            "faction": "hussites",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Máte bojeschopné oddíly. Zvažte, kudy je vést k průlomu.",
+                                "routing": "Vaše zbývající bojové oddíly prchají. Vyčkejte, zda se znovu zformují.",
+                                "absent": "Vaše bojové oddíly už na bojišti nejsou. Zkontrolujte zbývající síly."
+                            }
+                        }},
                     {
                         trigger: "turn_11",
                         type: "charge_bonus",
@@ -4276,17 +4553,34 @@ const Scenarios = {
             },
             {
                 id: 5,
-                name: "Zhroucení koalice",
+                name: "Závěr střetu",
                 turnRange: [12,15],
-                description: "Koaliční vojsko se hroutí. Zadní voje prchají bez boje.",
+                description: "Čas se krátí. Hlídejte cílová pole i zbývající odpor.",
                 events: [
-                    {"trigger":"turn_12","message":"Koalice se hroutí! Muži prchají směrem k Malešovu!"},
-                    {"trigger":"turn_13","message":"Diviš Bořek: \"Zpět! Všichni zpět!\" Zadní voje už ani nevstoupily do boje."},
+                    {"trigger":"turn_12",message: "Hlídejte zbývající odpor koalice a cestu k cíli.", forceStatus: {
+                            "faction": "crusaders",
+                            "kind": "field",
+                            "texts": {
+                                "ready": "Část koaličních oddílů stále drží. Nepolevujte.",
+                                "routing": "Zbývající bojové oddíly nepřítele prchají. Hlídejte hlavní cíl.",
+                                "absent": "Bojové oddíly nepřítele už na bojišti nejsou. Hlídejte hlavní cíl."
+                            }
+                        }},
+                    {"trigger":"turn_13",message: "Sledujte pohyb koaličních oddílů.", unitStatus: {
+                            "type": "DIVIS_BOREK",
+                            "faction": "crusaders",
+                            "texts": {
+                                "alive": "Diviš Bořek zůstává na bojišti. Sledujte pohyb jeho oddílů.",
+                                "routing": "Diviš Bořek prchá; nemůže přijímat rozkazy.",
+                                "fallen": "Diviš Bořek padl.",
+                                "escaped": "Diviš Bořek opustil bojiště."
+                            }
+                        }},
                     {
                         trigger: "turn_14",
-                        message: "O výsledku rozhoduje soudržnost oddílů. Historické odhady padlých nejsou součtem ztrát této partie."
+                        message: "Další postup zvažte podle soudržnosti a ztrát obou stran."
                     },
-                    {"trigger":"turn_15","message":"Žižka ovládl bojiště. Cesta na Kutnou Horu je volná!"}
+                    {"trigger":"turn_15",message: "Dokončete průlom k označeným cílovým polím."}
                 ]
             }
         ],
@@ -4306,21 +4600,24 @@ const Scenarios = {
             secondary: [
                 {
                     type: "hold_position",
+                    id: "hold_command_post",
+                    mapMarker: true,
+                    count: 2,
                     positions: [
                         [7,3],
                         [8,3],
                         [9,3],
                         [10,3]
                     ],
-                    description: "Udržte velitelskou pozici na svahu"
+                    description: "Při vítězství držte alespoň 2 ze 4 označených polí velitelského stanoviště"
                 },
-                {"type":"survive_commander","description":"Jan Žižka musí přežít"},
-                {"type":"max_losses","maxLosses":30,"description":"Ztratit méně než 30% vlastních jednotek"}
+                {"type":"survive_commander","target":"JAN_ZIZKA","description":"Jan Žižka musí přežít"},
+                {"type":"max_losses_percent","percent":30,"description":"Ztratit méně než 30% vlastních jednotek"}
             ]
         },
 
         debriefing: {
-            victory: "Koaliční obrana je prolomena! V této partii uspěl váš postup ze svahu. Historicky vítězství u Malešova otevřelo Žižkovi cestu ke Kutné Hoře. Pozdější příběh o vozech s kamením není spolehlivě doloženým vysvětlením tohoto úspěchu.",
+            victory: "Koaliční obrana je prolomena! V této partii uspěl váš postup ze svahu. Historicky vítězství u Malešova otevřelo Žižkovi cestu ke Kutné Hoře. Pozdější příběh o vozech s kamením není spolehlivě doloženým vysvětlením tohoto úspěchu.", victoryVariants: {"enemyEliminated":"Vyhráli jste vyřazením nepřítele. Potřebný počet hlavních cílových polí však při vítězství obsazený nebyl."},
             defeat: "Koalice odrazila váš postup. Žižkovo východočeské vojsko se musí stáhnout. Tato partie se rozešla s historickým výsledkem; označení sirotci se pro část jeho následovníků ujalo až po Žižkově smrti."
         },
 

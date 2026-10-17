@@ -1086,6 +1086,11 @@ body {
 .dual-objective p, #dual-objective-hint { margin: 6px 0; font-size: .85rem; line-height: 1.4; }
 .dual-objective .objective-progress { color: var(--field-ink-soft); }
 .dual-objective.objective-held .objective-progress { color: #365846; }
+.position-objective-details { flex: 1; min-width: 0; }
+.position-objective-details .objective-text { display: block; }
+.position-objective-details .objective-progress { font-size: .9rem; margin: 8px 0; }
+.position-objective.objective-held .objective-progress { color: #365846; }
+.position-objective-details .objective-locate { max-width: 100%; white-space: normal; }
 .objective-locate {
     min-height: 44px;
     padding: 6px 10px;

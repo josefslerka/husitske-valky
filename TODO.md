@@ -21,6 +21,9 @@ ověřit s dalšími začátečníky. Zvětšení Chromu na 125–150 % je ově�
 fyzický telefon a systémové písmo zatím ne.
 Oprava nepřátelského tooltipu je součástí Alpha 0.3.9.
 
+Navazující feedback (Hořice, Malešov, Tachov, Domažlice, Lipany a rychlost AI)
+zpracován v prvním balíčku 17. 10. 2026; viz bod 6. Tachov je výslovně odložený.
+
 #### 1 Most a vyhodnocení cílů
 
 - [x] **Viditelně označit městskou bránu i cílová pole Hněvína.**
@@ -136,6 +139,36 @@ Oprava nepřátelského tooltipu je součástí Alpha 0.3.9.
   - Zaznamenat první pokusy dalších nezkušených hráčů bez nutnosti hledat návod na X.
   - Teprve podle výsledků rozhodnout o změně síly jednotek nebo načasování posil.
 
+#### 6 Navazující cíle Lipany a rychlost AI
+
+- [x] **Označit přesná pole Hořic, Malešova a Domažlic a sladit popis s hodnocením.**
+  - Zlatý obrys a ◇, počítadlo obsazení, tooltip a `Ukázat na mapě`.
+  - Hořice a Malešov: při vítězství alespoň 2 ze 4 označených polí;
+    Domažlice: obě označená pole. Opuštění a pozdější návrat nevadí.
+  - Stejný výpočet pro živý stav i výsledek; mrtvé a uprchlé oddíly se nepočítají.
+- [x] **Opravit další vyhodnocování Malešova.**
+  - Striktně méně než 30 % původních oddílů, ne 30 ztracených jednotek.
+  - Podmínka přežití vyžaduje Žižku, nikoli jiného velitele.
+- [x] **Respektovat herní vítězství u Lipan při výpočtu pověsti.**
+  - Historický propad pouze po skutečné porážce před prvním vítězstvím;
+    neznehodnocovat dříve vyhranou bitvu prohrou při opakování.
+  - Výsledek ukazuje skutečnou změnu pověsti po všech omezeních.
+    Staré záznamy ani dříve snížená pověst se zpětně nepřepisují.
+- [x] **Umožnit vratné přepínání rychlosti soupeře.**
+  - Indikátor tahu i herní menu, aktuální režim, CS/EN, klávesnice a save/load.
+  - Menu umožní návrat i mezi tahy. Nová bitva začíná normálně;
+    rozpracovaná akce doběhne, rozhodování AI a pravidla se nemění.
+- [x] **Ověřit první balíček.**
+  - 36 nových regresí, shoda počítadel a konečného výsledku, focus, mlha války,
+    nezměněné ostatní scénáře a bojové statistiky.
+  - Ručně 1280×720, 375×812 a 320×640; přepnutí zpět během stejného tahu.
+- [ ] **Tachov: samostatně prověřit rychlý konec a dosažitelnost volitelných cílů.**
+  - Odloženo na přání uživatele; nyní neměnit paniku, chorál, obtížnost ani konec.
+  - Prověřit dobytí města před automatickým vítězstvím a požadavek 75 % zničených
+    před útěkem. Rozlišit skutečné zničení od útěku v počítadle i popisu.
+  - Případné pokračování v pronásledování či změnu cíle řešit jako vlastní
+    rozhodnutí o hratelnosti, ne jako skrytou opravu tohoto balíčku.
+
 #### Ověření a vydání
 
 Jednotlivé balíky ověřovat odděleně; zejména změnu bonusu nemíchat s laděním
@@ -209,11 +242,26 @@ potřebné cache verze. Číslo vydání, commit, push a nasazení řešit až n
 - [ ] **Redakčně projít české texty, které působí strojově.**
   - Zachovat jasné rozlišení mezi pramenem, herní rekonstrukcí a autorskou fikcí.
   - Kontrolovat současně anglický význam, aby se jazykové verze nerozešly.
-- [ ] **Prověřit zprávy závislé na stavu bojiště.**
-  - Hláška nesmí oznamovat protiútok, paniku nebo výpad, pokud už pro něj nejsou
-    odpovídající živé jednotky nebo podmínky.
-  - Nekmířské zprávy jsou opravené; další konkrétní případy z hráčského feedbacku
-    kontrolovat průběžně, ne plošným přepisem všech událostí.
+- [x] **Zkrátit a uhladit nové reaktivní hlášky v CS/EN.**
+  - Odstraněny technické vsuvky o scénářovém skriptu, zkráceny opakované zprávy
+    o velitelích a některé závěry. Zachováno rozlišení skutečného stavu a historie.
+  - Tři další regrese hlídají stručnost a stejné stavové/výsledkové větve;
+    pravidla, obtížnost i Tachov včetně překladů beze změny.
+- [x] **První cílená kontrola zpráv podle stavu bojiště.**
+  - Hořice, Malešov, Plzeň, Nekmíř, Vyšehrad, Žatec a Sion rozlišují osud
+    velitelů a stav bojových skupin. Prchání střelců není útěkem celé pěchoty.
+  - Problematické fáze nepředjímají útok, útěk, palbu ani kořist; očekávané
+    posily nejsou vydávané za potvrzeně příchozí. Historický příběh je oddělený
+    od skutečného průběhu partie.
+  - Závěry Brodu, Plzně a Malešova rozlišují vyřazení protivníka od obsazení,
+    Domažlice vyžadují obě pole pro potvrzení zajištěného přístupu a Sion
+    ukládá skutečný Roháčův osud. Staré zápisy Kroniky se nepřepisují.
+  - CS/EN, 24 nových regresí, ochrana mlhy války a zachování stavu čekající
+    zprávy při překladu. Účinky, podmínky, ID, kola, AI i obtížnost beze změny.
+  - Tachov včetně textů je výslovně vynechaný a zůstává samostatným úkolem.
+- [ ] **S dalšími hráči ověřit srozumitelnost reaktivních hlášek.**
+  - Průběžně kontrolovat další konkrétní rozpory z feedbacku a nezaměňovat
+    cílenou opravu vyprávění za úplný historický audit nebo test celé kampaně.
 
 ### P2 — Mapa a výtvarná čitelnost
 

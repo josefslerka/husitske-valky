@@ -881,6 +881,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         secondaryObjectives.innerHTML = '';
+        delete secondaryObjectives.dataset.progressSignature;
         if (scenario.victoryConditions.secondary) {
             for (const secondary of scenario.victoryConditions.secondary) {
                 const div = document.createElement('div');
