@@ -4,7 +4,7 @@
 
 Starší plánovací oddíly níže zachováváme jako dobový záznam; nejsou aktuálním plánem vydání. Aktuální stav a otevřené úkoly jsou v [TODO.md](TODO.md).
 
-## Připravované změny
+## Alpha 0.3.10 (17. října 2026)
 
 - Kratší a přirozenější scénářové hlášky v CS/EN: místo vysvětlování scénářového skriptu stručně popisují stav oddílů a připomínají užitečný další krok. Zkráceny také opakované zprávy o osudu velitelů a některé závěry. Historické poznámky dál odlišují prameny od dění v partii. Tři nové regrese hlídají stručnost, odstranění technických formulací a zachování všech stavových i výsledkových větví; herní pravidla, obtížnost a Tachov se nemění.
 

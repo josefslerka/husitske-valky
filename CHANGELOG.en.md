@@ -4,7 +4,7 @@
 
 The older planning sections below are preserved as a record of earlier development; they are not the current release plan. See [TODO.md](TODO.md) for the current state and open tasks (currently maintained in Czech).
 
-## Unreleased
+## Alpha 0.3.10 (17 October 2026)
 
 - Shorter, more natural Czech/English scenario messages describe troop conditions and suggest a useful next step instead of explaining the scenario script. Repeated commander-fate messages and selected endings are also more concise. Historical notes still distinguish source accounts from events in the game. Three new regressions protect brevity, the removal of technical phrasing and every state/outcome branch; gameplay rules, difficulty and Tachov are unchanged.
 
